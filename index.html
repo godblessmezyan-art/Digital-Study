@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="fresh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>数字书房 · 安静阅读，慢下来</title>
+  <meta name="description" content="一个治愈、安静、自然的数字书房。每天留一点时间，给阅读和自己。" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>" />
+
+  <!-- 主题变量（独立文件，方便未来扩展深色夜读 / 蓝色梦幻 / 复古纸张等主题） -->
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+  <!-- 整个页面是一间书房：墙面、窗、光线、远处书架、地板是连续的环境层 -->
+  <div class="room" aria-hidden="true">
+    <!-- 从窗口斜进来的午后光线 -->
+    <div class="room__light"></div>
+
+    <!-- 左墙的窗：Hero 就是窗边的阅读角 -->
+    <div class="room__window">
+      <div class="room__sill"></div>
+      <svg class="room__sill-plant" viewBox="0 0 60 66">
+        <g fill="#8AA47E">
+          <path d="M30 46 C 28 30, 18 22, 10 19 C 22 20, 29 30, 30 46 Z" opacity="0.9"/>
+          <path d="M31 46 C 32 28, 40 20, 50 17 C 40 23, 33 32, 31 46 Z" opacity="0.85"/>
+          <path d="M30 46 C 30 28, 28 16, 27 6 C 34 18, 32 34, 30 46 Z"/>
+        </g>
+        <path d="M20 46 h20 l-3 14 H23 Z" fill="#C9B18C"/>
+      </svg>
+    </div>
+
+    <!-- 右墙远处的书架阴影 -->
+    <svg class="room__shelf" viewBox="0 0 340 240" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="12" y1="72" x2="328" y2="72"/>
+      <line x1="12" y1="168" x2="328" y2="168"/>
+      <rect x="32" y="28" width="16" height="44"/>
+      <rect x="52" y="22" width="14" height="50"/>
+      <rect x="70" y="34" width="18" height="38"/>
+      <path d="M104 72 l12 -46 l15 4 z"/>
+      <rect x="210" y="26" width="16" height="46"/>
+      <rect x="230" y="32" width="18" height="40"/>
+      <rect x="150" y="118" width="16" height="50"/>
+      <rect x="170" y="126" width="20" height="42"/>
+      <rect x="194" y="114" width="14" height="54"/>
+    </svg>
+
+    <!-- 地板与地毯 -->
+    <div class="room__floor"></div>
+    <div class="room__rug"></div>
+  </div>
+
+  <!-- 顶部导航 -->
+  <header class="top-nav" id="top-nav"></header>
+
+  <div class="app">
+    <!-- 左侧导航 -->
+    <aside class="side-nav" id="side-nav"></aside>
+
+    <!-- 主内容区：由 JS 组件依次挂载 -->
+    <main class="page" id="page"></main>
+  </div>
+
+  <!-- 页脚 -->
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

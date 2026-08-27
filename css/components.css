@@ -1,0 +1,817 @@
+/* ============================================================
+   数字书房 · 组件样式
+   Hero / 阅读统计 / 分类导航 / 最近阅读 / 书籍卡片 / 今日书签
+   ============================================================ */
+
+/* ---------- Hero：完整的书房场景（文字与空间融为一体） ---------- */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  /* 左右出血：场景比内容栏更宽，像房间向两边延伸 */
+  margin: 0 -26px;
+  /* 背景透明，让房间的墙面从后面透进来：Hero 是房间的开口，不是一块独立画布 */
+  background: transparent;
+  /* 无阴影；底部圆润过渡，与下方“继续阅读”缝合 */
+  box-shadow: none;
+  border-radius: var(--radius-xl) var(--radius-xl) var(--radius-lg) var(--radius-lg);
+  display: grid;
+  grid-template-columns: 9fr 13fr;
+  min-height: 372px;
+}
+
+/* 场景前景物：左下角的盆栽，属于这个房间而非装饰图 */
+.hero__plant {
+  position: absolute;
+  left: -4px;
+  bottom: 0;
+  width: 118px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* 场景前景物：右下角的书堆与花瓶 */
+.hero__props {
+  position: absolute;
+  right: 42px;
+  bottom: 2px;
+  width: 156px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* 午后日光漫射 */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(560px 320px at 72% 8%, rgba(217, 184, 108, 0.18), transparent 64%),
+    radial-gradient(420px 260px at 12% 100%, rgba(231, 239, 225, 0.4), transparent 60%);
+  pointer-events: none;
+}
+
+/* 房间地面：底部一层极淡的落地阴影，让空间有了“地” */
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 46px;
+  z-index: 1;
+  background: linear-gradient(0deg, rgba(120, 110, 84, 0.06), transparent);
+  pointer-events: none;
+}
+
+.hero__text {
+  position: relative;
+  z-index: 2;
+  padding: 38px 16px 38px 52px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero__badge {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(231, 239, 225, 0.8);
+  color: var(--primary-soft-text);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  padding: 5px 13px;
+  border-radius: 999px;
+}
+
+.hero__title {
+  margin-top: 20px;
+  font-family: var(--font-serif);
+  font-size: 40px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.hero__desc {
+  margin-top: 14px;
+  font-size: 15px;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+}
+
+.hero__actions {
+  margin-top: 26px;
+  display: flex;
+  gap: 12px;
+}
+
+/* 右侧场景：图通铺到底，用渐变与文字区渐融，不是独立插画卡片 */
+.hero__scene {
+  position: relative;
+}
+
+.hero__scene img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  /* 顶部与左侧向墙面羽化：让场景融入房间，而不是被硬框裁掉（图片裁切，非装饰） */
+  -webkit-mask-image:
+    linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.75) 7%, #000 13%),
+    linear-gradient(90deg, rgba(0,0,0,0) 0%, #000 3%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.75) 7%, #000 13%),
+    linear-gradient(90deg, rgba(0,0,0,0) 0%, #000 3%);
+  mask-composite: intersect;
+}
+
+.hero__scene::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--hero-fade);
+  pointer-events: none;
+}
+
+/* ---------- 继续阅读：首页主角，一本正在读的书 + 最近翻开的几本 ---------- */
+/* 向上叠压 Hero 底部，与书房场景形成连续空间；桌上的便签悬浮在缝合处 */
+
+#sec-continue {
+  position: relative;
+  z-index: 3;
+  margin-top: -34px;
+}
+
+.desk-note {
+  position: absolute;
+  top: -24px;
+  left: 46%;
+  z-index: 4;
+  padding: 11px 17px 13px;
+  background: #F5EED9;
+  border-radius: 2px;
+  color: #8B7F5E;
+  font-family: var(--font-serif);
+  font-size: 12.5px;
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+  transform: rotate(-3deg);
+  box-shadow: 0 8px 16px rgba(96, 90, 70, 0.15);
+}
+
+/* 一小条胶带 */
+.desk-note::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  width: 46px;
+  height: 14px;
+  transform: translateX(-50%) rotate(-2deg);
+  background: rgba(217, 184, 108, 0.35);
+}
+
+.continue-wrap {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: 20px;
+  align-items: stretch;
+}
+
+.continue-featured {
+  position: relative;
+  /* 纸感 + 半透明：让房间的墙面透进来，不读作白色实体卡片 */
+  background: rgba(255, 253, 247, 0.72);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  padding: 26px;
+  display: flex;
+  gap: 26px;
+  transition: box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.continue-featured:hover {
+  background: rgba(255, 253, 247, 0.82);
+  box-shadow: var(--shadow-hover);
+}
+
+/* 正在读的书：轻微倾斜 + 纸页堆叠的实体感 */
+.continue-featured .cover {
+  width: 140px;
+  height: 198px;
+  flex-shrink: 0;
+  transform: rotate(-1.2deg);
+  box-shadow:
+    5px 6px 0 rgba(240, 235, 219, 0.95),
+    0 16px 30px rgba(96, 90, 70, 0.22);
+}
+
+.continue-featured__info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.continue-featured__title {
+  font-family: var(--font-serif);
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.continue-featured__meta {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.continue-featured__progress {
+  margin-top: auto;
+  padding-top: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.continue-featured__pct {
+  font-size: 12.5px;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.continue-featured__info .btn {
+  align-self: flex-start;
+}
+
+.continue-list {
+  background: rgba(255, 253, 247, 0.6);
+  border-radius: var(--radius-lg);
+  padding: 6px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.continue-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 2px;
+  min-width: 0;
+}
+
+.continue-item + .continue-item {
+  border-top: 1px solid var(--border);
+}
+
+.continue-item__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.continue-item__title {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.continue-item__meta {
+  margin-top: 3px;
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.continue-item__go {
+  flex-shrink: 0;
+  font-size: 12.5px;
+  color: var(--primary);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.continue-item__go:hover {
+  opacity: 0.7;
+  transform: translateX(3px);
+}
+
+/* ---------- 我的阅读生活：数字只是生活的注脚 ---------- */
+
+.stats-grid {
+  background: transparent;
+  border-radius: var(--radius-lg);
+  box-shadow: none;
+  padding: 8px 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.stat-card {
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 4px 26px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.stat-card + .stat-card {
+  border-left: 1px solid var(--border);
+}
+
+.stat-card__icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.stat-card__icon.is-accent {
+  background: transparent;
+  color: var(--accent-text);
+}
+
+/* 标题行：左侧标题，右侧一句生活式的手记 */
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.life-note {
+  font-family: var(--font-serif);
+  font-size: 12.5px;
+  font-style: italic;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  opacity: 0.9;
+}
+
+.stat-card__icon svg {
+  width: 19px;
+  height: 19px;
+}
+
+.stat-card__num {
+  font-family: var(--font-serif);
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+
+.stat-card__num small {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-left: 2px;
+}
+
+.stat-card__label {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ---------- 书架分类：书房里的分类索引，不是筛选器 ---------- */
+
+.cat-index {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.cat-index__item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  background: rgba(255, 253, 247, 0.66);
+  border: none;
+  border-radius: 12px;
+  padding: 13px 16px;
+  text-align: left;
+  transition: background 0.2s ease;
+}
+
+.cat-index__item:hover {
+  background: rgba(231, 239, 225, 0.5);
+}
+
+.cat-index__icon {
+  width: 27px;
+  height: 27px;
+  border-radius: 9px;
+  background: rgba(231, 239, 225, 0.65);
+  color: var(--primary-soft-text);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.cat-index__icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.cat-index__name {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  letter-spacing: 0.05em;
+  color: var(--text);
+}
+
+.cat-index__count {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.cat-index__item.is-active {
+  background: rgba(231, 239, 225, 0.85);
+}
+
+.cat-index__item.is-active .cat-index__name,
+.cat-index__item.is-active .cat-index__count {
+  color: var(--primary-soft-text);
+}
+
+/* ---------- 书封（CSS 生成，低饱和渐变 + 衬线书名） ---------- */
+
+.cover {
+  position: relative;
+  border-radius: var(--radius-md);
+  background: var(--cover-1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px 14px;
+  color: rgba(255, 255, 255, 0.94);
+}
+
+/* 柔和的光斑与书脊暗边 */
+.cover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 90% at 85% 0%, rgba(255, 255, 255, 0.28) 0%, transparent 55%),
+    radial-gradient(100% 80% at 10% 100%, rgba(0, 0, 0, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* 封面左侧书脊 + 合页亮线，右侧柔和光斑 */
+.cover::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 11px;
+  background: linear-gradient(90deg,
+    rgba(0, 0, 0, 0.15) 0%,
+    rgba(0, 0, 0, 0.08) 62%,
+    transparent 66%,
+    rgba(255, 255, 255, 0.22) 70%,
+    rgba(255, 255, 255, 0) 78%);
+  pointer-events: none;
+}
+
+.cover__title {
+  font-family: var(--font-serif);
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: 0.06em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.cover__author {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  opacity: 0.88;
+}
+
+.cover__leaf {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  font-size: 15px;
+  opacity: 0.75;
+}
+
+.cover--sm {
+  width: 64px;
+  height: 88px;
+  padding: 9px 8px;
+  border-radius: 9px;
+  flex-shrink: 0;
+}
+
+.cover--sm .cover__title {
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.cover--sm .cover__author,
+.cover--sm .cover__leaf {
+  display: none;
+}
+
+/* ---------- 书架：书就是书，书封为主体，去掉数据卡外壳 ---------- */
+
+.shelf-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* 一排书架：书籍落在自己的木架上，形成有节奏的书墙 */
+.shelf-row__books {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px 22px;
+}
+
+.book-card {
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.book-card:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.book-card .cover {
+  width: 100%;
+  box-shadow: var(--shadow-cover);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.book-card:hover .cover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* 一排书：底部对齐在“架板”上，高矮与倾角各不相同 */
+.book-card__slot {
+  height: 232px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.book-card:nth-child(4n+1) .cover { height: 216px; }
+.book-card:nth-child(4n+2) .cover { height: 228px; }
+.book-card:nth-child(4n+3) .cover { height: 206px; }
+.book-card:nth-child(4n)   .cover { height: 222px; }
+
+.book-card:nth-child(odd) .cover  { transform: rotate(-0.5deg); }
+.book-card:nth-child(even) .cover { transform: rotate(0.4deg); }
+
+/* 架板：一条木色托板，让每排书都落在「自己的书架」上 */
+.shelf-row__board {
+  margin-top: 20px;
+  height: 15px;
+  border-radius: 8px 8px 7px 7px;
+  position: relative;
+  background: linear-gradient(180deg, rgba(206, 179, 140, 0.82) 0%, rgba(186, 156, 117, 0.68) 100%);
+  box-shadow: 0 14px 22px rgba(96, 90, 70, 0.16);
+}
+
+/* 架板受光的前沿 */
+.shelf-row__board::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 3px;
+  border-radius: 8px 8px 0 0;
+  background: rgba(255, 250, 238, 0.55);
+}
+
+.book-card__title {
+  font-family: var(--font-serif);
+  font-size: 15.5px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.book-card__author {
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 弱化数据：极小的状态行 + 发丝级进度线 */
+.book-card__meta {
+  font-size: 11px;
+  color: var(--text-muted);
+  opacity: 0.82;
+}
+
+.book-card__foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.book-card__foot .progress {
+  flex: 1;
+  height: 3px;
+  background: rgba(228, 228, 216, 0.9);
+}
+
+.book-card__pct {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.shelf-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 48px 0;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* ---------- 封面渐变色号 ---------- */
+
+.cover[data-cover="1"] { background: var(--cover-1); }
+.cover[data-cover="2"] { background: var(--cover-2); }
+.cover[data-cover="3"] { background: var(--cover-3); }
+.cover[data-cover="4"] { background: var(--cover-4); }
+.cover[data-cover="5"] { background: var(--cover-5); }
+.cover[data-cover="6"] { background: var(--cover-6); }
+
+/* ---------- 今日书签 ---------- */
+
+.bookmark-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.bookmark-card {
+  background: rgba(255, 253, 247, 0.62);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bookmark-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+
+.bookmark-card__icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  display: grid;
+  place-items: center;
+}
+
+.bookmark-card__icon svg {
+  width: 17px;
+  height: 17px;
+}
+
+.bookmark-card__quote {
+  font-family: var(--font-serif);
+  font-size: 16.5px;
+  line-height: 1.9;
+  color: var(--text);
+}
+
+.bookmark-card__quote::before {
+  content: "「";
+  color: var(--accent);
+}
+
+.bookmark-card__quote::after {
+  content: "」";
+  color: var(--accent);
+}
+
+.bookmark-card__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.bookmark-card__go {
+  color: var(--primary);
+  font-size: 13px;
+  transition: opacity 0.2s ease;
+}
+
+.bookmark-card__go:hover {
+  opacity: 0.75;
+}
+
+/* ---------- 响应式 ---------- */
+
+@media (max-width: 1100px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stat-card:nth-child(3) {
+    border-left: none;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .hero__text {
+    padding: 36px;
+  }
+
+  .hero__scene {
+    height: 220px;
+  }
+
+  .hero__scene::before {
+    background: linear-gradient(0deg, rgba(237, 234, 218, 0) 60%, rgba(237, 234, 218, 0.35) 100%);
+  }
+
+  .continue-wrap {
+    grid-template-columns: 1fr;
+  }
+
+  .cat-index {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 680px) {
+  .stats-grid,
+  .bookmark-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .shelf-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cat-index {
+    grid-template-columns: 1fr;
+  }
+
+  .continue-featured {
+    flex-direction: column;
+  }
+
+  .continue-featured .cover {
+    width: 100%;
+    height: 180px;
+  }
+}

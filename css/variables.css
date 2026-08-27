@@ -1,0 +1,99 @@
+/* ============================================================
+   数字书房 · 主题变量
+   ------------------------------------------------------------
+   所有颜色 / 圆角 / 阴影 / 字体都通过 CSS 变量定义，
+   组件样式只引用变量，不写死颜色。
+   未来新增主题只需在下方追加一个 [data-theme="xxx"] 块
+   （或拆分为 css/themes/xxx.css 并在 index.html 引入），
+   覆盖同名变量即可，无需改动任何组件代码。
+   ============================================================ */
+
+/* ---------- 主题一：清新自然风（默认） ---------- */
+:root,
+[data-theme="fresh"] {
+  color-scheme: light;
+
+  /* 基础色板 */
+  --color-bg:        #F6F5EC;   /* 页面背景：米白纸感 */
+  --color-card:      #FFFDF7;   /* 卡片背景：暖白 */
+  --color-primary:   #7C9B72;   /* 主色：鼠尾草绿 */
+  --color-primary-2: #6A8A61;   /* 主色加深（hover） */
+  --color-primary-soft: #E7EFE1;/* 浅绿：选中态/标签底 */
+  --color-accent:    #D9B86C;   /* 强调色：暖金 */
+  --color-accent-soft:#F3EAD3;  /* 强调色浅底 */
+  --color-text:      #374238;   /* 主文字 */
+  --color-text-2:    #899187;   /* 次要文字 */
+  --color-border:    #E4E4D8;   /* 边框 */
+
+  /* 语义化变量（组件只使用这一层） */
+  --bg:            var(--color-bg);
+  --card:          var(--color-card);
+  --text:          var(--color-text);
+  --text-muted:    var(--color-text-2);
+  --text-on-primary: #FFFFFF;
+  --border:        var(--color-border);
+  --primary:       var(--color-primary);
+  --primary-hover: var(--color-primary-2);
+  --primary-soft:  var(--color-primary-soft);
+  --primary-soft-text: #5C7A53;
+  --accent:        var(--color-accent);
+  --accent-soft:   var(--color-accent-soft);
+  --accent-text:   #A98A45;
+
+  /* 书封渐变色（低饱和书脊色系） */
+  --cover-1: linear-gradient(150deg, #B9C8AC 0%, #93A98A 100%); /* 灰绿 */
+  --cover-2: linear-gradient(150deg, #E5D9BC 0%, #CBBA94 100%); /* 米金 */
+  --cover-3: linear-gradient(150deg, #B9C4C8 0%, #90A2A9 100%); /* 雾蓝 */
+  --cover-4: linear-gradient(150deg, #D9C3AE 0%, #BC9E82 100%); /* 暖陶 */
+  --cover-5: linear-gradient(150deg, #C9CBB4 0%, #A5A98C 100%); /* 橄榄 */
+  --cover-6: linear-gradient(150deg, #D8CDC0 0%, #B5A793 100%); /* 亚麻 */
+
+  /* 圆角 */
+  --radius-xl: 28px;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+
+  /* 阴影：柔和、低存在感（暖调，避免冷灰） */
+  --shadow-soft: 0 2px 16px rgba(96, 90, 70, 0.07);
+  --shadow-hover: 0 14px 30px rgba(96, 90, 70, 0.13);
+  --shadow-cover: 0 10px 24px rgba(96, 90, 70, 0.18);
+
+  /* Hero 书房场景：底色与文字区渐入融合（渐变更长，过渡更自然） */
+  --hero-bg: #EFECDC;
+  --hero-panel: linear-gradient(100deg, #F2EFE0 0%, #EDE9D6 58%, #E8E4CD 100%);
+  --hero-fade: linear-gradient(90deg, #EDEADA 0%, rgba(237, 234, 218, 0.55) 18%, rgba(237, 234, 218, 0) 46%);
+
+  /* 纸张噪点纹理（极淡，营造纸感） */
+  --paper-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.43 0 0 0 0 0.35 0 0 0 0.03 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+
+  /* 字体 */
+  --font-serif: "Noto Serif SC", "Songti SC", "STSong", "SimSun", Georgia, serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+                "Microsoft YaHei", "Noto Sans SC", "Segoe UI", sans-serif;
+
+  /* 布局：主内容区目标约 1000px，左侧导航作为视觉锚点 */
+  --page-max: 1320px;
+  --sidebar-w: 232px;
+}
+
+/* ---------- 未来主题预留（当前未启用） ----------
+   命名约定：
+   [data-theme="night"]   深色夜读
+   [data-theme="ocean"]   蓝色梦幻
+   [data-theme="retro"]   复古纸张
+
+   示例（取消注释并调整取值即可生效）：
+
+   [data-theme="night"] {
+     color-scheme: dark;
+     --bg: #1E241F;
+     --card: #262E27;
+     --text: #E6E4D8;
+     --text-muted: #9AA294;
+     --border: #37402F;
+     --primary: #8FA97F;
+     --primary-soft: #33402F;
+     --primary-soft-text: #B7CBA9;
+   }
+------------------------------------------------------------ */
