@@ -146,7 +146,7 @@
 }
 
 .icon-btn:hover {
-  background: rgba(231, 239, 225, 0.6);
+  background: var(--primary-glass);
   color: var(--text);
 }
 
@@ -172,11 +172,12 @@
 .side-nav {
   position: sticky;
   top: 76px;
-  padding: 16px 10px;
-  /* 墙上被光照亮的一块暖纸板：坐在场景里，与主内容保持清晰层级 */
-  background: var(--room-plate);
-  border-radius: 20px;
-  box-shadow: 0 6px 24px rgba(96, 90, 70, 0.10);
+  padding: 18px 10px;
+  /* Phase 3：墙上目录而非圆角底板盒子——上下缘渐隐入墙面，
+     去掉卡片轮廓感，保留分组发丝线；232px 宽与 56px 栏距不变 */
+  background: var(--room-plate-fade);
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .side-nav ul {
@@ -214,7 +215,7 @@
 
 /* 选中态：非常柔和的浅绿 */
 .side-nav__item.is-active {
-  background: rgba(231, 239, 225, 0.72);
+  background: var(--primary-glass-mid);
   color: var(--primary-soft-text);
   font-weight: 500;
 }
@@ -316,9 +317,19 @@
 /* ---------- 响应式 ---------- */
 
 @media (max-width: 900px) {
+  :root {
+    /* 单列窄屏：出血 ≤ padding(20px)，架板/收束线贴视口左缘，不穿出 */
+    --shelf-bleed: 20px;
+  }
+
   .app {
     grid-template-columns: 1fr;
     padding: 10px 20px 0;
+  }
+
+  /* 窄屏单列：收窄 Hero 出血（原 -26px 会穿出视口 6px），保留轻微破框感 */
+  .hero {
+    margin: 0 -14px;
   }
 
   .top-nav__inner {

@@ -2,7 +2,7 @@
 
 > **给接手的 Agent**：这份文档是唯一入口。请先完整读完第 1、2、5、9 节再动手改代码。
 > 项目位置：`c:\Users\Administrator\Documents\digital-study`
-> 文档更新时点：第 12 轮空间重构 Phase 0/1（分支 `feature/spatial-redesign`，方案见 `.shots` 外的设计文档与第 13 节空间脚本）
+> 文档更新时点：第 12 轮空间重构 Phase 3/4 完成（分支 `feature/spatial-redesign`，方案见第 13 节空间脚本）
 
 ---
 
@@ -17,7 +17,7 @@
 | 预览 | `http://localhost:8321`（`python -m http.server`，见第 8 节） |
 | 视觉基线 | `.shots/baseline-top.png`、`.shots/baseline-full.png`（1440px 宽，当前状态） |
 | 版本管理 | git 已建立：main（dd7457f 基线）+ `feature/spatial-redesign` 分支；`.shots/` 已 gitignore |
-| 当前状态 | 首页视觉/空间已完成 10 轮迭代并被用户认可，功能仍是"只有分类过滤会动"的原型 |
+| 当前状态 | Phase 3/4 完成：中景统一、区块缝合、前景减法、响应式验收通过（见 §13.6/13.7）；功能仍是"只有分类过滤会动"的原型 |
 
 ---
 
@@ -78,7 +78,7 @@
 ```
 digital-study/
 ├── index.html                  页面骨架 + .room 房间环境层（墙面/光窗/光线/书架/地板/地毯）
-├── assets/hero.png             Hero 书房场景插画（1792×1024，2.4MB，右下角水印已用纹理修补）
+├── assets/reading-room-bg.png   整张书房场景图（2443KB，环境层 v2 唯一背景，P4 后仓库唯一大图）
 ├── css/
 │   ├── variables.css           ★ 主题 Token 唯一来源（色板/语义层/书封渐变/圆角/阴影/字体/页宽）
 │   ├── base.css                reset、body 纸纹、排版基线、.btn/.progress/.section-title/.page-grid-4
@@ -157,9 +157,9 @@ z=4   .desk-note   旋转 -3° 的便签 + 胶带，悬浮在 Hero 与继续阅�
 
 | 手法 | 实现位置 | 意图 |
 |---|---|---|
-| Hero 左右出血 | `components.css` `.hero { margin: 0 -26px }` | 场景比内容栏更宽 → 房间向两侧延伸，非 Banner |
+| Hero 左右出血 | `components.css` `.hero { margin: 0 -26px }`，≤900px 收窄为 `-14px`（媒体查询就在基础规则之后，避免被本文件最后加载的同优先级规则覆盖） | 场景比内容栏更宽 → 房间向两侧延伸，非 Banner；窄屏仍保留轻微破框感但不穿出视口 |
 | Hero 无阴影 + 底部落地光 | `box-shadow: none` + `.hero::after` 46px 渐变 | 让空间有"地"，Hero 像一块光而非卡片 |
-| 前景盆栽 / 书堆花瓶 | `hero.js` 两个内联 SVG（`.hero__plant` 左下 / `.hero__props` 右下） | 与插画同色系的"房间里真实的物件"，制造前后层次 |
+| 前景盆栽 / 书堆花瓶 | 由背景场景图统一供给（`reading-room-bg.png`），补丁 SVG 与 hero.js 前景件已随 P4 删除 | 与场景同源的"房间里真实的物件"，制造前后层次 |
 | 继续阅读叠压 Hero | `#sec-continue { margin-top: -34px; z-index: 3 }` | 上下区不断裂 |
 | 桌上便签 + 胶带 | `.desk-note` / `.desk-note::before` | "人的痕迹"，缝合物件而非 UI 卡 |
 | 主书封实体感 | `.continue-featured .cover { rotate(-1.2deg); box-shadow: 5px 6px 0 纸色, … }` | 纸页堆叠的实体书 |
@@ -251,8 +251,8 @@ $edge = "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
 
 ## 9. 已知遗留与技术债（建议按此顺序处理）
 
-1. **大图未压缩 ×2**：`assets/reading-room-bg.png`（2.4MB，场景图，环境层 v2 核心）与 `assets/hero.png`（2.4MB，已被 CSS 隐藏待删）。上线前：压缩场景图为 WebP（≤400KB）；确认无引用后删除 hero.png。headless 截图需 `--virtual-time-budget`（见 §13.6）。
-2. ~~`.room` 环境层色值硬编码~~ **已清偿**（Phase 1 全量收敛为 `--room-*` 变量，见 §13.5）；Hero 前景 SVG 的 fill 色值已随 v2 退役隐藏，待 Phase 4 删除。
+1. **大图未压缩 ×1**：`assets/reading-room-bg.png`（2443KB，场景图，环境层 v2 核心）是仓库唯一大图。上线前：压缩为 WebP（≤400KB）。`hero.png` 已随 P4 从仓库移除，无代码引用。headless 截图需 `--virtual-time-budget`（见 §13.6）。
+2. ~~`.room` 环境层色值硬编码~~ **已清偿**（Phase 1 全量收敛为 `--room-*` 变量，见 §13.5）；Hero 前景 SVG（`.hero__plant` / `.hero__props`）已随 P4 从 hero.js 与 CSS 中删除，前景物件改由场景图供给。
 3. **孤儿 CSS**：`.note-slip`、`.recent-row` / `.recent-item*` 已在第 11 轮清理（组件已删，样式残留）。
 4. **纯装饰性交互未实现**（原型阶段刻意为之，别当 bug 修）：搜索框无过滤逻辑、侧栏「读书笔记 / 收藏 / 设置」无 target、Hero 与继续阅读的按钮无 click 行为、`icon-btn` 无反馈。
 5. **侧栏选中态语义混用**：主目录项与分类项共用 `.is-active` 但互斥规则不同（点主目录会清掉分类选中态，反之只清分类）；若后续要加路由/多页，需要重构为两组独立状态。
@@ -345,15 +345,17 @@ $edge = "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
 | 0 | git 基线 + 蓝图入库 + 分支 + 空间脚本 | ✅ 完成 |
 | 1 | 环境层 v1（CSS 光轴 + 深处书墙 + 地板光斑） | ✅ 完成（已被 v2 取代为兜底层） |
 | 1.5 | **环境层 v2：整张书房场景图统一背景，拼贴元素退役，Hero 旧插画隐藏，导航融入场景** | ✅ 完成（业务组件零改动） |
-| 2 | Hero 场景 SVG 化 | 调整为：评估场景图与文字排版的进一步融合（原 hero.png 已隐藏待删） |
-| 3 | 中景统一与区块缝合 / Nav 融入 | 待办（顶栏渐隐与侧栏纸板已提前完成） |
-| 4 | 前景归位与减法（只删不加） | 待办 |
+| 2 | Hero 场景 SVG 化 | ✅ 完成：经评估改为"场景图 + 文字排版融合"路线，补丁 SVG 与 hero.png 均已删除（无需再做 SVG 化） |
+| 3 | 中景统一与区块缝合 / Nav 融入 | ✅ 完成：侧栏去盒化（上下缘渐隐入墙）、纸感玻璃变量统一、圆角降档、阴影统一朝右下、架板单侧出血延伸、相邻区块 6 对 ≥1 视觉连接 |
+| 4 | 前景归位与减法（只删不加） | ✅ 完成：hero.js 前景件清理、`cover__leaf` 退役、hero.png 移除、硬编码收敛语义变量、900/680 响应式验收通过（见 §13.7） |
 
 ⚠️ 截图注意：场景图 2.4MB，headless 截图必须加 `--virtual-time-budget=15000`，否则拍到的只是兜底渐变（v2 验收时踩过的坑）。
 
 ### 13.7 程序化验收管线
 
 `python verify_room.py <截图> <标签>` 输出：墙面左右亮度差 / 右带最暗列 / 地板左右亮度 / 深处书墙区与中墙参照的差值。改环境层前后各跑一次对照。脚本在会话临时目录，可按第 8.2 节截图管线配合使用。
+
+**P3/P4 验收记录（2026-08-28，DOM 几何测量法）**：木色特征像素检测在场景图（自带窗框/书架/地板纹理）上不可靠，改以 `test-frame.html`（iframe + `getBoundingClientRect` + Edge `--dump-dom`）测量真实元素边界。900 与 680 两档结果：6 条架板全部 `left=0`（贴视口左缘，`--shelf-bleed` 20px 生效）、`right=内容栏右缘`（870 / 650）；hero 出血收窄为 `-14px` 后 `left=6 right=884`（900 档）、`left=6 right=664`（680 档），均落在视口内；全页溢出扫描 `overflow elements: 0`。截图留档：`.shots/p4-verify-900-v3.png`、`.shots/p4-verify-680-v3.png`。
 
 ---
 

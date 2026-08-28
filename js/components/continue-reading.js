@@ -30,13 +30,12 @@ export function renderContinueReading() {
     <section class="section" id="sec-continue">
       <!-- 桌上便签：悬浮在 Hero 与继续阅读的缝合处，是房间里的物件而非 UI 卡片 -->
       <p class="desk-note" aria-hidden="true">今天从第 12 章开始，<br />读完去泡茶。☕</p>
-      <h2 class="section-title section-title--leaf">继续阅读</h2>
+      <h2 class="section-title">继续阅读</h2>
       <div class="continue-wrap">
         <article class="continue-featured">
           <div class="cover" data-cover="${featured.cover}">
             <div class="cover__title">${esc(featured.title)}</div>
             <div class="cover__author">${esc(featured.author)}</div>
-            <span class="cover__leaf">🌿</span>
           </div>
           <div class="continue-featured__info">
             <h3 class="continue-featured__title">${esc(featured.title)}</h3>

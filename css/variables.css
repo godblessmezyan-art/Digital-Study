@@ -14,7 +14,7 @@
   color-scheme: light;
 
   /* 基础色板 */
-  --color-bg:        #F6F5EC;   /* 页面背景：米白纸感 */
+  --color-bg:        #F3F0E1;   /* 页面背景：米白纸感 */
   --color-card:      #FFFDF7;   /* 卡片背景：暖白 */
   --color-primary:   #7C9B72;   /* 主色：鼠尾草绿 */
   --color-primary-2: #6A8A61;   /* 主色加深（hover） */
@@ -48,16 +48,44 @@
   --cover-5: linear-gradient(150deg, #C9CBB4 0%, #A5A98C 100%); /* 橄榄 */
   --cover-6: linear-gradient(150deg, #D8CDC0 0%, #B5A793 100%); /* 亚麻 */
 
-  /* 圆角 */
-  --radius-xl: 28px;
-  --radius-lg: 20px;
-  --radius-md: 14px;
-  --radius-sm: 10px;
+  /* 圆角（Phase 3：整体降一档，去"现代 UI 卡片"感） */
+  --radius-xl: 22px;
+  --radius-lg: 17px;
+  --radius-md: 12px;
+  --radius-sm: 9px;
 
-  /* 阴影：柔和、低存在感（暖调，避免冷灰） */
-  --shadow-soft: 0 2px 16px rgba(96, 90, 70, 0.07);
-  --shadow-hover: 0 14px 30px rgba(96, 90, 70, 0.13);
-  --shadow-cover: 0 10px 24px rgba(96, 90, 70, 0.18);
+  /* 阴影：柔和、低存在感（暖调，避免冷灰）；
+     Phase 3：光自左上进入，全部投影统一朝右下（x 偏移为正） */
+  --shadow-soft:     3px 6px 18px rgba(96, 90, 70, 0.08);
+  --shadow-hover:    4px 14px 30px rgba(96, 90, 70, 0.14);
+  --shadow-cover:    3px 12px 26px rgba(96, 90, 70, 0.19);
+  --shadow-primary:  0 4px 14px rgba(124, 155, 114, 0.25); /* 主按钮落地阴影 */
+
+  /* 中景纸感材质（Phase 3：同一透明度档位 + 同一组暖调阴影，消除"白卡"读感） */
+  --card-glass:         rgba(255, 253, 247, 0.66);  /* 标准纸感容器 */
+  --card-glass-hover:   rgba(255, 253, 247, 0.82);  /* 悬停提亮 */
+  --card-glass-soft:    rgba(255, 253, 247, 0.42);  /* 次级容器（最近阅读列表） */
+  --card-glass-faint:   rgba(255, 253, 247, 0.30);  /* 极轻纸感（统计带） */
+  --primary-glass:      rgba(231, 239, 225, 0.62);  /* 浅绿玻璃：hover / 图标底 */
+  --primary-glass-mid:  rgba(231, 239, 225, 0.74);  /* 选中态 */
+  --primary-glass-strong: rgba(231, 239, 225, 0.88);/* 徽标 / 高亮 */
+  --primary-soft-hover: #DCE8D3;                    /* btn-soft 悬停 */
+
+  /* 木架材质（书架的架板与收束线） */
+  --wood-board: linear-gradient(180deg, rgba(206, 179, 140, 0.88) 0%, rgba(186, 156, 117, 0.74) 100%);
+  --wood-board-edge: rgba(255, 250, 238, 0.55);
+  --wood-thread: rgba(206, 179, 140, 0.45);
+  --shelf-bleed: 56px;                              /* 架板/收束线横向出血：穿出内容栏、破框入墙 */
+
+  /* 前景便签（人的痕迹） */
+  --note-paper: #F5EED9;
+  --note-ink: #8B7F5E;
+  --note-tape: rgba(217, 184, 108, 0.35);
+
+  /* Hero 光影（光轴起点处的漫射与落地） */
+  --hero-glow-warm:  rgba(217, 184, 108, 0.18);
+  --hero-glow-green: rgba(231, 239, 225, 0.40);
+  --hero-ground:     rgba(120, 110, 84, 0.06);
 
   /* Hero 书房场景：底色与文字区渐入融合（渐变更长，过渡更自然） */
   --hero-bg: #EFECDC;
@@ -118,6 +146,11 @@
   --room-veil:   rgba(247, 243, 230, 0.86);         /* 顶栏（叠在场景上需略实以保证可读） */
   --room-veil-0: rgba(247, 243, 230, 0);            /* 顶栏底边渐隐终点 */
   --room-plate:  rgba(242, 236, 218, 0.58);         /* 侧栏墙面底板（坐在场景里的暖纸板） */
+  --room-plate-fade: linear-gradient(180deg,        /* Phase 3：侧栏去盒化——上下缘渐隐入墙面 */
+    rgba(242, 236, 218, 0) 0%,
+    rgba(242, 236, 218, 0.55) 14%,
+    rgba(242, 236, 218, 0.55) 86%,
+    rgba(242, 236, 218, 0) 100%);
 
   /* 字体 */
   --font-serif: "Noto Serif SC", "Songti SC", "STSong", "SimSun", Georgia, serif;
