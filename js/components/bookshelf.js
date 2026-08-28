@@ -10,7 +10,6 @@ function bookCardHTML(book) {
         <div class="cover" data-cover="${book.cover}">
           <div class="cover__title">${esc(book.title)}</div>
           <div class="cover__author">${esc(book.author)}</div>
-          <span class="cover__leaf">🌿</span>
         </div>
       </div>
       <div>
@@ -30,7 +29,7 @@ function bookCardHTML(book) {
 export function renderBookshelf() {
   const el = h(`
     <section class="section" id="sec-shelf">
-      <h2 class="section-title section-title--leaf">我的书架</h2>
+      <h2 class="section-title">我的书架</h2>
       <div class="shelf-grid page-grid-4"></div>
     </section>
   `);

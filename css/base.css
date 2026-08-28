@@ -22,7 +22,7 @@ body {
   line-height: 1.75;
   color: var(--text);
   /* 墙面底色由 .room 环境层提供，这里只叠加纸张噪点 */
-  background-color: #F3F0E1;
+  background-color: var(--bg);
   background-image: var(--paper-texture);
   min-height: 100vh;
 }
@@ -90,15 +90,7 @@ ol {
   color: var(--text);
 }
 
-/* 带叶片装饰的空间感标题 */
-.section-title--leaf::after {
-  content: "🌿";
-  margin-left: 10px;
-  font-size: 13px;
-  vertical-align: 3px;
-  opacity: 0.55;
-}
-
+/* 无装饰标题：P4 减法，去除了无因果的 🌿 伪元素装饰 */
 .section-sub {
   margin-top: 4px;
   font-size: 13px;
@@ -128,7 +120,7 @@ ol {
 .btn-primary {
   background: var(--primary);
   color: var(--text-on-primary);
-  box-shadow: 0 4px 14px rgba(124, 155, 114, 0.25);
+  box-shadow: var(--shadow-primary);
 }
 
 .btn-primary:hover {
@@ -141,7 +133,7 @@ ol {
 }
 
 .btn-soft:hover {
-  background: #DCE8D3;
+  background: var(--primary-soft-hover);
 }
 
 /* 幽灵按钮：极轻，用于次要操作，避免胶囊堆叠 */
@@ -153,7 +145,7 @@ ol {
 }
 
 .btn-ghost:hover {
-  background: rgba(231, 239, 225, 0.6);
+  background: var(--primary-glass);
 }
 
 .btn-sm {

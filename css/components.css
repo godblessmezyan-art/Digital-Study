@@ -15,26 +15,31 @@
   /* 无阴影；底部圆润过渡，与下方“继续阅读”缝合 */
   box-shadow: none;
   border-radius: var(--radius-xl) var(--radius-xl) var(--radius-lg) var(--radius-lg);
-  display: grid;
-  grid-template-columns: 9fr 13fr;
+  display: flex;
+  align-items: center;
   min-height: 372px;
 }
 
-/* 环境层 v2：前景盆栽 / 书堆花瓶由背景场景图统一供给，Hero 内的补丁 SVG 退役 */
-.hero__plant,
-.hero__props {
-  display: none;
+/* 窄屏单列：收窄 Hero 出血（原 -26px 会穿出视口 6px），保留轻微破框感。
+   必须放在本文件基础规则之后——components.css 最后加载，
+   layout.css 的媒体查询会因层叠顺序被本文件同优先级规则覆盖 */
+@media (max-width: 900px) {
+  .hero {
+    margin: 0 -14px;
+  }
 }
 
-/* 午后日光漫射 */
+/* 环境层 v2：前景盆栽 / 书堆花瓶由背景场景图统一供给，补丁 SVG 已在 P4 移除 */
+
+/* 午后日光漫射（光轴起点的暖光 + 地面绿光回弹，均来自语义变量） */
 .hero::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 1;
   background:
-    radial-gradient(560px 320px at 72% 8%, rgba(217, 184, 108, 0.18), transparent 64%),
-    radial-gradient(420px 260px at 12% 100%, rgba(231, 239, 225, 0.4), transparent 60%);
+    radial-gradient(560px 320px at 72% 8%, var(--hero-glow-warm), transparent 64%),
+    radial-gradient(420px 260px at 12% 100%, var(--hero-glow-green), transparent 60%);
   pointer-events: none;
 }
 
@@ -47,13 +52,14 @@
   bottom: 0;
   height: 46px;
   z-index: 1;
-  background: linear-gradient(0deg, rgba(120, 110, 84, 0.06), transparent);
+  background: linear-gradient(0deg, var(--hero-ground), transparent);
   pointer-events: none;
 }
 
 .hero__text {
   position: relative;
   z-index: 2;
+  max-width: 480px;
   padding: 38px 16px 38px 52px;
   display: flex;
   flex-direction: column;
@@ -65,7 +71,7 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  background: rgba(231, 239, 225, 0.8);
+  background: var(--primary-glass-strong);
   color: var(--primary-soft-text);
   font-size: 12px;
   letter-spacing: 0.06em;
@@ -96,12 +102,8 @@
   gap: 12px;
 }
 
-/* 环境层 v2：房间场景由整张背景图提供（见 layout.css 的 .room）。
-   Hero 内不再放独立插画：文字直接落在场景的亮墙上，
-   右侧的窗、书架、植物由背景场景供给，Hero 与房间同一空间。 */
-.hero__scene {
-  display: none;
-}
+/* 环境层 v2：房间场景由整张背景图提供（见 layout.css 的 .room），
+   Hero 内不再放独立插画，scene 节点已在 P4 移除 */
 
 /* ---------- 继续阅读：首页主角，一本正在读的书 + 最近翻开的几本 ---------- */
 /* 向上叠压 Hero 底部，与书房场景形成连续空间；桌上的便签悬浮在缝合处 */
@@ -118,9 +120,9 @@
   left: 46%;
   z-index: 4;
   padding: 11px 17px 13px;
-  background: #F5EED9;
+  background: var(--note-paper);
   border-radius: 2px;
-  color: #8B7F5E;
+  color: var(--note-ink);
   font-family: var(--font-serif);
   font-size: 12.5px;
   line-height: 1.7;
@@ -138,7 +140,7 @@
   width: 46px;
   height: 14px;
   transform: translateX(-50%) rotate(-2deg);
-  background: rgba(217, 184, 108, 0.35);
+  background: var(--note-tape);
 }
 
 .continue-wrap {
@@ -151,7 +153,7 @@
 .continue-featured {
   position: relative;
   /* 纸感 + 半透明：让房间的墙面透进来，不读作白色实体卡片 */
-  background: rgba(255, 253, 247, 0.72);
+  background: var(--card-glass);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-soft);
   padding: 26px;
@@ -161,11 +163,11 @@
 }
 
 .continue-featured:hover {
-  background: rgba(255, 253, 247, 0.82);
+  background: var(--card-glass-hover);
   box-shadow: var(--shadow-hover);
 }
 
-/* 正在读的书：轻微倾斜 + 纸页堆叠的实体感 */
+/* 正在读的书：轻微倾斜 + 纸页堆叠的实体感（投影与页叠都朝右下） */
 .continue-featured .cover {
   width: 140px;
   height: 198px;
@@ -173,7 +175,7 @@
   transform: rotate(-1.2deg);
   box-shadow:
     5px 6px 0 rgba(240, 235, 219, 0.95),
-    0 16px 30px rgba(96, 90, 70, 0.22);
+    4px 16px 30px rgba(96, 90, 70, 0.22);
 }
 
 .continue-featured__info {
@@ -217,7 +219,7 @@
 }
 
 .continue-list {
-  background: rgba(255, 253, 247, 0.6);
+  background: var(--card-glass-soft);
   border-radius: var(--radius-lg);
   padding: 6px 20px;
   display: flex;
@@ -274,13 +276,13 @@
   transform: translateX(3px);
 }
 
-/* ---------- 我的阅读生活：数字只是生活的注脚 ---------- */
+/* ---------- 我的阅读生活：数字只是生活的注脚（极轻纸感带，不抢书架） ---------- */
 
 .stats-grid {
-  background: transparent;
+  background: var(--card-glass-faint);
   border-radius: var(--radius-lg);
   box-shadow: none;
-  padding: 8px 0;
+  padding: 14px 0;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 }
@@ -370,23 +372,23 @@
   display: flex;
   align-items: center;
   gap: 11px;
-  background: rgba(255, 253, 247, 0.66);
+  background: var(--card-glass);
   border: none;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   padding: 13px 16px;
   text-align: left;
   transition: background 0.2s ease;
 }
 
 .cat-index__item:hover {
-  background: rgba(231, 239, 225, 0.5);
+  background: var(--primary-glass);
 }
 
 .cat-index__icon {
   width: 27px;
   height: 27px;
   border-radius: 9px;
-  background: rgba(231, 239, 225, 0.65);
+  background: var(--primary-glass);
   color: var(--primary-soft-text);
   display: grid;
   place-items: center;
@@ -412,7 +414,7 @@
 }
 
 .cat-index__item.is-active {
-  background: rgba(231, 239, 225, 0.85);
+  background: var(--primary-glass-strong);
 }
 
 .cat-index__item.is-active .cat-index__name,
@@ -477,14 +479,6 @@
   opacity: 0.88;
 }
 
-.cover__leaf {
-  position: absolute;
-  right: 12px;
-  bottom: 10px;
-  font-size: 15px;
-  opacity: 0.75;
-}
-
 .cover--sm {
   width: 64px;
   height: 88px;
@@ -498,8 +492,7 @@
   line-height: 1.4;
 }
 
-.cover--sm .cover__author,
-.cover--sm .cover__leaf {
+.cover--sm .cover__author {
   display: none;
 }
 
@@ -559,14 +552,22 @@
 .book-card:nth-child(odd) .cover  { transform: rotate(-0.5deg); }
 .book-card:nth-child(even) .cover { transform: rotate(0.4deg); }
 
-/* 架板：一条木色托板，让每排书都落在「自己的书架」上 */
+/* 架板：一条木色托板，让每排书都落在「自己的书架」上。
+   左右出血与 Hero / 场景对齐，像木架从墙里长出来 */
 .shelf-row__board {
   margin-top: 20px;
+  /* 单侧出血：左端穿出主栏入侧栏墙面（光来自左上），右端靠墙对齐，
+     避免中宽视口下右侧溢出；端部用 mask 柔和淡出 */
+  margin-left: calc(-1 * var(--shelf-bleed));
+  margin-right: 0;
   height: 15px;
   border-radius: 8px 8px 7px 7px;
   position: relative;
-  background: linear-gradient(180deg, rgba(206, 179, 140, 0.82) 0%, rgba(186, 156, 117, 0.68) 100%);
+  background: var(--wood-board);
   box-shadow: 0 14px 22px rgba(96, 90, 70, 0.16);
+  /* 两端收尾柔和融入墙面：保留出血延伸，仅边缘渐隐 */
+  -webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,0) 0, rgba(0,0,0,1) 24px, rgba(0,0,0,1) calc(100% - 24px), rgba(0,0,0,0) 100%);
+  mask-image: linear-gradient(90deg, rgba(0,0,0,0) 0, rgba(0,0,0,1) 24px, rgba(0,0,0,1) calc(100% - 24px), rgba(0,0,0,0) 100%);
 }
 
 /* 架板受光的前沿 */
@@ -578,7 +579,18 @@
   top: 0;
   height: 3px;
   border-radius: 8px 8px 0 0;
-  background: rgba(255, 250, 238, 0.55);
+  background: var(--wood-board-edge);
+}
+
+/* 收束线：书架区末端的细木线，把书架区收束并与下方分类区缝合 */
+.shelf-grid::after {
+  content: "";
+  display: block;
+  height: 2px;
+  /* 与架板同侧（左出血）：收束线左侧穿出主栏，与架板左出血呼应 */
+  margin: -30px 0 0 calc(-1 * var(--shelf-bleed));
+  border-radius: 2px;
+  background: var(--wood-thread);
 }
 
 .book-card__title {
@@ -651,7 +663,7 @@
 }
 
 .bookmark-card {
-  background: rgba(255, 253, 247, 0.62);
+  background: var(--card-glass);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-soft);
   padding: 24px 28px;
@@ -728,20 +740,12 @@
   }
 
   .hero {
-    grid-template-columns: 1fr;
     min-height: 0;
   }
 
   .hero__text {
+    max-width: none;
     padding: 36px;
-  }
-
-  .hero__scene {
-    height: 220px;
-  }
-
-  .hero__scene::before {
-    background: linear-gradient(0deg, rgba(237, 234, 218, 0) 60%, rgba(237, 234, 218, 0.35) 100%);
   }
 
   .continue-wrap {
@@ -754,6 +758,7 @@
 }
 
 @media (max-width: 680px) {
+  /* --shelf-bleed 已由 layout.css 的 ≤900px 断点统一收窄为 20px */
   .stats-grid,
   .bookmark-grid {
     grid-template-columns: 1fr;
