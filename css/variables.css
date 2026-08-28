@@ -67,6 +67,50 @@
   /* 纸张噪点纹理（极淡，营造纸感） */
   --paper-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.43 0 0 0 0 0.35 0 0 0 0.03 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
 
+  /* ---------- 空间环境层（--room-*）：一间被同一条光照亮的屋子 ----------
+     空间脚本见 HANDOFF.md 第 13 节：光从左上光窗进入、向右下衰减，
+     右侧深处书墙是全页唯一暗部，地板承接光斑与极淡暮色反光。
+     组件层禁止写死色值；环境层新颜色必须先进这一组（主题切换基础）。 */
+
+  /* 墙面横向光梯度：左亮暖 → 右暗冷（94deg 用在 .room 上） */
+  --room-wall-lit:   #F7F4E7;                       /* 左侧受光墙（暖奶油，最亮） */
+  --room-wall-mid:   #EFECD9;                       /* 过渡墙 */
+  --room-wall-shade: #C4CBC1;                       /* 右侧背光墙（雾灰绿，全页最暗墙色） */
+
+  /* 顶部天光：房间上方的空气略亮 */
+  --room-sky-glow:   rgba(255, 251, 238, 0.5);
+  --room-sky-glow-0: rgba(255, 251, 238, 0);
+
+  /* 光窗斜入、落向右下的暖光带（与地板光斑同角度） */
+  --room-light-warm:   rgba(233, 213, 166, 0.20);
+  --room-light-warm-0: rgba(233, 213, 166, 0);
+
+  /* 光窗（左墙）：玻璃、光晕、窗框 */
+  --room-window-glass: linear-gradient(180deg, rgba(255, 252, 240, 0.94) 0%, rgba(247, 241, 221, 0.72) 100%);
+  --room-window-glow:  rgba(255, 250, 232, 0.7);
+  --room-window-frame: rgba(211, 202, 175, 0.8);
+  --room-window-frame-soft: rgba(211, 202, 175, 0.4);
+
+  /* 右侧深处书墙：全页唯一暗部（雾蓝灰），存在感 0.18–0.28 */
+  --room-far-shelf-ink: #5D6A7C;
+  --room-far-shelf: 0.26;
+
+  /* 地板：木色底 + 光窗光斑（左）+ 极淡暮色反光（右，≤0.12） */
+  --room-floor-wood:  linear-gradient(180deg, rgba(203, 176, 138, 0.18), rgba(181, 151, 112, 0.30));
+  --room-floor-glow:  rgba(255, 246, 220, 0.40);
+  --room-floor-glow-0: rgba(255, 246, 220, 0);
+  --room-floor-line:  rgba(160, 138, 105, 0.22);
+  --room-dusk:        rgba(123, 115, 147, 0.12);
+  --room-dusk-0:      rgba(123, 115, 147, 0);
+
+  /* 地毯、窗台盆栽、导航半透明面 */
+  --room-rug:    rgba(231, 239, 225, 0.6);
+  --room-rug-0:  rgba(231, 239, 225, 0);
+  --room-plant:  #8AA47E;
+  --room-pot:    #C9B18C;
+  --room-veil:   rgba(245, 242, 229, 0.82);         /* 顶栏 */
+  --room-plate:  rgba(234, 227, 206, 0.42);         /* 侧栏墙面底板 */
+
   /* 字体 */
   --font-serif: "Noto Serif SC", "Songti SC", "STSong", "SimSun", Georgia, serif;
   --font-sans:  -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",

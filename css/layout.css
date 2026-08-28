@@ -2,8 +2,10 @@
    数字书房 · 布局（房间氛围层 / 顶部导航 / 左侧导航 / 页面骨架 / 页脚）
    ============================================================ */
 
-/* ---------- 房间环境层：整个页面是一间连续的书房 ---------- */
-/* 墙面/窗/光线/地板固定不动，内容像房间里的物件从前面经过 */
+/* ---------- 房间环境层：整个页面是一间连续的书房 ----------
+   空间脚本（HANDOFF §13）：光从左上光窗进入、向右下衰减；
+   右侧深处书墙是全页唯一暗部；地板承接光斑与极淡暮色反光。
+   全部颜色来自 variables.css 的 --room-* 变量组。 */
 
 .room {
   position: fixed;
@@ -11,21 +13,37 @@
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
-  background: linear-gradient(180deg, #F5F2E5 0%, #F0ECDA 100%);
+  /* 墙面横向光梯度：左亮暖（受光）→ 右暗冷（背光，雾灰绿），纵深由光建立 */
+  background: linear-gradient(94deg,
+    var(--room-wall-lit) 0%,
+    var(--room-wall-mid) 42%,
+    var(--room-wall-shade) 100%);
 }
 
-/* 从窗口斜进来的午后光线 */
+/* 顶部天光：房间上方的空气略亮，向下渐隐 */
+.room::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 16vh;
+  background: linear-gradient(180deg, var(--room-sky-glow), var(--room-sky-glow-0));
+  pointer-events: none;
+}
+
+/* 从光窗斜入、落向右下的午后光带：与光窗、地板光斑同一条光轴 */
 .room__light {
   position: absolute;
-  top: -60px;
-  left: 12%;
-  width: 52vw;
-  height: 130vh;
-  background: linear-gradient(112deg, rgba(233, 213, 166, 0.16) 0%, rgba(233, 213, 166, 0) 56%);
-  transform: skewX(-10deg);
+  top: 40px;
+  left: max(60px, calc(50% - 660px));
+  width: 46vw;
+  height: 118vh;
+  background: linear-gradient(104deg, var(--room-light-warm) 0%, var(--room-light-warm-0) 58%);
+  transform: skewX(12deg);
 }
 
-/* 左墙的窗：在书架左侧的墙面上，部分出屏表示房间在画面外继续延伸 */
+/* 左墙的窗：光轴的来源，部分出屏表示房间在画面外继续延伸 */
 .room__window {
   position: absolute;
   top: 104px;
@@ -34,8 +52,8 @@
   height: 246px;
   border-radius: 14px 14px 10px 10px;
   /* 不带窗棂的柔和光窗：像阳光洒在墙上；透过半透明侧栏透出光晕 */
-  background: linear-gradient(180deg, rgba(255, 252, 240, 0.92) 0%, rgba(247, 241, 221, 0.7) 100%);
-  box-shadow: 0 0 80px rgba(255, 250, 232, 0.7);
+  background: var(--room-window-glass);
+  box-shadow: 0 0 80px var(--room-window-glow);
   opacity: 0.9;
 }
 
@@ -45,7 +63,7 @@
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  box-shadow: inset 0 0 0 5px rgba(211, 202, 175, 0.4);
+  box-shadow: inset 0 0 0 5px var(--room-window-frame-soft);
 }
 
 /* 窗台与窗台小盆栽 */
@@ -56,7 +74,7 @@
   bottom: -7px;
   height: 8px;
   border-radius: 3px;
-  background: rgba(211, 202, 175, 0.8);
+  background: var(--room-window-frame);
 }
 
 .room__sill-plant {
@@ -66,24 +84,33 @@
   width: 52px;
 }
 
-/* 右墙远处的书架阴影 */
+.room__sill-plant .leaf { fill: var(--room-plant); }
+.room__sill-plant .pot  { fill: var(--room-pot); }
+
+/* 右墙深处书墙：全页唯一暗部（雾蓝灰），左缘羽化融入背光墙面 */
 .room__shelf {
   position: absolute;
   top: 150px;
   right: calc(50% - 655px);
   width: 300px;
-  color: #6E6A55;
-  opacity: 0.05;
+  color: var(--room-far-shelf-ink);
+  opacity: var(--room-far-shelf);
+  -webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #000 34%);
+  mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #000 34%);
 }
 
-/* 地板：房间的地面，让页面底部收束到「地」而不是空白墙面 */
+/* 地板：房间的地面，页面底部收束到「地」；
+   左段承接光窗斜落的光斑，右段带极淡暮色反光（克制到几乎察觉不到） */
 .room__floor {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
   height: 13vh;
-  background: linear-gradient(180deg, rgba(203, 176, 138, 0.18), rgba(181, 151, 112, 0.3));
+  background:
+    linear-gradient(104deg, var(--room-floor-glow) 0%, var(--room-floor-glow-0) 44%),
+    linear-gradient(280deg, var(--room-dusk) 0%, var(--room-dusk-0) 36%),
+    var(--room-floor-wood);
 }
 
 .room__floor::before {
@@ -93,7 +120,7 @@
   right: 0;
   top: 0;
   height: 2px;
-  background: rgba(160, 138, 105, 0.22);
+  background: var(--room-floor-line);
 }
 
 /* 内容区下方的一块地毯 */
@@ -105,7 +132,7 @@
   width: 70vw;
   height: 19vh;
   border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(231, 239, 225, 0.6), rgba(231, 239, 225, 0));
+  background: radial-gradient(closest-side, var(--room-rug), var(--room-rug-0));
 }
 
 /* 小屏下隐藏窗与书架，保留光线与地板 */
@@ -129,7 +156,7 @@
   top: 0;
   z-index: 50;
   /* 半透明：不切断房间的空气 */
-  background: rgba(245, 242, 229, 0.82);
+  background: var(--room-veil);
 }
 
 .top-nav__inner {
@@ -254,7 +281,7 @@
   top: 76px;
   padding: 16px 10px;
   /* 不是白色盒子，而是墙上被光照亮的一块：去掉投影、降低底色，融入墙面 */
-  background: rgba(234, 227, 206, 0.42);
+  background: var(--room-plate);
   border-radius: 20px;
   box-shadow: none;
 }
