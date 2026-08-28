@@ -20,24 +20,10 @@
   min-height: 372px;
 }
 
-/* 场景前景物：左下角的盆栽，属于这个房间而非装饰图 */
-.hero__plant {
-  position: absolute;
-  left: -4px;
-  bottom: 0;
-  width: 118px;
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* 场景前景物：右下角的书堆与花瓶 */
+/* 环境层 v2：前景盆栽 / 书堆花瓶由背景场景图统一供给，Hero 内的补丁 SVG 退役 */
+.hero__plant,
 .hero__props {
-  position: absolute;
-  right: 42px;
-  bottom: 2px;
-  width: 156px;
-  z-index: 1;
-  pointer-events: none;
+  display: none;
 }
 
 /* 午后日光漫射 */
@@ -110,36 +96,11 @@
   gap: 12px;
 }
 
-/* 右侧场景：图通铺到底，用渐变与文字区渐融，不是独立插画卡片 */
+/* 环境层 v2：房间场景由整张背景图提供（见 layout.css 的 .room）。
+   Hero 内不再放独立插画：文字直接落在场景的亮墙上，
+   右侧的窗、书架、植物由背景场景供给，Hero 与房间同一空间。 */
 .hero__scene {
-  position: relative;
-}
-
-.hero__scene img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  /* 顶部与左侧向墙面羽化：让场景融入房间，而不是被硬框裁掉（图片裁切，非装饰） */
-  -webkit-mask-image:
-    linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.75) 7%, #000 13%),
-    linear-gradient(90deg, rgba(0,0,0,0) 0%, #000 3%);
-  -webkit-mask-composite: source-in;
-  mask-image:
-    linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.75) 7%, #000 13%),
-    linear-gradient(90deg, rgba(0,0,0,0) 0%, #000 3%);
-  mask-composite: intersect;
-}
-
-.hero__scene::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: var(--hero-fade);
-  pointer-events: none;
+  display: none;
 }
 
 /* ---------- 继续阅读：首页主角，一本正在读的书 + 最近翻开的几本 ---------- */

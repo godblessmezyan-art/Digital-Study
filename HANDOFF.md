@@ -251,8 +251,8 @@ $edge = "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
 
 ## 9. 已知遗留与技术债（建议按此顺序处理）
 
-1. **`assets/hero.png` 2.4MB 未压缩**：本地无碍，上线前压缩或转 WebP。右下角原始生成水印已用相邻纹理 + 高斯羽化修补（`.shots/hero-corner-fixed.png` 为修补后证据）。
-2. **`.room` 环境层色值硬编码**（`layout.css` 中墙面/光窗/光线/地板/书架共约 10 处 rgba/hex）+ Hero 前景 SVG 与窗台盆栽的 fill 色：换主题会露馅。做第二主题前需收敛为 `--room-wall-top`、`--room-light`、`--room-floor` 一类语义变量。
+1. **大图未压缩 ×2**：`assets/reading-room-bg.png`（2.4MB，场景图，环境层 v2 核心）与 `assets/hero.png`（2.4MB，已被 CSS 隐藏待删）。上线前：压缩场景图为 WebP（≤400KB）；确认无引用后删除 hero.png。headless 截图需 `--virtual-time-budget`（见 §13.6）。
+2. ~~`.room` 环境层色值硬编码~~ **已清偿**（Phase 1 全量收敛为 `--room-*` 变量，见 §13.5）；Hero 前景 SVG 的 fill 色值已随 v2 退役隐藏，待 Phase 4 删除。
 3. **孤儿 CSS**：`.note-slip`、`.recent-row` / `.recent-item*` 已在第 11 轮清理（组件已删，样式残留）。
 4. **纯装饰性交互未实现**（原型阶段刻意为之，别当 bug 修）：搜索框无过滤逻辑、侧栏「读书笔记 / 收藏 / 设置」无 target、Hero 与继续阅读的按钮无 click 行为、`icon-btn` 无反馈。
 5. **侧栏选中态语义混用**：主目录项与分类项共用 `.is-active` 但互斥规则不同（点主目录会清掉分类选中态，反之只清分类）；若后续要加路由/多页，需要重构为两组独立状态。
@@ -334,18 +334,22 @@ $edge = "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
 
 ### 13.5 环境层变量（`variables.css`，`--room-*` 组）
 
-`--room-wall-lit / --room-wall-mid / --room-wall-shade`（横向光梯度）、`--room-sky-glow`（顶部天光）、`--room-light-warm`（光带）、`--room-window-glass / --room-window-glow / --room-window-frame`（光窗）、`--room-far-shelf-ink`（深处书墙墨色）、`--room-floor-wood / --room-floor-glow / --room-floor-line / --room-dusk`（地板四件套）、`--room-rug`、`--room-plant / --room-pot`（窗台盆栽）、`--room-veil / --room-plate`（导航半透明面）。
-组件层**禁止**写死色值，环境层新颜色必须先进这组变量。这是未来主题（夜读/蓝色梦幻/复古纸）的切换基础。
+**v2（当前）**：整张场景图方案——`--room-scene`（场景图 URL）+ `--room-scene-veil-top / -veil / -veil-bottom`（暖纸薄纱三档）+ `--room-veil / --room-veil-0`（顶栏及其渐隐）+ `--room-plate`（侧栏暖纸板）。窗、书架、植物、木桌全部来自 `assets/reading-room-bg.png`，禁止再拼贴独立 CSS 环境元素。
+**v1 保留**：`--room-wall-* / --room-light-* / --room-window-* / --room-far-shelf* / --room-floor-* / --room-dusk / --room-rug / --room-plant / --room-pot` 作为场景图加载兜底与未来主题的调色基础。
+组件层**禁止**写死色值；环境层新颜色必须先进这组变量。
 
 ### 13.6 Phase 状态
 
 | Phase | 内容 | 状态 |
 |---|---|---|
-| 0 | git 基线 + 蓝图入库 + 分支 + 本节 | ✅ 完成 |
-| 1 | 环境层重构（`.room` + `--room-*`） | ✅ 完成（本轮） |
-| 2 | Hero 场景重做（SVG 替换 hero.png） | 待办 |
-| 3 | 中景统一与区块缝合 / Nav 融入 | 待办 |
+| 0 | git 基线 + 蓝图入库 + 分支 + 空间脚本 | ✅ 完成 |
+| 1 | 环境层 v1（CSS 光轴 + 深处书墙 + 地板光斑） | ✅ 完成（已被 v2 取代为兜底层） |
+| 1.5 | **环境层 v2：整张书房场景图统一背景，拼贴元素退役，Hero 旧插画隐藏，导航融入场景** | ✅ 完成（业务组件零改动） |
+| 2 | Hero 场景 SVG 化 | 调整为：评估场景图与文字排版的进一步融合（原 hero.png 已隐藏待删） |
+| 3 | 中景统一与区块缝合 / Nav 融入 | 待办（顶栏渐隐与侧栏纸板已提前完成） |
 | 4 | 前景归位与减法（只删不加） | 待办 |
+
+⚠️ 截图注意：场景图 2.4MB，headless 截图必须加 `--virtual-time-budget=15000`，否则拍到的只是兜底渐变（v2 验收时踩过的坑）。
 
 ### 13.7 程序化验收管线
 

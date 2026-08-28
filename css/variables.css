@@ -68,11 +68,18 @@
   --paper-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.43 0 0 0 0 0.35 0 0 0 0.03 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
 
   /* ---------- 空间环境层（--room-*）：一间被同一条光照亮的屋子 ----------
-     空间脚本见 HANDOFF.md 第 13 节：光从左上光窗进入、向右下衰减，
-     右侧深处书墙是全页唯一暗部，地板承接光斑与极淡暮色反光。
-     组件层禁止写死色值；环境层新颜色必须先进这一组（主题切换基础）。 */
+     环境层 v2：整张书房场景图 reading-room-bg.png 作为统一背景，
+     左窗 / 中墙与阳光 / 右侧木书架 / 底部木桌均来自同一场景，
+     不再拼贴独立的窗台、书架、盆栽、地板 CSS 元素。
+     空间脚本见 HANDOFF.md 第 13 节；组件层禁止写死色值。 */
 
-  /* 墙面横向光梯度：左亮暖 → 右暗冷（94deg 用在 .room 上） */
+  /* 场景图（相对 css/ 的路径）与暖纸薄纱：让 UI 像放进房间里，而非漂浮在照片上 */
+  --room-scene: url("../assets/reading-room-bg.png");
+  --room-scene-veil-top:    rgba(250, 246, 233, 0.14);  /* 上部：保留天光与窗的细节 */
+  --room-scene-veil:        rgba(250, 246, 233, 0.26);  /* 中部：内容区微融 */
+  --room-scene-veil-bottom: rgba(240, 232, 210, 0.34);  /* 底部：木桌上方稍收拢 */
+
+  /* 墙面横向光梯度：场景图加载前/失败时的兜底（左亮暖 → 右暗冷） */
   --room-wall-lit:   #F7F4E7;                       /* 左侧受光墙（暖奶油，最亮） */
   --room-wall-mid:   #EFECD9;                       /* 过渡墙 */
   --room-wall-shade: #C4CBC1;                       /* 右侧背光墙（雾灰绿，全页最暗墙色） */
@@ -108,8 +115,9 @@
   --room-rug-0:  rgba(231, 239, 225, 0);
   --room-plant:  #8AA47E;
   --room-pot:    #C9B18C;
-  --room-veil:   rgba(245, 242, 229, 0.82);         /* 顶栏 */
-  --room-plate:  rgba(234, 227, 206, 0.42);         /* 侧栏墙面底板 */
+  --room-veil:   rgba(247, 243, 230, 0.86);         /* 顶栏（叠在场景上需略实以保证可读） */
+  --room-veil-0: rgba(247, 243, 230, 0);            /* 顶栏底边渐隐终点 */
+  --room-plate:  rgba(242, 236, 218, 0.58);         /* 侧栏墙面底板（坐在场景里的暖纸板） */
 
   /* 字体 */
   --font-serif: "Noto Serif SC", "Songti SC", "STSong", "SimSun", Georgia, serif;

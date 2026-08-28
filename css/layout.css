@@ -2,10 +2,10 @@
    数字书房 · 布局（房间氛围层 / 顶部导航 / 左侧导航 / 页面骨架 / 页脚）
    ============================================================ */
 
-/* ---------- 房间环境层：整个页面是一间连续的书房 ----------
-   空间脚本（HANDOFF §13）：光从左上光窗进入、向右下衰减；
-   右侧深处书墙是全页唯一暗部；地板承接光斑与极淡暮色反光。
-   全部颜色来自 variables.css 的 --room-* 变量组。 */
+/* ---------- 房间环境层：整张书房场景图，一间连续的屋子 ----------
+   v2：窗、窗帘、植物、右侧木书架、底部木桌全部来自同一张场景图
+   （assets/reading-room-bg.png），不再拼贴独立的 CSS 元素；
+   UI 通过暖纸薄纱坐进场景，而不是漂浮在照片上（HANDOFF §13）。 */
 
 .room {
   position: fixed;
@@ -13,135 +13,28 @@
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
-  /* 墙面横向光梯度：左亮暖（受光）→ 右暗冷（背光，雾灰绿），纵深由光建立 */
-  background: linear-gradient(94deg,
-    var(--room-wall-lit) 0%,
-    var(--room-wall-mid) 42%,
-    var(--room-wall-shade) 100%);
+  /* 场景铺满视口（居中裁切）；墙面渐变仅作图片加载前/失败时的兜底 */
+  background: var(--room-scene) center / cover no-repeat,
+    linear-gradient(94deg,
+      var(--room-wall-lit) 0%,
+      var(--room-wall-mid) 42%,
+      var(--room-wall-shade) 100%);
 }
 
-/* 顶部天光：房间上方的空气略亮，向下渐隐 */
+/* 暖纸薄纱：上薄（保留窗与天光细节）→ 中等（内容区微融）→ 底部稍厚（木桌上方收拢） */
 .room::before {
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 16vh;
-  background: linear-gradient(180deg, var(--room-sky-glow), var(--room-sky-glow-0));
+  inset: 0;
+  background: linear-gradient(180deg,
+    var(--room-scene-veil-top) 0%,
+    var(--room-scene-veil) 52%,
+    var(--room-scene-veil-bottom) 100%);
   pointer-events: none;
 }
 
-/* 从光窗斜入、落向右下的午后光带：与光窗、地板光斑同一条光轴 */
-.room__light {
-  position: absolute;
-  top: 40px;
-  left: max(60px, calc(50% - 660px));
-  width: 46vw;
-  height: 118vh;
-  background: linear-gradient(104deg, var(--room-light-warm) 0%, var(--room-light-warm-0) 58%);
-  transform: skewX(12deg);
-}
-
-/* 左墙的窗：光轴的来源，部分出屏表示房间在画面外继续延伸 */
-.room__window {
-  position: absolute;
-  top: 104px;
-  left: max(-40px, calc(50% - 748px));
-  width: 176px;
-  height: 246px;
-  border-radius: 14px 14px 10px 10px;
-  /* 不带窗棂的柔和光窗：像阳光洒在墙上；透过半透明侧栏透出光晕 */
-  background: var(--room-window-glass);
-  box-shadow: 0 0 80px var(--room-window-glow);
-  opacity: 0.9;
-}
-
-/* 窗框的极淡暗示 */
-.room__window::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  box-shadow: inset 0 0 0 5px var(--room-window-frame-soft);
-}
-
-/* 窗台与窗台小盆栽 */
-.room__sill {
-  position: absolute;
-  left: -12px;
-  right: -12px;
-  bottom: -7px;
-  height: 8px;
-  border-radius: 3px;
-  background: var(--room-window-frame);
-}
-
-.room__sill-plant {
-  position: absolute;
-  bottom: 0;
-  left: 20px;
-  width: 52px;
-}
-
-.room__sill-plant .leaf { fill: var(--room-plant); }
-.room__sill-plant .pot  { fill: var(--room-pot); }
-
-/* 右墙深处书墙：全页唯一暗部（雾蓝灰），左缘羽化融入背光墙面 */
-.room__shelf {
-  position: absolute;
-  top: 150px;
-  right: calc(50% - 655px);
-  width: 300px;
-  color: var(--room-far-shelf-ink);
-  opacity: var(--room-far-shelf);
-  -webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #000 34%);
-  mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #000 34%);
-}
-
-/* 地板：房间的地面，页面底部收束到「地」；
-   左段承接光窗斜落的光斑，右段带极淡暮色反光（克制到几乎察觉不到） */
-.room__floor {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 13vh;
-  background:
-    linear-gradient(104deg, var(--room-floor-glow) 0%, var(--room-floor-glow-0) 44%),
-    linear-gradient(280deg, var(--room-dusk) 0%, var(--room-dusk-0) 36%),
-    var(--room-floor-wood);
-}
-
-.room__floor::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 2px;
-  background: var(--room-floor-line);
-}
-
-/* 内容区下方的一块地毯 */
-.room__rug {
-  position: absolute;
-  left: 50%;
-  bottom: -7vh;
-  transform: translateX(-50%);
-  width: 70vw;
-  height: 19vh;
-  border-radius: 50%;
-  background: radial-gradient(closest-side, var(--room-rug), var(--room-rug-0));
-}
-
-/* 小屏下隐藏窗与书架，保留光线与地板 */
-@media (max-width: 1280px) {
-  .room__window,
-  .room__shelf {
-    display: none;
-  }
-}
+/* （环境层 v1 的窗 / 光带 / 深处书墙 / 地板 / 地毯样式已整体退役：
+   这些物件现在由场景图 reading-room-bg.png 统一提供，见上方 .room。） */
 
 /* 内容层盖在环境层之上 */
 .top-nav,
@@ -155,8 +48,8 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  /* 半透明：不切断房间的空气 */
-  background: var(--room-veil);
+  /* 空气般的过渡：顶栏向下渐隐进场景，不切断房间 */
+  background: linear-gradient(180deg, var(--room-veil) 56%, var(--room-veil-0));
 }
 
 .top-nav__inner {
@@ -280,10 +173,10 @@
   position: sticky;
   top: 76px;
   padding: 16px 10px;
-  /* 不是白色盒子，而是墙上被光照亮的一块：去掉投影、降低底色，融入墙面 */
+  /* 墙上被光照亮的一块暖纸板：坐在场景里，与主内容保持清晰层级 */
   background: var(--room-plate);
   border-radius: 20px;
-  box-shadow: none;
+  box-shadow: 0 6px 24px rgba(96, 90, 70, 0.10);
 }
 
 .side-nav ul {
