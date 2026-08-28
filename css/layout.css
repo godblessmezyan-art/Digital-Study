@@ -2,8 +2,10 @@
    数字书房 · 布局（房间氛围层 / 顶部导航 / 左侧导航 / 页面骨架 / 页脚）
    ============================================================ */
 
-/* ---------- 房间环境层：整个页面是一间连续的书房 ---------- */
-/* 墙面/窗/光线/地板固定不动，内容像房间里的物件从前面经过 */
+/* ---------- 房间环境层：整张书房场景图，一间连续的屋子 ----------
+   v2：窗、窗帘、植物、右侧木书架、底部木桌全部来自同一张场景图
+   （assets/reading-room-bg.png），不再拼贴独立的 CSS 元素；
+   UI 通过暖纸薄纱坐进场景，而不是漂浮在照片上（HANDOFF §13）。 */
 
 .room {
   position: fixed;
@@ -11,110 +13,28 @@
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
-  background: linear-gradient(180deg, #F5F2E5 0%, #F0ECDA 100%);
+  /* 场景铺满视口（居中裁切）；墙面渐变仅作图片加载前/失败时的兜底 */
+  background: var(--room-scene) center / cover no-repeat,
+    linear-gradient(94deg,
+      var(--room-wall-lit) 0%,
+      var(--room-wall-mid) 42%,
+      var(--room-wall-shade) 100%);
 }
 
-/* 从窗口斜进来的午后光线 */
-.room__light {
-  position: absolute;
-  top: -60px;
-  left: 12%;
-  width: 52vw;
-  height: 130vh;
-  background: linear-gradient(112deg, rgba(233, 213, 166, 0.16) 0%, rgba(233, 213, 166, 0) 56%);
-  transform: skewX(-10deg);
-}
-
-/* 左墙的窗：在书架左侧的墙面上，部分出屏表示房间在画面外继续延伸 */
-.room__window {
-  position: absolute;
-  top: 104px;
-  left: max(-40px, calc(50% - 748px));
-  width: 176px;
-  height: 246px;
-  border-radius: 14px 14px 10px 10px;
-  /* 不带窗棂的柔和光窗：像阳光洒在墙上；透过半透明侧栏透出光晕 */
-  background: linear-gradient(180deg, rgba(255, 252, 240, 0.92) 0%, rgba(247, 241, 221, 0.7) 100%);
-  box-shadow: 0 0 80px rgba(255, 250, 232, 0.7);
-  opacity: 0.9;
-}
-
-/* 窗框的极淡暗示 */
-.room__window::after {
+/* 暖纸薄纱：上薄（保留窗与天光细节）→ 中等（内容区微融）→ 底部稍厚（木桌上方收拢） */
+.room::before {
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: inherit;
-  box-shadow: inset 0 0 0 5px rgba(211, 202, 175, 0.4);
+  background: linear-gradient(180deg,
+    var(--room-scene-veil-top) 0%,
+    var(--room-scene-veil) 52%,
+    var(--room-scene-veil-bottom) 100%);
+  pointer-events: none;
 }
 
-/* 窗台与窗台小盆栽 */
-.room__sill {
-  position: absolute;
-  left: -12px;
-  right: -12px;
-  bottom: -7px;
-  height: 8px;
-  border-radius: 3px;
-  background: rgba(211, 202, 175, 0.8);
-}
-
-.room__sill-plant {
-  position: absolute;
-  bottom: 0;
-  left: 20px;
-  width: 52px;
-}
-
-/* 右墙远处的书架阴影 */
-.room__shelf {
-  position: absolute;
-  top: 150px;
-  right: calc(50% - 655px);
-  width: 300px;
-  color: #6E6A55;
-  opacity: 0.05;
-}
-
-/* 地板：房间的地面，让页面底部收束到「地」而不是空白墙面 */
-.room__floor {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 13vh;
-  background: linear-gradient(180deg, rgba(203, 176, 138, 0.18), rgba(181, 151, 112, 0.3));
-}
-
-.room__floor::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 2px;
-  background: rgba(160, 138, 105, 0.22);
-}
-
-/* 内容区下方的一块地毯 */
-.room__rug {
-  position: absolute;
-  left: 50%;
-  bottom: -7vh;
-  transform: translateX(-50%);
-  width: 70vw;
-  height: 19vh;
-  border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(231, 239, 225, 0.6), rgba(231, 239, 225, 0));
-}
-
-/* 小屏下隐藏窗与书架，保留光线与地板 */
-@media (max-width: 1280px) {
-  .room__window,
-  .room__shelf {
-    display: none;
-  }
-}
+/* （环境层 v1 的窗 / 光带 / 深处书墙 / 地板 / 地毯样式已整体退役：
+   这些物件现在由场景图 reading-room-bg.png 统一提供，见上方 .room。） */
 
 /* 内容层盖在环境层之上 */
 .top-nav,
@@ -128,8 +48,8 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  /* 半透明：不切断房间的空气 */
-  background: rgba(245, 242, 229, 0.82);
+  /* 空气般的过渡：顶栏向下渐隐进场景，不切断房间 */
+  background: linear-gradient(180deg, var(--room-veil) 56%, var(--room-veil-0));
 }
 
 .top-nav__inner {
@@ -253,10 +173,10 @@
   position: sticky;
   top: 76px;
   padding: 16px 10px;
-  /* 不是白色盒子，而是墙上被光照亮的一块：去掉投影、降低底色，融入墙面 */
-  background: rgba(234, 227, 206, 0.42);
+  /* 墙上被光照亮的一块暖纸板：坐在场景里，与主内容保持清晰层级 */
+  background: var(--room-plate);
   border-radius: 20px;
-  box-shadow: none;
+  box-shadow: 0 6px 24px rgba(96, 90, 70, 0.10);
 }
 
 .side-nav ul {
