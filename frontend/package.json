@@ -1,0 +1,15 @@
+{
+  "name": "digital-study-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "数字书房 · 前端（Vite + 原生 ES Modules）",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^7.0.0"
+  }
+}

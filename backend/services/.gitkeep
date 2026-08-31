@@ -1,0 +1,3 @@
+# 业务逻辑层
+# 每个服务一个文件：services/<name>.js
+# 示例：bookshelf.service.js（书架查询、阅读进度等）

@@ -1,0 +1,54 @@
+# ============================================================
+# 数字书房 · 本地开发环境（docker compose）
+# 用法：docker compose up -d
+# 说明：当前后端为骨架期，仅提供服务骨架；数据库服务按需启用。
+# ============================================================
+services:
+  # 前端：Vite dev server（热更新）
+  frontend:
+    image: node:22-alpine
+    working_dir: /app/frontend
+    volumes:
+      - ./frontend:/app/frontend
+      - frontend_node_modules:/app/frontend/node_modules
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_BACKEND_URL=http://localhost:3000
+    depends_on:
+      - backend
+
+  # 后端：Express API
+  backend:
+    image: node:22-alpine
+    working_dir: /app/backend
+    volumes:
+      - ./backend:/app/backend
+      - backend_node_modules:/app/backend/node_modules
+    command: sh -c "npm install && npm run dev"
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+    # 数据库接入后取消注释：
+    # depends_on:
+    #   - db
+
+  # 数据库（后续接入时启用，按需改凭据）
+  # db:
+  #   image: postgres:16-alpine
+  #   environment:
+  #     POSTGRES_USER: ${DB_USER:-digitalstudy}
+  #     POSTGRES_PASSWORD: ${DB_PASSWORD:-digitalstudy}
+  #     POSTGRES_DB: ${DB_NAME:-digitalstudy}
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - db_data:/var/lib/postgresql/data
+
+volumes:
+  frontend_node_modules:
+  backend_node_modules:
+  # db_data:

@@ -14,7 +14,7 @@ export function renderHero() {
         </div>
       </div>
       <div class="hero__scene">
-        <img src="assets/hero.png" alt="书房一角：窗边阳光、书架、绿植与一杯热茶" />
+        <img src="/assets/hero.png" alt="书房一角：窗边阳光、书架、绿植与一杯热茶" />
       </div>
 
       <!-- 场景前景物：与插画同属一个房间的盆栽、书堆与花瓶 -->
