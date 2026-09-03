@@ -1,0 +1,102 @@
+/* ============================================================
+   主题：温暖手绘书房（warm-study）
+   ------------------------------------------------------------
+   ★ 本文件是唯一允许出现「裸色值 / 资产 URL」的地方。
+   组件与语义层（variables.css）只引用这里的令牌。
+   新增主题 = 复制本文件改值 + 建对应 assets/themes/<id>/ 目录，
+   布局/响应式系统（layout.css）与主题完全无关，禁止在此文件写断点。
+
+   令牌分组：
+   1. core   —— 色板 / 圆角 / 阴影 / 字体（视觉风格）
+   2. env    —— 环境层（墙面/窗光/书架剪影/地板，Phase 3 使用）
+   3. hero   —— Hero 场景
+   4. asset  —— 主题插画与纹理（URL 也是令牌）
+   ============================================================ */
+
+:root,
+[data-theme="warm-study"] {
+  color-scheme: light;
+
+  /* ---------- 1. core：温暖手绘色板（设计图 02） ---------- */
+  --color-bg:           #F8F0DF;  /* 页面背景：温暖米白纸张 */
+  --color-bg-top:       #FAF4E6;  /* 纸张渐变亮端 */
+  --color-bg-mid:       #F4EAD4;  /* 纸张渐变中段 */
+  --color-bg-deep:      #EFE1C5;  /* 纸张渐变深端（页脚方向） */
+  --color-card:         #FFFDF8;  /* 卡片：暖白，完整不透明内容层 */
+  --color-primary:      #D88A3D;  /* 强调：暖橙（active/进度/链接） */
+  --color-primary-2:    #C07A32;  /* 暖橙加深（hover） */
+  --color-primary-soft: #F6E3C4;  /* 淡暖黄：选中态底/图标衬底 */
+  --color-accent:       #7C9B72;  /* 绿：仅少量用于植物/完成状态 */
+  --color-accent-soft:  #E7EFE1;
+  --color-text:         #5A4632;  /* 主文字：深棕 */
+  --color-text-2:       #9B8973;  /* 辅助文字：棕灰 */
+  --color-border:       #EADDC3;  /* 边框：暖米 */
+  --color-on-primary:   #FFF9EE;
+  --color-primary-soft-text: #96622C;
+  --color-accent-text:  #5C7A53;
+
+  /* 导航/侧栏的半透明暖纸底 */
+  --color-nav-bg:  rgba(255, 252, 244, 0.88);
+  --color-side-bg: rgba(252, 247, 236, 0.82);
+
+  /* 今日书签手记卡：仿旧纸张 + 细棕线框 */
+  --color-note-paper: #F9F1DC;
+  --color-note-line:  rgba(150, 120, 80, 0.28);
+  --color-note-text:  #6B5138;
+
+  /* 表面细节令牌（暗色主题依赖这些换皮） */
+  --color-search-bg:      rgba(255, 253, 248, 0.92);
+  --color-note-chip:      rgba(255, 253, 248, 0.72);
+  --color-hover-veil:     rgba(255, 253, 248, 0.7);
+  --color-avatar:         linear-gradient(135deg, #F2D9B0, #E0B87E);
+  --color-progress-track: rgba(234, 221, 195, 0.7);
+  --color-tape:           rgba(216, 138, 61, 0.26);
+  --color-primary-glow:   rgba(216, 138, 61, 0.28);
+  --color-primary-soft-hover: #EFD9B0;
+  --color-focus-ring:     rgba(216, 138, 61, 0.12);
+
+  /* 书封兜底渐变（水彩插画之下的底色） */
+  --color-cover-1: linear-gradient(150deg, #EFD9A7 0%, #D8B36E 100%); /* 麦金 */
+  --color-cover-2: linear-gradient(150deg, #F0C8A0 0%, #D49A68 100%); /* 陶土 */
+  --color-cover-3: linear-gradient(150deg, #E4CDB0 0%, #C4A57E 100%); /* 亚麻 */
+  --color-cover-4: linear-gradient(150deg, #E8D5B8 0%, #C9A87C 100%); /* 暖沙 */
+  --color-cover-5: linear-gradient(150deg, #D9DCB4 0%, #B0B583 100%); /* 橄榄绿野 */
+  --color-cover-6: linear-gradient(150deg, #EAD2BC 0%, #C8A484 100%); /* 浅陶 */
+
+  /* 圆角（克制：卡片 10~14，容器 16~20） */
+  --radius-xl: 20px;
+  --radius-lg: 16px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+
+  /* 阴影（暖棕调，杜绝冷灰） */
+  --shadow-soft:  0 4px 16px rgba(122, 95, 58, 0.08);
+  --shadow-hover: 0 12px 28px rgba(122, 95, 58, 0.14);
+  --shadow-cover: 0 8px 20px rgba(122, 95, 58, 0.16);
+
+  /* 字体：中文标题衬线（文学感），正文无衬线 */
+  --font-serif: "Noto Serif SC", "Songti SC", "STSong", "SimSun", Georgia, serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+                "Microsoft YaHei", "Noto Sans SC", "Segoe UI", sans-serif;
+
+  /* ---------- 2. env：环境层（Phase 3 空间场景） ----------
+     空间逻辑：右侧通铺手绘书房插画（花/书/台灯/猫）作为环境背景，
+     左缘与下缘羽化融入纸面；暖阳光晕从右上方洒下。 */
+  --env-wall:        linear-gradient(180deg, #FAF4E6 0%, #F8F0DF 32%, #F4EAD4 72%, #EFE1C5 100%);
+  --env-art-glow:    radial-gradient(78% 66% at 76% 14%, rgba(255, 236, 190, 0.55), rgba(255, 236, 190, 0) 62%);
+  --env-window-glow: rgba(255, 244, 214, 0.0);   /* 预留：左缘窗光晕 */
+  --env-shelf-ink:   #8A7355;                    /* 预留：书架剪影墨色 */
+  --env-shelf-alpha: 0.14;
+  --env-floor:       rgba(203, 176, 138, 0.0);   /* 预留：底部地板收束 */
+  --env-plant:       #8AA47E;
+  --env-pot:         #C9B18C;
+
+  /* ---------- 3. hero：场景 ---------- */
+  --hero-panel: linear-gradient(105deg, #FBF5E7 0%, #F7EDD8 58%, #F3E5C8 100%);
+  --hero-fade:  linear-gradient(90deg, #F7EDD8 0%, rgba(247, 237, 216, 0.5) 16%, rgba(247, 237, 216, 0) 42%);
+
+  /* ---------- 4. asset：主题资产（URL 即令牌，换主题即换 URL） ---------- */
+  --asset-hero: url("/assets/themes/warm-study/hero.png");          /* 移动端 Hero 场景图 */
+  --asset-env: url("/assets/themes/warm-study/env.png");            /* 桌面端全宽环境全景（四角环绕） */
+  --asset-paper-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.38 0 0 0 0 0.26 0 0 0 0.03 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}

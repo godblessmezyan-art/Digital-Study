@@ -1,143 +1,82 @@
 /* ============================================================
-   数字书房 · 主题变量
+   数字书房 · 语义变量层（组件契约）
    ------------------------------------------------------------
-   所有颜色 / 圆角 / 阴影 / 字体都通过 CSS 变量定义，
-   组件样式只引用变量，不写死颜色。
-   未来新增主题只需在下方追加一个 [data-theme="xxx"] 块
-   （或拆分为 css/themes/xxx.css 并在 index.html 引入），
-   覆盖同名变量即可，无需改动任何组件代码。
+   本文件只做两件事，禁止出现裸色值 / 资产 URL：
+   1. 把主题令牌（css/themes/*.css）映射为组件使用的语义变量
+   2. 定义与主题无关的「布局系统」令牌（宽度/间距/断点注释）
+
+   主题 ↔ 布局分离原则：
+   - 换主题：只改 themes/<id>.css（颜色/资产/圆角/阴影/字体）
+   - 换布局：只改 layout.css + 本文件布局令牌（断点/宽度/间距）
    ============================================================ */
 
-/* ---------- 主题一：清新自然风（默认） ---------- */
-:root,
-[data-theme="fresh"] {
-  color-scheme: light;
+:root {
+  /* ---------- 语义色（组件只准用这一层） ---------- */
+  --bg:               var(--color-bg);
+  --card:             var(--color-card);
+  --text:             var(--color-text);
+  --text-muted:       var(--color-text-2);
+  --text-on-primary:  var(--color-on-primary);
+  --border:           var(--color-border);
+  --primary:          var(--color-primary);
+  --primary-hover:    var(--color-primary-2);
+  --primary-soft:     var(--color-primary-soft);
+  --primary-soft-text: var(--color-primary-soft-text);
+  --accent:           var(--color-accent);
+  --accent-soft:      var(--color-accent-soft);
+  --accent-text:      var(--color-accent-text);
+  --nav-bg:           var(--color-nav-bg);
+  --side-bg:          var(--color-side-bg);
+  --note-paper:       var(--color-note-paper);
+  --note-line:        var(--color-note-line);
+  --note-text:        var(--color-note-text);
 
-  /* 基础色板 */
-  --color-bg:        #F6F5EC;   /* 页面背景：米白纸感 */
-  --color-card:      #FFFDF7;   /* 卡片背景：暖白 */
-  --color-primary:   #7C9B72;   /* 主色：鼠尾草绿 */
-  --color-primary-2: #6A8A61;   /* 主色加深（hover） */
-  --color-primary-soft: #E7EFE1;/* 浅绿：选中态/标签底 */
-  --color-accent:    #D9B86C;   /* 强调色：暖金 */
-  --color-accent-soft:#F3EAD3;  /* 强调色浅底 */
-  --color-text:      #374238;   /* 主文字 */
-  --color-text-2:    #899187;   /* 次要文字 */
-  --color-border:    #E4E4D8;   /* 边框 */
+  /* 表面细节（暗色主题换皮依赖） */
+  --search-bg:           var(--color-search-bg);
+  --note-chip:           var(--color-note-chip);
+  --hover-veil:          var(--color-hover-veil);
+  --avatar-grad:         var(--color-avatar);
+  --progress-track:      var(--color-progress-track);
+  --tape:                var(--color-tape);
+  --primary-glow:        var(--color-primary-glow);
+  --primary-soft-hover:  var(--color-primary-soft-hover);
+  --focus-ring:          var(--color-focus-ring);
 
-  /* 语义化变量（组件只使用这一层） */
-  --bg:            var(--color-bg);
-  --card:          var(--color-card);
-  --text:          var(--color-text);
-  --text-muted:    var(--color-text-2);
-  --text-on-primary: #FFFFFF;
-  --border:        var(--color-border);
-  --primary:       var(--color-primary);
-  --primary-hover: var(--color-primary-2);
-  --primary-soft:  var(--color-primary-soft);
-  --primary-soft-text: #5C7A53;
-  --accent:        var(--color-accent);
-  --accent-soft:   var(--color-accent-soft);
-  --accent-text:   #A98A45;
+  /* 书封兜底渐变 */
+  --cover-1: var(--color-cover-1);
+  --cover-2: var(--color-cover-2);
+  --cover-3: var(--color-cover-3);
+  --cover-4: var(--color-cover-4);
+  --cover-5: var(--color-cover-5);
+  --cover-6: var(--color-cover-6);
 
-  /* 书封渐变色（低饱和书脊色系） */
-  --cover-1: linear-gradient(150deg, #B9C8AC 0%, #93A98A 100%); /* 灰绿 */
-  --cover-2: linear-gradient(150deg, #E5D9BC 0%, #CBBA94 100%); /* 米金 */
-  --cover-3: linear-gradient(150deg, #B9C4C8 0%, #90A2A9 100%); /* 雾蓝 */
-  --cover-4: linear-gradient(150deg, #D9C3AE 0%, #BC9E82 100%); /* 暖陶 */
-  --cover-5: linear-gradient(150deg, #C9CBB4 0%, #A5A98C 100%); /* 橄榄 */
-  --cover-6: linear-gradient(150deg, #D8CDC0 0%, #B5A793 100%); /* 亚麻 */
+  /* Hero 场景、字体、圆角、阴影、环境层令牌（--hero-* / --font-* /
+     --radius-* / --shadow-* / --env-* / --asset-*）由主题文件直接提供，
+     同名令牌不在此重复映射（自引用会造成循环失效） */
 
-  /* 圆角 */
-  --radius-xl: 28px;
-  --radius-lg: 20px;
-  --radius-md: 14px;
-  --radius-sm: 10px;
+  /* ---------- 布局系统令牌（与主题无关） ---------- */
 
-  /* 阴影：柔和、低存在感（暖调，避免冷灰） */
-  --shadow-soft: 0 2px 16px rgba(96, 90, 70, 0.07);
-  --shadow-hover: 0 14px 30px rgba(96, 90, 70, 0.13);
-  --shadow-cover: 0 10px 24px rgba(96, 90, 70, 0.18);
+  /* 内容骨架：1880px 是「最大宽度」而非固定宽度，
+     实际宽度 = min(94vw, --page-max)，随视口自然收缩 */
+  --page-max: 1880px;
+  --page-gutter: 94vw;      /* 内容占视口比例（两侧留呼吸） */
 
-  /* Hero 书房场景：底色与文字区渐入融合（渐变更长，过渡更自然） */
-  --hero-bg: #EFECDC;
-  --hero-panel: linear-gradient(100deg, #F2EFE0 0%, #EDE9D6 58%, #E8E4CD 100%);
-  --hero-fade: linear-gradient(90deg, #EDEADA 0%, rgba(237, 234, 218, 0.55) 18%, rgba(237, 234, 218, 0) 46%);
+  /* Nav：桌面 264px「书房侧厅」（含我的分类/底部名言）；≤900px 转横向导航条 */
+  --sidebar-w: 264px;
+  --nav-gap: 36px;          /* Nav 与 Main 的空间层次间距 */
 
-  /* 纸张噪点纹理（极淡，营造纸感） */
-  --paper-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.43 0 0 0 0 0.35 0 0 0 0.03 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* 8px 间距系统 */
+  --sp-1: 8px;
+  --sp-2: 16px;
+  --sp-3: 24px;
+  --sp-4: 32px;
+  --sp-5: 40px;
+  --sp-6: 48px;
 
-  /* ---------- 空间环境层（--room-*）：一间被同一条光照亮的屋子 ----------
-     空间脚本见 HANDOFF.md 第 13 节：光从左上光窗进入、向右下衰减，
-     右侧深处书墙是全页唯一暗部，地板承接光斑与极淡暮色反光。
-     组件层禁止写死色值；环境层新颜色必须先进这一组（主题切换基础）。 */
-
-  /* 墙面横向光梯度：左亮暖 → 右暗冷（94deg 用在 .room 上） */
-  --room-wall-lit:   #F7F4E7;                       /* 左侧受光墙（暖奶油，最亮） */
-  --room-wall-mid:   #EFECD9;                       /* 过渡墙 */
-  --room-wall-shade: #C4CBC1;                       /* 右侧背光墙（雾灰绿，全页最暗墙色） */
-
-  /* 顶部天光：房间上方的空气略亮 */
-  --room-sky-glow:   rgba(255, 251, 238, 0.5);
-  --room-sky-glow-0: rgba(255, 251, 238, 0);
-
-  /* 光窗斜入、落向右下的暖光带（与地板光斑同角度） */
-  --room-light-warm:   rgba(233, 213, 166, 0.20);
-  --room-light-warm-0: rgba(233, 213, 166, 0);
-
-  /* 光窗（左墙）：玻璃、光晕、窗框 */
-  --room-window-glass: linear-gradient(180deg, rgba(255, 252, 240, 0.94) 0%, rgba(247, 241, 221, 0.72) 100%);
-  --room-window-glow:  rgba(255, 250, 232, 0.7);
-  --room-window-frame: rgba(211, 202, 175, 0.8);
-  --room-window-frame-soft: rgba(211, 202, 175, 0.4);
-
-  /* 右侧深处书墙：全页唯一暗部（雾蓝灰），存在感 0.18–0.28 */
-  --room-far-shelf-ink: #5D6A7C;
-  --room-far-shelf: 0.26;
-
-  /* 地板：木色底 + 光窗光斑（左）+ 极淡暮色反光（右，≤0.12） */
-  --room-floor-wood:  linear-gradient(180deg, rgba(203, 176, 138, 0.18), rgba(181, 151, 112, 0.30));
-  --room-floor-glow:  rgba(255, 246, 220, 0.40);
-  --room-floor-glow-0: rgba(255, 246, 220, 0);
-  --room-floor-line:  rgba(160, 138, 105, 0.22);
-  --room-dusk:        rgba(123, 115, 147, 0.12);
-  --room-dusk-0:      rgba(123, 115, 147, 0);
-
-  /* 地毯、窗台盆栽、导航半透明面 */
-  --room-rug:    rgba(231, 239, 225, 0.6);
-  --room-rug-0:  rgba(231, 239, 225, 0);
-  --room-plant:  #8AA47E;
-  --room-pot:    #C9B18C;
-  --room-veil:   rgba(245, 242, 229, 0.82);         /* 顶栏 */
-  --room-plate:  rgba(234, 227, 206, 0.42);         /* 侧栏墙面底板 */
-
-  /* 字体 */
-  --font-serif: "Noto Serif SC", "Songti SC", "STSong", "SimSun", Georgia, serif;
-  --font-sans:  -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
-                "Microsoft YaHei", "Noto Sans SC", "Segoe UI", sans-serif;
-
-  /* 布局：主内容区目标约 1000px，左侧导航作为视觉锚点 */
-  --page-max: 1320px;
-  --sidebar-w: 232px;
+  /* 统一断点（只在 layout.css / components.css 的媒体查询使用）：
+     ≥1101px  桌面（Nav 侧栏 + 4 列书架）
+     901–1100 平板横屏/小桌面（Nav 侧栏收窄 + 3 列书架）
+     ≤900px   平板竖屏/手机（Nav 转横条 + Hero 纵排 + 2 列书架）
+     ≤600px   小屏手机（紧凑间距 + 分类横滑）
+     ≤400px   超窄屏（顶栏进一步精简） */
 }
-
-/* ---------- 未来主题预留（当前未启用） ----------
-   命名约定：
-   [data-theme="night"]   深色夜读
-   [data-theme="ocean"]   蓝色梦幻
-   [data-theme="retro"]   复古纸张
-
-   示例（取消注释并调整取值即可生效）：
-
-   [data-theme="night"] {
-     color-scheme: dark;
-     --bg: #1E241F;
-     --card: #262E27;
-     --text: #E6E4D8;
-     --text-muted: #9AA294;
-     --border: #37402F;
-     --primary: #8FA97F;
-     --primary-soft: #33402F;
-     --primary-soft-text: #B7CBA9;
-   }
------------------------------------------------------------- */

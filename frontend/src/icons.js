@@ -24,6 +24,8 @@ export const icons = {
 
   bookmark: `<svg viewBox="0 0 24 24" ${S}><path d="M7 4h10v16l-5-3.6L7 20z"/></svg>`,
 
+  bell: `<svg viewBox="0 0 24 24" ${S}><path d="M18 8.5a6 6 0 1 0-12 0c0 6.5-2.5 8.5-2.5 8.5h17S18 15 18 8.5"/><path d="M13.7 20.5a2 2 0 0 1-3.4 0"/></svg>`,
+
   calendar: `<svg viewBox="0 0 24 24" ${S}><rect x="4" y="5.5" width="16" height="14.5" rx="2.5"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/></svg>`,
 
   flame: `<svg viewBox="0 0 24 24" ${S}><path d="M12 3.8s1 2.7 3.3 5.1c1.8 1.9 2.4 3.6 2.4 5.3a5.7 5.7 0 0 1-11.4 0c0-1.3.4-2.6 1.3-3.9.6 1 1.3 1.6 2.2 2 .1-3 1-6 2.2-8.5z"/></svg>`,

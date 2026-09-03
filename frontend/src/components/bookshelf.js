@@ -1,26 +1,21 @@
 import { h, esc } from '../utils.js';
 import { booksByCategory, progressText } from '../data.js';
+import { coverArt } from '../cover.js';
 
-/** 生成单本书的卡片 */
+/** 生成单本书的卡片（设计图 02：水彩封面 + 完整不透明卡片） */
 function bookCardHTML(book) {
   const done = book.progress >= 100;
   return `
     <article class="book-card">
-      <div class="book-card__slot">
-        <div class="cover" data-cover="${book.cover}">
-          <div class="cover__title">${esc(book.title)}</div>
-          <div class="cover__author">${esc(book.author)}</div>
-          <span class="cover__leaf">🌿</span>
-        </div>
-      </div>
-      <div>
+      <div class="cover" data-cover="${book.cover}">${coverArt(book.cover)}</div>
+      <div class="book-card__body">
         <h3 class="book-card__title">${esc(book.title)}</h3>
         <p class="book-card__author">${esc(book.author)}</p>
-      </div>
-      <p class="book-card__meta">${esc(progressText(book))}</p>
-      <div class="book-card__foot">
-        <div class="progress ${done ? 'is-done' : ''}"><i style="width:${book.progress}%"></i></div>
-        <span class="book-card__pct">${done ? '已读完' : `${book.progress}%`}</span>
+        <p class="book-card__meta">${esc(progressText(book))}</p>
+        <div class="book-card__foot">
+          <div class="progress ${done ? 'is-done' : ''}"><i style="width:${book.progress}%"></i></div>
+          <span class="book-card__pct">${done ? '已读完' : `${book.progress}%`}</span>
+        </div>
       </div>
     </article>
   `;
@@ -31,7 +26,7 @@ export function renderBookshelf() {
   const el = h(`
     <section class="section" id="sec-shelf">
       <h2 class="section-title section-title--leaf">我的书架</h2>
-      <div class="shelf-grid page-grid-4"></div>
+      <div class="shelf-grid"></div>
     </section>
   `);
 
@@ -43,15 +38,8 @@ export function renderBookshelf() {
       grid.innerHTML = '<p class="shelf-empty">这个书架还空着，去挑一本书吧 🌱</p>';
       return;
     }
-    // 按每排 4 本排成「一排书架」：每排落在自己的木架上，形成有节奏的书墙，而非一整块库存网格
-    const rows = [];
-    for (let i = 0; i < list.length; i += 4) rows.push(list.slice(i, i + 4));
-    grid.innerHTML = rows.map((row) => `
-      <div class="shelf-row">
-        <div class="shelf-row__books">${row.map(bookCardHTML).join('')}</div>
-        <div class="shelf-row__board" aria-hidden="true"></div>
-      </div>
-    `).join('');
+    // 平铺 4 列卡片网格（设计图 02 §15），不再有架板/书墙分层
+    grid.innerHTML = list.map(bookCardHTML).join('');
   };
 
   paint('all');

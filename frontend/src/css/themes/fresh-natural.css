@@ -1,0 +1,84 @@
+/* ============================================================
+   主题 01：清新自然风（fresh-natural）
+   晨光 · 绿植 · 治愈 —— 浅绿米白，窗边晨读的氛围
+   完整令牌集：与 warm-study.css 同构，可整体替换
+   ============================================================ */
+
+[data-theme="fresh-natural"] {
+  color-scheme: light;
+
+  /* ---------- core：浅绿 + 米白 ---------- */
+  --color-bg:           #F6F5EC;
+  --color-bg-top:       #FAFAF2;
+  --color-bg-mid:       #F2F1E4;
+  --color-bg-deep:      #E9E8D8;
+  --color-card:         #FFFDF7;
+  --color-primary:      #7C9B72;   /* 鼠尾草绿 */
+  --color-primary-2:    #6A8A61;
+  --color-primary-soft: #E7EFE1;
+  --color-accent:       #D9B86C;   /* 暖金 */
+  --color-accent-soft:  #F3EAD3;
+  --color-text:         #374238;
+  --color-text-2:       #899187;
+  --color-border:       #E4E4D8;
+  --color-on-primary:   #FFFFFF;
+  --color-primary-soft-text: #5C7A53;
+  --color-accent-text:  #A98A45;
+
+  --color-nav-bg:  rgba(255, 253, 247, 0.88);
+  --color-side-bg: rgba(250, 249, 240, 0.78);
+
+  /* 手记卡 */
+  --color-note-paper: #F4F6EA;
+  --color-note-line:  rgba(110, 130, 100, 0.28);
+  --color-note-text:  #4A5A48;
+
+  /* 表面细节 */
+  --color-search-bg:      rgba(255, 253, 247, 0.92);
+  --color-note-chip:      rgba(255, 253, 247, 0.72);
+  --color-hover-veil:     rgba(255, 253, 247, 0.7);
+  --color-avatar:         linear-gradient(135deg, #CFE0C4, #A8C49A);
+  --color-progress-track: rgba(220, 228, 210, 0.8);
+  --color-tape:           rgba(124, 155, 114, 0.26);
+  --color-primary-glow:   rgba(124, 155, 114, 0.28);
+  --color-primary-soft-hover: #DCE8D3;
+  --color-focus-ring:     rgba(124, 155, 114, 0.14);
+
+  /* 书封兜底渐变（低饱和书脊色） */
+  --color-cover-1: linear-gradient(150deg, #B9C8AC 0%, #93A98A 100%);
+  --color-cover-2: linear-gradient(150deg, #E5D9BC 0%, #CBBA94 100%);
+  --color-cover-3: linear-gradient(150deg, #B9C4C8 0%, #90A2A9 100%);
+  --color-cover-4: linear-gradient(150deg, #D9C3AE 0%, #BC9E82 100%);
+  --color-cover-5: linear-gradient(150deg, #C9CBB4 0%, #A5A98C 100%);
+  --color-cover-6: linear-gradient(150deg, #D8CDC0 0%, #B5A793 100%);
+
+  /* 圆角 / 阴影 / 字体 */
+  --radius-xl: 20px; --radius-lg: 16px; --radius-md: 14px; --radius-sm: 10px;
+  --shadow-soft:  0 4px 16px rgba(96, 90, 70, 0.07);
+  --shadow-hover: 0 12px 28px rgba(96, 90, 70, 0.12);
+  --shadow-cover: 0 8px 20px rgba(96, 90, 70, 0.15);
+  --font-serif: "Noto Serif SC", "Songti SC", "STSong", "SimSun", Georgia, serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+                "Microsoft YaHei", "Noto Sans SC", "Segoe UI", sans-serif;
+
+  /* Hero（移动端卡片壳） */
+  --hero-panel: linear-gradient(105deg, #F8F7EE 0%, #F2F1E2 58%, #ECEBD8 100%);
+  --hero-fade:  linear-gradient(90deg, #F2F1E2 0%, rgba(242, 241, 226, 0.5) 16%, rgba(242, 241, 226, 0) 42%);
+
+  /* 纸纹（浅底深 speck） */
+  --asset-paper-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.40 0 0 0 0 0.42 0 0 0 0 0.34 0 0 0 0.03 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+
+  /* ---------- env：晨光窗边 ---------- */
+  --env-wall:        linear-gradient(180deg, #FAFAF2 0%, #F6F5EC 32%, #F2F1E4 72%, #E9E8D8 100%);
+  --env-art-glow:    radial-gradient(78% 66% at 76% 14%, rgba(240, 244, 220, 0.55), rgba(240, 244, 220, 0) 62%);
+  --env-window-glow: rgba(240, 244, 220, 0.0);
+  --env-shelf-ink:   #7A8A70;
+  --env-shelf-alpha: 0.14;
+  --env-floor:       rgba(180, 190, 160, 0.0);
+  --env-plant:       #8AA47E;
+  --env-pot:         #C9B18C;
+
+  /* ---------- asset ---------- */
+  --asset-hero: url("/assets/themes/fresh-natural/hero.png");
+  --asset-env: url("/assets/themes/fresh-natural/env.png");
+}

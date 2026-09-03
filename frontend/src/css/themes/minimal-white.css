@@ -1,0 +1,83 @@
+/* ============================================================
+   主题 04：极简留白风（minimal-white）
+   纯粹 · 留白 · 一枝绿植 —— 灰白底，几乎无阴影，呼吸感优先
+   ============================================================ */
+
+[data-theme="minimal-white"] {
+  color-scheme: light;
+
+  /* ---------- core：灰白 + 淡绿 ---------- */
+  --color-bg:           #FAFAF7;
+  --color-bg-top:       #FDFDFB;
+  --color-bg-mid:       #FAFAF7;
+  --color-bg-deep:      #F4F4EF;
+  --color-card:         #FFFFFF;
+  --color-primary:      #6B8A62;   /* 一枝绿 */
+  --color-primary-2:    #5A7752;
+  --color-primary-soft: #EDF2EA;
+  --color-accent:       #B0A78E;   /* 枯枝棕 */
+  --color-accent-soft:  #F2EFE6;
+  --color-text:         #3C443C;
+  --color-text-2:       #9AA89A;
+  --color-border:       #ECECE6;
+  --color-on-primary:   #FFFFFF;
+  --color-primary-soft-text: #4F6B48;
+  --color-accent-text:  #8A8168;
+
+  --color-nav-bg:  rgba(255, 255, 255, 0.92);
+  --color-side-bg: rgba(255, 255, 255, 0.8);
+
+  /* 手记卡：素白便签 */
+  --color-note-paper: #FDFDFB;
+  --color-note-line:  rgba(140, 150, 140, 0.24);
+  --color-note-text:  #55605A;
+
+  /* 表面细节 */
+  --color-search-bg:      #FFFFFF;
+  --color-note-chip:      rgba(255, 255, 255, 0.85);
+  --color-hover-veil:     rgba(240, 242, 238, 0.8);
+  --color-avatar:         linear-gradient(135deg, #E4EAE0, #C9D4C2);
+  --color-progress-track: #F0F0EA;
+  --color-tape:           rgba(107, 138, 98, 0.18);
+  --color-primary-glow:   rgba(107, 138, 98, 0.16);
+  --color-primary-soft-hover: #E2EADC;
+  --color-focus-ring:     rgba(107, 138, 98, 0.12);
+
+  /* 书封兜底渐变（极简淡色） */
+  --color-cover-1: linear-gradient(150deg, #E3E8DC 0%, #C9D2BC 100%);
+  --color-cover-2: linear-gradient(150deg, #EDE8DC 0%, #D8CFBB 100%);
+  --color-cover-3: linear-gradient(150deg, #E0E5E8 0%, #C5CDD2 100%);
+  --color-cover-4: linear-gradient(150deg, #EAE2DA 0%, #D4C7BA 100%);
+  --color-cover-5: linear-gradient(150deg, #E5E7D9 0%, #CBD0B6 100%);
+  --color-cover-6: linear-gradient(150deg, #E8E4DE 0%, #D2CBC1 100%);
+
+  /* 圆角更小、阴影近乎无 —— 极简的克制 */
+  --radius-xl: 16px; --radius-lg: 12px; --radius-md: 10px; --radius-sm: 8px;
+  --shadow-soft:  0 1px 8px rgba(60, 68, 60, 0.05);
+  --shadow-hover: 0 6px 18px rgba(60, 68, 60, 0.09);
+  --shadow-cover: 0 4px 12px rgba(60, 68, 60, 0.08);
+  --font-serif: "Noto Serif SC", "Songti SC", "STSong", "SimSun", Georgia, serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+                "Microsoft YaHei", "Noto Sans SC", "Segoe UI", sans-serif;
+
+  /* Hero（移动端卡片壳） */
+  --hero-panel: linear-gradient(105deg, #FDFDFB 0%, #FAFAF7 58%, #F6F6F1 100%);
+  --hero-fade:  linear-gradient(90deg, #FAFAF7 0%, rgba(250, 250, 247, 0.5) 16%, rgba(250, 250, 247, 0) 42%);
+
+  /* 纸纹：极简主题几乎无纹（透明度更低） */
+  --asset-paper-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.48 0 0 0 0.015 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+
+  /* ---------- env：几乎空白的墙，一枝绿植 ---------- */
+  --env-wall:        linear-gradient(180deg, #FDFDFB 0%, #FAFAF7 40%, #F6F6F1 100%);
+  --env-art-glow:    radial-gradient(70% 60% at 80% 16%, rgba(240, 244, 236, 0.5), rgba(240, 244, 236, 0) 60%);
+  --env-window-glow: rgba(240, 244, 236, 0.0);
+  --env-shelf-ink:   #B9C2B4;
+  --env-shelf-alpha: 0.1;
+  --env-floor:       rgba(200, 205, 195, 0.0);
+  --env-plant:       #8FA98A;
+  --env-pot:         #D8D2C4;
+
+  /* ---------- asset ---------- */
+  --asset-hero: url("/assets/themes/minimal-white/hero.png");
+  --asset-env: url("/assets/themes/minimal-white/env.png");
+}

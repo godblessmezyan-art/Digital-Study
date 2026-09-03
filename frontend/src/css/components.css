@@ -1,74 +1,27 @@
 /* ============================================================
-   数字书房 · 组件样式
-   Hero / 阅读统计 / 分类导航 / 最近阅读 / 书籍卡片 / 今日书签
+   数字书房 · 组件样式 —— 设计图 02「温暖手绘风」
+   Hero / 阅读统计 / 分类 / 继续阅读 / 书籍卡片 / 今日书签
+   ------------------------------------------------------------
+   原则（用户 §7/§8/§16/§18）：
+   - 单一页面背景（body 纸张渐变），section 不再各铺大背景色
+   - 卡片是完整不透明的内容层（#FFFDF8），背景不穿透
+   - 模块之间用间距/字体/卡片区分，不用横向分割线
    ============================================================ */
 
-/* ---------- Hero：完整的书房场景（文字与空间融为一体） ---------- */
+/* ---------- Hero：不再是 Banner 卡片，而是纸面上的开场白 ----------
+   桌面端：去掉卡片壳（背景/阴影/圆角全撤），文字直接落在纸面上，
+   右侧环境插画（.env-art）从背后透出来，手记卡叠在插画上 */
 
 .hero {
   position: relative;
-  overflow: hidden;
-  /* 左右出血：场景比内容栏更宽，像房间向两边延伸 */
-  margin: 0 -26px;
-  /* 背景透明，让房间的墙面从后面透进来：Hero 是房间的开口，不是一块独立画布 */
-  background: transparent;
-  /* 无阴影；底部圆润过渡，与下方“继续阅读”缝合 */
-  box-shadow: none;
-  border-radius: var(--radius-xl) var(--radius-xl) var(--radius-lg) var(--radius-lg);
-  display: grid;
-  grid-template-columns: 9fr 13fr;
-  min-height: 372px;
-}
-
-/* 场景前景物：左下角的盆栽，属于这个房间而非装饰图 */
-.hero__plant {
-  position: absolute;
-  left: -4px;
-  bottom: 0;
-  width: 118px;
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* 场景前景物：右下角的书堆与花瓶 */
-.hero__props {
-  position: absolute;
-  right: 42px;
-  bottom: 2px;
-  width: 156px;
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* 午后日光漫射 */
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background:
-    radial-gradient(560px 320px at 72% 8%, rgba(217, 184, 108, 0.18), transparent 64%),
-    radial-gradient(420px 260px at 12% 100%, rgba(231, 239, 225, 0.4), transparent 60%);
-  pointer-events: none;
-}
-
-/* 房间地面：底部一层极淡的落地阴影，让空间有了“地” */
-.hero::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 46px;
-  z-index: 1;
-  background: linear-gradient(0deg, rgba(120, 110, 84, 0.06), transparent);
-  pointer-events: none;
+  min-height: 430px;
 }
 
 .hero__text {
   position: relative;
   z-index: 2;
-  padding: 38px 16px 38px 52px;
+  max-width: 640px;
+  padding: 56px 24px 48px 8px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -79,40 +32,42 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  background: rgba(231, 239, 225, 0.8);
+  background: rgba(246, 227, 196, 0.85);
   color: var(--primary-soft-text);
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  padding: 5px 13px;
+  font-size: 12.5px;
+  letter-spacing: 0.08em;
+  padding: 5px 14px;
   border-radius: 999px;
 }
 
 .hero__title {
   margin-top: 20px;
   font-family: var(--font-serif);
-  font-size: 40px;
-  font-weight: 600;
+  /* 流式字号：手机 26px ↔ 桌面 38px 自然生长 */
+  font-size: clamp(26px, 2.6vw, 38px);
+  font-weight: 700;
   letter-spacing: 0.05em;
   line-height: 1.5;
   color: var(--text);
 }
 
 .hero__desc {
-  margin-top: 14px;
+  margin-top: 12px;
   font-size: 15px;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
   color: var(--text-muted);
 }
 
 .hero__actions {
-  margin-top: 26px;
+  margin-top: 28px;
   display: flex;
   gap: 12px;
 }
 
-/* 右侧场景：图通铺到底，用渐变与文字区渐融，不是独立插画卡片 */
+/* 右侧场景：桌面端隐藏（插画已由 .env-art 环境层承担），
+   ≤0900px 时恢复为 Hero 卡片内的堆叠场景 */
 .hero__scene {
-  position: relative;
+  display: none;
 }
 
 .hero__scene img {
@@ -122,15 +77,6 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  /* 顶部与左侧向墙面羽化：让场景融入房间，而不是被硬框裁掉（图片裁切，非装饰） */
-  -webkit-mask-image:
-    linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.75) 7%, #000 13%),
-    linear-gradient(90deg, rgba(0,0,0,0) 0%, #000 3%);
-  -webkit-mask-composite: source-in;
-  mask-image:
-    linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.75) 7%, #000 13%),
-    linear-gradient(90deg, rgba(0,0,0,0) 0%, #000 3%);
-  mask-composite: intersect;
 }
 
 .hero__scene::before {
@@ -142,43 +88,251 @@
   pointer-events: none;
 }
 
-/* ---------- 继续阅读：首页主角，一本正在读的书 + 最近翻开的几本 ---------- */
-/* 向上叠压 Hero 底部，与书房场景形成连续空间；桌上的便签悬浮在缝合处 */
+/* ---------- 今日书签手记卡：叠在右侧插画上的一张纸 ---------- */
 
-#sec-continue {
-  position: relative;
-  z-index: 3;
-  margin-top: -34px;
-}
-
-.desk-note {
+.today-note {
   position: absolute;
-  top: -24px;
-  left: 46%;
-  z-index: 4;
-  padding: 11px 17px 13px;
-  background: #F5EED9;
-  border-radius: 2px;
-  color: #8B7F5E;
-  font-family: var(--font-serif);
-  font-size: 12.5px;
-  line-height: 1.7;
-  letter-spacing: 0.04em;
-  transform: rotate(-3deg);
-  box-shadow: 0 8px 16px rgba(96, 90, 70, 0.15);
+  top: 16px;
+  right: 32px;
+  z-index: 3;
+  width: 300px;
+  background: var(--note-paper);
+  border: 1px solid var(--note-line);
+  border-radius: 4px 14px 14px 14px;
+  box-shadow: 0 10px 26px rgba(122, 95, 58, 0.18);
+  padding: 16px 18px 13px;
+  transform: rotate(1.4deg);
 }
 
-/* 一小条胶带 */
-.desk-note::before {
+/* 顶部一条胶带，把纸片“贴”在书房墙上 */
+.today-note::before {
   content: "";
   position: absolute;
-  top: -7px;
+  top: -9px;
   left: 50%;
-  width: 46px;
-  height: 14px;
+  width: 54px;
+  height: 16px;
   transform: translateX(-50%) rotate(-2deg);
-  background: rgba(217, 184, 108, 0.35);
+  background: var(--tape);
+  border-radius: 3px;
 }
+
+.today-note__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  color: var(--note-text);
+  background: var(--note-chip);
+  border: 1px solid var(--note-line);
+  padding: 3px 11px;
+  border-radius: 999px;
+}
+
+.today-note__quote {
+  margin-top: 10px;
+  font-family: var(--font-serif);
+  font-size: 13.5px;
+  line-height: 2;
+  letter-spacing: 0.04em;
+  color: var(--note-text);
+}
+
+.today-note__src {
+  margin-top: 8px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+/* ---------- 我的阅读生活：4 张暖白卡片（数据保留，仅换壳） ---------- */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.stat-card {
+  background: var(--card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* 图标：淡暖色圆角衬底 + 线性图标 */
+.stat-card__icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  background: var(--primary-soft);
+  color: var(--primary-soft-text);
+}
+
+.stat-card__icon.is-accent {
+  background: var(--accent-soft);
+  color: var(--accent-text);
+}
+
+.stat-card__icon svg {
+  width: 19px;
+  height: 19px;
+}
+
+.stat-card__num {
+  font-family: var(--font-serif);
+  font-size: 23px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+
+.stat-card__num small {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-left: 3px;
+}
+
+.stat-card__label {
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+/* 标题行：左侧标题，右侧一句生活式的手记 */
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.life-note {
+  font-family: var(--font-serif);
+  font-size: 12.5px;
+  font-style: italic;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  opacity: 0.9;
+}
+
+/* ---------- 书架分类：一排胶囊标签（active 暖橙） ---------- */
+
+.cat-index {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.cat-index__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 8px 18px;
+  text-align: left;
+  box-shadow: var(--shadow-soft);
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.cat-index__item:hover {
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.cat-index__icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--primary-soft);
+  color: var(--primary-soft-text);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.cat-index__icon svg {
+  width: 13px;
+  height: 13px;
+}
+
+.cat-index__name {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: var(--text);
+}
+
+.cat-index__count {
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.cat-index__item.is-active {
+  background: var(--primary);
+  border-color: var(--primary);
+  box-shadow: 0 6px 16px var(--primary-glow);
+}
+
+.cat-index__item.is-active .cat-index__icon {
+  background: rgba(255, 249, 238, 0.25);
+  color: var(--text-on-primary);
+}
+
+.cat-index__item.is-active .cat-index__name,
+.cat-index__item.is-active .cat-index__count {
+  color: var(--text-on-primary);
+}
+
+/* ---------- 书封：水彩插画（cover.js）为主体 ---------- */
+
+.cover {
+  position: relative;
+  border-radius: var(--radius-md);
+  background: var(--cover-1);
+  overflow: hidden;
+}
+
+/* 水彩场景 SVG 铺满封面容器 */
+.cover__art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.cover--sm {
+  width: 64px;
+  height: 88px;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+/* 封面兜底渐变色号（插画之下的底色） */
+.cover[data-cover="1"] { background: var(--cover-1); }
+.cover[data-cover="2"] { background: var(--cover-2); }
+.cover[data-cover="3"] { background: var(--cover-3); }
+.cover[data-cover="4"] { background: var(--cover-4); }
+.cover[data-cover="5"] { background: var(--cover-5); }
+.cover[data-cover="6"] { background: var(--cover-6); }
+
+/* ---------- 继续阅读：暖白卡片，不再叠压 Hero ---------- */
 
 .continue-wrap {
   display: grid;
@@ -189,30 +343,29 @@
 
 .continue-featured {
   position: relative;
-  /* 纸感 + 半透明：让房间的墙面透进来，不读作白色实体卡片 */
-  background: rgba(255, 253, 247, 0.72);
+  background: var(--card);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-soft);
-  padding: 26px;
+  padding: 24px;
   display: flex;
-  gap: 26px;
-  transition: box-shadow 0.25s ease, background 0.25s ease;
+  gap: 24px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .continue-featured:hover {
-  background: rgba(255, 253, 247, 0.82);
+  transform: translateY(-3px);
   box-shadow: var(--shadow-hover);
 }
 
-/* 正在读的书：轻微倾斜 + 纸页堆叠的实体感 */
+/* 正在读的书：水彩封面 + 轻微倾斜的实体感 */
 .continue-featured .cover {
-  width: 140px;
-  height: 198px;
+  width: 132px;
+  height: 186px;
   flex-shrink: 0;
-  transform: rotate(-1.2deg);
+  transform: rotate(-1deg);
   box-shadow:
-    5px 6px 0 rgba(240, 235, 219, 0.95),
-    0 16px 30px rgba(96, 90, 70, 0.22);
+    4px 5px 0 rgba(240, 230, 208, 0.95),
+    0 14px 26px rgba(122, 95, 58, 0.2);
 }
 
 .continue-featured__info {
@@ -239,10 +392,10 @@
 
 .continue-featured__progress {
   margin-top: auto;
-  padding-top: 22px;
+  padding-top: 20px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .continue-featured__pct {
@@ -256,8 +409,9 @@
 }
 
 .continue-list {
-  background: rgba(255, 253, 247, 0.6);
+  background: var(--card);
   border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
   padding: 6px 20px;
   display: flex;
   flex-direction: column;
@@ -313,311 +467,42 @@
   transform: translateX(3px);
 }
 
-/* ---------- 我的阅读生活：数字只是生活的注脚 ---------- */
+/* ---------- 我的书架：平铺 4 列卡片网格（设计图 02 §15/§16/§17） ---------- */
 
-.stats-grid {
-  background: transparent;
-  border-radius: var(--radius-lg);
-  box-shadow: none;
-  padding: 8px 0;
+.shelf-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
 }
 
-.stat-card {
-  background: transparent;
-  border-radius: 0;
-  box-shadow: none;
-  padding: 4px 26px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.stat-card + .stat-card {
-  border-left: 1px solid var(--border);
-}
-
-.stat-card__icon {
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-  background: transparent;
-  color: var(--text-muted);
-}
-
-.stat-card__icon.is-accent {
-  background: transparent;
-  color: var(--accent-text);
-}
-
-/* 标题行：左侧标题，右侧一句生活式的手记 */
-.section-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.life-note {
-  font-family: var(--font-serif);
-  font-size: 12.5px;
-  font-style: italic;
-  letter-spacing: 0.05em;
-  color: var(--text-muted);
-  opacity: 0.9;
-}
-
-.stat-card__icon svg {
-  width: 19px;
-  height: 19px;
-}
-
-.stat-card__num {
-  font-family: var(--font-serif);
-  font-size: 21px;
-  font-weight: 600;
-  line-height: 1.3;
-  letter-spacing: 0.02em;
-  color: var(--text);
-}
-
-.stat-card__num small {
-  font-size: 13px;
-  font-weight: 400;
-  color: var(--text-muted);
-  margin-left: 2px;
-}
-
-.stat-card__label {
-  font-size: 13px;
-  color: var(--text-muted);
-}
-
-/* ---------- 书架分类：书房里的分类索引，不是筛选器 ---------- */
-
-.cat-index {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
-
-.cat-index__item {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  background: rgba(255, 253, 247, 0.66);
-  border: none;
-  border-radius: 12px;
-  padding: 13px 16px;
-  text-align: left;
-  transition: background 0.2s ease;
-}
-
-.cat-index__item:hover {
-  background: rgba(231, 239, 225, 0.5);
-}
-
-.cat-index__icon {
-  width: 27px;
-  height: 27px;
-  border-radius: 9px;
-  background: rgba(231, 239, 225, 0.65);
-  color: var(--primary-soft-text);
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-}
-
-.cat-index__icon svg {
-  width: 14px;
-  height: 14px;
-}
-
-.cat-index__name {
-  font-family: var(--font-serif);
-  font-size: 15px;
-  letter-spacing: 0.05em;
-  color: var(--text);
-}
-
-.cat-index__count {
-  margin-left: auto;
-  font-size: 12px;
-  color: var(--text-muted);
-}
-
-.cat-index__item.is-active {
-  background: rgba(231, 239, 225, 0.85);
-}
-
-.cat-index__item.is-active .cat-index__name,
-.cat-index__item.is-active .cat-index__count {
-  color: var(--primary-soft-text);
-}
-
-/* ---------- 书封（CSS 生成，低饱和渐变 + 衬线书名） ---------- */
-
-.cover {
-  position: relative;
+/* 书卡：完整不透明的内容层，背景绝不穿透 */
+.book-card {
+  background: var(--card);
   border-radius: var(--radius-md);
-  background: var(--cover-1);
+  box-shadow: var(--shadow-soft);
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 16px 14px;
-  color: rgba(255, 255, 255, 0.94);
-}
-
-/* 柔和的光斑与书脊暗边 */
-.cover::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(120% 90% at 85% 0%, rgba(255, 255, 255, 0.28) 0%, transparent 55%),
-    radial-gradient(100% 80% at 10% 100%, rgba(0, 0, 0, 0.08) 0%, transparent 50%);
-  pointer-events: none;
-}
-
-/* 封面左侧书脊 + 合页亮线，右侧柔和光斑 */
-.cover::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 11px;
-  background: linear-gradient(90deg,
-    rgba(0, 0, 0, 0.15) 0%,
-    rgba(0, 0, 0, 0.08) 62%,
-    transparent 66%,
-    rgba(255, 255, 255, 0.22) 70%,
-    rgba(255, 255, 255, 0) 78%);
-  pointer-events: none;
-}
-
-.cover__title {
-  font-family: var(--font-serif);
-  font-size: 19px;
-  font-weight: 700;
-  line-height: 1.45;
-  letter-spacing: 0.06em;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
-}
-
-.cover__author {
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  opacity: 0.88;
-}
-
-.cover__leaf {
-  position: absolute;
-  right: 12px;
-  bottom: 10px;
-  font-size: 15px;
-  opacity: 0.75;
-}
-
-.cover--sm {
-  width: 64px;
-  height: 88px;
-  padding: 9px 8px;
-  border-radius: 9px;
-  flex-shrink: 0;
-}
-
-.cover--sm .cover__title {
-  font-size: 11px;
-  line-height: 1.4;
-}
-
-.cover--sm .cover__author,
-.cover--sm .cover__leaf {
-  display: none;
-}
-
-/* ---------- 书架：书就是书，书封为主体，去掉数据卡外壳 ---------- */
-
-.shelf-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-}
-
-/* 一排书架：书籍落在自己的木架上，形成有节奏的书墙 */
-.shelf-row__books {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 30px 22px;
-}
-
-.book-card {
-  background: transparent;
-  border-radius: 0;
-  box-shadow: none;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 11px;
-}
-
-.book-card:hover {
-  transform: none;
-  box-shadow: none;
-}
-
-.book-card .cover {
-  width: 100%;
-  box-shadow: var(--shadow-cover);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.book-card:hover .cover {
-  transform: translateY(-5px);
+.book-card:hover {
+  transform: translateY(-4px);
   box-shadow: var(--shadow-hover);
 }
 
-/* 一排书：底部对齐在“架板”上，高矮与倾角各不相同 */
-.book-card__slot {
-  height: 232px;
+/* 封面区：水彩插画，高度随卡宽流式（150↔220px），顶部圆角随卡片 */
+.book-card .cover {
+  width: 100%;
+  height: clamp(150px, 11vw, 220px);
+  border-radius: 0;
+}
+
+.book-card__body {
+  padding: 14px 16px 16px;
   display: flex;
-  align-items: flex-end;
-}
-
-.book-card:nth-child(4n+1) .cover { height: 216px; }
-.book-card:nth-child(4n+2) .cover { height: 228px; }
-.book-card:nth-child(4n+3) .cover { height: 206px; }
-.book-card:nth-child(4n)   .cover { height: 222px; }
-
-.book-card:nth-child(odd) .cover  { transform: rotate(-0.5deg); }
-.book-card:nth-child(even) .cover { transform: rotate(0.4deg); }
-
-/* 架板：一条木色托板，让每排书都落在「自己的书架」上 */
-.shelf-row__board {
-  margin-top: 20px;
-  height: 15px;
-  border-radius: 8px 8px 7px 7px;
-  position: relative;
-  background: linear-gradient(180deg, rgba(206, 179, 140, 0.82) 0%, rgba(186, 156, 117, 0.68) 100%);
-  box-shadow: 0 14px 22px rgba(96, 90, 70, 0.16);
-}
-
-/* 架板受光的前沿 */
-.shelf-row__board::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 3px;
-  border-radius: 8px 8px 0 0;
-  background: rgba(255, 250, 238, 0.55);
+  flex-direction: column;
+  gap: 5px;
 }
 
 .book-card__title {
@@ -632,7 +517,6 @@
 }
 
 .book-card__author {
-  margin-top: 2px;
   font-size: 12px;
   color: var(--text-muted);
   white-space: nowrap;
@@ -640,14 +524,14 @@
   text-overflow: ellipsis;
 }
 
-/* 弱化数据：极小的状态行 + 发丝级进度线 */
 .book-card__meta {
-  font-size: 11px;
+  font-size: 11.5px;
   color: var(--text-muted);
-  opacity: 0.82;
+  opacity: 0.85;
 }
 
 .book-card__foot {
+  margin-top: 6px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -655,8 +539,8 @@
 
 .book-card__foot .progress {
   flex: 1;
-  height: 3px;
-  background: rgba(228, 228, 216, 0.9);
+  height: 5px;
+  background: var(--progress-track);
 }
 
 .book-card__pct {
@@ -672,16 +556,7 @@
   font-size: 14px;
 }
 
-/* ---------- 封面渐变色号 ---------- */
-
-.cover[data-cover="1"] { background: var(--cover-1); }
-.cover[data-cover="2"] { background: var(--cover-2); }
-.cover[data-cover="3"] { background: var(--cover-3); }
-.cover[data-cover="4"] { background: var(--cover-4); }
-.cover[data-cover="5"] { background: var(--cover-5); }
-.cover[data-cover="6"] { background: var(--cover-6); }
-
-/* ---------- 今日书签 ---------- */
+/* ---------- 今日书签：句子卡片 ---------- */
 
 .bookmark-grid {
   display: grid;
@@ -690,7 +565,7 @@
 }
 
 .bookmark-card {
-  background: rgba(255, 253, 247, 0.62);
+  background: var(--card);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-soft);
   padding: 24px 28px;
@@ -708,7 +583,7 @@
 .bookmark-card__icon {
   width: 38px;
   height: 38px;
-  border-radius: 11px;
+  border-radius: 12px;
   background: var(--accent-soft);
   color: var(--accent-text);
   display: grid;
@@ -722,19 +597,19 @@
 
 .bookmark-card__quote {
   font-family: var(--font-serif);
-  font-size: 16.5px;
+  font-size: 16px;
   line-height: 1.9;
   color: var(--text);
 }
 
 .bookmark-card__quote::before {
   content: "「";
-  color: var(--accent);
+  color: var(--primary);
 }
 
 .bookmark-card__quote::after {
   content: "」";
-  color: var(--accent);
+  color: var(--primary);
 }
 
 .bookmark-card__foot {
@@ -755,63 +630,280 @@
   opacity: 0.75;
 }
 
-/* ---------- 响应式 ---------- */
+/* ---------- 设置面板：主题切换 ---------- */
 
+.settings-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(40, 30, 18, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.settings-overlay.is-open {
+  display: flex;
+}
+
+.settings-card {
+  width: min(640px, 100%);
+  max-height: 86vh;
+  overflow-y: auto;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-hover);
+  padding: 24px 28px 28px;
+}
+
+.settings-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.settings-title {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--text);
+}
+
+.settings-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: var(--text-muted);
+  font-size: 14px;
+  display: grid;
+  place-items: center;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.settings-close:hover {
+  background: var(--primary-soft);
+  color: var(--primary-soft-text);
+}
+
+.settings-sub {
+  margin-top: 4px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.theme-grid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.theme-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.theme-tile:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+}
+
+.theme-tile.is-active {
+  border-color: var(--primary);
+  box-shadow: 0 4px 14px var(--primary-glow);
+}
+
+.theme-tile__swatch {
+  width: 100%;
+  height: 44px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.theme-tile__name {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.theme-tile__desc {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+@media (max-width: 600px) {
+  .theme-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ---------- 响应式（与 layout.css 共用断点体系：1100 / 900 / 600 / 400） ---------- */
+
+/* ≤1100：平板横屏——书架 3 列，统计 2×2 */
 @media (max-width: 1100px) {
+  .shelf-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+}
 
-  .stat-card:nth-child(3) {
-    border-left: none;
-  }
-
+/* ≤900：平板竖屏/手机——Hero 恢复卡片壳并纵排（文上手记下场景），单列内容，书架 2 列 */
+@media (max-width: 900px) {
   .hero {
-    grid-template-columns: 1fr;
+    background: var(--hero-panel);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
     min-height: 0;
+    display: flex;
+    flex-direction: column;
   }
 
   .hero__text {
-    padding: 36px;
+    max-width: none;
+    padding: 32px 24px 8px;
+  }
+
+  /* 手记卡从绝对定位改为随流，贴在文字与场景之间 */
+  .today-note {
+    position: static;
+    width: auto;
+    margin: 8px 20px 16px;
+    transform: rotate(0.6deg);
   }
 
   .hero__scene {
-    height: 220px;
+    display: block;
+    position: relative;
+    min-height: 0;
+    height: clamp(200px, 42vw, 300px);
   }
 
+  /* 纵排时羽化改为上下融合 */
   .hero__scene::before {
-    background: linear-gradient(0deg, rgba(237, 234, 218, 0) 60%, rgba(237, 234, 218, 0.35) 100%);
+    background: linear-gradient(0deg, rgba(247, 237, 216, 0) 55%, rgba(247, 237, 216, 0.5) 100%);
   }
 
   .continue-wrap {
     grid-template-columns: 1fr;
   }
 
-  .cat-index {
+  .shelf-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
-}
 
-@media (max-width: 680px) {
-  .stats-grid,
   .bookmark-grid {
     grid-template-columns: 1fr;
   }
+}
 
-  .shelf-grid {
-    grid-template-columns: repeat(2, 1fr);
+/* ≤600：小屏手机——分类横滑（内部滚动，不撑破页面），统计紧凑化 */
+@media (max-width: 600px) {
+  .cat-index {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 4px;
+    /* 边缘渐隐提示可横滑 */
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 12px, #000 calc(100% - 12px), transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 12px, #000 calc(100% - 12px), transparent 100%);
   }
 
-  .cat-index {
-    grid-template-columns: 1fr;
+  .cat-index::-webkit-scrollbar {
+    display: none;
+  }
+
+  .cat-index__item {
+    flex-shrink: 0;
+    padding: 7px 14px;
+  }
+
+  .stat-card {
+    padding: 14px 16px;
+    gap: 11px;
+  }
+
+  .stat-card__icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 11px;
+  }
+
+  .stat-card__icon svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .stat-card__num {
+    font-size: 19px;
+  }
+
+  .stat-card__label {
+    font-size: 11.5px;
+  }
+
+  .hero__actions .btn {
+    flex: 1;
   }
 
   .continue-featured {
-    flex-direction: column;
+    padding: 18px;
+    gap: 16px;
   }
 
   .continue-featured .cover {
-    width: 100%;
-    height: 180px;
+    width: 104px;
+    height: 148px;
+  }
+
+  .continue-featured__title {
+    font-size: 18px;
+  }
+
+  .section-title {
+    font-size: 19px;
+  }
+
+  .book-card__body {
+    padding: 12px 13px 13px;
+  }
+
+  .book-card__title {
+    font-size: 14px;
+  }
+}
+
+/* ≤400：超窄屏——书架保持 2 列但间距收紧，卡片仍可读 */
+@media (max-width: 400px) {
+  .shelf-grid {
+    gap: 12px;
+  }
+
+  .stats-grid {
+    gap: 12px;
+  }
+
+  .hero__text {
+    padding: 24px 18px 20px;
   }
 }

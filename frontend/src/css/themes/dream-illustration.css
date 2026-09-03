@@ -1,0 +1,124 @@
+/* ============================================================
+   主题 06：插画梦境风（dream-illustration）★ 主推主题
+   星空 · 提灯 · 全屏沉浸插画 —— 紫罗兰 + 星空蓝 + 暖黄光
+   ------------------------------------------------------------
+   特殊之处：环境插画不是右上角局部，而是【整个页面的背景】。
+   .env-art 在此主题下切换为 fixed 全屏模式（覆盖 ≤900px 的隐藏规则），
+   内容卡片改为半透明深紫蒙版 + backdrop blur，浮在梦境之上。
+   ============================================================ */
+
+[data-theme="dream-illustration"] {
+  color-scheme: dark;
+
+  /* ---------- core：紫罗兰 + 星空蓝 + 灯火金 ---------- */
+  --color-bg:           #241E45;
+  --color-bg-top:       #2E2657;
+  --color-bg-mid:       #241E45;
+  --color-bg-deep:      #1B1638;
+  --color-card:         rgba(46, 39, 92, 0.82);   /* 半透明深紫蒙版 */
+  --color-primary:      #9B8AE8;                  /* 梦紫 */
+  --color-primary-2:    #8674D8;
+  --color-primary-soft: rgba(155, 138, 232, 0.18);
+  --color-accent:       #F2C879;                  /* 提灯金 */
+  --color-accent-soft:  rgba(242, 200, 121, 0.16);
+  --color-text:         #EDE9F7;
+  --color-text-2:       #B8AED4;
+  --color-border:       rgba(255, 255, 255, 0.14);
+  --color-on-primary:   #1E1A3C;
+  --color-primary-soft-text: #CBBFF5;
+  --color-accent-text:  #F2C879;
+
+  --color-nav-bg:  rgba(42, 35, 80, 0.78);
+  --color-side-bg: rgba(42, 35, 80, 0.62);
+
+  /* 手记卡：梦境便签 */
+  --color-note-paper: rgba(52, 44, 99, 0.9);
+  --color-note-line:  rgba(242, 200, 121, 0.3);
+  --color-note-text:  #E9E2F7;
+
+  /* 表面细节 */
+  --color-search-bg:      rgba(52, 44, 99, 0.85);
+  --color-note-chip:      rgba(255, 255, 255, 0.08);
+  --color-hover-veil:     rgba(255, 255, 255, 0.07);
+  --color-avatar:         linear-gradient(135deg, #6B5CB7, #4A3D8F);
+  --color-progress-track: rgba(255, 255, 255, 0.16);
+  --color-tape:           rgba(242, 200, 121, 0.3);
+  --color-primary-glow:   rgba(155, 138, 232, 0.35);
+  --color-primary-soft-hover: rgba(155, 138, 232, 0.28);
+  --color-focus-ring:     rgba(155, 138, 232, 0.22);
+
+  /* 书封兜底渐变（梦色书脊） */
+  --color-cover-1: linear-gradient(150deg, #5A4D9E 0%, #3D3375 100%);
+  --color-cover-2: linear-gradient(150deg, #7A5FA0 0%, #554078 100%);
+  --color-cover-3: linear-gradient(150deg, #4A5DA8 0%, #324178 100%);
+  --color-cover-4: linear-gradient(150deg, #8A6A9E 0%, #604878 100%);
+  --color-cover-5: linear-gradient(150deg, #4E7A8A 0%, #355560 100%);
+  --color-cover-6: linear-gradient(150deg, #6A5AAA 0%, #473B7A 100%);
+
+  /* 圆角 / 阴影 / 字体 */
+  --radius-xl: 20px; --radius-lg: 16px; --radius-md: 14px; --radius-sm: 10px;
+  --shadow-soft:  0 4px 20px rgba(10, 6, 30, 0.4);
+  --shadow-hover: 0 14px 34px rgba(10, 6, 30, 0.5);
+  --shadow-cover: 0 8px 24px rgba(10, 6, 30, 0.45);
+  --font-serif: "Noto Serif SC", "Songti SC", "STSong", "SimSun", Georgia, serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+                "Microsoft YaHei", "Noto Sans SC", "Segoe UI", sans-serif;
+
+  /* Hero（移动端卡片壳） */
+  --hero-panel: linear-gradient(105deg, rgba(52, 44, 99, 0.85) 0%, rgba(42, 35, 80, 0.9) 58%, rgba(33, 27, 66, 0.92) 100%);
+  --hero-fade:  linear-gradient(90deg, rgba(42, 35, 80, 0.9) 0%, rgba(42, 35, 80, 0.45) 16%, rgba(42, 35, 80, 0) 42%);
+
+  /* 星尘纹理（亮 speck，像纸上落了的星光） */
+  --asset-paper-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.95 0 0 0 0 0.92 0 0 0 0 1 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+
+  /* ---------- env：月光笼罩整页 ---------- */
+  --env-wall:        linear-gradient(180deg, #2E2657 0%, #241E45 40%, #1E1840 75%, #1B1638 100%);
+  --env-art-glow:    radial-gradient(70% 55% at 72% 10%, rgba(214, 205, 255, 0.22), rgba(214, 205, 255, 0) 60%);
+  --env-window-glow: rgba(214, 205, 255, 0.0);
+  --env-shelf-ink:   #120E2A;
+  --env-shelf-alpha: 0.2;
+  --env-floor:       rgba(12, 8, 30, 0.0);
+  --env-plant:       #5A6B8A;
+  --env-pot:         #7A6248;
+
+  /* ---------- asset ---------- */
+  --asset-hero: url("/assets/themes/dream-illustration/hero.png");
+  /* 梦境主题：全景即全屏插画本身（hero 与 env 同图） */
+  --asset-env: url("/assets/themes/dream-illustration/hero.png");
+}
+
+/* ============================================================
+   梦境主题专属布局模式：环境插画 = 整个页面的背景
+   （特异性 [data-theme]+class > layout.css 的 .env-art / 媒体查询隐藏）
+   ============================================================ */
+
+[data-theme="dream-illustration"] .env-art {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;                 /* 覆盖 ≤900px 的 display:none */
+  opacity: 1;
+  background-size: cover;
+  background-position: center 20%;
+  -webkit-mask-image: none;       /* 全屏无需羽化 */
+  mask-image: none;
+}
+
+/* 半透明卡片浮在梦境上：加 backdrop blur 保证可读性 */
+[data-theme="dream-illustration"] .top-nav__inner,
+[data-theme="dream-illustration"] .side-nav,
+[data-theme="dream-illustration"] .stat-card,
+[data-theme="dream-illustration"] .book-card,
+[data-theme="dream-illustration"] .continue-featured,
+[data-theme="dream-illustration"] .continue-list,
+[data-theme="dream-illustration"] .bookmark-card,
+[data-theme="dream-illustration"] .today-note {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* 书卡实体化：梦境里书卡是"发光的窗"，不透明度略高保证阅读 */
+[data-theme="dream-illustration"] .book-card {
+  background: rgba(46, 39, 92, 0.88);
+}

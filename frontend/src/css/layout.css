@@ -1,213 +1,139 @@
 /* ============================================================
-   数字书房 · 布局（房间氛围层 / 顶部导航 / 左侧导航 / 页面骨架 / 页脚）
+   数字书房 · 布局系统 —— 响应式骨架（与主题无关）
+   ------------------------------------------------------------
+   空间模型：
+   - 内容骨架 = min(94vw, 1880px)：随视口自然生长/收缩，绝不固定宽
+   - 桌面：Nav 208px 家具侧栏 │ Main 拿走全部剩余空间
+   - 平板（≤1100）：Nav 收窄，书架 3 列
+   - 手机（≤900）：Nav 转横向导航条，Hero 纵排，书架 2 列
+   - 断点体系：1100 / 900 / 600 / 400（见 variables.css 注释）
+   - 防横向滚动：所有可横滑区域用内部 overflow-x:auto，
+     body 用 overflow-x:clip 兜底（不破坏 sticky）
    ============================================================ */
 
-/* ---------- 房间环境层：整个页面是一间连续的书房 ----------
-   空间脚本（HANDOFF §13）：光从左上光窗进入、向右下衰减；
-   右侧深处书墙是全页唯一暗部；地板承接光斑与极淡暮色反光。
-   全部颜色来自 variables.css 的 --room-* 变量组。 */
+/* ---------- 全局防横滚守卫 ---------- */
+body {
+  overflow-x: clip;     /* clip 不像 hidden 那样破坏 position:sticky */
+  max-width: 100vw;
+}
 
-.room {
-  position: fixed;
-  inset: 0;
+img, svg, video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ---------- 环境插画层：贯穿页顶的全宽房间场景 ----------
+   全景图四角环绕（左上垂叶 / 左下盆栽 / 右侧主场景 / 右下蕨叶），
+   顶栏与侧栏是浮在房间里的半透明面板，背景延伸到它们后方——
+   整个页面是一间连续的书房，而不是“右边贴了一张图”。
+   绝对定位随文档滚动（非 fixed）；底缘 mask 羽化收进纸面；
+   插画与光晕全部来自主题令牌，换主题即换房间。 */
+.env-art {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: min(88vh, 920px);
   z-index: 0;
   pointer-events: none;
-  overflow: hidden;
-  /* 墙面横向光梯度：左亮暖（受光）→ 右暗冷（背光，雾灰绿），纵深由光建立 */
-  background: linear-gradient(94deg,
-    var(--room-wall-lit) 0%,
-    var(--room-wall-mid) 42%,
-    var(--room-wall-shade) 100%);
+  background-image: var(--env-art-glow), var(--asset-env);
+  background-size: cover, cover;
+  /* 重心右上：让右上方主场景/顶叶更完整；左侧仍露出垂叶/盆栽边缘 */
+  background-position: right top, right top;
+  background-repeat: no-repeat;
+  /* 整体不透明度提高，让左侧元素（垂叶/盆栽）更实在 */
+  opacity: 1;
+  /* 只羽化底缘：上/左/右保持贴边，让四角植物“长在”页面边缘 */
+  -webkit-mask-image: linear-gradient(180deg, #000 52%, rgba(0, 0, 0, 0.55) 76%, rgba(0, 0, 0, 0) 97%);
+  mask-image: linear-gradient(180deg, #000 52%, rgba(0, 0, 0, 0.55) 76%, rgba(0, 0, 0, 0) 97%);
 }
 
-/* 顶部天光：房间上方的空气略亮，向下渐隐 */
-.room::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 16vh;
-  background: linear-gradient(180deg, var(--room-sky-glow), var(--room-sky-glow-0));
-  pointer-events: none;
-}
-
-/* 从光窗斜入、落向右下的午后光带：与光窗、地板光斑同一条光轴 */
-.room__light {
-  position: absolute;
-  top: 40px;
-  left: max(60px, calc(50% - 660px));
-  width: 46vw;
-  height: 118vh;
-  background: linear-gradient(104deg, var(--room-light-warm) 0%, var(--room-light-warm-0) 58%);
-  transform: skewX(12deg);
-}
-
-/* 左墙的窗：光轴的来源，部分出屏表示房间在画面外继续延伸 */
-.room__window {
-  position: absolute;
-  top: 104px;
-  left: max(-40px, calc(50% - 748px));
-  width: 176px;
-  height: 246px;
-  border-radius: 14px 14px 10px 10px;
-  /* 不带窗棂的柔和光窗：像阳光洒在墙上；透过半透明侧栏透出光晕 */
-  background: var(--room-window-glass);
-  box-shadow: 0 0 80px var(--room-window-glow);
-  opacity: 0.9;
-}
-
-/* 窗框的极淡暗示 */
-.room__window::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  box-shadow: inset 0 0 0 5px var(--room-window-frame-soft);
-}
-
-/* 窗台与窗台小盆栽 */
-.room__sill {
-  position: absolute;
-  left: -12px;
-  right: -12px;
-  bottom: -7px;
-  height: 8px;
-  border-radius: 3px;
-  background: var(--room-window-frame);
-}
-
-.room__sill-plant {
-  position: absolute;
-  bottom: 0;
-  left: 20px;
-  width: 52px;
-}
-
-.room__sill-plant .leaf { fill: var(--room-plant); }
-.room__sill-plant .pot  { fill: var(--room-pot); }
-
-/* 右墙深处书墙：全页唯一暗部（雾蓝灰），左缘羽化融入背光墙面 */
-.room__shelf {
-  position: absolute;
-  top: 150px;
-  right: calc(50% - 655px);
-  width: 300px;
-  color: var(--room-far-shelf-ink);
-  opacity: var(--room-far-shelf);
-  -webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #000 34%);
-  mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #000 34%);
-}
-
-/* 地板：房间的地面，页面底部收束到「地」；
-   左段承接光窗斜落的光斑，右段带极淡暮色反光（克制到几乎察觉不到） */
-.room__floor {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 13vh;
-  background:
-    linear-gradient(104deg, var(--room-floor-glow) 0%, var(--room-floor-glow-0) 44%),
-    linear-gradient(280deg, var(--room-dusk) 0%, var(--room-dusk-0) 36%),
-    var(--room-floor-wood);
-}
-
-.room__floor::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 2px;
-  background: var(--room-floor-line);
-}
-
-/* 内容区下方的一块地毯 */
-.room__rug {
-  position: absolute;
-  left: 50%;
-  bottom: -7vh;
-  transform: translateX(-50%);
-  width: 70vw;
-  height: 19vh;
-  border-radius: 50%;
-  background: radial-gradient(closest-side, var(--room-rug), var(--room-rug-0));
-}
-
-/* 小屏下隐藏窗与书架，保留光线与地板 */
-@media (max-width: 1280px) {
-  .room__window,
-  .room__shelf {
-    display: none;
-  }
-}
-
-/* 内容层盖在环境层之上 */
-.top-nav,
-.app,
-.site-footer {
-  position: relative;
-  z-index: 1;
-}
+/* ---------- 顶部导航：不是卡片，是纸面上的一行 ----------
+   无圆角/无阴影/无可见底板；吸顶滚动时用主题色轻纱 + 毛玻璃保证可读 */
 
 .top-nav {
   position: sticky;
   top: 0;
   z-index: 50;
-  /* 半透明：不切断房间的空气 */
-  background: var(--room-veil);
+  background: transparent;
 }
 
 .top-nav__inner {
-  max-width: var(--page-max);
+  width: min(var(--page-gutter), var(--page-max));
   margin: 0 auto;
-  padding: 14px 36px 8px;
+  padding: 18px 4px 14px;
   display: flex;
   align-items: center;
   gap: 24px;
+  /* 彻底去卡片感：无底色、无毛玻璃、无框——导航元素直接浮在房间背景上 */
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
 }
 
+/* 品牌：📚 书房 / Demian Library */
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 9px;
   font-family: var(--font-serif);
-  font-size: 19px;
+  font-size: 18px;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   color: var(--text);
   flex-shrink: 0;
 }
 
 .brand__mark {
-  width: 35px;
-  height: 35px;
+  width: 34px;
+  height: 34px;
+  /* logo 圆底色太像「组件」，改透明 + 细描边 */
   border-radius: 11px;
-  background: var(--primary-soft);
+  background: transparent;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-border) 60%, transparent);
   display: grid;
   place-items: center;
-  font-size: 17px;
+  font-size: 16px;
 }
 
-/* 搜索框：小而不显眼，不是视觉中心 */
+.brand__sub {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  padding-left: 9px;
+  border-left: 1px solid var(--border);
+}
+
+/* 搜索框：去掉胶囊底色和边框，只保留 placeholder 文字与放大镜图标 */
 .search {
-  flex: 0 1 auto;
-  width: 260px;
+  flex: 0 1 420px;
+  min-width: 0;
   margin-left: auto;
   display: flex;
   align-items: center;
   gap: 8px;
   background: transparent;
-  border: 1px solid var(--border);
-  border-radius: 11px;
-  padding: 7px 12px;
-  transition: border-color 0.2s ease, background 0.2s ease;
+  border: none;
+  border-radius: 0;
+  padding: 8px 8px;
+  transition: background 0.2s ease;
+}
+
+.search:hover {
+  background: color-mix(in srgb, var(--color-card) 40%, transparent);
+  border-radius: 999px;
 }
 
 .search:focus-within {
-  background: var(--card);
-  border-color: var(--primary);
+  background: color-mix(in srgb, var(--color-card) 55%, transparent);
+  border-radius: 999px;
+  box-shadow: none;
 }
 
 .search svg {
@@ -232,75 +158,91 @@
   color: var(--text-muted);
 }
 
-/* 右侧操作区 */
+/* 右侧操作区：铃铛 / 设置 / 头像 */
 .top-nav__actions {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   flex-shrink: 0;
 }
 
 .icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 7px 12px;
-  border-radius: 11px;
-  font-size: 13px;
-  letter-spacing: 0.02em;
-  color: var(--text-muted);
-  transition: background 0.2s ease, color 0.2s ease;
+  justify-content: center;
+  color: var(--text);
+  background: transparent;
+  transition: color 0.2s ease, background 0.2s ease;
 }
 
 .icon-btn:hover {
-  background: rgba(231, 239, 225, 0.6);
-  color: var(--text);
+  background: color-mix(in srgb, var(--color-card) 50%, transparent);
+  color: var(--primary);
 }
 
 .icon-btn svg {
-  width: 16px;
-  height: 16px;
+  width: 17px;
+  height: 17px;
 }
 
-/* ---------- 主体骨架 ---------- */
+.top-nav__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--avatar-grad);
+  display: grid;
+  place-items: center;
+  font-size: 17px;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+}
+
+/* ---------- 主体骨架：Nav + Main，流式宽度 ---------- */
 
 .app {
-  max-width: var(--page-max);
-  margin: 0 auto;
-  padding: 8px 36px 0;
+  width: min(var(--page-gutter), var(--page-max));
+  margin: 24px auto 0;
   display: grid;
-  grid-template-columns: var(--sidebar-w) 1fr;
-  gap: 56px;
+  grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
+  gap: var(--nav-gap);
   align-items: start;
 }
 
-/* ---------- 左侧导航：书房的一面墙，而非后台 Sidebar ---------- */
+/* ---------- 左侧 Nav：书房里的一件家具（桌面态） ---------- */
 
 .side-nav {
   position: sticky;
-  top: 76px;
-  padding: 16px 10px;
-  /* 不是白色盒子，而是墙上被光照亮的一块：去掉投影、降低底色，融入墙面 */
-  background: var(--room-plate);
-  border-radius: 20px;
-  box-shadow: none;
+  top: 96px;
+  padding: 20px 14px;
+  /* 侧栏更透：让环境层（左上垂叶 / 左下盆栽）从底板透过来，左侧不显空 */
+  background: color-mix(in srgb, var(--side-bg) 70%, transparent);
+  backdrop-filter: blur(14px) saturate(1.1);
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
 }
+
+/* 「书房」铭牌已移除：品牌只在顶栏左上角出现一次，侧栏直接从「首页」开始 */
 
 .side-nav ul {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .side-nav__item {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 11px;
   width: 100%;
   min-height: 46px;
-  padding: 0 16px;
+  padding: 0 14px;
   border-radius: 12px;
-  font-size: 15.5px;
+  font-size: 14.5px;
   font-weight: 400;
   letter-spacing: 0.05em;
   color: var(--text-muted);
@@ -317,96 +259,129 @@
 
 .side-nav__item:hover {
   color: var(--text);
+  background: var(--hover-veil);
 }
 
-/* 选中态：非常柔和的浅绿 */
+/* 选中态：暖奶油底 + 棕橙字 + 左侧书签条（像夹在目录里的丝带） */
 .side-nav__item.is-active {
-  background: rgba(231, 239, 225, 0.72);
+  background: var(--primary-soft);
   color: var(--primary-soft-text);
-  font-weight: 500;
+  font-weight: 600;
 }
 
-/* 目录分组：极淡的发丝分隔线，不用边框感；分组间呼吸更足 */
+.side-nav__item.is-active::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 20px;
+  border-radius: 2px;
+  background: var(--primary);
+}
+
+/* 极淡发丝分隔线 */
 .side-nav__divider {
   height: 1px;
-  margin: 14px 16px;
+  margin: 10px 14px;
   background: var(--border);
-  opacity: 0.75;
+  opacity: 0.8;
 }
 
-/* 分组小标题 */
+/* 分组小标题：「我的分类」 */
 .side-nav__label {
-  padding: 8px 16px 4px;
+  padding: 10px 16px 4px;
   font-size: 11.5px;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   color: var(--text-muted);
-  opacity: 0.85;
 }
 
-/* 「我的分类」索引项：衬线名字更像书房目录，而非筛选器 */
+/* 分类索引项：衬线名字，像书房目录而非筛选器 */
 .side-nav__item--cat {
-  min-height: 42px;
-  font-size: 15px;
-  color: var(--text-muted);
-}
-
-.side-nav__item--cat svg {
-  width: 17px;
-  height: 17px;
+  min-height: 40px;
+  font-size: 13.5px;
 }
 
 .side-nav__item--cat span:not(.side-nav__count) {
   font-family: var(--font-serif);
-  letter-spacing: 0.07em;
+  letter-spacing: 0.06em;
 }
 
 .side-nav__count {
   margin-left: auto;
   font-size: 11.5px;
   color: var(--text-muted);
-  opacity: 0.9;
 }
 
-/* ---------- 主内容区 ---------- */
+/* 底部名言：书房里的一句话 */
+.side-nav__quote {
+  margin: 14px 10px 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-serif);
+  font-size: 12.5px;
+  line-height: 2;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* 底部小盆栽：属于这个空间的绿植（令牌取色） */
+.side-nav__plant {
+  display: block;
+  width: 56px;
+  margin: 10px auto 2px;
+}
+
+/* 盆栽取色跟随主题环境令牌 */
+.side-nav__plant .leaf { fill: var(--env-plant); }
+.side-nav__plant .pot  { fill: var(--env-pot); }
+
+/* ---------- 主内容区：填满剩余空间，无二次限宽 ---------- */
 
 .page {
   min-width: 0;
-  padding-bottom: 28px;
+  width: 100%;
+  padding-bottom: 32px;
   display: flex;
   flex-direction: column;
-  gap: 50px;
+  gap: 40px;
 }
 
-/* 锚点滚动时避开吸顶导航 */
 .page > .section {
-  scroll-margin-top: 76px;
+  scroll-margin-top: 96px;
+  min-width: 0;
 }
 
 .section {
   display: flex;
   flex-direction: column;
   gap: 18px;
+  min-width: 0;
 }
 
 /* ---------- 页脚 ---------- */
 
 .site-footer {
-  border-top: 1px solid var(--border);
-  margin-top: 16px;
-  padding: 32px 36px 40px;
+  width: min(var(--page-gutter), var(--page-max));
+  margin: 8px auto 0;
+  padding: 24px 36px 36px;
   text-align: center;
 }
 
 .site-footer__motto {
   font-family: var(--font-serif);
-  font-size: 15px;
+  font-size: 14px;
+  letter-spacing: 0.05em;
   color: var(--text-muted);
 }
 
 .site-footer__links {
-  margin-top: 12px;
+  margin-top: 10px;
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 28px;
   font-size: 13px;
 }
@@ -420,20 +395,169 @@
   color: var(--primary);
 }
 
-/* ---------- 响应式 ---------- */
+/* ============================================================
+   响应式断点体系
+   ============================================================ */
 
-@media (max-width: 900px) {
-  .app {
-    grid-template-columns: 1fr;
-    padding: 10px 20px 0;
+/* ---------- ≤1100px：平板横屏 / 小桌面 ----------
+   Nav 保持侧栏但收窄；间距压缩；Main 依然拿走剩余全部空间 */
+@media (max-width: 1100px) {
+  :root {
+    --sidebar-w: 224px;
+    --nav-gap: 24px;
+  }
+
+  .env-art {
+    height: min(80vh, 720px);
   }
 
   .top-nav__inner {
-    padding: 16px 20px 12px;
     gap: 16px;
+    padding-left: 12px;
+    padding-right: 12px;
   }
 
-  .icon-btn span {
+  .page {
+    gap: 32px;
+  }
+
+  .side-nav__item {
+    min-height: 42px;
+    font-size: 14px;
+    padding: 0 12px;
+  }
+}
+
+/* ---------- ≤900px：平板竖屏 / 手机 ----------
+   Nav 转横向导航条（内部横滑，不撑破页面）；单列布局 */
+@media (max-width: 900px) {
+  /* 环境插画让位给内容：移动端改由 Hero 内部场景承担插画 */
+  .env-art {
+    display: none;
+  }
+
+  .app {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  /* 侧栏 → 横向导航条；分类组/名言/盆栽在横条形态下隐藏 */
+  .side-nav {
+    position: static;
+    padding: 10px 12px;
+    border-radius: var(--radius-md);
+  }
+
+  .side-nav__divider,
+  .side-nav__label,
+  .side-nav__item--cat,
+  .side-nav__quote,
+  .side-nav__plant {
+    display: none;
+  }
+
+  .side-nav ul {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 6px;
+    overflow-x: auto;
+    /* 内部横滑：滚动条隐藏但可滑动，绝不把页面撑宽 */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .side-nav ul::-webkit-scrollbar {
+    display: none;
+  }
+
+  .side-nav__item {
+    width: auto;
+    flex-shrink: 0;
+    min-height: 38px;
+    padding: 0 14px;
+    font-size: 13.5px;
+    border-radius: 999px;
+  }
+
+  /* 书签条在横条形态下改为底部短条 */
+  .side-nav__item.is-active::before {
+    left: 50%;
+    top: auto;
+    bottom: 3px;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 3px;
+  }
+
+  .brand__sub {
+    display: none;
+  }
+
+  .page {
+    gap: 28px;
+  }
+
+  .page > .section {
+    scroll-margin-top: 80px;
+  }
+}
+
+/* ---------- ≤600px：小屏手机 ---------- */
+@media (max-width: 600px) {
+  .top-nav__inner {
+    gap: 8px;
+    padding: 12px 4px 8px;
+  }
+
+  .brand {
+    font-size: 16px;
+    gap: 6px;
+  }
+
+  .brand__mark {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+
+  /* 搜索框吃掉剩余空间；快捷键提示与铃铛隐藏 */
+  .search {
+    flex: 1 1 auto;
+    padding: 7px 12px;
+  }
+
+  .search kbd {
+    display: none;
+  }
+
+  .icon-btn[title="通知"] {
+    display: none;
+  }
+
+  .top-nav__avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 15px;
+  }
+
+  .icon-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .site-footer {
+    padding: 20px 16px 28px;
+  }
+}
+
+/* ---------- ≤400px：超窄屏 ---------- */
+@media (max-width: 400px) {
+  .brand span:not(.brand__mark) {
+    display: none;   /* 只留 📚 图标 */
+  }
+
+  .icon-btn[title="设置"] {
     display: none;
   }
 }

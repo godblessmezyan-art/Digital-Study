@@ -21,9 +21,11 @@ body {
   font-size: 15px;
   line-height: 1.75;
   color: var(--text);
-  /* 墙面底色由 .room 环境层提供，这里只叠加纸张噪点 */
-  background-color: #F3F0E1;
-  background-image: var(--paper-texture);
+  /* 单一页面背景：主题提供纸张渐变（--env-wall）+ 纸纹（--asset-paper-texture），
+     所有 section 共享这一张“纸”，不各自铺背景色 */
+  background-color: var(--color-bg);
+  background-image: var(--asset-paper-texture), var(--env-wall);
+  background-attachment: fixed, fixed;
   min-height: 100vh;
 }
 
@@ -128,7 +130,7 @@ ol {
 .btn-primary {
   background: var(--primary);
   color: var(--text-on-primary);
-  box-shadow: 0 4px 14px rgba(124, 155, 114, 0.25);
+  box-shadow: 0 4px 14px var(--primary-glow);
 }
 
 .btn-primary:hover {
@@ -141,10 +143,10 @@ ol {
 }
 
 .btn-soft:hover {
-  background: #DCE8D3;
+  background: var(--primary-soft-hover);
 }
 
-/* 幽灵按钮：极轻，用于次要操作，避免胶囊堆叠 */
+/* 幽灵按钮：极轻，用于次要操作 */
 .btn-ghost {
   background: transparent;
   color: var(--primary-soft-text);
@@ -153,7 +155,7 @@ ol {
 }
 
 .btn-ghost:hover {
-  background: rgba(231, 239, 225, 0.6);
+  background: var(--primary-soft);
 }
 
 .btn-sm {
@@ -196,26 +198,6 @@ kbd {
   white-space: nowrap;
 }
 
-/* ---------- 响应式 ---------- */
-
-@media (max-width: 1100px) {
-  .page-grid-4 {
-    grid-template-columns: repeat(3, 1fr) !important;
-  }
-}
-
-@media (max-width: 900px) {
-  .side-nav {
-    display: none;
-  }
-
-  .page-grid-4 {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-}
-
-@media (max-width: 560px) {
-  .page-grid-4 {
-    grid-template-columns: 1fr !important;
-  }
-}
+/* ---------- 响应式 ----------
+   书架列数等布局断点统一由 layout.css / components.css 承担，
+   此处不再保留 .page-grid-4 的 !important 覆盖（会与新断点体系冲突） */

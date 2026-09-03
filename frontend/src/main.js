@@ -20,11 +20,11 @@ renderSideNav(document.getElementById('side-nav'));
 
 const page = document.getElementById('page');
 [
-  renderHero(),             // 1. Hero 书房空间
-  renderContinueReading(),  // 2. 继续阅读（首页主角）
-  renderBookshelf(),        // 3. 我的书架（书优先）
-  renderCategories(),       // 4. 书架分类（轻量索引）
-  renderStats(),            // 5. 我的阅读生活（数据靠后）
+  renderHero(),             // 1. Hero 欢迎区（视觉中心）
+  renderStats(),            // 2. 数据统计（我的阅读生活）
+  renderCategories(),       // 3. 分类标签
+  renderContinueReading(),  // 4. 继续阅读
+  renderBookshelf(),        // 5. 书籍卡片（我的书架）
   renderBookmarks(),        // 6. 今日书签
 ].forEach((node) => page.appendChild(node));
 

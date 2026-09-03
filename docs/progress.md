@@ -11,6 +11,12 @@
 | Phase 1.5 | 环境层 v2（整张书房场景图统一背景） | ✅ 完成（备份于 tag `v2-final-archive` → `9576065`） |
 | 版本/部署 | main 分支发布 + `deploy.ps1` 一键发布 | ✅ 完成（提交 `af69c3f`） |
 | 结构重构 | 迁移为 my-website/ monorepo（frontend Vite + backend Express 骨架） | 🔄 进行中（分支 `refactor/my-website`） |
+| 设计图 02 | 温暖手绘风重构：删除 .room 环境层（棕色地板穿透书卡的根源）；容器 min(94vw,1500px)；侧栏 232→120px；暖橙色板（#D88A3D/#5A4632/#F8F0DF）；Hero 左文右图（hero-warm.png）；cover.js 水彩书封接线；书架改平铺 4 列完整卡片 | ✅ 完成（本地，截图 .shots/w02-*.png，待验收发布） |
+| Phase 2A | 响应式骨架 + 主题架构分离：themes/warm-study.css（裸色值/env/asset 令牌唯一来源）+ variables.css 纯语义层；容器 min(94vw,1880px)；Nav 208px 家具化（书签条选中态）；断点 1100/900/600/400；移动端 Nav 横条/Hero 纵排/Stats 2×2/分类横滑/书架 2 列；7 档视口 puppeteer 实测零横向溢出（.shots/p2b-*.png）；hero.png AI 水印已修补 | ✅ 完成（本地，待用户验收） |
+| Phase 3 | 氛围感升级：① Nav 208→264px「书房侧厅」（我的分类真实数据联动书架 + 底部名言 + 盆栽，书单→书摘）；② 插画拆出 Hero 卡片壳，改为 body 级 .env-art 环境层通铺右上区域（mask 羽化融入纸面，绝对定位随文档滚动不横穿内容，≤900px 隐藏）；③ Hero 去 Banner 化（文字直接落在纸面）；④ 右上角今日书签手记卡（胶带+仿旧纸，数据取 bookmarks[0] 不新增）；移动端手记卡随流嵌入 Hero 卡片 | ✅ 完成（7 档视口零溢出，截图 p2b-*.png） |
+| 六主题系统 | ① 六套主题令牌 CSS（themes/fresh-natural、warm-study、night-library、minimal-white、retro-paper、dream-illustration）+ 每主题专属插画（全部 AI 水印已检测修补）；② dream-illustration 为全屏背景模式（.env-art 转 fixed 铺满视口，含移动端，卡片加 backdrop-blur）；③ 设置面板 settings.js（顶栏 ⚙ / 侧栏「设置」打开，6 张主题卡即时切换，setTheme 广播 study:theme 事件，Hero 图随主题换）；④ 表面细节全令牌化（search-bg/tape/progress-track/avatar 等），无裸色值残留 | ✅ 完成（六主题 1920 + dream 390 实测零溢出，截图 th-*.png） |
+| 顶栏去卡片化 | 用户反馈「顶部和左侧两个明显卡片」：顶栏去圆角/阴影/底板，改为纸面一行（吸顶时 color-mix 主题色轻纱+毛玻璃保可读）；「书房」品牌只保留顶栏左上角一处，侧栏铭牌删除，菜单直接从「首页」开始 | ✅ 完成（1920/390 截图复验） |
+| 全宽环境层 | 用户反馈「背景只在右侧死板无空间感，应延伸到顶栏和侧栏后方」：每主题新生成 2560×1080 四角环绕全景图（左上垂叶/左下盆栽/右侧主场景/右下蕨叶，中心留白，全部水印已修补），新增 --asset-env 令牌；.env-art 改全宽 min(88vh,920px)，仅底缘羽化，上/左/右贴边；顶栏与侧栏半透明面板浮在房间上（dream 主题仍为 fixed 全屏模式） | ✅ 完成（六主题 1920 零溢出，左上角裁剪确认背景延伸到 Nav/侧栏后方，截图 th-*.png） |
 | Phase 2 | Hero 场景重做（SVG 替换 hero.png） | 待办 |
 | Phase 3 | 中景统一与区块缝合 / Nav 融入 | 待办 |
 | Phase 4 | 前景归位与减法（只删不加） | 待办 |
@@ -38,12 +44,12 @@
 
 ## 4. 遗留技术债（建议顺序处理）
 
-1. **`hero.png` 2.4MB 未压缩**：上线前压缩或转 WebP。
-2. **`.room` 环境层色值硬编码**（`layout.css` 约 10 处 + Hero 前景 SVG）：换主题会露馅，做第二主题前收敛为 `--room-*` 变量。
-3. **孤儿 CSS**：`.note-slip`、`.recent-row*` 等（组件已删，样式残留）。
-4. **纯装饰性交互未实现**（原型阶段刻意为之，别当 bug 修）：搜索框无过滤、侧栏「读书笔记/收藏/设置」无 target、按钮无 click。
-5. **侧栏选中态语义混用**：主目录项与分类项共用 `.is-active` 但互斥规则不同；加路由/多页时需重构为两组独立状态。
-6. **超宽屏（>1920px）未校准**：`.room__window` / `.room__shelf` 定位需复查。
+1. **`hero-warm.png` 约 2.5MB 未压缩**：上线前压缩或转 WebP（已复制到 themes/warm-study/hero.png 并修补水印，旧 hero.png / hero-warm.png 可删）。
+2. **`.room` 环境层已删除**（设计图 02 轮）：`--room-*` 变量组一并移除，handoff.md 中相关描述已过时；若未来想恢复“连续房间”需重新设计。
+3. **孤儿 CSS**：`.note-slip`、`.recent-row*`、`.desk-note`（便签已随设计图 02 移除）、`.shelf-row__board`（架板已移除）等样式残留待清理。
+4. **纯装饰性交互未实现**（原型阶段刻意为之，别当 bug 修）：搜索框无过滤、侧栏「书单/时间线/设置」无 target、Hero 按钮无 click。
+5. **侧栏选中态**：主目录项共用 `.is-active`，加路由/多页时需重构。
+6. **暗色模式无入口**：theme.js 机制保留（night 主题变量已预置暖棕色版），但顶栏未放切换按钮。
 7. **部署脚本与 Vite 联动**：deploy.ps1 已改为构建后上传 `frontend/dist/`，若前端资源结构再变需同步维护。
 
 ## 5. 下一轮开工自检清单
