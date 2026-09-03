@@ -25,8 +25,8 @@
   --color-primary-soft-text: #5C7A53;
   --color-accent-text:  #A98A45;
 
-  --color-nav-bg:  rgba(255, 253, 247, 0.88);
-  --color-side-bg: rgba(250, 249, 240, 0.78);
+  --color-nav-bg:  rgba(255, 253, 247, 0.97);
+  --color-side-bg: rgba(251, 250, 242, 0.96);
 
   /* 手记卡 */
   --color-note-paper: #F4F6EA;
@@ -81,4 +81,707 @@
   /* ---------- asset ---------- */
   --asset-hero: url("/assets/themes/fresh-natural/hero.png");
   --asset-env: url("/assets/themes/fresh-natural/env.png");
+}
+
+/* ============================================================
+   01 主题专属：书籍区域「私人书房化」
+   目标：书是摆在纸面上的一本书，不是数据卡片
+   全部限定在 [data-theme="fresh-natural"] 下，02~06 主题不受影响；
+   不改 DOM / 数据 / 交互，只重塑视觉
+   ============================================================ */
+
+/* ---------- 继续阅读区：四本平等的书架排列 ----------
+   卡片就是 .book-card，下方「我的书架」的书化规则自动生效，
+   两个区域共用同一套视觉语言，不再需要单独的纸底/大卡样式 */
+[data-theme="fresh-natural"] .continue-grid {
+  gap: 30px 26px;
+  padding: 6px 2px 0;
+}
+
+/* ---------- 书封本体：纸质感 + 书脊感 ----------
+   封面现在是手绘 PNG 插画（不透明），书脊/纸纹改用 ::after 叠加层，
+   左缘深色窄带渐亮（合页线）极轻，不遮挡画面 */
+[data-theme="fresh-natural"] .book-card .cover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(90deg,
+      rgba(74, 90, 72, 0.2) 0%, rgba(74, 90, 72, 0.07) 7px,
+      rgba(255, 255, 255, 0.16) 12px, rgba(255, 255, 255, 0) 24px),
+    var(--asset-paper-texture);
+}
+
+/* ---------- 书架区：书直接立在页面纸面上，不再是白色矩形阵列 ---------- */
+/* 架板暗示：极淡的暖色底晕只在书架页底部，书像放在被光照亮的木板上 */
+[data-theme="fresh-natural"] .shelf-page {
+  background:
+    radial-gradient(120% 30% at 50% 106%, rgba(217, 200, 164, 0.16), rgba(217, 200, 164, 0) 70%);
+  border-radius: 18px;
+}
+
+[data-theme="fresh-natural"] .shelf-grid {
+  gap: 30px 26px;
+  padding: 6px 2px 0;
+  /* 顶部对齐：封面顶缘成一条安静的主线，高矮差/微倾落在底缘，
+     像一排书被随手放齐——有秩序但不机械（不用 end，避免长书名行错位） */
+  align-items: start;
+}
+
+/* 卡壳消失：无底色/无阴影/不裁剪，封面成为主体，文字落在纸面上 */
+[data-theme="fresh-natural"] .book-card {
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+
+/* hover 安静：只轻抬 2px + 落地影加深，无放大无发光 */
+[data-theme="fresh-natural"] .book-card:hover {
+  transform: translateY(-2px);
+  box-shadow: none;
+}
+
+/* 封面：接近真实书比例，底对齐、微高低错落、±0.8° 微倾（6 循环） */
+[data-theme="fresh-natural"] .book-card .cover {
+  height: clamp(168px, 12.5vw, 240px);
+  aspect-ratio: auto;
+  border-radius: 3px 6px 6px 3px;
+  border: 1px solid rgba(120, 110, 90, 0.1);
+  border-left: none;
+  box-shadow:
+    2px 3px 0 rgba(232, 230, 214, 0.9),
+    0 8px 18px rgba(96, 90, 70, 0.13);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+[data-theme="fresh-natural"] .book-card:hover .cover {
+  box-shadow:
+    2px 3px 0 rgba(232, 230, 214, 0.95),
+    0 12px 24px rgba(96, 90, 70, 0.17);
+}
+
+/* 错落：封面高度微差（底对齐），微倾方向交替，整体仍保持网格秩序（书架页+首页继续阅读共用） */
+[data-theme="fresh-natural"] .shelf-grid .book-card .cover,
+[data-theme="fresh-natural"] .continue-grid .book-card .cover { transform-origin: bottom center; }
+[data-theme="fresh-natural"] .shelf-grid .book-card:nth-child(6n+1) .cover,
+[data-theme="fresh-natural"] .continue-grid .book-card:nth-child(4n+1) .cover { height: calc(clamp(168px, 12.5vw, 240px) * 0.97); transform: rotate(-0.8deg); }
+[data-theme="fresh-natural"] .shelf-grid .book-card:nth-child(6n+2) .cover,
+[data-theme="fresh-natural"] .continue-grid .book-card:nth-child(4n+2) .cover { transform: rotate(0.5deg); }
+[data-theme="fresh-natural"] .shelf-grid .book-card:nth-child(6n+3) .cover,
+[data-theme="fresh-natural"] .continue-grid .book-card:nth-child(4n+3) .cover { height: calc(clamp(168px, 12.5vw, 240px) * 1.02); transform: rotate(-0.4deg); }
+[data-theme="fresh-natural"] .shelf-grid .book-card:nth-child(6n+4) .cover,
+[data-theme="fresh-natural"] .continue-grid .book-card:nth-child(4n+4) .cover { transform: rotate(0.8deg); }
+[data-theme="fresh-natural"] .shelf-grid .book-card:nth-child(6n+5) .cover { height: calc(clamp(168px, 12.5vw, 240px) * 0.99); transform: rotate(-0.6deg); }
+[data-theme="fresh-natural"] .shelf-grid .book-card:nth-child(6n+6) .cover { height: calc(clamp(168px, 12.5vw, 240px) * 1.01); transform: rotate(0.3deg); }
+[data-theme="fresh-natural"] .shelf-grid .book-card:hover .cover,
+[data-theme="fresh-natural"] .continue-grid .book-card:hover .cover { transform: rotate(0deg) translateY(-2px); }
+
+/* 信息区：书名 > 作者 > 进度，无卡片内边距，像书下方的藏书票 */
+[data-theme="fresh-natural"] .book-card__body {
+  padding: 12px 3px 0;
+  gap: 4px;
+}
+
+/* 书名：衬线加重，长书名允许两行（卡片高度因此产生自然微差） */
+[data-theme="fresh-natural"] .book-card__title {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+[data-theme="fresh-natural"] .book-card__author {
+  font-size: 12px;
+  color: var(--color-text-2);
+}
+
+/* 进度行弱化：meta 更轻，进度条变细绿线 */
+[data-theme="fresh-natural"] .book-card__meta {
+  font-size: 11px;
+  opacity: 0.68;
+}
+
+[data-theme="fresh-natural"] .book-card__foot {
+  margin-top: 8px;
+}
+
+[data-theme="fresh-natural"] .book-card__foot .progress {
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(220, 228, 210, 0.65);
+}
+
+[data-theme="fresh-natural"] .book-card__foot .progress.is-done > i {
+  background: var(--color-accent);
+}
+
+[data-theme="fresh-natural"] .book-card__pct {
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--color-primary-soft-text);
+}
+
+/* 空书架文案坐在纸面上 */
+[data-theme="fresh-natural"] .shelf-empty {
+  color: var(--color-text-2);
+}
+
+/* 窄屏时封面高度收窄，错落比例不变 */
+@media (max-width: 600px) {
+  [data-theme="fresh-natural"] .book-card .cover {
+    height: clamp(150px, 38vw, 190px);
+  }
+  [data-theme="fresh-natural"] .shelf-grid .book-card:nth-child(6n+1) .cover { height: calc(clamp(150px, 38vw, 190px) * 0.97); }
+  [data-theme="fresh-natural"] .shelf-grid .book-card:nth-child(6n+3) .cover { height: calc(clamp(150px, 38vw, 190px) * 1.02); }
+  [data-theme="fresh-natural"] .shelf-grid .book-card:nth-child(6n+5) .cover { height: calc(clamp(150px, 38vw, 190px) * 0.99); }
+  [data-theme="fresh-natural"] .shelf-grid .book-card:nth-child(6n+6) .cover { height: calc(clamp(150px, 38vw, 190px) * 1.01); }
+  [data-theme="fresh-natural"] .shelf-grid {
+    gap: 22px 16px;
+  }
+  [data-theme="fresh-natural"] .continue-grid {
+    gap: 22px 16px;
+  }
+}
+
+/* ============================================================
+   01 主题精修（第二轮反馈）：严格对齐 01 设计图
+   背景=氛围层 / UI=信息层 / 书=内容主体
+   全部限定在 [data-theme="fresh-natural"] 下，02~06 不受影响
+   ============================================================ */
+
+/* ---- 壁纸：局部面纱 + 降对比，不靠整体 opacity 一刀切 ----
+   壁纸已改 fixed 全屏（不随滚动变），01 下比全局更轻：
+   中央纸色雾化让 UI 区退后，四角植物/窗光保持可见 */
+[data-theme="fresh-natural"] .env-art {
+  opacity: 0.18;
+  filter: contrast(0.86) saturate(0.82) brightness(1.05);
+  background-image:
+    linear-gradient(90deg,
+      rgba(246, 245, 236, 0) 0%,
+      rgba(246, 245, 236, 0.5) 15%,
+      rgba(246, 245, 236, 0.64) 40%,
+      rgba(246, 245, 236, 0.64) 62%,
+      rgba(246, 245, 236, 0.38) 84%,
+      rgba(246, 245, 236, 0) 100%),
+    var(--env-art-glow),
+    var(--asset-env);
+  /* 三层背景对应三个定位（面纱/glow/壁纸），不能继承全局的两值简写 */
+  background-position: center top, right top, right top;
+}
+
+/* ---- Hero 场景：通铺无框（01 不做任何画框/描边/投影）----
+   图就是书房本身，纸色从左缘/底缘渐入把它溶进页面；
+   只把取景略偏下，让桌面与窗光落在 Hero 中部 */
+[data-theme="fresh-natural"] .hero__scene img {
+  object-position: center 66%;
+}
+
+/* ---- 手记：书房里的小便签，不是 Dashboard Widget ---- */
+[data-theme="fresh-natural"] .today-note {
+  width: 252px;
+  padding: 13px 15px 11px;
+  background-image: var(--asset-paper-texture);
+  border-color: rgba(110, 130, 100, 0.18);
+  border-radius: 3px 10px 10px 10px;
+  /* 半透明纸需要一点投影才能从场景里分层，但仍很轻 */
+  box-shadow: 0 5px 14px -6px rgba(96, 90, 70, 0.16);
+  transform: rotate(1deg);
+}
+
+[data-theme="fresh-natural"] .today-note__tag {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-size: 11px;
+  opacity: 0.85;
+}
+
+[data-theme="fresh-natural"] .today-note__quote {
+  margin-top: 7px;
+  font-size: 12.5px;
+  line-height: 1.9;
+}
+
+[data-theme="fresh-natural"] .today-note__src {
+  margin-top: 5px;
+  font-size: 10.5px;
+}
+
+/* ---- 统计：轻量信息栏，不是 SaaS 卡片 ----
+   去壳：无底色/无阴影，数字为主角，底部发丝线收住 */
+[data-theme="fresh-natural"] .stat-card {
+  background: transparent;
+  box-shadow: none;
+  border-bottom: 1px solid rgba(160, 172, 148, 0.28);
+  border-radius: 0;
+  padding: 4px 6px 12px;
+  gap: 12px;
+}
+
+[data-theme="fresh-natural"] .stat-card:hover {
+  transform: none;
+  box-shadow: none;
+  border-bottom-color: rgba(124, 155, 114, 0.5);
+}
+
+[data-theme="fresh-natural"] .stat-card__icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+}
+
+[data-theme="fresh-natural"] .stat-card__icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+[data-theme="fresh-natural"] .stat-card__num {
+  font-size: 25px;
+}
+
+[data-theme="fresh-natural"] .stat-card__label {
+  font-size: 11.5px;
+  opacity: 0.75;
+}
+
+/* ---- 分类：书房目录索引，不是后台 Filter Bar ----
+   无边框无阴影，静止态几乎融进纸面，选中态淡绿底+深绿字 */
+[data-theme="fresh-natural"] .cat-index__item {
+  border: none;
+  background: rgba(231, 239, 225, 0.5);
+  padding: 4px 13px;
+}
+
+[data-theme="fresh-natural"] .cat-index__item:hover {
+  border-color: transparent;
+  background: rgba(220, 232, 211, 0.8);
+  transform: none;
+}
+
+[data-theme="fresh-natural"] .cat-index__item.is-active {
+  background: var(--color-primary-soft);
+  border-color: transparent;
+  box-shadow: none;
+}
+
+[data-theme="fresh-natural"] .cat-index__item.is-active .cat-index__name {
+  color: var(--color-primary-soft-text);
+  font-weight: 600;
+}
+
+[data-theme="fresh-natural"] .cat-index__item.is-active .cat-index__count,
+[data-theme="fresh-natural"] .cat-index__item.is-active .cat-index__icon {
+  color: var(--color-primary-soft-text);
+  opacity: 0.75;
+}
+
+/* ---- Sidebar：融入环境的轻半透面板，不是白色大矩形 ----
+   78% 纸底 + 轻 blur：导航文字仍清晰，但环境从后面透过来 */
+[data-theme="fresh-natural"] .side-nav {
+  background: color-mix(in srgb, var(--color-side-bg) 78%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 2px 12px rgba(96, 90, 70, 0.05);
+}
+
+/* ---- Header：搜索框收窄，工具栏更轻 ---- */
+[data-theme="fresh-natural"] .search {
+  flex-basis: 280px;
+  background: color-mix(in srgb, var(--color-card) 72%, transparent);
+}
+
+/* ---- 书卡：收藏小心形 + hover 克制 ---- */
+[data-theme="fresh-natural"] .book-card__heart {
+  margin-left: auto;
+  border: none;
+  background: transparent;
+  padding: 0 2px;
+  font-size: 13px;
+  line-height: 1;
+  color: rgba(137, 145, 135, 0.55);
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+[data-theme="fresh-natural"] .book-card__heart:hover {
+  color: var(--color-primary);
+  transform: scale(1.15);
+}
+
+[data-theme="fresh-natural"] .book-card__heart.is-on {
+  color: #C98A8A;   /* 点亮：柔和蔷薇红，不高饱和 */
+}
+
+[data-theme="fresh-natural"] .book-card:hover {
+  transform: translateY(-2px);
+  box-shadow: none;
+}
+
+/* ============================================================
+   01 主题第三轮精修：从「书籍管理 UI」到「有空间感的数字书房」
+   实体书 / 设计感错落 / 纸质目录侧栏 / 克制色彩
+   同特异性后置覆盖前两轮值，不动 DOM
+   （壁纸/背景规则已上提到第四轮统一维护，此处不再重复）
+   ============================================================ */
+
+/* ---- Sidebar：书房里的半透明纸质目录 ---- */
+[data-theme="fresh-natural"] .side-nav {
+  background-image: var(--asset-paper-texture);
+  background-color: color-mix(in srgb, var(--color-side-bg) 62%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: none;
+  box-shadow: 0 1px 8px rgba(96, 90, 70, 0.04);
+}
+
+[data-theme="fresh-natural"] .side-nav__item.is-active {
+  background: rgba(231, 239, 225, 0.75);
+  box-shadow: none;
+}
+
+/* ---- 书封：真实开本比例 + 桌面投影 ---- */
+[data-theme="fresh-natural"] .book-card .cover {
+  border-radius: 2px 5px 5px 2px;
+  border: none;
+  /* 投影模拟书放在桌上：柔和大范围低透明度、轻微向下，暖灰绿而非黑 */
+  box-shadow:
+    2px 3px 0 rgba(236, 233, 216, 0.9),
+    0 16px 30px -12px rgba(86, 92, 74, 0.26),
+    0 5px 12px rgba(86, 92, 74, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 纸张层次：切口侧三道发丝页缘，像合上的书页 */
+[data-theme="fresh-natural"] .book-card .cover::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  right: 0;
+  width: 5px;
+  background: repeating-linear-gradient(180deg,
+    rgba(255, 253, 246, 0.55) 0 1px,
+    rgba(255, 253, 246, 0) 1px 3px);
+  border-right: 1px solid rgba(120, 110, 90, 0.14);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ---- 错落：设计感不等高（非随机）+ 轻微旋转/上下偏移 ----
+   信息区定高后底部对齐（end）：书立在架板上，高矮差落在顶部 */
+[data-theme="fresh-natural"] .continue-grid {
+  align-items: end;
+  gap: 34px 28px;
+}
+
+[data-theme="fresh-natural"] .shelf-grid {
+  align-items: end;
+}
+
+[data-theme="fresh-natural"] .continue-grid .book-card:nth-child(4n+1) .cover { height: 240px; transform: translateY(6px) rotate(-0.5deg); }
+[data-theme="fresh-natural"] .continue-grid .book-card:nth-child(4n+2) .cover { height: 270px; transform: translateY(-4px) rotate(0.4deg); }
+[data-theme="fresh-natural"] .continue-grid .book-card:nth-child(4n+3) .cover { height: 252px; transform: translateY(9px) rotate(-0.3deg); }
+[data-theme="fresh-natural"] .continue-grid .book-card:nth-child(4n+4) .cover { height: 284px; transform: translateY(-2px) rotate(0.5deg); }
+
+[data-theme="fresh-natural"] .shelf-grid .book-card:nth-child(6n+1) .cover { height: 240px; transform: translateY(5px) rotate(-0.5deg); }
+[data-theme="fresh-natural"] .shelf-grid .book-card:nth-child(6n+2) .cover { height: 264px; transform: translateY(-3px) rotate(0.4deg); }
+[data-theme="fresh-natural"] .shelf-grid .book-card:nth-child(6n+3) .cover { height: 250px; transform: translateY(8px) rotate(-0.3deg); }
+[data-theme="fresh-natural"] .shelf-grid .book-card:nth-child(6n+4) .cover { height: 280px; transform: translateY(-2px) rotate(0.5deg); }
+[data-theme="fresh-natural"] .shelf-grid .book-card:nth-child(6n+5) .cover { height: 246px; transform: translateY(4px) rotate(-0.4deg); }
+[data-theme="fresh-natural"] .shelf-grid .book-card:nth-child(6n+6) .cover { height: 272px; transform: translateY(-3px) rotate(0.3deg); }
+
+/* hover：书被轻轻拿起——浮起减少（影子变浅），不放大不发光 */
+[data-theme="fresh-natural"] .book-card:hover .cover {
+  transform: translateY(0) rotate(0deg) !important;
+  box-shadow:
+    2px 3px 0 rgba(236, 233, 216, 0.95),
+    0 20px 36px -12px rgba(86, 92, 74, 0.3),
+    0 6px 14px rgba(86, 92, 74, 0.1);
+}
+
+/* ---- 书籍信息：藏书票式，不是后台字段列表 ---- */
+/* 章节 meta 退出卡面（降低信息密度；数据仍在，仅 01 主题隐藏） */
+[data-theme="fresh-natural"] .book-card__meta {
+  display: none;
+}
+
+/* 信息区定高：底部对齐时封面顶缘高矮差清晰稳定 */
+[data-theme="fresh-natural"] .book-card__body {
+  min-height: 76px;
+  padding: 12px 3px 0;
+  gap: 3px;
+}
+
+[data-theme="fresh-natural"] .book-card__title {
+  font-size: 15.5px;
+  white-space: nowrap;
+  display: block;
+  -webkit-line-clamp: unset;
+}
+
+[data-theme="fresh-natural"] .book-card__foot {
+  margin-top: auto;
+  padding-top: 6px;
+  align-items: center;
+}
+
+/* 进度：更细更柔，不像后台进度组件 */
+[data-theme="fresh-natural"] .book-card__foot .progress {
+  height: 1.5px;
+  border-radius: 1px;
+  background: rgba(160, 172, 148, 0.3);
+}
+
+[data-theme="fresh-natural"] .book-card__foot .progress > i {
+  background: rgba(124, 155, 114, 0.75);
+}
+
+/* 百分比退为轻字；心形幽灵化（平时几乎不见，hover 显现） */
+[data-theme="fresh-natural"] .book-card__pct {
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+[data-theme="fresh-natural"] .book-card__heart {
+  font-size: 12px;
+  opacity: 0.35;
+}
+
+[data-theme="fresh-natural"] .book-card:hover .book-card__heart {
+  opacity: 0.8;
+}
+
+[data-theme="fresh-natural"] .book-card__heart.is-on {
+  opacity: 1;
+}
+
+/* ---- 色彩克制：主按钮降饱和去光晕，不像普通 Web App 的绿 ---- */
+[data-theme="fresh-natural"] .btn-primary {
+  background: color-mix(in srgb, var(--color-primary) 86%, #8A9184);
+  box-shadow: none;
+}
+
+[data-theme="fresh-natural"] .btn-primary:hover {
+  background: color-mix(in srgb, var(--color-primary) 92%, #8A9184);
+}
+
+/* ---- 窄屏：错落收敛为比例差，避免小屏拥挤 ---- */
+@media (max-width: 600px) {
+  [data-theme="fresh-natural"] .continue-grid .book-card:nth-child(4n+1) .cover,
+  [data-theme="fresh-natural"] .shelf-grid .book-card:nth-child(6n+1) .cover,
+  [data-theme="fresh-natural"] .shelf-grid .book-card:nth-child(6n+5) .cover { height: clamp(160px, 40vw, 200px); }
+  [data-theme="fresh-natural"] .continue-grid .book-card:nth-child(4n+2) .cover,
+  [data-theme="fresh-natural"] .shelf-grid .book-card:nth-child(6n+2) .cover,
+  [data-theme="fresh-natural"] .shelf-grid .book-card:nth-child(6n+6) .cover { height: calc(clamp(160px, 40vw, 200px) * 1.1); }
+  [data-theme="fresh-natural"] .continue-grid .book-card:nth-child(4n+3) .cover,
+  [data-theme="fresh-natural"] .shelf-grid .book-card:nth-child(6n+3) .cover { height: calc(clamp(160px, 40vw, 200px) * 1.03); }
+  [data-theme="fresh-natural"] .continue-grid .book-card:nth-child(4n+4) .cover,
+  [data-theme="fresh-natural"] .shelf-grid .book-card:nth-child(6n+4) .cover { height: calc(clamp(160px, 40vw, 200px) * 1.15); }
+}
+
+/* ============================================================
+   01 主题第四轮：消除最后的 Dashboard 残留 + 出版物气质
+   书签便签化 / 封面装饰框与题字区 / 统计注脚化 / Hero 文学排版
+   ============================================================ */
+
+/* ---- 今日书签：两张贴在纸上的便签，不是标准 Card ---- */
+[data-theme="fresh-natural"] .bookmark-grid {
+  gap: 26px;
+  align-items: start;
+}
+
+[data-theme="fresh-natural"] .bookmark-card {
+  position: relative;
+  background-color: var(--color-note-paper);
+  background-image: var(--asset-paper-texture);
+  border: 1px solid rgba(110, 130, 100, 0.16);
+  border-radius: 3px 12px 12px 12px;
+  box-shadow: 0 4px 12px rgba(96, 90, 70, 0.07);
+  padding: 20px 22px 15px;
+  gap: 10px;
+  transform: rotate(-0.7deg);
+}
+
+[data-theme="fresh-natural"] .bookmark-card:nth-child(2) {
+  transform: rotate(0.9deg);
+  margin-top: 10px;
+}
+
+[data-theme="fresh-natural"] .bookmark-card:hover {
+  transform: rotate(0deg) translateY(-2px);
+  box-shadow: 0 6px 16px rgba(96, 90, 70, 0.1);
+}
+
+/* 胶带：把便签贴在书房墙上（与 Hero 手记同语言） */
+[data-theme="fresh-natural"] .bookmark-card::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 26px;
+  width: 48px;
+  height: 15px;
+  transform: rotate(-2.5deg);
+  background: var(--color-tape);
+  border-radius: 2px;
+}
+
+/* 图标退为一枚小书签，不再是圆角色块 */
+[data-theme="fresh-natural"] .bookmark-card__icon {
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  background: transparent;
+  color: var(--color-primary);
+  opacity: 0.6;
+  display: inline-flex;
+}
+
+[data-theme="fresh-natural"] .bookmark-card__quote {
+  font-size: 15px;
+  line-height: 2;
+  color: var(--color-note-text);
+}
+
+[data-theme="fresh-natural"] .bookmark-card__quote::before,
+[data-theme="fresh-natural"] .bookmark-card__quote::after {
+  color: var(--color-primary);
+  opacity: 0.55;
+}
+
+[data-theme="fresh-natural"] .bookmark-card__foot {
+  font-size: 11.5px;
+  letter-spacing: 0.03em;
+  color: var(--color-text-2);
+  border-top: 1px dashed rgba(160, 172, 148, 0.35);
+  padding-top: 9px;
+}
+
+/* ---- 封面：出版物气质——装饰细框 + 底部题字留白区 ---- */
+/* 内框：距封面边 7px 的一圈发丝线，像真实书籍的装饰框 */
+[data-theme="fresh-natural"] .book-card .cover .cover__img {
+  outline: 1px solid rgba(255, 253, 246, 0.42);
+  outline-offset: -7px;
+}
+
+/* 题字留白：封面底部一段极淡纸色渐隐，像封面留给书名的位置；
+   同时重写 ::after（叠加层）保留书脊合页线与纸纹 */
+[data-theme="fresh-natural"] .book-card .cover::after {
+  background-image:
+    linear-gradient(0deg, rgba(250, 247, 237, 0.46) 0%, rgba(250, 247, 237, 0.14) 9%, rgba(250, 247, 237, 0) 17%),
+    linear-gradient(90deg,
+      rgba(74, 90, 72, 0.2) 0%, rgba(74, 90, 72, 0.07) 7px,
+      rgba(255, 255, 255, 0.16) 12px, rgba(255, 255, 255, 0) 24px),
+    var(--asset-paper-texture);
+}
+
+/* ---- 统计：彻底注脚化——四项收成一横排小字 ---- */
+[data-theme="fresh-natural"] .stats-grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  /* 列间靠 padding+竖线，行间留 4px 以防窄屏换行后挤在一起 */
+  gap: 4px 0;
+}
+
+[data-theme="fresh-natural"] .stat-card {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  border-bottom: none;
+  padding: 2px 14px;
+}
+
+/* 项之间用发丝竖线分隔，像一行手记里的数字 */
+[data-theme="fresh-natural"] .stat-card + .stat-card {
+  border-left: 1px solid rgba(160, 172, 148, 0.3);
+}
+
+[data-theme="fresh-natural"] .stat-card:hover {
+  border-bottom: none;
+}
+
+/* 图标退出：注脚不需要图标 */
+[data-theme="fresh-natural"] .stat-card__icon {
+  display: none;
+}
+
+/* 数字与标签同行内联（:last-child 避开已隐藏的图标 div，防止特异性反超） */
+[data-theme="fresh-natural"] .stat-card > div:last-child {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+[data-theme="fresh-natural"] .stat-card__num {
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--color-primary-soft-text);
+}
+
+[data-theme="fresh-natural"] .stat-card__num small {
+  font-size: 11.5px;
+  color: var(--color-text-2);
+}
+
+[data-theme="fresh-natural"] .stat-card__label {
+  font-size: 11.5px;
+  opacity: 0.7;
+}
+
+/* 统计区标题也退一号，不与书争视觉重心 */
+[data-theme="fresh-natural"] #sec-stats .section-title {
+  font-size: 17px;
+  opacity: 0.85;
+}
+
+/* ---- Hero：文学排版——大引号装饰 + 徐章去胶囊 ---- */
+[data-theme="fresh-natural"] .hero__title {
+  position: relative;
+}
+
+[data-theme="fresh-natural"] .hero__title::before {
+  content: "「";
+  position: absolute;
+  left: -26px;
+  top: -14px;
+  font-family: var(--font-serif);
+  font-size: 52px;
+  line-height: 1;
+  color: var(--color-primary);
+  opacity: 0.16;
+  pointer-events: none;
+}
+
+/* 徐章不再是胶囊按钮，而是一枚小小的藏书印 */
+[data-theme="fresh-natural"] .hero__badge {
+  background: transparent;
+  border: 1px solid rgba(124, 155, 114, 0.35);
+  border-radius: 3px;
+  padding: 3px 9px;
+  font-size: 11.5px;
+  letter-spacing: 0.18em;
+  color: var(--color-primary-soft-text);
+  opacity: 0.9;
+}
+
+/* 窄屏：引号与竖线分隔退让，避免拥挤 */
+@media (max-width: 600px) {
+  [data-theme="fresh-natural"] .hero__title::before {
+    display: none;
+  }
+
+  [data-theme="fresh-natural"] .stat-card {
+    padding: 2px 10px 2px 0;
+  }
+
+  [data-theme="fresh-natural"] .stat-card + .stat-card {
+    border-left: none;
+  }
 }

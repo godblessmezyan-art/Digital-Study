@@ -35,9 +35,9 @@
   --color-primary-soft-text: #96622C;
   --color-accent-text:  #5C7A53;
 
-  /* 导航/侧栏的半透明暖纸底 */
-  --color-nav-bg:  rgba(255, 252, 244, 0.88);
-  --color-side-bg: rgba(252, 247, 236, 0.82);
+  /* 导航/侧栏：接近不透明的暖纸底（边界清晰，背景插画不再透进 UI 造成「糊」） */
+  --color-nav-bg:  rgba(255, 252, 244, 0.97);
+  --color-side-bg: rgba(253, 248, 238, 0.96);
 
   /* 今日书签手记卡：仿旧纸张 + 细棕线框 */
   --color-note-paper: #F9F1DC;

@@ -22,31 +22,27 @@ img, svg, video {
   height: auto;
 }
 
-/* ---------- 环境插画层：贯穿页顶的全宽房间场景 ----------
-   全景图四角环绕（左上垂叶 / 左下盆栽 / 右侧主场景 / 右下蕨叶），
-   顶栏与侧栏是浮在房间里的半透明面板，背景延伸到它们后方——
-   整个页面是一间连续的书房，而不是“右边贴了一张图”。
-   绝对定位随文档滚动（非 fixed）；底缘 mask 羽化收进纸面；
-   插画与光晕全部来自主题令牌，换主题即换房间。 */
+/* ---------- 环境壁纸层：固定在视口的轻量底图 ----------
+   它是「壁纸」不是「插画」：fixed 不随滚动变化（避免背景跟着页面跑），
+   浓度极低、上下双缘羽化，只负责给纸面一点室内光影与四角植物；
+   Hero 自己的场景图（.hero__scene）才是页面主视觉。
+   插画与光晕全部来自主题令牌，换主题即换壁纸。 */
 .env-art {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  position: fixed;
+  inset: 0;
   width: 100%;
-  height: min(88vh, 920px);
+  height: 100%;
   z-index: 0;
   pointer-events: none;
   background-image: var(--env-art-glow), var(--asset-env);
   background-size: cover, cover;
-  /* 重心右上：让右上方主场景/顶叶更完整；左侧仍露出垂叶/盆栽边缘 */
-  background-position: right top, right top;
+  background-position: center top, right top;
   background-repeat: no-repeat;
-  /* 整体不透明度提高，让左侧元素（垂叶/盆栽）更实在 */
-  opacity: 1;
-  /* 只羽化底缘：上/左/右保持贴边，让四角植物“长在”页面边缘 */
-  -webkit-mask-image: linear-gradient(180deg, #000 52%, rgba(0, 0, 0, 0.55) 76%, rgba(0, 0, 0, 0) 97%);
-  mask-image: linear-gradient(180deg, #000 52%, rgba(0, 0, 0, 0.55) 76%, rgba(0, 0, 0, 0) 97%);
+  /* 壁纸轻量化：低不透明度 + 平缓衰减（底部保留 38%，
+     以免滚到页面下半部时背景突然变成纯纸） */
+  opacity: 0.26;
+  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.92) 0%, #000 26%, rgba(0, 0, 0, 0.72) 68%, rgba(0, 0, 0, 0.38) 100%);
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.92) 0%, #000 26%, rgba(0, 0, 0, 0.72) 68%, rgba(0, 0, 0, 0.38) 100%);
 }
 
 /* ---------- 顶部导航：不是卡片，是纸面上的一行 ----------
@@ -62,11 +58,11 @@ img, svg, video {
 .top-nav__inner {
   width: min(var(--page-gutter), var(--page-max));
   margin: 0 auto;
-  padding: 18px 4px 14px;
+  padding: 14px 4px 10px;
   display: flex;
   align-items: center;
-  gap: 24px;
-  /* 彻底去卡片感：无底色、无毛玻璃、无框——导航元素直接浮在房间背景上 */
+  gap: 20px;
+  /* 无底色无框：但元素本身（搜索胶囊）有清晰边界，避免松散 */
   background: transparent;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
@@ -110,30 +106,29 @@ img, svg, video {
   border-left: 1px solid var(--border);
 }
 
-/* 搜索框：去掉胶囊底色和边框，只保留 placeholder 文字与放大镜图标 */
+/* 搜索框：轻纸面胶囊——发丝边框+实心底，边界清楚但不卡不重 */
 .search {
-  flex: 0 1 420px;
+  flex: 0 1 380px;
   min-width: 0;
   margin-left: auto;
   display: flex;
   align-items: center;
   gap: 8px;
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  padding: 8px 8px;
-  transition: background 0.2s ease;
+  background: color-mix(in srgb, var(--color-card) 88%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 7px 16px;
+  transition: border-color 0.2s ease, background 0.2s ease;
 }
 
 .search:hover {
-  background: color-mix(in srgb, var(--color-card) 40%, transparent);
-  border-radius: 999px;
+  border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
 }
 
 .search:focus-within {
-  background: color-mix(in srgb, var(--color-card) 55%, transparent);
-  border-radius: 999px;
-  box-shadow: none;
+  background: var(--color-card);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
 .search svg {
@@ -209,20 +204,33 @@ img, svg, video {
   grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
   gap: var(--nav-gap);
   align-items: start;
+  /* 关键：明确抬到壁纸之上——定位元素（.env-art z-index:0）会绘制在
+     static 正常流内容之上，不给 z-index 就会出现“背景压住书卡”的发糊感 */
+  position: relative;
+  z-index: 1;
 }
 
 /* ---------- 左侧 Nav：书房里的一件家具（桌面态） ---------- */
 
 .side-nav {
   position: sticky;
-  top: 96px;
+  top: 84px;
   padding: 20px 14px;
-  /* 侧栏更透：让环境层（左上垂叶 / 左下盆栽）从底板透过来，左侧不显空 */
-  background: color-mix(in srgb, var(--side-bg) 70%, transparent);
-  backdrop-filter: blur(14px) saturate(1.1);
-  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+  /* 不透明纸面：边界清晰不糊，靠轻影+纸色融入环境而不是靠透明 */
+  background: var(--side-bg);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-soft);
+  /* 侧栏铁律：绝不内部滚动——条目已精简，兼容极端矮窗口也不出滚动条 */
+  max-height: calc(100vh - 104px);
+  overflow: hidden;
+}
+
+/* 矮窗口（笔记本/分屏）：藏掉纯装饰的名言与盆栽，保留导航功能项 */
+@media (max-height: 820px) {
+  .side-nav__quote,
+  .side-nav__plant {
+    display: none;
+  }
 }
 
 /* 「书房」铭牌已移除：品牌只在顶栏左上角出现一次，侧栏直接从「首页」开始 */
@@ -343,13 +351,28 @@ img, svg, video {
 .page {
   min-width: 0;
   width: 100%;
+  /* 稳定阅读宽度：宽屏下 Main 不被拉成长横幅，两侧由环境插画补氛围 */
+  max-width: 1080px;
+  margin-inline: auto;
   padding-bottom: 32px;
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 30px;
 }
 
-.page > .section {
+/* 双视图（hash 路由）：首页 / 书架页互斥显示 */
+.page > .view {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  min-width: 0;
+}
+
+.page > .view[hidden] {
+  display: none;
+}
+
+.page .section {
   scroll-margin-top: 96px;
   min-width: 0;
 }
@@ -357,8 +380,30 @@ img, svg, video {
 .section {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 14px;
   min-width: 0;
+}
+
+/* ---------- 书架页（#/shelf）：工具条 + 分类 + 全部书籍 ---------- */
+
+.shelf-page {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  min-width: 0;
+}
+
+.shelf-tools {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.shelf-tools .search--page {
+  flex: 0 1 320px;
+  margin-left: 0;
+  background: var(--card);
 }
 
 /* ---------- 页脚 ---------- */
@@ -368,6 +413,8 @@ img, svg, video {
   margin: 8px auto 0;
   padding: 24px 36px 36px;
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
 .site-footer__motto {
@@ -447,6 +494,9 @@ img, svg, video {
     position: static;
     padding: 10px 12px;
     border-radius: var(--radius-md);
+    /* 解除桌面态的不滚动钳制：横条形态靠 ul 内部横滑 */
+    max-height: none;
+    overflow: visible;
   }
 
   .side-nav__divider,
@@ -498,7 +548,11 @@ img, svg, video {
     gap: 28px;
   }
 
-  .page > .section {
+  .page > .view {
+    gap: 28px;
+  }
+
+  .page .section {
     scroll-margin-top: 80px;
   }
 }

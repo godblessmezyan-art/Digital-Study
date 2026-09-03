@@ -14,17 +14,20 @@
 
 .hero {
   position: relative;
-  min-height: 430px;
+  /* Hero = 一整片书房场景，不是「左文 + 右边一张画」：
+     无框、无圆角、无分栅，场景图通铺，文字直接落在光里 */
+  min-height: clamp(300px, 30vw, 400px);
 }
 
 .hero__text {
   position: relative;
   z-index: 2;
-  max-width: 640px;
-  padding: 56px 24px 48px 8px;
+  max-width: 540px;
+  padding: 44px 24px 44px 8px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-height: inherit;
 }
 
 .hero__badge {
@@ -41,33 +44,58 @@
 }
 
 .hero__title {
-  margin-top: 20px;
+  margin-top: 12px;
   font-family: var(--font-serif);
-  /* 流式字号：手机 26px ↔ 桌面 38px 自然生长 */
-  font-size: clamp(26px, 2.6vw, 38px);
+  /* 流式字号：手机 25px ↔ 桌面 32px */
+  font-size: clamp(25px, 2.2vw, 32px);
   font-weight: 700;
   letter-spacing: 0.05em;
-  line-height: 1.5;
+  line-height: 1.42;
   color: var(--text);
 }
 
 .hero__desc {
-  margin-top: 12px;
-  font-size: 15px;
+  margin-top: 8px;
+  font-size: 14.5px;
   letter-spacing: 0.04em;
   color: var(--text-muted);
 }
 
+/* 时辰问候：一句手写式的生活提醒（情绪细节） */
+.hero__greeting {
+  margin-top: 10px;
+  font-family: var(--font-serif);
+  font-size: 12.5px;
+  font-style: italic;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero__greeting::before {
+  content: "";
+  width: 18px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.45;
+  flex-shrink: 0;
+}
+
 .hero__actions {
-  margin-top: 28px;
+  margin-top: 16px;
   display: flex;
   gap: 12px;
 }
 
-/* 右侧场景：桌面端隐藏（插画已由 .env-art 环境层承担），
-   ≤0900px 时恢复为 Hero 卡片内的堆叠场景 */
+/* 场景图：通铺整个 Hero（absolute 铺满），没有任何边界——
+   它不是一幅画，而是书房本身；纸色从左缘与底缘渐入，把图溶进页面 */
 .hero__scene {
-  display: none;
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
 }
 
 .hero__scene img {
@@ -76,15 +104,31 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: center 62%;
 }
 
+/* 三缘羽化（左/顶/底）：消除矩形边界，让图从纸面里长出来；
+   左缘渐隐同时保证文字可读。全用主题令牌，暗色主题同样成立 */
 .hero__scene::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: var(--hero-fade);
+  background:
+    linear-gradient(90deg,
+      var(--bg) 0%,
+      color-mix(in srgb, var(--bg) 93%, transparent) 16%,
+      color-mix(in srgb, var(--bg) 58%, transparent) 36%,
+      color-mix(in srgb, var(--bg) 14%, transparent) 58%,
+      transparent 76%),
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--bg) 76%, transparent) 0%,
+      color-mix(in srgb, var(--bg) 20%, transparent) 12%,
+      transparent 30%),
+    linear-gradient(0deg,
+      color-mix(in srgb, var(--bg) 82%, transparent) 0%,
+      color-mix(in srgb, var(--bg) 24%, transparent) 14%,
+      transparent 34%);
   pointer-events: none;
 }
 
@@ -92,29 +136,34 @@
 
 .today-note {
   position: absolute;
-  top: 16px;
-  right: 32px;
+  /* 坐在场景右下角：像一张蒙在书房光影上的便签，不是浮起的白卡 */
+  top: auto;
+  bottom: 26px;
+  right: 30px;
   z-index: 3;
-  width: 300px;
-  background: var(--note-paper);
+  width: 272px;
+  background: color-mix(in srgb, var(--note-paper) 84%, transparent);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   border: 1px solid var(--note-line);
-  border-radius: 4px 14px 14px 14px;
-  box-shadow: 0 10px 26px rgba(122, 95, 58, 0.18);
-  padding: 16px 18px 13px;
-  transform: rotate(1.4deg);
+  border-radius: 3px 12px 12px 12px;
+  box-shadow: 0 6px 18px -8px color-mix(in srgb, var(--text) 34%, transparent);
+  padding: 14px 16px 12px;
+  transform: rotate(1.2deg);
 }
 
-/* 顶部一条胶带，把纸片“贴”在书房墙上 */
+/* 顶部一条胶带，把纸片“贴”在书房里（淡化，不做视觉焦点） */
 .today-note::before {
   content: "";
   position: absolute;
-  top: -9px;
+  top: -8px;
   left: 50%;
-  width: 54px;
-  height: 16px;
+  width: 48px;
+  height: 14px;
   transform: translateX(-50%) rotate(-2deg);
   background: var(--tape);
   border-radius: 3px;
+  opacity: 0.7;
 }
 
 .today-note__tag {
@@ -151,14 +200,14 @@
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  gap: 14px;
 }
 
 .stat-card {
   background: var(--card);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-soft);
-  padding: 18px 20px;
+  padding: 14px 18px;
   display: flex;
   align-items: center;
   gap: 14px;
@@ -230,24 +279,38 @@
   opacity: 0.9;
 }
 
-/* ---------- 书架分类：一排胶囊标签（active 暖橙） ---------- */
+/* ---------- 书架分类：紧凑筛选条，快速带过，把视觉重点留给书 ---------- */
+
+/* 分类区整体压缩：标题+计数同一行，小一号标题 */
+.section--compact {
+  gap: 10px;
+}
+
+.section--compact .section-title {
+  font-size: 18px;
+}
+
+.section--compact .section-sub {
+  margin-top: 0;
+  font-size: 12.5px;
+}
 
 .cat-index {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
 }
 
 .cat-index__item {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 999px;
-  padding: 8px 18px;
+  padding: 5px 14px;
   text-align: left;
-  box-shadow: var(--shadow-soft);
+  box-shadow: none;
   transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
@@ -257,10 +320,10 @@
 }
 
 .cat-index__icon {
-  width: 24px;
-  height: 24px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  background: var(--primary-soft);
+  background: transparent;
   color: var(--primary-soft-text);
   display: grid;
   place-items: center;
@@ -274,13 +337,13 @@
 
 .cat-index__name {
   font-family: var(--font-serif);
-  font-size: 14px;
+  font-size: 13px;
   letter-spacing: 0.04em;
   color: var(--text);
 }
 
 .cat-index__count {
-  font-size: 11.5px;
+  font-size: 11px;
   color: var(--text-muted);
 }
 
@@ -291,7 +354,7 @@
 }
 
 .cat-index__item.is-active .cat-index__icon {
-  background: rgba(255, 249, 238, 0.25);
+  background: transparent;
   color: var(--text-on-primary);
 }
 
@@ -309,12 +372,21 @@
   overflow: hidden;
 }
 
-/* 水彩场景 SVG 铺满封面容器 */
+/* 水彩场景 SVG 铺满封面容器（旧几何封面兜底） */
 .cover__art {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
+}
+
+/* 手绘插画封面：铺满容器，加载失败时 onerror 自移除露出渐变底色 */
+.cover__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .cover--sm {
@@ -332,139 +404,15 @@
 .cover[data-cover="5"] { background: var(--cover-5); }
 .cover[data-cover="6"] { background: var(--cover-6); }
 
-/* ---------- 继续阅读：暖白卡片，不再叠压 Hero ---------- */
+/* ---------- 继续阅读：四本平等的书架排列 ----------
+   不再是「左大卡 + 右窄列表」，视觉重量均衡；
+   卡片结构与 .book-card 同构，与下方书架形成同一套视觉语言 */
 
-.continue-wrap {
+.continue-grid {
   display: grid;
-  grid-template-columns: 7fr 5fr;
-  gap: 20px;
-  align-items: stretch;
-}
-
-.continue-featured {
-  position: relative;
-  background: var(--card);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-soft);
-  padding: 24px;
-  display: flex;
+  grid-template-columns: repeat(4, 1fr);
   gap: 24px;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.continue-featured:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-hover);
-}
-
-/* 正在读的书：水彩封面 + 轻微倾斜的实体感 */
-.continue-featured .cover {
-  width: 132px;
-  height: 186px;
-  flex-shrink: 0;
-  transform: rotate(-1deg);
-  box-shadow:
-    4px 5px 0 rgba(240, 230, 208, 0.95),
-    0 14px 26px rgba(122, 95, 58, 0.2);
-}
-
-.continue-featured__info {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.continue-featured__title {
-  font-family: var(--font-serif);
-  font-size: 21px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  line-height: 1.4;
-  color: var(--text);
-}
-
-.continue-featured__meta {
-  margin-top: 6px;
-  font-size: 13px;
-  color: var(--text-muted);
-}
-
-.continue-featured__progress {
-  margin-top: auto;
-  padding-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.continue-featured__pct {
-  font-size: 12.5px;
-  letter-spacing: 0.04em;
-  color: var(--text-muted);
-}
-
-.continue-featured__info .btn {
-  align-self: flex-start;
-}
-
-.continue-list {
-  background: var(--card);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-soft);
-  padding: 6px 20px;
-  display: flex;
-  flex-direction: column;
-}
-
-.continue-item {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 14px 2px;
-  min-width: 0;
-}
-
-.continue-item + .continue-item {
-  border-top: 1px solid var(--border);
-}
-
-.continue-item__info {
-  flex: 1;
-  min-width: 0;
-}
-
-.continue-item__title {
-  font-family: var(--font-serif);
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  color: var(--text);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.continue-item__meta {
-  margin-top: 3px;
-  font-size: 12px;
-  color: var(--text-muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.continue-item__go {
-  flex-shrink: 0;
-  font-size: 12.5px;
-  color: var(--primary);
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.continue-item__go:hover {
-  opacity: 0.7;
-  transform: translateX(3px);
+  align-items: start;
 }
 
 /* ---------- 我的书架：平铺 4 列卡片网格（设计图 02 §15/§16/§17） ---------- */
@@ -546,6 +494,27 @@
 .book-card__pct {
   font-size: 11px;
   color: var(--text-muted);
+}
+
+/* 收藏小心形（基础样式，01 主题内另有精修） */
+.book-card__heart {
+  margin-left: auto;
+  border: none;
+  background: transparent;
+  padding: 0 2px;
+  font-size: 13px;
+  line-height: 1;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.book-card__heart:hover {
+  color: var(--primary);
+}
+
+.book-card__heart.is-on {
+  color: var(--primary);
 }
 
 .shelf-empty {
@@ -779,6 +748,7 @@
 
   .hero__text {
     max-width: none;
+    min-height: 0;
     padding: 32px 24px 8px;
   }
 
@@ -793,17 +763,25 @@
   .hero__scene {
     display: block;
     position: relative;
+    inset: auto;          /* 取消桌面态的 absolute 铺满 */
     min-height: 0;
     height: clamp(200px, 42vw, 300px);
+    /* 已在 Hero 卡片壳内（壳自带圆角+overflow），不做双重边界 */
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
   }
 
-  /* 纵排时羽化改为上下融合 */
+  /* 纵排时改为顶部渐入纸色（场景图在文字下方，两者需要衔接） */
   .hero__scene::before {
-    background: linear-gradient(0deg, rgba(247, 237, 216, 0) 55%, rgba(247, 237, 216, 0.5) 100%);
+    background: linear-gradient(0deg,
+      transparent 52%,
+      color-mix(in srgb, var(--bg) 55%, transparent) 100%);
   }
 
-  .continue-wrap {
-    grid-template-columns: 1fr;
+  .continue-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
 
   .shelf-grid {
@@ -864,20 +842,6 @@
 
   .hero__actions .btn {
     flex: 1;
-  }
-
-  .continue-featured {
-    padding: 18px;
-    gap: 16px;
-  }
-
-  .continue-featured .cover {
-    width: 104px;
-    height: 148px;
-  }
-
-  .continue-featured__title {
-    font-size: 18px;
   }
 
   .section-title {

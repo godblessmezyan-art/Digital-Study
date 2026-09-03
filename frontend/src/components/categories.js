@@ -16,9 +16,11 @@ export function renderCategories() {
   `).join('');
 
   const el = h(`
-    <section class="section" id="sec-cats">
-      <h2 class="section-title">书架分类</h2>
-      <p class="section-sub" id="cat-sub">共 ${books.length} 本书籍 · 已读 ${books.filter((b) => b.progress >= 100).length} 本</p>
+    <section class="section section--compact" id="sec-cats">
+      <div class="section-head">
+        <h2 class="section-title">书架分类</h2>
+        <p class="section-sub" id="cat-sub">共 ${books.length} 本书籍 · 已读 ${books.filter((b) => b.progress >= 100).length} 本</p>
+      </div>
       <div class="cat-index">${items}</div>
     </section>
   `);

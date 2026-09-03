@@ -110,8 +110,6 @@
 [data-theme="dream-illustration"] .side-nav,
 [data-theme="dream-illustration"] .stat-card,
 [data-theme="dream-illustration"] .book-card,
-[data-theme="dream-illustration"] .continue-featured,
-[data-theme="dream-illustration"] .continue-list,
 [data-theme="dream-illustration"] .bookmark-card,
 [data-theme="dream-illustration"] .today-note {
   backdrop-filter: blur(12px);
@@ -121,4 +119,12 @@
 /* 书卡实体化：梦境里书卡是"发光的窗"，不透明度略高保证阅读 */
 [data-theme="dream-illustration"] .book-card {
   background: rgba(46, 39, 92, 0.88);
+}
+
+/* 梦境主题的全屏壁纸就是 hero.png 本身，桌面端不再重复铺一张场景图
+   （避免“图上图”），文字直接浮在全屏梦境上；≤900 纵排形态保持原样 */
+@media (min-width: 901px) {
+  [data-theme="dream-illustration"] .hero__scene {
+    display: none;
+  }
 }
