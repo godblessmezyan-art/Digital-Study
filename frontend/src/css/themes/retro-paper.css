@@ -1,0 +1,83 @@
+/* ============================================================
+   主题 05：复古纸质风（retro-paper）
+   旧纸 · 羽毛笔 · 岁月 —— 泛黄羊皮纸底 + 皮革棕
+   ============================================================ */
+
+[data-theme="retro-paper"] {
+  color-scheme: light;
+
+  /* ---------- core：羊皮纸 + 皮革棕 ---------- */
+  --color-bg:           #EFE5CE;
+  --color-bg-top:       #F5EDDA;
+  --color-bg-mid:       #EFE5CE;
+  --color-bg-deep:      #E3D5B8;
+  --color-card:         #F9F2E1;
+  --color-primary:      #8C5A3C;   /* 皮革棕 */
+  --color-primary-2:    #75482E;
+  --color-primary-soft: #EAD9BC;
+  --color-accent:       #9C4A3C;   /* 火漆红 */
+  --color-accent-soft:  #EEDDD2;
+  --color-text:         #4A3826;
+  --color-text-2:       #8A7355;
+  --color-border:       #DCC9A5;
+  --color-on-primary:   #FBF5E8;
+  --color-primary-soft-text: #75482E;
+  --color-accent-text:  #8C4034;
+
+  --color-nav-bg:  rgba(249, 242, 225, 0.9);
+  --color-side-bg: rgba(247, 238, 218, 0.8);
+
+  /* 手记卡：泛黄信笺 */
+  --color-note-paper: #F3E9CF;
+  --color-note-line:  rgba(120, 90, 55, 0.32);
+  --color-note-text:  #5C4630;
+
+  /* 表面细节 */
+  --color-search-bg:      rgba(250, 244, 230, 0.94);
+  --color-note-chip:      rgba(250, 244, 230, 0.75);
+  --color-hover-veil:     rgba(250, 244, 230, 0.7);
+  --color-avatar:         linear-gradient(135deg, #DFC49C, #C4A276);
+  --color-progress-track: rgba(200, 178, 140, 0.5);
+  --color-tape:           rgba(140, 90, 60, 0.24);
+  --color-primary-glow:   rgba(140, 90, 60, 0.28);
+  --color-primary-soft-hover: #E0CBAA;
+  --color-focus-ring:     rgba(140, 90, 60, 0.14);
+
+  /* 书封兜底渐变（旧书脊） */
+  --color-cover-1: linear-gradient(150deg, #C8A878 0%, #A5834F 100%);
+  --color-cover-2: linear-gradient(150deg, #B58A6A 0%, #8F6544 100%);
+  --color-cover-3: linear-gradient(150deg, #A89468 0%, #84703F 100%);
+  --color-cover-4: linear-gradient(150deg, #B0785C 0%, #8A5540 100%);
+  --color-cover-5: linear-gradient(150deg, #9AA06A 0%, #74793F 100%);
+  --color-cover-6: linear-gradient(150deg, #C0AE90 0%, #9A8666 100%);
+
+  /* 圆角 / 阴影 / 字体 */
+  --radius-xl: 18px; --radius-lg: 14px; --radius-md: 12px; --radius-sm: 8px;
+  --shadow-soft:  0 4px 16px rgba(105, 80, 45, 0.12);
+  --shadow-hover: 0 12px 28px rgba(105, 80, 45, 0.18);
+  --shadow-cover: 0 8px 20px rgba(105, 80, 45, 0.2);
+  --font-serif: "Noto Serif SC", "Songti SC", "STSong", "SimSun", Georgia, serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+                "Microsoft YaHei", "Noto Sans SC", "Segoe UI", sans-serif;
+
+  /* Hero（移动端卡片壳） */
+  --hero-panel: linear-gradient(105deg, #F5EDDA 0%, #EFE5CE 58%, #E8DCC0 100%);
+  --hero-fade:  linear-gradient(90deg, #EFE5CE 0%, rgba(239, 229, 206, 0.5) 16%, rgba(239, 229, 206, 0) 42%);
+
+  /* 纸纹：复古主题纹理更明显 */
+  --asset-paper-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 0.42 0 0 0 0 0.34 0 0 0 0 0.2 0 0 0 0.055 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+
+  /* ---------- env：午后旧书房的光 ---------- */
+  --env-wall:        linear-gradient(180deg, #F5EDDA 0%, #EFE5CE 34%, #E9DCBE 72%, #E0CFAC 100%);
+  --env-art-glow:    radial-gradient(76% 64% at 78% 14%, rgba(240, 220, 180, 0.5), rgba(240, 220, 180, 0) 62%);
+  --env-window-glow: rgba(240, 220, 180, 0.0);
+  --env-shelf-ink:   #7A6242;
+  --env-shelf-alpha: 0.16;
+  --env-floor:       rgba(160, 130, 90, 0.0);
+  --env-plant:       #7A8A5E;
+  --env-pot:         #A5834F;
+
+  /* ---------- asset ---------- */
+  --asset-hero: url("/assets/themes/retro-paper/hero.png");
+  --asset-env: url("/assets/themes/retro-paper/env.png");
+}

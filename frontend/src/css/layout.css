@@ -1,0 +1,617 @@
+/* ============================================================
+   数字书房 · 布局系统 —— 响应式骨架（与主题无关）
+   ------------------------------------------------------------
+   空间模型：
+   - 内容骨架 = min(94vw, 1880px)：随视口自然生长/收缩，绝不固定宽
+   - 桌面：Nav 208px 家具侧栏 │ Main 拿走全部剩余空间
+   - 平板（≤1100）：Nav 收窄，书架 3 列
+   - 手机（≤900）：Nav 转横向导航条，Hero 纵排，书架 2 列
+   - 断点体系：1100 / 900 / 600 / 400（见 variables.css 注释）
+   - 防横向滚动：所有可横滑区域用内部 overflow-x:auto，
+     body 用 overflow-x:clip 兜底（不破坏 sticky）
+   ============================================================ */
+
+/* ---------- 全局防横滚守卫 ---------- */
+body {
+  overflow-x: clip;     /* clip 不像 hidden 那样破坏 position:sticky */
+  max-width: 100vw;
+}
+
+img, svg, video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ---------- 环境壁纸层：固定在视口的轻量底图 ----------
+   它是「壁纸」不是「插画」：fixed 不随滚动变化（避免背景跟着页面跑），
+   浓度极低、上下双缘羽化，只负责给纸面一点室内光影与四角植物；
+   Hero 自己的场景图（.hero__scene）才是页面主视觉。
+   插画与光晕全部来自主题令牌，换主题即换壁纸。 */
+.env-art {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-image: var(--env-art-glow), var(--asset-env);
+  background-size: cover, cover;
+  background-position: center top, right top;
+  background-repeat: no-repeat;
+  /* 壁纸轻量化：低不透明度 + 平缓衰减（底部保留 38%，
+     以免滚到页面下半部时背景突然变成纯纸） */
+  opacity: 0.26;
+  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.92) 0%, #000 26%, rgba(0, 0, 0, 0.72) 68%, rgba(0, 0, 0, 0.38) 100%);
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.92) 0%, #000 26%, rgba(0, 0, 0, 0.72) 68%, rgba(0, 0, 0, 0.38) 100%);
+}
+
+/* ---------- 顶部导航：不是卡片，是纸面上的一行 ----------
+   无圆角/无阴影/无可见底板；吸顶滚动时用主题色轻纱 + 毛玻璃保证可读 */
+
+.top-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: transparent;
+}
+
+.top-nav__inner {
+  width: min(var(--page-gutter), var(--page-max));
+  margin: 0 auto;
+  padding: 14px 4px 10px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  /* 无底色无框：但元素本身（搜索胶囊）有清晰边界，避免松散 */
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* 品牌：📚 书房 / Demian Library */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  flex-shrink: 0;
+}
+
+.brand__mark {
+  width: 34px;
+  height: 34px;
+  /* logo 圆底色太像「组件」，改透明 + 细描边 */
+  border-radius: 11px;
+  background: transparent;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-border) 60%, transparent);
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+}
+
+.brand__sub {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  padding-left: 9px;
+  border-left: 1px solid var(--border);
+}
+
+/* 搜索框：轻纸面胶囊——发丝边框+实心底，边界清楚但不卡不重 */
+.search {
+  flex: 0 1 380px;
+  min-width: 0;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: color-mix(in srgb, var(--color-card) 88%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 7px 16px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.search:hover {
+  border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
+}
+
+.search:focus-within {
+  background: var(--color-card);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+.search svg {
+  flex-shrink: 0;
+  width: 15px;
+  height: 15px;
+  color: var(--text-muted);
+}
+
+.search input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.search input::placeholder {
+  color: var(--text-muted);
+}
+
+/* 右侧操作区：铃铛 / 设置 / 头像 */
+.top-nav__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+  background: transparent;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.icon-btn:hover {
+  background: color-mix(in srgb, var(--color-card) 50%, transparent);
+  color: var(--primary);
+}
+
+.icon-btn svg {
+  width: 17px;
+  height: 17px;
+}
+
+.top-nav__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--avatar-grad);
+  display: grid;
+  place-items: center;
+  font-size: 17px;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+}
+
+/* ---------- 主体骨架：Nav + Main，流式宽度 ---------- */
+
+.app {
+  width: min(var(--page-gutter), var(--page-max));
+  margin: 24px auto 0;
+  display: grid;
+  grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
+  gap: var(--nav-gap);
+  align-items: start;
+  /* 关键：明确抬到壁纸之上——定位元素（.env-art z-index:0）会绘制在
+     static 正常流内容之上，不给 z-index 就会出现“背景压住书卡”的发糊感 */
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- 左侧 Nav：书房里的一件家具（桌面态） ---------- */
+
+.side-nav {
+  position: sticky;
+  top: 84px;
+  padding: 20px 14px;
+  /* 不透明纸面：边界清晰不糊，靠轻影+纸色融入环境而不是靠透明 */
+  background: var(--side-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  /* 侧栏铁律：绝不内部滚动——条目已精简，兼容极端矮窗口也不出滚动条 */
+  max-height: calc(100vh - 104px);
+  overflow: hidden;
+}
+
+/* 矮窗口（笔记本/分屏）：藏掉纯装饰的名言与盆栽，保留导航功能项 */
+@media (max-height: 820px) {
+  .side-nav__quote,
+  .side-nav__plant {
+    display: none;
+  }
+}
+
+/* 「书房」铭牌已移除：品牌只在顶栏左上角出现一次，侧栏直接从「首页」开始 */
+
+.side-nav ul {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.side-nav__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  min-height: 46px;
+  padding: 0 14px;
+  border-radius: 12px;
+  font-size: 14.5px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  text-align: left;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.side-nav__item svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+.side-nav__item:hover {
+  color: var(--text);
+  background: var(--hover-veil);
+}
+
+/* 选中态：暖奶油底 + 棕橙字 + 左侧书签条（像夹在目录里的丝带） */
+.side-nav__item.is-active {
+  background: var(--primary-soft);
+  color: var(--primary-soft-text);
+  font-weight: 600;
+}
+
+.side-nav__item.is-active::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 20px;
+  border-radius: 2px;
+  background: var(--primary);
+}
+
+/* 极淡发丝分隔线 */
+.side-nav__divider {
+  height: 1px;
+  margin: 10px 14px;
+  background: var(--border);
+  opacity: 0.8;
+}
+
+/* 分组小标题：「我的分类」 */
+.side-nav__label {
+  padding: 10px 16px 4px;
+  font-size: 11.5px;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+}
+
+/* 分类索引项：衬线名字，像书房目录而非筛选器 */
+.side-nav__item--cat {
+  min-height: 40px;
+  font-size: 13.5px;
+}
+
+.side-nav__item--cat span:not(.side-nav__count) {
+  font-family: var(--font-serif);
+  letter-spacing: 0.06em;
+}
+
+.side-nav__count {
+  margin-left: auto;
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+/* 底部名言：书房里的一句话 */
+.side-nav__quote {
+  margin: 14px 10px 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-serif);
+  font-size: 12.5px;
+  line-height: 2;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* 底部小盆栽：属于这个空间的绿植（令牌取色） */
+.side-nav__plant {
+  display: block;
+  width: 56px;
+  margin: 10px auto 2px;
+}
+
+/* 盆栽取色跟随主题环境令牌 */
+.side-nav__plant .leaf { fill: var(--env-plant); }
+.side-nav__plant .pot  { fill: var(--env-pot); }
+
+/* ---------- 主内容区：填满剩余空间，无二次限宽 ---------- */
+
+.page {
+  min-width: 0;
+  width: 100%;
+  /* 稳定阅读宽度：宽屏下 Main 不被拉成长横幅，两侧由环境插画补氛围 */
+  max-width: 1080px;
+  margin-inline: auto;
+  padding-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* 双视图（hash 路由）：首页 / 书架页互斥显示 */
+.page > .view {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  min-width: 0;
+}
+
+.page > .view[hidden] {
+  display: none;
+}
+
+.page .section {
+  scroll-margin-top: 96px;
+  min-width: 0;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+/* ---------- 书架页（#/shelf）：工具条 + 分类 + 全部书籍 ---------- */
+
+.shelf-page {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  min-width: 0;
+}
+
+.shelf-tools {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.shelf-tools .search--page {
+  flex: 0 1 320px;
+  margin-left: 0;
+  background: var(--card);
+}
+
+/* ---------- 页脚 ---------- */
+
+.site-footer {
+  width: min(var(--page-gutter), var(--page-max));
+  margin: 8px auto 0;
+  padding: 24px 36px 36px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.site-footer__motto {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.site-footer__links {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 28px;
+  font-size: 13px;
+}
+
+.site-footer__links a {
+  color: var(--text-muted);
+  transition: color 0.2s ease;
+}
+
+.site-footer__links a:hover {
+  color: var(--primary);
+}
+
+/* ============================================================
+   响应式断点体系
+   ============================================================ */
+
+/* ---------- ≤1100px：平板横屏 / 小桌面 ----------
+   Nav 保持侧栏但收窄；间距压缩；Main 依然拿走剩余全部空间 */
+@media (max-width: 1100px) {
+  :root {
+    --sidebar-w: 224px;
+    --nav-gap: 24px;
+  }
+
+  .env-art {
+    height: min(80vh, 720px);
+  }
+
+  .top-nav__inner {
+    gap: 16px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .page {
+    gap: 32px;
+  }
+
+  .side-nav__item {
+    min-height: 42px;
+    font-size: 14px;
+    padding: 0 12px;
+  }
+}
+
+/* ---------- ≤900px：平板竖屏 / 手机 ----------
+   Nav 转横向导航条（内部横滑，不撑破页面）；单列布局 */
+@media (max-width: 900px) {
+  /* 环境插画让位给内容：移动端改由 Hero 内部场景承担插画 */
+  .env-art {
+    display: none;
+  }
+
+  .app {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  /* 侧栏 → 横向导航条；分类组/名言/盆栽在横条形态下隐藏 */
+  .side-nav {
+    position: static;
+    padding: 10px 12px;
+    border-radius: var(--radius-md);
+    /* 解除桌面态的不滚动钳制：横条形态靠 ul 内部横滑 */
+    max-height: none;
+    overflow: visible;
+  }
+
+  .side-nav__divider,
+  .side-nav__label,
+  .side-nav__item--cat,
+  .side-nav__quote,
+  .side-nav__plant {
+    display: none;
+  }
+
+  .side-nav ul {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 6px;
+    overflow-x: auto;
+    /* 内部横滑：滚动条隐藏但可滑动，绝不把页面撑宽 */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .side-nav ul::-webkit-scrollbar {
+    display: none;
+  }
+
+  .side-nav__item {
+    width: auto;
+    flex-shrink: 0;
+    min-height: 38px;
+    padding: 0 14px;
+    font-size: 13.5px;
+    border-radius: 999px;
+  }
+
+  /* 书签条在横条形态下改为底部短条 */
+  .side-nav__item.is-active::before {
+    left: 50%;
+    top: auto;
+    bottom: 3px;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 3px;
+  }
+
+  .brand__sub {
+    display: none;
+  }
+
+  .page {
+    gap: 28px;
+  }
+
+  .page > .view {
+    gap: 28px;
+  }
+
+  .page .section {
+    scroll-margin-top: 80px;
+  }
+}
+
+/* ---------- ≤600px：小屏手机 ---------- */
+@media (max-width: 600px) {
+  .top-nav__inner {
+    gap: 8px;
+    padding: 12px 4px 8px;
+  }
+
+  .brand {
+    font-size: 16px;
+    gap: 6px;
+  }
+
+  .brand__mark {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+
+  /* 搜索框吃掉剩余空间；快捷键提示与铃铛隐藏 */
+  .search {
+    flex: 1 1 auto;
+    padding: 7px 12px;
+  }
+
+  .search kbd {
+    display: none;
+  }
+
+  .icon-btn[title="通知"] {
+    display: none;
+  }
+
+  .top-nav__avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 15px;
+  }
+
+  .icon-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .site-footer {
+    padding: 20px 16px 28px;
+  }
+}
+
+/* ---------- ≤400px：超窄屏 ---------- */
+@media (max-width: 400px) {
+  .brand span:not(.brand__mark) {
+    display: none;   /* 只留 📚 图标 */
+  }
+
+  .icon-btn[title="设置"] {
+    display: none;
+  }
+}

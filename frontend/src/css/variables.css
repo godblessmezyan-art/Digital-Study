@@ -1,0 +1,83 @@
+/* ============================================================
+   数字书房 · 语义变量层（组件契约）
+   ------------------------------------------------------------
+   本文件只做两件事，禁止出现裸色值 / 资产 URL：
+   1. 把主题令牌（css/themes/*.css）映射为组件使用的语义变量
+   2. 定义与主题无关的「布局系统」令牌（宽度/间距/断点注释）
+
+   主题 ↔ 布局分离原则：
+   - 换主题：只改 themes/<id>.css（颜色/资产/圆角/阴影/字体）
+   - 换布局：只改 layout.css + 本文件布局令牌（断点/宽度/间距）
+   ============================================================ */
+
+:root {
+  /* ---------- 语义色（组件只准用这一层） ---------- */
+  --bg:               var(--color-bg);
+  --card:             var(--color-card);
+  --text:             var(--color-text);
+  --text-muted:       var(--color-text-2);
+  --text-on-primary:  var(--color-on-primary);
+  --border:           var(--color-border);
+  --primary:          var(--color-primary);
+  --primary-hover:    var(--color-primary-2);
+  --primary-soft:     var(--color-primary-soft);
+  --primary-soft-text: var(--color-primary-soft-text);
+  --accent:           var(--color-accent);
+  --accent-soft:      var(--color-accent-soft);
+  --accent-text:      var(--color-accent-text);
+  --nav-bg:           var(--color-nav-bg);
+  --side-bg:          var(--color-side-bg);
+  --note-paper:       var(--color-note-paper);
+  --note-line:        var(--color-note-line);
+  --note-text:        var(--color-note-text);
+
+  /* 表面细节（暗色主题换皮依赖） */
+  --search-bg:           var(--color-search-bg);
+  --note-chip:           var(--color-note-chip);
+  --hover-veil:          var(--color-hover-veil);
+  --avatar-grad:         var(--color-avatar);
+  --progress-track:      var(--color-progress-track);
+  --tape:                var(--color-tape);
+  --primary-glow:        var(--color-primary-glow);
+  --primary-soft-hover:  var(--color-primary-soft-hover);
+  --focus-ring:          var(--color-focus-ring);
+
+  /* 书封兜底渐变 */
+  --cover-1: var(--color-cover-1);
+  --cover-2: var(--color-cover-2);
+  --cover-3: var(--color-cover-3);
+  --cover-4: var(--color-cover-4);
+  --cover-5: var(--color-cover-5);
+  --cover-6: var(--color-cover-6);
+
+  /* Hero 场景、字体、圆角、阴影、环境层令牌（--hero-* / --font-* /
+     --radius-* / --shadow-* / --env-* / --asset-*）由主题文件直接提供，
+     同名令牌不在此重复映射（自引用会造成循环失效） */
+
+  /* ---------- 布局系统令牌（与主题无关） ---------- */
+
+  /* 内容骨架：1560px 是「最大阅读宽度」而非固定宽度，
+     实际宽度 = min(94vw, --page-max)，随视口自然收缩；
+     Hero/统计/分类/书籍共用同一内容边界，宽屏不拉成长横幅 */
+  --page-max: 1560px;
+  --page-gutter: 94vw;      /* 内容占视口比例（两侧留呼吸） */
+
+  /* Nav：桌面 264px「书房侧厅」（含我的分类/底部名言）；≤900px 转横向导航条 */
+  --sidebar-w: 264px;
+  --nav-gap: 36px;          /* Nav 与 Main 的空间层次间距 */
+
+  /* 8px 间距系统 */
+  --sp-1: 8px;
+  --sp-2: 16px;
+  --sp-3: 24px;
+  --sp-4: 32px;
+  --sp-5: 40px;
+  --sp-6: 48px;
+
+  /* 统一断点（只在 layout.css / components.css 的媒体查询使用）：
+     ≥1101px  桌面（Nav 侧栏 + 4 列书架）
+     901–1100 平板横屏/小桌面（Nav 侧栏收窄 + 3 列书架）
+     ≤900px   平板竖屏/手机（Nav 转横条 + Hero 纵排 + 2 列书架）
+     ≤600px   小屏手机（紧凑间距 + 分类横滑）
+     ≤400px   超窄屏（顶栏进一步精简） */
+}

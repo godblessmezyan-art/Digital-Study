@@ -1,0 +1,83 @@
+/* ============================================================
+   主题 03：深夜夜读风（night-library）
+   夜深人静 · 台灯金光 · 星空窗外 —— 深藏蓝 + 暖金
+   ============================================================ */
+
+[data-theme="night-library"] {
+  color-scheme: dark;
+
+  /* ---------- core：深藏蓝 + 暖金 ---------- */
+  --color-bg:           #1B2440;
+  --color-bg-top:       #212B4C;
+  --color-bg-mid:       #1B2440;
+  --color-bg-deep:      #141C33;
+  --color-card:         #232E52;
+  --color-primary:      #D9A441;   /* 台灯金 */
+  --color-primary-2:    #C08F30;
+  --color-primary-soft: rgba(217, 164, 65, 0.16);
+  --color-accent:       #6FBF8F;   /* 完成状态：夜灯绿 */
+  --color-accent-soft:  rgba(111, 191, 143, 0.14);
+  --color-text:         #E8E4D8;
+  --color-text-2:       #9AA3BF;
+  --color-border:       rgba(255, 255, 255, 0.12);
+  --color-on-primary:   #1B2440;
+  --color-primary-soft-text: #E5C078;
+  --color-accent-text:  #8FD4AC;
+
+  --color-nav-bg:  rgba(27, 36, 64, 0.88);
+  --color-side-bg: rgba(27, 36, 64, 0.72);
+
+  /* 手记卡：夜读便签 */
+  --color-note-paper: #2A3557;
+  --color-note-line:  rgba(217, 164, 65, 0.3);
+  --color-note-text:  #E8DFC8;
+
+  /* 表面细节 */
+  --color-search-bg:      rgba(35, 46, 82, 0.92);
+  --color-note-chip:      rgba(35, 46, 82, 0.72);
+  --color-hover-veil:     rgba(255, 255, 255, 0.06);
+  --color-avatar:         linear-gradient(135deg, #3A4A7C, #2A3557);
+  --color-progress-track: rgba(255, 255, 255, 0.14);
+  --color-tape:           rgba(217, 164, 65, 0.3);
+  --color-primary-glow:   rgba(217, 164, 65, 0.25);
+  --color-primary-soft-hover: rgba(217, 164, 65, 0.24);
+  --color-focus-ring:     rgba(217, 164, 65, 0.18);
+
+  /* 书封兜底渐变（夜色书脊） */
+  --color-cover-1: linear-gradient(150deg, #3D4A75 0%, #2A3557 100%);
+  --color-cover-2: linear-gradient(150deg, #6B5A48 0%, #4A3D30 100%);
+  --color-cover-3: linear-gradient(150deg, #4A5A80 0%, #33405F 100%);
+  --color-cover-4: linear-gradient(150deg, #7A6248 0%, #55442F 100%);
+  --color-cover-5: linear-gradient(150deg, #3F5A50 0%, #2B4038 100%);
+  --color-cover-6: linear-gradient(150deg, #5A4A6B 0%, #3D3249 100%);
+
+  /* 圆角 / 阴影 / 字体 */
+  --radius-xl: 20px; --radius-lg: 16px; --radius-md: 14px; --radius-sm: 10px;
+  --shadow-soft:  0 4px 18px rgba(0, 0, 0, 0.35);
+  --shadow-hover: 0 12px 30px rgba(0, 0, 0, 0.45);
+  --shadow-cover: 0 8px 22px rgba(0, 0, 0, 0.4);
+  --font-serif: "Noto Serif SC", "Songti SC", "STSong", "SimSun", Georgia, serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+                "Microsoft YaHei", "Noto Sans SC", "Segoe UI", sans-serif;
+
+  /* Hero（移动端卡片壳） */
+  --hero-panel: linear-gradient(105deg, #232E52 0%, #1F2949 58%, #1B2440 100%);
+  --hero-fade:  linear-gradient(90deg, #1F2949 0%, rgba(31, 41, 73, 0.5) 16%, rgba(31, 41, 73, 0) 42%);
+
+  /* 纸纹（暗底亮 speck） */
+  --asset-paper-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.9 0 0 0 0 0.88 0 0 0 0 0.8 0 0 0 0.035 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+
+  /* ---------- env：台灯金光从右上洒下 ---------- */
+  --env-wall:        linear-gradient(180deg, #212B4C 0%, #1B2440 34%, #17203A 72%, #121A30 100%);
+  --env-art-glow:    radial-gradient(72% 60% at 78% 12%, rgba(217, 164, 65, 0.16), rgba(217, 164, 65, 0) 60%);
+  --env-window-glow: rgba(217, 164, 65, 0.0);
+  --env-shelf-ink:   #0E1528;
+  --env-shelf-alpha: 0.2;
+  --env-floor:       rgba(10, 14, 28, 0.0);
+  --env-plant:       #4A6B52;
+  --env-pot:         #8A7355;
+
+  /* ---------- asset ---------- */
+  --asset-hero: url("/assets/themes/night-library/hero.png");
+  --asset-env: url("/assets/themes/night-library/env.png");
+}

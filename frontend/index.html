@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="warm-study">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>数字书房 · 安静阅读，慢下来</title>
+  <meta name="description" content="一个治愈、安静、自然的数字书房。每天留一点时间，给阅读和自己。" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>" />
+
+  <!-- 主题令牌（裸色值/资产唯一来源）→ 语义层 → 基础/布局/组件 -->
+  <!-- warm-study 为默认主题（含 :root 兑底），其余主题按 data-theme 覆盖，顺序在后优先级更高 -->
+  <link rel="stylesheet" href="/src/css/themes/warm-study.css" />
+  <link rel="stylesheet" href="/src/css/themes/fresh-natural.css" />
+  <link rel="stylesheet" href="/src/css/themes/night-library.css" />
+  <link rel="stylesheet" href="/src/css/themes/minimal-white.css" />
+  <link rel="stylesheet" href="/src/css/themes/retro-paper.css" />
+  <link rel="stylesheet" href="/src/css/themes/dream-illustration.css" />
+  <link rel="stylesheet" href="/src/css/variables.css" />
+  <link rel="stylesheet" href="/src/css/base.css" />
+  <link rel="stylesheet" href="/src/css/layout.css" />
+  <link rel="stylesheet" href="/src/css/components.css" />
+</head>
+<body>
+  <!-- 环境层：手绘书房插画通铺页面右上区域（z0，随文档滚动，
+       左缘/下缘羽化融入纸面；≤0900px 隐藏，改由 Hero 内部场景承担） -->
+  <div class="env-art" aria-hidden="true"></div>
+
+  <!-- 顶部导航 -->
+  <header class="top-nav" id="top-nav"></header>
+
+  <div class="app">
+    <!-- 左侧导航 -->
+    <aside class="side-nav" id="side-nav"></aside>
+
+    <!-- 主内容区：由 JS 组件依次挂载 -->
+    <main class="page" id="page"></main>
+  </div>
+
+  <!-- 页脚 -->
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
