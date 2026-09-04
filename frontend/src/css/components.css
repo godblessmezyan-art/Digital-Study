@@ -107,8 +107,11 @@
   object-position: center 62%;
 }
 
-/* 三缘羽化（左/顶/底）：消除矩形边界，让图从纸面里长出来；
-   左缘渐隐同时保证文字可读。全用主题令牌，暗色主题同样成立 */
+/* 三缘羽化（左/顶/底）：消除矩形边界，让图从纸面里长出来。
+   左缘用多级色标模拟缓动曲线（相邻色标之间是线性插值，
+   色标越密过渡越“渐渐”）：文字区纸色浓保证可读，
+   44% 之后慢慢放开到最右完全清晰——不是一刀切。
+   全用主题令牌，暗色主题同样成立 */
 .hero__scene::before {
   content: "";
   position: absolute;
@@ -117,10 +120,15 @@
   background:
     linear-gradient(90deg,
       var(--bg) 0%,
-      color-mix(in srgb, var(--bg) 93%, transparent) 16%,
-      color-mix(in srgb, var(--bg) 58%, transparent) 36%,
-      color-mix(in srgb, var(--bg) 14%, transparent) 58%,
-      transparent 76%),
+      color-mix(in srgb, var(--bg) 98%, transparent) 10%,
+      color-mix(in srgb, var(--bg) 95%, transparent) 22%,
+      color-mix(in srgb, var(--bg) 90%, transparent) 34%,
+      color-mix(in srgb, var(--bg) 82%, transparent) 44%,
+      color-mix(in srgb, var(--bg) 68%, transparent) 54%,
+      color-mix(in srgb, var(--bg) 48%, transparent) 66%,
+      color-mix(in srgb, var(--bg) 28%, transparent) 78%,
+      color-mix(in srgb, var(--bg) 12%, transparent) 89%,
+      transparent 100%),
     linear-gradient(180deg,
       color-mix(in srgb, var(--bg) 76%, transparent) 0%,
       color-mix(in srgb, var(--bg) 20%, transparent) 12%,
@@ -404,15 +412,140 @@
 .cover[data-cover="5"] { background: var(--cover-5); }
 .cover[data-cover="6"] { background: var(--cover-6); }
 
-/* ---------- 继续阅读：四本平等的书架排列 ----------
-   不再是「左大卡 + 右窄列表」，视觉重量均衡；
-   卡片结构与 .book-card 同构，与下方书架形成同一套视觉语言 */
+/* ---------- 继续阅读：左 1 本主书 + 右 2 本小卡 ----------
+   主次分明：最近读的那本给足空间（大封面+完整状态+按钮），
+   另两本收在右侧。全部无卡片壳，直接坐在纸面上 */
 
-.continue-grid {
+.continue-wrap {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 30px;
   align-items: start;
+}
+
+/* 主书：大封面 + 信息列，无壳无底 */
+.continue-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.continue-main .cover {
+  width: 172px;
+  height: 240px;
+  flex-shrink: 0;
+}
+
+.continue-main__info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding-top: 12px;
+}
+
+.continue-main__title {
+  font-family: var(--font-serif);
+  font-size: 23px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.continue-main__meta {
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+}
+
+.continue-main__foot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.continue-main__foot .progress {
+  flex: 0 1 220px;
+  height: 3px;
+}
+
+.continue-main__pct {
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.continue-main__go {
+  align-self: flex-start;
+  margin-top: 8px;
+  font-size: 13.5px;
+  letter-spacing: 0.04em;
+  color: var(--primary);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.continue-main__go:hover {
+  opacity: 0.75;
+  transform: translateX(3px);
+}
+
+/* 右侧两本：小封面 + 两行信息 + 箭头，发丝线分隔 */
+.continue-side {
+  display: flex;
+  flex-direction: column;
+}
+
+.continue-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 14px 2px;
+  min-width: 0;
+}
+
+.continue-item + .continue-item {
+  border-top: 1px solid var(--border);
+}
+
+.continue-item__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.continue-item__title {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.continue-item__meta {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.continue-item__go {
+  flex-shrink: 0;
+  font-size: 15px;
+  color: var(--primary);
+  opacity: 0.65;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.continue-item:hover .continue-item__go {
+  opacity: 1;
+  transform: translateX(3px);
 }
 
 /* ---------- 我的书架：平铺 4 列卡片网格（设计图 02 §15/§16/§17） ---------- */
@@ -779,9 +912,23 @@
       color-mix(in srgb, var(--bg) 55%, transparent) 100%);
   }
 
-  .continue-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+  /* 继续阅读纵排：主书上、两本小卡下，封面同步收窄 */
+  .continue-wrap {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+  }
+
+  .continue-main .cover {
+    width: 132px;
+    height: 184px;
+  }
+
+  .continue-main__title {
+    font-size: 20px;
+  }
+
+  .continue-main__info {
+    padding-top: 6px;
   }
 
   .shelf-grid {
