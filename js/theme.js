@@ -1,37 +1,54 @@
 /**
- * 主题管理器
- * ------------------------------------------------------------
- * 当前仅启用「清新自然风」(fresh)。
- * 未来主题命名约定：
- *   night  深色夜读
- *   ocean  蓝色梦幻
- *   retro  复古纸张
- *
- * 新增主题步骤：
- * 1. 在 css/variables.css 追加 [data-theme="xxx"] 变量块
- * 2. 把主题 id 加入下方 AVAILABLE_THEMES
- * 3. 调用 setTheme('xxx') 或在 <html> 上设置 data-theme="xxx"
+ * 主题注册表：页面组件只消费这些令牌。
+ * 新主题只需增加一份配置与对应素材，不需要重写组件。
  */
+export const THEMES = {
+  'cloud-realm': {
+    id: 'cloud-realm',
+    name: '云天幻境',
+    englishName: 'Cloud Realm Archive',
+    welcomeEyebrow: '欢迎来到',
+    welcomeTitle: '云天幻境',
+    subtitle: '在云海之上，遇见更大的世界',
+    background: 'assets/cloud-realm-study-v2.png',
+    colors: {
+      primary: '#173653',
+      accent: '#b98b4d',
+      panel: 'rgba(255, 252, 245, .88)',
+      text: '#15273a',
+    },
+    backgroundFocus: {
+      desktop: 'center 48%',
+      tablet: '54% 48%',
+      mobile: '52% 45%',
+    },
+    logo: 'sigil',
+    decorations: ['astrolabe', 'telescope', 'ivy', 'lantern'],
+    dailyBookmarkSource: 'dailyBookmarks',
+    categoryArtwork: 'assets/cloud-realm-study-v2.png',
+    atmosphere: 'day',
+  },
+};
 
-const STORAGE_KEY = 'digital-study-theme';
+const KEY = 'library-theme';
 
-export const AVAILABLE_THEMES = ['fresh'];
-
-export function getTheme() {
-  return localStorage.getItem(STORAGE_KEY)
-    || document.documentElement.dataset.theme
-    || 'fresh';
+export function applyTheme(id = 'cloud-realm') {
+  const theme = THEMES[id] || THEMES['cloud-realm'];
+  const root = document.documentElement;
+  root.dataset.theme = theme.id;
+  root.dataset.atmosphere = theme.atmosphere;
+  root.style.setProperty('--navy', theme.colors.primary);
+  root.style.setProperty('--gold', theme.colors.accent);
+  root.style.setProperty('--glass', theme.colors.panel);
+  root.style.setProperty('--ink', theme.colors.text);
+  root.style.setProperty('--scene-position', theme.backgroundFocus.desktop);
+  root.style.setProperty('--scene-position-mobile', theme.backgroundFocus.mobile);
+  root.style.setProperty('--scene-position-tablet', theme.backgroundFocus.tablet || theme.backgroundFocus.desktop);
+  document.querySelector('.world__art')?.setAttribute('src', theme.background);
+  localStorage.setItem(KEY, theme.id);
+  return theme;
 }
 
-export function setTheme(name) {
-  document.documentElement.dataset.theme = name;
-  localStorage.setItem(STORAGE_KEY, name);
-}
-
-/** 应用已保存的主题（页面加载时调用） */
 export function initTheme() {
-  const saved = localStorage.getItem(STORAGE_KEY);
-  if (saved && AVAILABLE_THEMES.includes(saved)) {
-    document.documentElement.dataset.theme = saved;
-  }
+  return applyTheme(localStorage.getItem(KEY) || 'cloud-realm');
 }

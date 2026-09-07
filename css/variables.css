@@ -1,64 +1,38 @@
-/*
- * 数字书房主题令牌
- * 新主题只需要覆盖这一组变量，页面组件不写主题专属颜色。
- */
 :root,
-[data-theme="fresh"] {
+[data-theme="cloud-realm"] {
   color-scheme: light;
-
-  --bg: #f2efe5;
-  --bg-deep: #e8e7d9;
-  --surface: #fffdf7;
-  --surface-soft: rgba(255, 253, 247, 0.82);
-  --surface-glass: rgba(255, 253, 247, 0.72);
-  --text: #26372d;
-  --text-soft: #536159;
-  --text-muted: #7f8a82;
-  --border: rgba(67, 84, 70, 0.13);
-  --border-strong: rgba(67, 84, 70, 0.2);
-
-  --primary: #6f9368;
-  --primary-hover: #5d7f57;
-  --primary-soft: #e4ecdc;
-  --primary-soft-text: #587451;
-  --accent: #d5ad59;
-  --accent-soft: #f4ead0;
-  --accent-text: #927337;
-  --text-on-primary: #fff;
-
-  --hero-panel: #f5f1e5;
-  --hero-fade: linear-gradient(90deg, #f5f1e5 0%, rgba(245, 241, 229, 0.94) 20%, rgba(245, 241, 229, 0.15) 58%, transparent 72%);
-  --room-bg: linear-gradient(120deg, #f7f4e9 0%, #eeecdf 54%, #e3e8df 100%);
-  --room-glow: rgba(246, 222, 164, 0.22);
-  --nav-bg: rgba(248, 246, 238, 0.88);
-  --sidebar-bg: rgba(250, 248, 240, 0.72);
-
-  --cover-1: linear-gradient(145deg, #7f9f78 0%, #4f7257 100%);
-  --cover-2: linear-gradient(145deg, #dec99d 0%, #b69863 100%);
-  --cover-3: linear-gradient(145deg, #8ea9ac 0%, #5f7f88 100%);
-  --cover-4: linear-gradient(145deg, #d1a98f 0%, #a77661 100%);
-  --cover-5: linear-gradient(145deg, #a9af83 0%, #747d58 100%);
-  --cover-6: linear-gradient(145deg, #a79f93 0%, #776f67 100%);
-
-  --font-serif: "Noto Serif SC", "Songti SC", "STSong", "SimSun", Georgia, serif;
-  --font-sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", "Segoe UI", sans-serif;
-
-  --radius-xl: 24px;
-  --radius-lg: 18px;
-  --radius-md: 13px;
-  --radius-sm: 10px;
-  --shadow-soft: 0 8px 30px rgba(72, 77, 60, 0.08);
-  --shadow-card: 0 6px 18px rgba(72, 77, 60, 0.1);
-  --shadow-hover: 0 15px 34px rgba(72, 77, 60, 0.16);
-  --shadow-cover: 0 10px 24px rgba(57, 64, 50, 0.19);
-
-  --page-max: 1440px;
+  --ink: #15273a;
+  --ink-soft: #536476;
+  --muted: #7d8791;
+  --navy: #132a43;
+  --navy-2: #0c1d31;
+  --blue: #335b83;
+  --blue-soft: #dce8f3;
+  --gold: #b98b4d;
+  --gold-light: #e7c992;
+  --paper: #f8f4eb;
+  --paper-strong: #fffdf8;
+  --glass: rgba(255, 252, 245, .88);
+  --glass-soft: rgba(251, 248, 240, .74);
+  --line: rgba(46, 61, 76, .12);
+  --line-gold: rgba(185, 139, 77, .3);
+  --shadow: 0 14px 42px rgba(18, 36, 55, .14);
+  --shadow-deep: 0 24px 60px rgba(9, 27, 45, .24);
   --sidebar-w: 196px;
-  --content-gap: 24px;
+  --topbar-h: 82px;
+  --radius: 17px;
+  --serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", Georgia, serif;
+  --sans: Inter, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --scene-position: center 48%;
+  --scene-position-mobile: 55% 50%;
+  --scene-position-tablet: 54% 48%;
 }
 
-/* 后续主题的稳定覆盖接口
-[data-theme="night"] { ... }
-[data-theme="retro"] { ... }
-[data-theme="dream"] { ... }
-*/
+[data-theme="cloud-realm"][data-atmosphere="dusk"] {
+  --paper: #eee8de;
+  --glass: rgba(247, 240, 230, .9);
+  --glass-soft: rgba(241, 232, 219, .76);
+  --gold: #c38548;
+  --blue: #4b587a;
+  --scene-position: center 56%;
+}
