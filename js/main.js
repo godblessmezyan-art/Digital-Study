@@ -9,7 +9,6 @@ import { renderHero } from './components/hero.js';
 import { renderContinueReading } from './components/continue-reading.js';
 import { renderBookshelf } from './components/bookshelf.js';
 import { renderCategories } from './components/categories.js';
-import { renderStats } from './components/stats.js';
 import { renderBookmarks } from './components/bookmarks.js';
 import { renderFooter } from './components/footer.js';
 
@@ -20,12 +19,11 @@ renderSideNav(document.getElementById('side-nav'));
 
 const page = document.getElementById('page');
 [
-  renderHero(),             // 1. Hero 书房空间
-  renderContinueReading(),  // 2. 继续阅读（首页主角）
-  renderBookshelf(),        // 3. 我的书架（书优先）
-  renderCategories(),       // 4. 书架分类（轻量索引）
-  renderStats(),            // 5. 我的阅读生活（数据靠后）
-  renderBookmarks(),        // 6. 今日书签
+  renderHero(),             // 1. Hero + 阅读概览
+  renderCategories(),       // 2. 分类筛选
+  renderBookshelf(),        // 3. 我的书架
+  renderContinueReading(),  // 4. 继续阅读
+  renderBookmarks(),        // 5. 今日书签
 ].forEach((node) => page.appendChild(node));
 
 // 9. 页脚

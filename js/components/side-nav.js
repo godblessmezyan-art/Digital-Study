@@ -99,4 +99,23 @@ export function renderSideNav(container) {
   addLi(settingsBtn);
 
   container.appendChild(ul);
+
+  const mobile = h(`
+    <nav class="mobile-nav" aria-label="移动端主导航">
+      <button class="mobile-nav__item is-active" type="button" data-target="top">${icons.home}<span>首页</span></button>
+      <button class="mobile-nav__item" type="button" data-target="#sec-shelf">${icons.bookshelf}<span>书架</span></button>
+      <button class="mobile-nav__item" type="button" data-target="#sec-continue">${icons.clock}<span>阅读</span></button>
+      <button class="mobile-nav__item" type="button" data-target="#sec-cats">${icons.grid}<span>分类</span></button>
+      <button class="mobile-nav__item" type="button" data-target="#sec-bookmarks">${icons.bookmark}<span>书签</span></button>
+    </nav>
+  `);
+  mobile.addEventListener('click', (event) => {
+    const btn = event.target.closest('.mobile-nav__item');
+    if (!btn) return;
+    mobile.querySelectorAll('.mobile-nav__item').forEach((item) => item.classList.remove('is-active'));
+    btn.classList.add('is-active');
+    if (btn.dataset.target === 'top') window.scrollTo({ top: 0, behavior: 'smooth' });
+    else document.querySelector(btn.dataset.target)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  document.body.appendChild(mobile);
 }

@@ -30,32 +30,33 @@ function bookCardHTML(book) {
 export function renderBookshelf() {
   const el = h(`
     <section class="section" id="sec-shelf">
-      <h2 class="section-title section-title--leaf">我的书架</h2>
       <div class="shelf-grid page-grid-4"></div>
     </section>
   `);
 
   const grid = el.querySelector('.shelf-grid');
+  let activeCategory = 'all';
+  let searchQuery = '';
 
   const paint = (catId) => {
-    const list = booksByCategory(catId);
+    activeCategory = catId;
+    const list = booksByCategory(catId).filter((book) => {
+      const target = `${book.title} ${book.author}`.toLowerCase();
+      return !searchQuery || target.includes(searchQuery.toLowerCase());
+    });
     if (!list.length) {
       grid.innerHTML = '<p class="shelf-empty">这个书架还空着，去挑一本书吧 🌱</p>';
       return;
     }
-    // 按每排 4 本排成「一排书架」：每排落在自己的木架上，形成有节奏的书墙，而非一整块库存网格
-    const rows = [];
-    for (let i = 0; i < list.length; i += 4) rows.push(list.slice(i, i + 4));
-    grid.innerHTML = rows.map((row) => `
-      <div class="shelf-row">
-        <div class="shelf-row__books">${row.map(bookCardHTML).join('')}</div>
-        <div class="shelf-row__board" aria-hidden="true"></div>
-      </div>
-    `).join('');
+    grid.innerHTML = list.map(bookCardHTML).join('');
   };
 
   paint('all');
   document.addEventListener('study:category', (e) => paint(e.detail.catId));
+  document.addEventListener('study:search', (e) => {
+    searchQuery = e.detail.query;
+    paint(activeCategory);
+  });
 
   return el;
 }

@@ -17,8 +17,13 @@ export function renderCategories() {
 
   const el = h(`
     <section class="section" id="sec-cats">
-      <h2 class="section-title">书架分类</h2>
-      <p class="section-sub" id="cat-sub">共 ${books.length} 本书籍 · 已读 ${books.filter((b) => b.progress >= 100).length} 本</p>
+      <div class="section-head section-head--books">
+        <div>
+          <h2 class="section-title section-title--leaf">我的书架</h2>
+          <p class="section-sub" id="cat-sub">共 ${books.length} 本书籍 · 已读 ${books.filter((b) => b.progress >= 100).length} 本</p>
+        </div>
+        <a class="section-more" href="#sec-shelf">查看全部 →</a>
+      </div>
       <div class="cat-index">${items}</div>
     </section>
   `);

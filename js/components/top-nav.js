@@ -7,7 +7,7 @@ export function renderTopNav(container) {
     <div class="top-nav__inner">
       <a class="brand" href="#">
         <span class="brand__mark">🌿</span>
-        <span>数字书房</span>
+        <span><span class="brand__name">书房</span><small class="brand__en">Demian Library</small></span>
       </a>
 
       <div class="search">
@@ -17,9 +17,9 @@ export function renderTopNav(container) {
       </div>
 
       <nav class="top-nav__actions">
-        <button class="icon-btn" type="button">${icons.bookmark}<span>收藏</span></button>
-        <button class="icon-btn" type="button">${icons.note}<span>笔记</span></button>
-        <button class="icon-btn" type="button">${icons.sliders}<span>设置</span></button>
+        <button class="icon-btn" type="button" aria-label="查看收藏">${icons.bookmark}<span>收藏</span></button>
+        <button class="icon-btn" type="button" aria-label="查看笔记">${icons.note}<span>笔记</span></button>
+        <button class="icon-btn" type="button" aria-label="打开设置">${icons.sliders}<span>设置</span></button>
       </nav>
     </div>
   `);
@@ -32,5 +32,10 @@ export function renderTopNav(container) {
       e.preventDefault();
       el.querySelector('#search-input')?.focus();
     }
+  });
+
+  const search = el.querySelector('#search-input');
+  search.addEventListener('input', () => {
+    document.dispatchEvent(new CustomEvent('study:search', { detail: { query: search.value.trim() } }));
   });
 }

@@ -16,7 +16,7 @@ export function renderBookmarks() {
   `).join('');
 
   return h(`
-    <section class="section">
+    <section class="section" id="sec-bookmarks">
       <h2 class="section-title">今日书签</h2>
       <div class="bookmark-grid">${cards}</div>
     </section>

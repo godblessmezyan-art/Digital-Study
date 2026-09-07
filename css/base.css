@@ -22,8 +22,7 @@ body {
   line-height: 1.75;
   color: var(--text);
   /* 墙面底色由 .room 环境层提供，这里只叠加纸张噪点 */
-  background-color: #F3F0E1;
-  background-image: var(--paper-texture);
+  background: var(--bg);
   min-height: 100vh;
 }
 
@@ -43,6 +42,18 @@ button {
   background: none;
   cursor: pointer;
   color: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
 }
 
 ul,
@@ -140,9 +151,7 @@ ol {
   color: var(--primary-soft-text);
 }
 
-.btn-soft:hover {
-  background: #DCE8D3;
-}
+.btn-soft:hover { background: var(--primary-soft); filter: brightness(.97); }
 
 /* 幽灵按钮：极轻，用于次要操作，避免胶囊堆叠 */
 .btn-ghost {
@@ -196,26 +205,6 @@ kbd {
   white-space: nowrap;
 }
 
-/* ---------- 响应式 ---------- */
-
-@media (max-width: 1100px) {
-  .page-grid-4 {
-    grid-template-columns: repeat(3, 1fr) !important;
-  }
-}
-
-@media (max-width: 900px) {
-  .side-nav {
-    display: none;
-  }
-
-  .page-grid-4 {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-}
-
-@media (max-width: 560px) {
-  .page-grid-4 {
-    grid-template-columns: 1fr !important;
-  }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
 }
