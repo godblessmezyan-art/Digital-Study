@@ -15,15 +15,19 @@ export const THEMES = {
     scenes: [
       {
         id: 'sky-study',
+        code: 'CR-01',
         name: '云端书房',
-        description: '从藏书塔眺望天空主城',
+        region: '藏书塔 · 东侧观景窗',
+        description: '越过黄铜仪器与摊开的书页，眺望天空主城。',
         image: 'assets/cloud-realm-study-v2.png',
         focus: { desktop: 'center 48%', tablet: '54% 48%', mobile: '52% 45%' },
       },
       {
         id: 'city-panorama',
+        code: 'CR-02',
         name: '天空城全景',
-        description: '沿拱廊远眺浮岛与瀑布',
+        region: '白塔回廊 · 主城方向',
+        description: '沿着高塔拱廊，远眺浮岛、云桥与倾泻的瀑布。',
         image: 'assets/cloud-realm-background.png',
         focus: { desktop: 'center 46%', tablet: '54% 46%', mobile: '50% 44%' },
       },
@@ -31,7 +35,7 @@ export const THEMES = {
     colors: {
       primary: '#173653',
       accent: '#b98b4d',
-      panel: 'rgba(255, 252, 245, .88)',
+      panel: 'rgba(255, 252, 245, .82)',
       text: '#15273a',
     },
     backgroundFocus: {

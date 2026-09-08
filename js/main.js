@@ -1,14 +1,15 @@
-import { icons } from './icons.js?v=cloud-realm-study-21';
+import { icons } from './icons.js?v=cloud-realm-study-23';
 import {
   books, categories, dailyBookmarks, notes, popularCategories, quotes, stats,
-} from './data.js?v=cloud-realm-study-21';
-import { applyScene, initTheme } from './theme.js?v=cloud-realm-study-21';
+} from './data.js?v=cloud-realm-study-23';
+import { applyScene, initTheme } from './theme.js?v=cloud-realm-study-23';
 
 const theme = initTheme();
 const app = document.querySelector('#app');
 const sidebar = document.querySelector('#sidebar');
 const topbar = document.querySelector('#topbar');
 const toast = document.querySelector('#toast');
+const sceneCaption = document.querySelector('#scene-caption');
 let activeCategory = 'all';
 let query = '';
 let bookmarkIndex = 0;
@@ -28,6 +29,7 @@ sidebar.innerHTML = `
   <button class="sidebar__explore" data-target="#categories"><span>${icons.astrolabe}</span><strong>探索更多</strong><small>未知的故事正在云海深处等待</small><i>→</i></button>`;
 
 topbar.innerHTML = `<div class="topbar__inner">
+  <button class="scene-status" id="scene-status" type="button" aria-label="打开天空城风景图鉴">${icons.astrolabe}<span><small>当前窗景</small><strong id="scene-status-name"></strong></span></button>
   <button class="circle-btn scenic-toggle" id="scenic-toggle" aria-label="进入观景模式" title="进入观景模式">${icons.telescope}</button>
   <button class="circle-btn" aria-label="通知">${icons.bell}</button>
   <button class="circle-btn" id="theme-button" aria-label="主题设置">${icons.settings}</button>
@@ -38,7 +40,7 @@ const statHTML = stats.map((s) => `<a class="stat-card" href="${s.target}"><span
 const noteHTML = notes.map((n) => `<article class="note-item"><span class="note-thumb"></span><span><strong>${n.title}</strong><small>${n.meta}</small></span></article>`).join('');
 const quoteHTML = quotes.map((q) => `<blockquote class="quote">${q.text}<cite>—— ${q.source}</cite></blockquote>`).join('');
 const categoryHTML = popularCategories.map((item) => `<button class="category-card" data-category="${item.category}" style="--category-art:url('${item.image}')"><span><strong>${item.title}</strong><small>${item.subtitle}</small></span><i>→</i></button>`).join('');
-const sceneHTML = theme.scenes.map((scene) => `<button class="scene-option ${document.documentElement.dataset.scene === scene.id ? 'is-active' : ''}" type="button" data-scene="${scene.id}"><span class="scene-option__preview" style="background-image:url('${scene.image}')"></span><span><strong>${scene.name}</strong><small>${scene.description}</small></span><i>✓</i></button>`).join('');
+const sceneHTML = theme.scenes.map((scene) => `<button class="scene-option ${document.documentElement.dataset.scene === scene.id ? 'is-active' : ''}" type="button" data-scene="${scene.id}"><span class="scene-option__preview" data-code="${scene.code}" style="background-image:url('${scene.image}')"></span><span><em>${scene.region}</em><strong>${scene.name}</strong><small>${scene.description}</small></span><i>✓</i></button>`).join('');
 
 app.innerHTML = `
   <section class="hero" id="top">
@@ -66,9 +68,10 @@ app.innerHTML = `
     <section class="category-section" id="categories"><div class="section-head"><div><span>EXPLORE THE ARCHIVE</span><h2>热门分类</h2></div><a href="#shelf">查看全部分类 →</a></div><div class="category-grid">${categoryHTML}</div></section>
     <section class="panel shelf" id="shelf"><div class="shelf__head"><h2>我的书架</h2><div class="tabs">${categories.map((c, i) => `<button class="tab ${i === 0 ? 'is-active' : ''}" data-category="${c.id}">${c.label}</button>`).join('')}</div><span class="shelf__more">共 24 本藏书</span></div><div class="books" id="books"></div></section>
   </div>
-  <aside class="theme-popover" id="settings"><h3>书房主题</h3><p>场景、配色与内容彼此解耦，新增风景只需扩展主题配置。</p><button class="theme-option" id="atmosphere"><span class="theme-swatch"></span><span><strong>${theme.name}</strong><small>点击切换晨光 / 暮色氛围</small></span></button><div class="scene-settings"><span class="scene-settings__label">天空城风景</span>${sceneHTML}</div></aside>`;
+  <aside class="theme-popover" id="settings"><h3>天空城风景图鉴</h3><p>选择一扇窗，抵达天空城的不同地点。后续新增风景只需扩展主题配置。</p><button class="theme-option" id="atmosphere"><span class="theme-swatch"></span><span><strong>${theme.name}</strong><small>点击切换晨光 / 暮色氛围</small></span></button><div class="scene-settings"><div class="scene-settings__head"><span class="scene-settings__label">可抵达的窗景</span><span class="scene-settings__count">${theme.scenes.length} LOCATIONS</span></div>${sceneHTML}<button class="scene-enter" id="scene-enter" type="button">${icons.telescope}<span>隐藏界面，欣赏当前风景</span></button></div></aside>`;
 
-document.querySelector('#scenic-next').innerHTML = `${icons.astrolabe}<span>切换风景</span>`;
+document.querySelector('#scenic-prev').innerHTML = `${icons.return}<span>上一处</span>`;
+document.querySelector('#scenic-next').innerHTML = `${icons.astrolabe}<span>下一处</span>`;
 document.querySelector('#scenic-return').innerHTML = `${icons.return}<span>返回书房</span>`;
 
 function renderBooks() {
@@ -93,11 +96,28 @@ function showToast(text) {
   showToast.timer = setTimeout(() => toast.classList.remove('is-visible'), 1800);
 }
 
-function selectScene(id, announce = true) {
-  const scene = applyScene(theme, id);
+function updateSceneUI(scene) {
+  document.querySelector('#scene-status-name').textContent = scene.name;
+  sceneCaption.innerHTML = `<span class="scene-caption__top">${scene.code} · ${scene.region}</span><h2>${scene.name}</h2><p>${scene.description}</p>`;
   document.querySelectorAll('.scene-option').forEach((option) => option.classList.toggle('is-active', option.dataset.scene === scene.id));
-  if (announce) showToast(`已抵达：${scene.name}`);
-  return scene;
+}
+
+function selectScene(id, announce = true) {
+  const nextScene = theme.scenes.find((item) => item.id === id) || theme.scenes[0];
+  document.body.classList.add('is-scene-changing');
+  window.setTimeout(() => {
+    const scene = applyScene(theme, nextScene.id);
+    updateSceneUI(scene);
+    window.setTimeout(() => document.body.classList.remove('is-scene-changing'), 300);
+  }, 170);
+  if (announce) showToast(`已抵达：${nextScene.name}`);
+  return nextScene;
+}
+
+function changeScene(offset) {
+  const current = theme.scenes.findIndex((scene) => scene.id === document.documentElement.dataset.scene);
+  const next = (current + offset + theme.scenes.length) % theme.scenes.length;
+  selectScene(theme.scenes[next].id);
 }
 
 function setScenicMode(enabled) {
@@ -110,6 +130,9 @@ function setScenicMode(enabled) {
 }
 
 renderBooks();
+updateSceneUI(theme.scenes.find((scene) => scene.id === document.documentElement.dataset.scene) || theme.scenes[0]);
+const preloadScenes = () => theme.scenes.forEach((scene) => { const image = new Image(); image.src = scene.image; });
+if ('requestIdleCallback' in window) window.requestIdleCallback(preloadScenes); else window.setTimeout(preloadScenes, 900);
 
 document.querySelectorAll('[data-target]').forEach((button) => button.addEventListener('click', () => {
   if (button.classList.contains('nav__item')) {
@@ -134,15 +157,17 @@ document.querySelector('#daily-bookmark').addEventListener('click', () => {
 });
 document.addEventListener('keydown', (event) => {
   if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); document.querySelector('#search').focus(); }
+  if (document.body.classList.contains('is-scenic') && event.key === 'ArrowLeft') changeScene(-1);
+  if (document.body.classList.contains('is-scenic') && event.key === 'ArrowRight') changeScene(1);
   if (event.key === 'Escape' && document.body.classList.contains('is-scenic')) setScenicMode(false);
   else if (event.key === 'Escape') document.querySelector('#settings').classList.remove('is-open');
 });
 document.querySelector('#scenic-toggle').addEventListener('click', () => setScenicMode(true));
+document.querySelector('#scene-enter').addEventListener('click', () => setScenicMode(true));
+document.querySelector('#scene-status').addEventListener('click', () => document.querySelector('#settings').classList.toggle('is-open'));
 document.querySelector('#scenic-return').addEventListener('click', () => setScenicMode(false));
-document.querySelector('#scenic-next').addEventListener('click', () => {
-  const current = theme.scenes.findIndex((scene) => scene.id === document.documentElement.dataset.scene);
-  selectScene(theme.scenes[(current + 1) % theme.scenes.length].id);
-});
+document.querySelector('#scenic-prev').addEventListener('click', () => changeScene(-1));
+document.querySelector('#scenic-next').addEventListener('click', () => changeScene(1));
 document.querySelector('#theme-button').addEventListener('click', () => document.querySelector('#settings').classList.toggle('is-open'));
 document.querySelector('#atmosphere').addEventListener('click', () => {
   const root = document.documentElement;

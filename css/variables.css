@@ -12,8 +12,8 @@
   --gold-light: #e7c992;
   --paper: #f8f4eb;
   --paper-strong: #fffdf8;
-  --glass: rgba(255, 252, 245, .88);
-  --glass-soft: rgba(251, 248, 240, .74);
+  --glass: rgba(255, 252, 245, .82);
+  --glass-soft: rgba(251, 248, 240, .66);
   --line: rgba(46, 61, 76, .12);
   --line-gold: rgba(185, 139, 77, .3);
   --shadow: 0 14px 42px rgba(18, 36, 55, .14);
@@ -30,8 +30,8 @@
 
 [data-theme="cloud-realm"][data-atmosphere="dusk"] {
   --paper: #eee8de;
-  --glass: rgba(247, 240, 230, .9);
-  --glass-soft: rgba(241, 232, 219, .76);
+  --glass: rgba(247, 240, 230, .84);
+  --glass-soft: rgba(241, 232, 219, .7);
   --gold: #c38548;
   --blue: #4b587a;
   --scene-position: center 56%;
