@@ -28,8 +28,8 @@ export const THEMES = {
         name: '天空城全景',
         region: '白塔回廊 · 主城方向',
         description: '沿着高塔拱廊，远眺浮岛、云桥与倾泻的瀑布。',
-        image: 'assets/cloud-realm-background.png',
-        focus: { desktop: 'center 46%', tablet: '54% 46%', mobile: '50% 44%' },
+        image: 'assets/sky-city-panorama-forbidden-archive.png',
+        focus: { desktop: '54% 50%', tablet: '58% 50%', mobile: '58% 48%' },
       },
     ],
     colors: {
