@@ -1,15 +1,21 @@
 .world { position: fixed; inset: 0; z-index: 0; overflow: hidden; background: #b9daf3; }
 .world__art { width: 100%; height: 100%; object-fit: cover; object-position: var(--scene-position); transition: filter .5s ease, transform 1.2s ease; }
-.world__veil { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, rgba(7,20,35,.2), transparent 20%, transparent 76%, rgba(7,20,35,.12)), linear-gradient(180deg, transparent 40%, rgba(243,238,228,.08) 54%, rgba(239,232,219,.83) 76%, #e9dfd0 100%); }
+.world__veil { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, rgba(7,20,35,.2), transparent 20%, transparent 76%, rgba(7,20,35,.12)), linear-gradient(180deg, transparent 43%, rgba(243,238,228,.05) 57%, rgba(239,232,219,.68) 79%, rgba(233,223,208,.9) 100%); transition:opacity .45s ease; }
 [data-atmosphere="dusk"] .world__art { filter: sepia(.16) saturate(.88) brightness(.76) hue-rotate(9deg); }
 
-.sidebar { position: fixed; inset: 0 auto 0 0; z-index: 30; width: var(--sidebar-w); display: flex; flex-direction: column; padding: 26px 17px 20px; color: rgba(242,246,249,.82); overflow: hidden; background: linear-gradient(180deg, rgba(8,25,43,.9), rgba(15,40,65,.8)); border-right: 1px solid rgba(231,201,146,.28); box-shadow: 15px 0 45px rgba(5,19,34,.17); backdrop-filter: blur(16px) saturate(1.1); }
+.sidebar { position: fixed; inset: 0 auto 0 0; z-index: 30; width: var(--sidebar-w); display: flex; flex-direction: column; padding: 26px 17px 20px; color: rgba(242,246,249,.82); overflow: hidden; background: linear-gradient(180deg, rgba(8,25,43,.9), rgba(15,40,65,.8)); border-right: 1px solid rgba(231,201,146,.28); box-shadow: 15px 0 45px rgba(5,19,34,.17); backdrop-filter: blur(16px) saturate(1.1); transition:opacity .35s ease,transform .35s ease; }
 .sidebar::before { content:""; position:absolute; inset:0; z-index:-1; opacity:.2; background: radial-gradient(circle at 50% 10%, transparent 0 42px, rgba(231,201,146,.45) 43px 44px, transparent 45px), repeating-linear-gradient(135deg, transparent 0 28px, rgba(231,201,146,.055) 29px 30px); }
-.topbar { position: fixed; top: 0; left: var(--sidebar-w); right: 0; z-index: 25; min-height: var(--topbar-h); padding: 17px clamp(24px,2vw,40px); display: flex; justify-content: flex-end; align-items: center; pointer-events: none; }
+.topbar { position: fixed; top: 0; left: var(--sidebar-w); right: 0; z-index: 25; min-height: var(--topbar-h); padding: 17px clamp(24px,2vw,40px); display: flex; justify-content: flex-end; align-items: center; pointer-events: none; transition:opacity .35s ease,visibility .35s ease; }
 .topbar > * { pointer-events: auto; }
-.main { position: relative; z-index: 10; width: calc(100% - var(--sidebar-w)); margin-left: var(--sidebar-w); min-height: 100vh; padding: 0 clamp(24px,2vw,40px) 52px; }
+.main { position: relative; z-index: 10; width: calc(100% - var(--sidebar-w)); margin-left: var(--sidebar-w); min-height: 100vh; padding: 0 clamp(24px,2vw,40px) 52px; transition:opacity .35s ease,visibility .35s ease; }
 .hero { height: clamp(470px, 55vh, 590px); position: relative; }
 .dashboard { width: 100%; max-width: none; margin: 0; }
+
+body.is-scenic { height:100vh; overflow:hidden; }
+body.is-scenic .main,body.is-scenic .topbar { opacity:0; visibility:hidden; pointer-events:none; }
+body.is-scenic .world__veil { opacity:0; }
+body.is-scenic .sidebar { opacity:.28; transform:translateX(calc(-100% + 58px)); }
+body.is-scenic .sidebar:hover,body.is-scenic .sidebar:focus-within { opacity:1; transform:translateX(0); }
 
 @media (max-width: 1180px) {
   :root { --sidebar-w: 88px; }
@@ -25,5 +31,8 @@
   .hero { height: 500px; }
   .world { background: linear-gradient(180deg,#9ed0ef 0 500px,#eee6d9 720px,#e8ddcf 100%); }
   .world__art { height: 520px; object-position: var(--scene-position-mobile); }
+  body.is-scenic .world__art { height:100%; }
   .world__veil { background: linear-gradient(180deg,rgba(8,24,40,.08),transparent 300px,rgba(244,239,229,.34) 455px,#efe7da 710px,#e8ddcf 100%); }
+  body.is-scenic .sidebar { opacity:.24; transform:translateY(calc(100% - 16px)); }
+  body.is-scenic .sidebar:hover,body.is-scenic .sidebar:focus-within { opacity:1; transform:none; }
 }

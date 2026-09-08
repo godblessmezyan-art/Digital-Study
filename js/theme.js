@@ -11,6 +11,23 @@ export const THEMES = {
     welcomeTitle: '云天幻境',
     subtitle: '在云海之上，遇见更大的世界',
     background: 'assets/cloud-realm-study-v2.png',
+    defaultScene: 'sky-study',
+    scenes: [
+      {
+        id: 'sky-study',
+        name: '云端书房',
+        description: '从藏书塔眺望天空主城',
+        image: 'assets/cloud-realm-study-v2.png',
+        focus: { desktop: 'center 48%', tablet: '54% 48%', mobile: '52% 45%' },
+      },
+      {
+        id: 'city-panorama',
+        name: '天空城全景',
+        description: '沿拱廊远眺浮岛与瀑布',
+        image: 'assets/cloud-realm-background.png',
+        focus: { desktop: 'center 46%', tablet: '54% 46%', mobile: '50% 44%' },
+      },
+    ],
     colors: {
       primary: '#173653',
       accent: '#b98b4d',
@@ -27,25 +44,42 @@ export const THEMES = {
     dailyBookmarkSource: 'dailyBookmarks',
     categoryArtwork: 'assets/cloud-realm-study-v2.png',
     atmosphere: 'day',
+    atmospheres: {
+      day: { id: 'day', name: '晨光' },
+      dusk: { id: 'dusk', name: '暮色' },
+    },
   },
 };
 
 const KEY = 'library-theme';
+const SCENE_KEY = 'library-scene';
+const ATMOSPHERE_KEY = 'library-atmosphere';
+
+export function applyScene(theme, id) {
+  const scenes = theme.scenes?.length ? theme.scenes : [{ id: 'default', image: theme.background, focus: theme.backgroundFocus }];
+  const scene = scenes.find((item) => item.id === id) || scenes.find((item) => item.id === theme.defaultScene) || scenes[0];
+  const root = document.documentElement;
+  root.dataset.scene = scene.id;
+  root.style.setProperty('--scene-position', scene.focus?.desktop || theme.backgroundFocus.desktop);
+  root.style.setProperty('--scene-position-mobile', scene.focus?.mobile || theme.backgroundFocus.mobile);
+  root.style.setProperty('--scene-position-tablet', scene.focus?.tablet || scene.focus?.desktop || theme.backgroundFocus.tablet || theme.backgroundFocus.desktop);
+  document.querySelector('.world__art')?.setAttribute('src', scene.image);
+  localStorage.setItem(SCENE_KEY, scene.id);
+  return scene;
+}
 
 export function applyTheme(id = 'cloud-realm') {
   const theme = THEMES[id] || THEMES['cloud-realm'];
   const root = document.documentElement;
   root.dataset.theme = theme.id;
-  root.dataset.atmosphere = theme.atmosphere;
+  const storedAtmosphere = localStorage.getItem(ATMOSPHERE_KEY);
+  root.dataset.atmosphere = theme.atmospheres?.[storedAtmosphere] ? storedAtmosphere : theme.atmosphere;
   root.style.setProperty('--navy', theme.colors.primary);
   root.style.setProperty('--gold', theme.colors.accent);
   root.style.setProperty('--glass', theme.colors.panel);
   root.style.setProperty('--ink', theme.colors.text);
-  root.style.setProperty('--scene-position', theme.backgroundFocus.desktop);
-  root.style.setProperty('--scene-position-mobile', theme.backgroundFocus.mobile);
-  root.style.setProperty('--scene-position-tablet', theme.backgroundFocus.tablet || theme.backgroundFocus.desktop);
-  document.querySelector('.world__art')?.setAttribute('src', theme.background);
   localStorage.setItem(KEY, theme.id);
+  applyScene(theme, localStorage.getItem(SCENE_KEY) || theme.defaultScene);
   return theme;
 }
 

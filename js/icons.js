@@ -12,6 +12,8 @@ export const icons = {
   alchemy: svg('<circle cx="12" cy="12" r="3"/><path d="M19 14.5l1.5 1-2 3.5-1.8-.8a8 8 0 0 1-2.2 1.3l-.2 2h-4l-.3-2a8 8 0 0 1-2.2-1.3L6 19l-2-3.5 1.5-1a8 8 0 0 1 0-2.5L4 11l2-3.5 1.8.8A8 8 0 0 1 10 7l.3-2h4l.2 2a8 8 0 0 1 2.2 1.3l1.8-.8 2 3.5-1.5 1a8 8 0 0 1 0 2.5z"/><path d="m12 9 1 2 2 1-2 1-1 2-1-2-2-1 2-1z"/>'),
   search: svg('<circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.3 15.3 4.7 4.7M19 4v3m-1.5-1.5h3M5 18v2m-1-1h2"/>'),
   bell: svg('<path d="M6 17h12l-1.5-2.5V10a4.5 4.5 0 0 0-9 0v4.5zM10 20h4"/><path d="M12 3V1m-2.5 1h5M4 9l-1 1m17-1 1 1"/>'),
+  telescope: svg('<path d="m4 14 11-6 2 3-11 6z"/><path d="m15 8 2.5-1.4 2 3.5L17 11.5M8 16l4 6m2-8-2 8M9.5 15l3.5-1.9"/><path d="M3 13.5 5.2 17M18.5 5.5l1-1m1.5 3 1-.2"/>'),
+  return: svg('<path d="M9 7 4 12l5 5M5 12h9a5 5 0 0 1 5 5v1"/><path d="M15 4h4v4"/>'),
   sigil: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.15" aria-hidden="true"><circle cx="32" cy="32" r="20"/><circle cx="32" cy="32" r="5"/><path d="M32 2v60M2 32h60M11 11l42 42m0-42L11 53M32 12l6.2 13.8L52 32l-13.8 6.2L32 52l-6.2-13.8L12 32l13.8-6.2z"/><path d="M28 2h8M28 62h8M2 28v8M62 28v8"/><circle cx="32" cy="32" r="27" stroke-dasharray="1 5"/></svg>`,
 };
 
