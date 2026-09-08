@@ -1,8 +1,8 @@
-import { icons } from './icons.js?v=cloud-realm-study-24';
+import { icons } from './icons.js?v=cloud-realm-study-26';
 import {
   books, categories, dailyBookmarks, notes, popularCategories, quotes, stats,
-} from './data.js?v=cloud-realm-study-24';
-import { applyScene, initTheme } from './theme.js?v=cloud-realm-study-24';
+} from './data.js?v=cloud-realm-study-26';
+import { applyScene, initTheme } from './theme.js?v=cloud-realm-study-26';
 
 const theme = initTheme();
 const app = document.querySelector('#app');
@@ -36,7 +36,7 @@ topbar.innerHTML = `<div class="topbar__inner">
   <button class="circle-btn avatar" aria-label="个人中心">旅</button>
 </div>`;
 
-const statHTML = stats.map((s) => `<a class="stat-card" href="${s.target}"><span class="stat-card__icon">${icons[s.icon]}</span><span class="stat-card__copy"><strong>${s.label}</strong><small>${s.detail}</small></span><span class="stat-card__arrow">›</span></a>`).join('');
+const statHTML = stats.map((s) => `<a class="stat-card" href="${s.target}"><span class="stat-card__watermark" aria-hidden="true">${icons[s.icon]}</span><span class="stat-card__icon">${icons[s.icon]}</span><span class="stat-card__copy"><strong>${s.label}</strong><small>${s.detail}</small></span><span class="stat-card__arrow">›</span></a>`).join('');
 const noteHTML = notes.map((n) => `<article class="note-item"><span class="note-thumb"></span><span><strong>${n.title}</strong><small>${n.meta}</small></span></article>`).join('');
 const quoteHTML = quotes.map((q) => `<blockquote class="quote">${q.text}<cite>—— ${q.source}</cite></blockquote>`).join('');
 const categoryHTML = popularCategories.map((item) => `<button class="category-card" data-category="${item.category}" style="--category-art:url('${item.image}')"><span><strong>${item.title}</strong><small>${item.subtitle}</small></span><i>→</i></button>`).join('');
@@ -61,7 +61,7 @@ app.innerHTML = `
   <div class="dashboard">
     <section class="stat-grid" aria-label="书房概览">${statHTML}</section>
     <section class="content-grid">
-      <article class="panel reading"><div class="reading__cover"></div><div class="reading__body"><span class="reading__label">继续阅读 · 第十二章</span><h2>三体</h2><p class="reading__author">刘慈欣</p><div class="progress-line"><i></i><span>已读 42%</span></div><button class="primary-btn" data-action="read">继续阅读 →</button></div></article>
+      <article class="panel reading" id="continue-reading"><div class="reading__art" aria-hidden="true"></div><div class="reading__cover"></div><div class="reading__body"><span class="reading__label">继续阅读 · 第十二章</span><h2>三体</h2><p class="reading__author">刘慈欣</p><div class="reading__meta"><span>上次阅读 <time datetime="2026-09-07T22:36">昨晚 22:36</time></span><span>预计剩余 <time datetime="PT4H20M">4 小时 20 分</time></span></div><div class="progress-line"><i><b aria-hidden="true">✦</b></i><span>已读 42%</span></div><button class="primary-btn" data-action="read">继续阅读 →</button></div></article>
       <section class="panel notes-panel" id="notes"><div class="panel__head"><h2 class="panel__title">最近笔记</h2><button class="panel__more">查看全部 →</button></div><div class="notes">${noteHTML}</div></section>
       <section class="panel quotes-panel" id="quotes"><div class="panel__head"><h2 class="panel__title">精选书摘</h2><button class="panel__more">查看全部 →</button></div><div class="quotes">${quoteHTML}</div></section>
     </section>
@@ -133,6 +133,21 @@ renderBooks();
 updateSceneUI(theme.scenes.find((scene) => scene.id === document.documentElement.dataset.scene) || theme.scenes[0]);
 const preloadScenes = () => theme.scenes.forEach((scene) => { const image = new Image(); image.src = scene.image; });
 if ('requestIdleCallback' in window) window.requestIdleCallback(preloadScenes); else window.setTimeout(preloadScenes, 900);
+
+const readingCard = document.querySelector('#continue-reading');
+if (window.matchMedia('(pointer:fine) and (prefers-reduced-motion:no-preference)').matches) {
+  readingCard.addEventListener('pointermove', (event) => {
+    const bounds = readingCard.getBoundingClientRect();
+    const x = ((event.clientX - bounds.left) / bounds.width - .5) * -9;
+    const y = ((event.clientY - bounds.top) / bounds.height - .5) * -6;
+    readingCard.style.setProperty('--parallax-x', `${x}px`);
+    readingCard.style.setProperty('--parallax-y', `${y}px`);
+  });
+  readingCard.addEventListener('pointerleave', () => {
+    readingCard.style.setProperty('--parallax-x', '0px');
+    readingCard.style.setProperty('--parallax-y', '0px');
+  });
+}
 
 document.querySelectorAll('[data-target]').forEach((button) => button.addEventListener('click', () => {
   if (button.classList.contains('nav__item')) {
