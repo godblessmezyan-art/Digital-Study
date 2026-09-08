@@ -1,8 +1,8 @@
-import { icons } from './icons.js?v=cloud-realm-study-23';
+import { icons } from './icons.js?v=cloud-realm-study-24';
 import {
   books, categories, dailyBookmarks, notes, popularCategories, quotes, stats,
-} from './data.js?v=cloud-realm-study-23';
-import { applyScene, initTheme } from './theme.js?v=cloud-realm-study-23';
+} from './data.js?v=cloud-realm-study-24';
+import { applyScene, initTheme } from './theme.js?v=cloud-realm-study-24';
 
 const theme = initTheme();
 const app = document.querySelector('#app');
@@ -65,10 +65,10 @@ app.innerHTML = `
       <section class="panel notes-panel" id="notes"><div class="panel__head"><h2 class="panel__title">最近笔记</h2><button class="panel__more">查看全部 →</button></div><div class="notes">${noteHTML}</div></section>
       <section class="panel quotes-panel" id="quotes"><div class="panel__head"><h2 class="panel__title">精选书摘</h2><button class="panel__more">查看全部 →</button></div><div class="quotes">${quoteHTML}</div></section>
     </section>
-    <section class="category-section" id="categories"><div class="section-head"><div><span>EXPLORE THE ARCHIVE</span><h2>热门分类</h2></div><a href="#shelf">查看全部分类 →</a></div><div class="category-grid">${categoryHTML}</div></section>
+    <section class="category-section" id="categories"><div class="section-head"><div><span>漫游云端藏书世界</span><h2>热门分类</h2></div><a href="#shelf">查看全部分类 →</a></div><div class="category-grid">${categoryHTML}</div></section>
     <section class="panel shelf" id="shelf"><div class="shelf__head"><h2>我的书架</h2><div class="tabs">${categories.map((c, i) => `<button class="tab ${i === 0 ? 'is-active' : ''}" data-category="${c.id}">${c.label}</button>`).join('')}</div><span class="shelf__more">共 24 本藏书</span></div><div class="books" id="books"></div></section>
   </div>
-  <aside class="theme-popover" id="settings"><h3>天空城风景图鉴</h3><p>选择一扇窗，抵达天空城的不同地点。后续新增风景只需扩展主题配置。</p><button class="theme-option" id="atmosphere"><span class="theme-swatch"></span><span><strong>${theme.name}</strong><small>点击切换晨光 / 暮色氛围</small></span></button><div class="scene-settings"><div class="scene-settings__head"><span class="scene-settings__label">可抵达的窗景</span><span class="scene-settings__count">${theme.scenes.length} LOCATIONS</span></div>${sceneHTML}<button class="scene-enter" id="scene-enter" type="button">${icons.telescope}<span>隐藏界面，欣赏当前风景</span></button></div></aside>`;
+  <aside class="theme-popover" id="settings"><h3>天空城风景图鉴</h3><p>选择一扇窗，抵达天空城的不同地点。后续新增风景只需扩展主题配置。</p><button class="theme-option" id="atmosphere"><span class="theme-swatch"></span><span><strong>${theme.name}</strong><small>点击切换晨光 / 暮色氛围</small></span></button><div class="scene-settings"><div class="scene-settings__head"><span class="scene-settings__label">可抵达的窗景</span><span class="scene-settings__count">共 ${theme.scenes.length} 处风景</span></div>${sceneHTML}<button class="scene-enter" id="scene-enter" type="button">${icons.telescope}<span>隐藏界面，欣赏当前风景</span></button></div></aside>`;
 
 document.querySelector('#scenic-prev').innerHTML = `${icons.return}<span>上一处</span>`;
 document.querySelector('#scenic-next').innerHTML = `${icons.astrolabe}<span>下一处</span>`;

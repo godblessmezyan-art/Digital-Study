@@ -1,6 +1,6 @@
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; min-width: 320px; min-height: 100vh; overflow-x: hidden; color: var(--ink); background: var(--navy-2); font: 15px/1.7 var(--sans); -webkit-font-smoothing: antialiased; }
+body { margin:0; min-width:320px; min-height:100vh; overflow-x:hidden; color:var(--ink); background:var(--navy-2); font:15px/1.75 var(--sans); font-kerning:normal; text-rendering:optimizeLegibility; -webkit-font-smoothing:antialiased; }
 button, input { font: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
 button { color: inherit; border: 0; cursor: pointer; }

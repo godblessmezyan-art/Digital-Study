@@ -21,8 +21,9 @@
   --sidebar-w: 196px;
   --topbar-h: 82px;
   --radius: 17px;
-  --serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", Georgia, serif;
-  --sans: Inter, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --display: "Noto Serif SC", "Source Han Serif SC", "Source Han Serif CN", "Songti SC", "STSong", "SimSun", serif;
+  --serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", serif;
+  --sans: Inter, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", sans-serif;
   --scene-position: center 48%;
   --scene-position-mobile: 55% 50%;
   --scene-position-tablet: 54% 48%;
