@@ -1,8 +1,8 @@
-import { icons } from './icons.js?v=cloud-realm-study-27';
+import { icons } from './icons.js?v=cloud-realm-study-29';
 import {
   books, categories, dailyBookmarks, notes, popularCategories, quotes, stats,
-} from './data.js?v=cloud-realm-study-27';
-import { applyScene, initTheme } from './theme.js?v=cloud-realm-study-27';
+} from './data.js?v=cloud-realm-study-29';
+import { applyScene, initTheme } from './theme.js?v=cloud-realm-study-29';
 
 const theme = initTheme();
 const app = document.querySelector('#app');
