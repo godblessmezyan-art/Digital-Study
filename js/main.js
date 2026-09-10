@@ -2,7 +2,7 @@ import { icons } from './icons.js?v=cloud-realm-study-29';
 import {
   books, categories, dailyBookmarks, notes, popularCategories, quotes, stats,
 } from './data.js?v=cloud-realm-study-29';
-import { applyScene, initTheme } from './theme.js?v=cloud-realm-study-29';
+import { applyScene, initTheme } from './theme.js?v=cloud-realm-study-30';
 
 const theme = initTheme();
 const app = document.querySelector('#app');
