@@ -2,7 +2,7 @@ import { icons } from './icons.js?v=cloud-realm-study-29';
 import {
   books, categories, dailyBookmarks, notes, popularCategories, quotes, stats,
 } from './data.js?v=cloud-realm-study-29';
-import { applyScene, initTheme } from './theme.js?v=cloud-realm-study-30';
+import { applyScene, initTheme } from './theme.js?v=cloud-realm-study-35';
 
 const theme = initTheme();
 const app = document.querySelector('#app');
@@ -13,6 +13,8 @@ const sceneCaption = document.querySelector('#scene-caption');
 let activeCategory = 'all';
 let query = '';
 let bookmarkIndex = 0;
+let atlasSceneId = document.documentElement.dataset.scene;
+let atlasViewId = document.documentElement.dataset.sceneView || 'default';
 
 const navItems = [
   ['首页', 'tower', '#top'], ['我的书架', 'tome', '#shelf'], ['书籍分类', 'astrolabe', '#categories'],
@@ -29,7 +31,7 @@ sidebar.innerHTML = `
   <button class="sidebar__explore" data-target="#categories"><span>${icons.astrolabe}</span><strong>探索更多</strong><small>未知的故事正在云海深处等待</small><i>→</i></button>`;
 
 topbar.innerHTML = `<div class="topbar__inner">
-  <button class="scene-status" id="scene-status" type="button" aria-label="打开天空城风景图鉴">${icons.astrolabe}<span><small>当前窗景</small><strong id="scene-status-name"></strong></span></button>
+  <button class="scene-status" id="scene-status" type="button" aria-label="打开天空城航行图"><span class="scene-status__astrolabe" aria-hidden="true">${icons.astrolabe}</span><span><small>当前窗景</small><strong id="scene-status-name"></strong></span></button>
   <button class="circle-btn scenic-toggle" id="scenic-toggle" aria-label="进入观景模式" title="进入观景模式">${icons.telescope}</button>
   <button class="circle-btn" aria-label="通知">${icons.bell}</button>
   <button class="circle-btn" id="theme-button" aria-label="主题设置">${icons.settings}</button>
@@ -40,7 +42,7 @@ const statHTML = stats.map((s) => `<a class="stat-card" href="${s.target}"><span
 const noteHTML = notes.map((n) => `<article class="note-item"><span class="note-thumb"></span><span><strong>${n.title}</strong><small>${n.meta}</small></span></article>`).join('');
 const quoteHTML = quotes.map((q) => `<blockquote class="quote">${q.text}<cite>—— ${q.source}</cite></blockquote>`).join('');
 const categoryHTML = popularCategories.map((item) => `<button class="category-card" data-category="${item.category}" style="--category-art:url('${item.image}')"><span><strong>${item.title}</strong><small>${item.subtitle}</small></span><i>→</i></button>`).join('');
-const sceneHTML = theme.scenes.map((scene) => `<button class="scene-option ${document.documentElement.dataset.scene === scene.id ? 'is-active' : ''}" type="button" data-scene="${scene.id}"><span class="scene-option__preview" data-code="${scene.code}" style="background-image:url('${scene.image}')"></span><span><em>${scene.region}</em><strong>${scene.name}</strong><small>${scene.description}</small></span><i>✓</i></button>`).join('');
+const mapPinHTML = theme.scenes.filter((scene) => scene.map).map((scene) => `<button class="map-pin ${document.documentElement.dataset.scene === scene.id ? 'is-active is-selected' : ''}" type="button" data-scene="${scene.id}" style="--pin-x:${scene.map.x}%;--pin-y:${scene.map.y}%" aria-label="选择${scene.name}"><span class="map-pin__orbit" aria-hidden="true"></span><b>${scene.map.marker}</b><span class="map-pin__label">${scene.name}</span></button>`).join('');
 
 app.innerHTML = `
   <section class="hero" id="top">
@@ -68,7 +70,43 @@ app.innerHTML = `
     <section class="category-section" id="categories"><div class="section-head"><div><span>漫游云端藏书世界</span><h2>热门分类</h2></div><a href="#shelf">查看全部分类 →</a></div><div class="category-grid">${categoryHTML}</div></section>
     <section class="panel shelf" id="shelf"><div class="shelf__head"><h2>我的书架</h2><div class="tabs">${categories.map((c, i) => `<button class="tab ${i === 0 ? 'is-active' : ''}" data-category="${c.id}">${c.label}</button>`).join('')}</div><span class="shelf__more">共 24 本藏书</span></div><div class="books" id="books"></div></section>
   </div>
-  <aside class="theme-popover" id="settings"><h3>天空城风景图鉴</h3><p>选择一扇窗，抵达天空城的不同地点。后续新增风景只需扩展主题配置。</p><button class="theme-option" id="atmosphere"><span class="theme-swatch"></span><span><strong>${theme.name}</strong><small>点击切换晨光 / 暮色氛围</small></span></button><div class="scene-settings"><div class="scene-settings__head"><span class="scene-settings__label">可抵达的窗景</span><span class="scene-settings__count">共 ${theme.scenes.length} 处风景</span></div>${sceneHTML}<button class="scene-enter" id="scene-enter" type="button">${icons.telescope}<span>隐藏界面，欣赏当前风景</span></button></div></aside>`;
+  <aside class="scene-atlas" id="settings" role="dialog" aria-modal="true" aria-labelledby="atlas-title" aria-hidden="true">
+    <button class="scene-atlas__backdrop" type="button" data-atlas-close aria-label="关闭航行图"></button>
+    <section class="scene-atlas__panel">
+      <header class="scene-atlas__head">
+        <span class="atlas-sigil" aria-hidden="true">${icons.astrolabe}</span>
+        <span><small>${theme.name} · CELESTIAL ATLAS</small><h2 id="atlas-title">${theme.navigator.title}</h2><p>${theme.navigator.subtitle}</p></span>
+        <button class="scene-atlas__close" id="atlas-close" type="button" aria-label="关闭航行图">×</button>
+      </header>
+      <div class="scene-atlas__body">
+        <div class="atlas-map-frame">
+          <span class="atlas-map-frame__corner atlas-map-frame__corner--a" aria-hidden="true"></span>
+          <span class="atlas-map-frame__corner atlas-map-frame__corner--b" aria-hidden="true"></span>
+          <div class="atlas-map">
+            <img data-atlas-src="${theme.navigator.image}" alt="云天幻境场景分布地图" />
+            ${mapPinHTML}
+          </div>
+          <span class="atlas-map__hint">选择地图上的黄铜坐标</span>
+          <button class="atlas-home" type="button" data-atlas-home><span aria-hidden="true">⌂</span> 一键返回首页</button>
+        </div>
+        <aside class="atlas-detail" aria-live="polite">
+          <span class="atlas-detail__code" id="atlas-detail-code"></span>
+          <div class="atlas-detail__preview" id="atlas-detail-preview"></div>
+          <h3 id="atlas-detail-name"></h3>
+          <span class="atlas-detail__region" id="atlas-detail-region"></span>
+          <div class="atlas-view-switcher" id="atlas-view-switcher" aria-label="选择地点视角"></div>
+          <p id="atlas-detail-description"></p>
+          <button class="atlas-travel" id="atlas-travel" type="button"><span>抵达此处</span><i aria-hidden="true">→</i></button>
+          <button class="theme-option atlas-atmosphere" id="atmosphere"><span class="theme-swatch"></span><span><strong>天光校准</strong><small>切换晨光 / 暮色氛围</small></span></button>
+          <button class="scene-enter" id="scene-enter" type="button">${icons.telescope}<span>隐藏界面，欣赏当前风景</span></button>
+        </aside>
+      </div>
+    </section>
+  </aside>`;
+
+// The atlas is rendered with the page template, then moved to the viewport root
+// so its modal layer is not constrained by the main content stacking context.
+document.body.append(document.querySelector('#settings'));
 
 document.querySelector('#scenic-prev').innerHTML = `${icons.return}<span>上一处</span>`;
 document.querySelector('#scenic-next').innerHTML = `${icons.astrolabe}<span>下一处</span>`;
@@ -98,16 +136,69 @@ function showToast(text) {
 
 function updateSceneUI(scene) {
   document.querySelector('#scene-status-name').textContent = scene.name;
-  sceneCaption.innerHTML = `<span class="scene-caption__top">${scene.code} · ${scene.region}</span><h2>${scene.name}</h2><p>${scene.description}</p>`;
-  document.querySelectorAll('.scene-option').forEach((option) => option.classList.toggle('is-active', option.dataset.scene === scene.id));
+  const visual = scene.activeView || scene;
+  sceneCaption.innerHTML = `<span class="scene-caption__top">${scene.code} · ${visual.region}</span><h2>${scene.name}${scene.activeView ? ` · ${scene.activeView.name}` : ''}</h2><p>${visual.description}</p>`;
+  document.querySelectorAll('.map-pin').forEach((pin) => pin.classList.toggle('is-active', pin.dataset.scene === scene.id));
+  document.querySelector('[data-atlas-home]').classList.toggle('is-active', scene.id === theme.defaultScene);
 }
 
-function selectScene(id, announce = true) {
+function updateAtlasSelection(id, viewId = null) {
+  const scene = theme.scenes.find((item) => item.id === id) || theme.scenes[0];
+  const view = scene.views?.find((item) => item.id === viewId) || scene.views?.[0] || null;
+  const visual = view || scene;
+  atlasSceneId = scene.id;
+  atlasViewId = view?.id || 'default';
+  document.querySelectorAll('.map-pin').forEach((pin) => pin.classList.toggle('is-selected', pin.dataset.scene === scene.id));
+  document.querySelector('#atlas-detail-code').textContent = scene.map ? `${scene.code} · 坐标 ${scene.map.marker}` : `${scene.code} · 主航道`;
+  document.querySelector('#atlas-detail-preview').style.backgroundImage = `url('${visual.image}')`;
+  document.querySelector('#atlas-detail-name').textContent = view ? `${scene.name} · ${view.name}` : scene.name;
+  document.querySelector('#atlas-detail-region').textContent = visual.region;
+  document.querySelector('#atlas-detail-description').textContent = visual.description;
+  const viewSwitcher = document.querySelector('#atlas-view-switcher');
+  viewSwitcher.hidden = !scene.views?.length;
+  viewSwitcher.innerHTML = scene.views?.map((item) => `<button type="button" class="atlas-view ${item.id === atlasViewId ? 'is-active' : ''}" data-view="${item.id}" style="--view-image:url('${item.image}')"><span></span><b>${item.name}</b></button>`).join('') || '';
+  const travelButton = document.querySelector('#atlas-travel');
+  const isCurrent = scene.id === document.documentElement.dataset.scene && atlasViewId === document.documentElement.dataset.sceneView;
+  travelButton.classList.toggle('is-current', isCurrent);
+  travelButton.querySelector('span').textContent = isCurrent ? '当前所在位置' : '抵达此处';
+  travelButton.querySelector('i').textContent = isCurrent ? '✓' : '→';
+  return scene;
+}
+
+function openAtlas() {
+  const atlas = document.querySelector('#settings');
+  const mapImage = atlas.querySelector('[data-atlas-src]');
+  if (!mapImage.getAttribute('src')) mapImage.setAttribute('src', mapImage.dataset.atlasSrc);
+  updateAtlasSelection(document.documentElement.dataset.scene, document.documentElement.dataset.sceneView);
+  atlas.classList.add('is-open');
+  atlas.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('is-atlas-open');
+  window.setTimeout(() => document.querySelector('#atlas-close').focus(), 80);
+}
+
+function closeAtlas() {
+  const atlas = document.querySelector('#settings');
+  atlas.classList.remove('is-open');
+  atlas.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('is-atlas-open');
+}
+
+function changeAtlasSelection(offset) {
+  const current = theme.scenes.findIndex((scene) => scene.id === atlasSceneId);
+  const next = (current + offset + theme.scenes.length) % theme.scenes.length;
+  const scene = updateAtlasSelection(theme.scenes[next].id);
+  const destination = document.querySelector(`.map-pin[data-scene="${scene.id}"]`) || document.querySelector('[data-atlas-home]');
+  destination?.focus({ preventScroll: true });
+}
+
+function selectScene(id, announce = true, viewId = null) {
   const nextScene = theme.scenes.find((item) => item.id === id) || theme.scenes[0];
   document.body.classList.add('is-scene-changing');
   window.setTimeout(() => {
-    const scene = applyScene(theme, nextScene.id);
+    const scene = applyScene(theme, nextScene.id, viewId);
     updateSceneUI(scene);
+    updateAtlasSelection(scene.id, scene.activeView?.id);
+    preloadSceneNeighbors(scene.id);
     window.setTimeout(() => document.body.classList.remove('is-scene-changing'), 300);
   }, 170);
   if (announce) showToast(`已抵达：${nextScene.name}`);
@@ -120,18 +211,31 @@ function changeScene(offset) {
   selectScene(theme.scenes[next].id);
 }
 
+function preloadSceneNeighbors(id) {
+  const current = theme.scenes.findIndex((scene) => scene.id === id);
+  [-1, 1].forEach((offset) => {
+    const scene = theme.scenes[(current + offset + theme.scenes.length) % theme.scenes.length];
+    (scene.views?.length ? scene.views : [scene]).forEach((visual) => {
+      const image = new Image();
+      image.src = visual.image;
+    });
+  });
+}
+
 function setScenicMode(enabled) {
   if (enabled) window.scrollTo({ top: 0, behavior: 'instant' });
   document.body.classList.toggle('is-scenic', enabled);
-  document.querySelector('#settings').classList.remove('is-open');
+  closeAtlas();
   const toggle = document.querySelector('#scenic-toggle');
   toggle.setAttribute('aria-pressed', String(enabled));
   toggle.setAttribute('aria-label', enabled ? '退出观景模式' : '进入观景模式');
 }
 
 renderBooks();
-updateSceneUI(theme.scenes.find((scene) => scene.id === document.documentElement.dataset.scene) || theme.scenes[0]);
-const preloadScenes = () => theme.scenes.forEach((scene) => { const image = new Image(); image.src = scene.image; });
+const initialScene = applyScene(theme, document.documentElement.dataset.scene, document.documentElement.dataset.sceneView);
+updateSceneUI(initialScene);
+updateAtlasSelection(initialScene.id, initialScene.activeView?.id);
+const preloadScenes = () => preloadSceneNeighbors(initialScene.id);
 if ('requestIdleCallback' in window) window.requestIdleCallback(preloadScenes); else window.setTimeout(preloadScenes, 900);
 
 const readingCard = document.querySelector('#continue-reading');
@@ -153,16 +257,32 @@ document.querySelectorAll('[data-target]').forEach((button) => button.addEventLi
   if (button.classList.contains('nav__item')) {
     document.querySelectorAll('.nav__item').forEach((item) => item.classList.remove('is-active'));
     button.classList.add('is-active');
+    if (button.dataset.target === '#top' && document.documentElement.dataset.scene !== theme.defaultScene) selectScene(theme.defaultScene, false);
   }
-  if (button.dataset.target === '#settings') document.querySelector('#settings').classList.toggle('is-open');
+  if (button.dataset.target === '#settings') openAtlas();
   else document.querySelector(button.dataset.target)?.scrollIntoView({ behavior: 'smooth' });
 }));
+document.querySelector('.brand').addEventListener('click', () => {
+  if (document.documentElement.dataset.scene !== theme.defaultScene) selectScene(theme.defaultScene, false);
+});
 document.querySelectorAll('.tab').forEach((tab) => tab.addEventListener('click', () => selectCategory(tab.dataset.category)));
 document.querySelectorAll('.category-card').forEach((card) => card.addEventListener('click', () => {
   selectCategory(card.dataset.category);
   document.querySelector('#shelf').scrollIntoView({ behavior: 'smooth' });
 }));
-document.querySelectorAll('.scene-option').forEach((option) => option.addEventListener('click', () => selectScene(option.dataset.scene)));
+document.querySelectorAll('.map-pin').forEach((pin) => pin.addEventListener('click', () => updateAtlasSelection(pin.dataset.scene)));
+document.querySelector('[data-atlas-home]').addEventListener('click', () => {
+  if (document.documentElement.dataset.scene === theme.defaultScene) {
+    closeAtlas();
+    return;
+  }
+  closeAtlas();
+  selectScene(theme.defaultScene);
+});
+document.querySelector('#atlas-view-switcher').addEventListener('click', (event) => {
+  const view = event.target.closest('[data-view]');
+  if (view) updateAtlasSelection(atlasSceneId, view.dataset.view);
+});
 document.querySelector('#search').addEventListener('input', (event) => { query = event.target.value.trim(); renderBooks(); });
 document.querySelector('#search-go').addEventListener('click', () => document.querySelector('#shelf').scrollIntoView({ behavior: 'smooth' }));
 document.querySelector('#daily-bookmark').addEventListener('click', () => {
@@ -172,18 +292,32 @@ document.querySelector('#daily-bookmark').addEventListener('click', () => {
 });
 document.addEventListener('keydown', (event) => {
   if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); document.querySelector('#search').focus(); }
+  if (document.body.classList.contains('is-atlas-open') && event.key === 'ArrowLeft') { event.preventDefault(); changeAtlasSelection(-1); }
+  if (document.body.classList.contains('is-atlas-open') && event.key === 'ArrowRight') { event.preventDefault(); changeAtlasSelection(1); }
   if (document.body.classList.contains('is-scenic') && event.key === 'ArrowLeft') changeScene(-1);
   if (document.body.classList.contains('is-scenic') && event.key === 'ArrowRight') changeScene(1);
   if (event.key === 'Escape' && document.body.classList.contains('is-scenic')) setScenicMode(false);
-  else if (event.key === 'Escape') document.querySelector('#settings').classList.remove('is-open');
+  else if (event.key === 'Escape' && document.body.classList.contains('is-atlas-open')) closeAtlas();
 });
 document.querySelector('#scenic-toggle').addEventListener('click', () => setScenicMode(true));
 document.querySelector('#scene-enter').addEventListener('click', () => setScenicMode(true));
-document.querySelector('#scene-status').addEventListener('click', () => document.querySelector('#settings').classList.toggle('is-open'));
+document.querySelector('#scene-status').addEventListener('click', openAtlas);
 document.querySelector('#scenic-return').addEventListener('click', () => setScenicMode(false));
 document.querySelector('#scenic-prev').addEventListener('click', () => changeScene(-1));
 document.querySelector('#scenic-next').addEventListener('click', () => changeScene(1));
-document.querySelector('#theme-button').addEventListener('click', () => document.querySelector('#settings').classList.toggle('is-open'));
+document.querySelector('#theme-button').addEventListener('click', openAtlas);
+document.querySelector('#atlas-close').addEventListener('click', closeAtlas);
+document.querySelector('[data-atlas-close]').addEventListener('click', closeAtlas);
+document.querySelector('#atlas-travel').addEventListener('click', () => {
+  if (atlasSceneId === document.documentElement.dataset.scene && atlasViewId === document.documentElement.dataset.sceneView) {
+    closeAtlas();
+    return;
+  }
+  const destination = atlasSceneId;
+  const destinationView = atlasViewId === 'default' ? null : atlasViewId;
+  closeAtlas();
+  selectScene(destination, true, destinationView);
+});
 document.querySelector('#atmosphere').addEventListener('click', () => {
   const root = document.documentElement;
   root.dataset.atmosphere = root.dataset.atmosphere === 'dusk' ? 'day' : 'dusk';
