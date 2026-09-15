@@ -1,33 +1,26 @@
 <!doctype html>
-<html lang="zh-CN" data-theme="cloud-realm">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="云天幻境——漂浮在云海与天空城之间的西方奇幻数字书房。" />
-  <meta name="theme-color" content="#14283f" />
-  <title>云天幻境 · 数字书房</title>
-  <link rel="stylesheet" href="css/variables.css?v=cloud-realm-study-35" />
-  <link rel="stylesheet" href="css/base.css?v=cloud-realm-study-35" />
-  <link rel="stylesheet" href="css/layout.css?v=cloud-realm-study-35" />
-  <link rel="stylesheet" href="css/components.css?v=cloud-realm-study-35" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0c1c2b">
+  <meta name="description" content="云天幻境 · 藏书管理与 AI 内容工坊">
+  <title>云天幻境 · 内容管理</title>
+  <link rel="stylesheet" href="css/app.css?v=1">
+  <link rel="stylesheet" href="css/categories.css?v=1">
+  <link rel="stylesheet" href="css/studio-v2.css?v=1">
+  <link rel="stylesheet" href="css/studio-workshop.css?v=1">
 </head>
 <body>
-  <div class="world" aria-hidden="true">
-    <img class="world__art" src="assets/sky-city-panorama-forbidden-archive.png" alt="" />
-    <div class="world__veil"></div>
-  </div>
-
+  <div class="backdrop" aria-hidden="true"></div>
   <aside class="sidebar" id="sidebar"></aside>
-  <header class="topbar" id="topbar"></header>
-  <main class="main" id="app"></main>
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <aside class="scene-caption" id="scene-caption" aria-live="polite"></aside>
-  <div class="scenic-controls" id="scenic-controls" aria-label="观景模式控制">
-    <button type="button" id="scenic-prev" aria-label="切换上一处风景"></button>
-    <button type="button" id="scenic-next" aria-label="切换下一处风景"></button>
-    <button type="button" id="scenic-return" aria-label="返回数字书房"></button>
-  </div>
-
-  <script type="module" src="js/main.js?v=cloud-realm-study-35"></script>
+  <header class="mobilebar">
+    <button class="icon-button" id="menuButton" aria-label="打开菜单">☰</button>
+    <span>云天幻境</span>
+    <button class="icon-button" aria-label="通知">♧</button>
+  </header>
+  <main id="app" class="app"></main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="js/app.js?v=1"></script>
 </body>
 </html>
