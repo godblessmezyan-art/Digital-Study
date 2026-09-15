@@ -10,10 +10,12 @@
   <link rel="stylesheet" href="css/categories.css?v=1">
   <link rel="stylesheet" href="css/studio-v2.css?v=1">
   <link rel="stylesheet" href="css/studio-workshop.css?v=1">
+  <link rel="stylesheet" href="css/shared-shell.css?v=1">
 </head>
 <body>
   <div class="backdrop" aria-hidden="true"></div>
   <aside class="sidebar" id="sidebar"></aside>
+  <header class="app-topbar" id="appTopbar"></header>
   <header class="mobilebar">
     <button class="icon-button" id="menuButton" aria-label="打开菜单">☰</button>
     <span>云天幻境</span>
@@ -21,6 +23,12 @@
   </header>
   <main id="app" class="app"></main>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <aside class="app-scene-caption" id="appSceneCaption" aria-live="polite"></aside>
+  <div class="app-scenic-controls" id="appScenicControls">
+    <button type="button" id="appScenePrev" aria-label="上一处风景"></button>
+    <button type="button" id="appSceneNext" aria-label="下一处风景"></button>
+    <button type="button" id="appSceneReturn" aria-label="返回工作区"></button>
+  </div>
   <script type="module" src="js/app.js?v=1"></script>
 </body>
 </html>

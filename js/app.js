@@ -1,4 +1,5 @@
 import { createAiWorkshopPage } from './studio-page.js?v=1';
+import { icons as archiveIcons } from './icons.js?v=cloud-realm-study-29';
 
 const icon = (name) => {
   const paths = {home:'<path d="M3 11 12 3l9 8v9a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',book:'<path d="M4 5a3 3 0 0 1 3-3h13v17H7a3 3 0 0 0-3 3z"/><path d="M4 5v17"/>',grid:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',pen:'<path d="m4 20 4-1 11-11-3-3L5 16z"/><path d="m14 6 3 3"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',star:'<path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',spark:'<path d="m12 3 1.4 4.1L17 9l-3.6 1.9L12 15l-1.4-4.1L7 9l3.6-1.9z"/><path d="m19 14 .8 2.2L22 17l-2.2.8L19 20l-.8-2.2L16 17l2.2-.8z"/>',tag:'<path d="M20 13 13 20l-9-9V4h7z"/><circle cx="8.5" cy="8.5" r="1.5"/>',settings:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3A1.7 1.7 0 0 0 10 3V2.8h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1z"/>',upload:'<path d="M12 16V3m0 0L7 8m5-5 5 5"/><path d="M5 13v7h14v-7"/>'};
@@ -13,14 +14,39 @@ const books=[
  {title:'三体',author:'刘慈欣',desc:'当文明与宇宙相遇，人类的命运将何去何从。',main:'科幻宇宙',tags:['科幻','宇宙','文明'],status:'已发布',date:'2025/08/18',time:'16:40',cover:'linear-gradient(145deg,#203b55,#050b12)'},
  {title:'乌合之众',author:'古斯塔夫·勒庞',desc:'群体心理如何影响个体判断，揭示社会行为的深层逻辑。',main:'社会科学',tags:['群体心理','社会','大众行为'],status:'待完善',date:'2025/08/15',time:'13:25',cover:'linear-gradient(145deg,#51483d,#11100f)'}
 ];
-const navTop=[['首页','home'],['我的书架','book'],['书籍分类','grid','categories'],['阅读笔记','pen'],['精选书摘','star'],['思考档案','clock'],['星象图谱','spark'],['设置','settings']];
+const navTop=[['首页','home','home'],['我的书架','book'],['书籍分类','grid','categories'],['阅读笔记','pen'],['精选书摘','star'],['时间线','clock'],['设置','settings']];
 const navManage=[['藏书管理','book','library'],['AI 工坊','spark','studio'],['分类与标签','tag'],['导入记录','upload']];
 const sidebar=document.querySelector('#sidebar'),app=document.querySelector('#app'),toast=document.querySelector('#toast');
-sidebar.innerHTML=`<div class="brand"><div class="brand-mark">${icon('spark')}</div><h2>云天幻境</h2><small>CLOUD REALM ARCHIVE</small></div><nav class="nav">${navTop.map(x=>`<button data-page="${x[2]||''}">${icon(x[1])}<span>${x[0]}</span></button>`).join('')}<div class="nav-section">管理</div>${navManage.map(x=>`<button data-page="${x[2]||''}">${icon(x[1])}<span>${x[0]}</span></button>`).join('')}</nav><div class="nav-card"><div class="mini-scene"></div><strong>独处 · 阅读 · 思考</strong><small>让思想在云海之上生长</small></div>`;
+sidebar.innerHTML=`<button class="brand" data-page="home"><div class="brand-mark">${archiveIcons.astrolabe}</div><h2>云天幻境</h2><small>CLOUD REALM ARCHIVE</small></button><span class="sidebar-rule"></span><nav class="nav">${navTop.map(x=>`<button data-page="${x[2]||''}">${icon(x[1])}<span>${x[0]}</span></button>`).join('')}<div class="nav-section">管理</div>${navManage.map(x=>`<button data-page="${x[2]||''}">${icon(x[1])}<span>${x[0]}</span></button>`).join('')}</nav><div class="nav-card"><div class="mini-scene"></div><strong>独处 · 阅读 · 思考</strong><small>让思想在云海之上生长</small></div>`;
+
+const appScenes=[
+ {name:'云端书斋',region:'晨光穿过拱窗，照亮等待书写的篇章。',image:'assets/cloud-realm-study-v2.png',position:'center 45%'},
+ {name:'星象观测台',region:'群星在云海之上缓慢运行。',image:'assets/scenes/astronomical-observatory.png',position:'center 46%'},
+ {name:'遗忘档案馆',region:'被时间封存的故事，仍在烛光中等待。',image:'assets/scenes/forgotten-archive.png',position:'center 48%'},
+ {name:'天空城远景',region:'让目光越过云层，抵达更远的城邦。',image:'assets/sky-city-panorama-forbidden-archive.png',position:'center 45%'}
+];
+let appSceneIndex=0;
+const appTopbar=document.querySelector('#appTopbar'),appSceneCaption=document.querySelector('#appSceneCaption');
+appTopbar.innerHTML=`<div class="app-topbar-inner"><button class="app-scene-status" id="appSceneStatus"><span>${archiveIcons.astrolabe}</span><span><small>当前窗景</small><strong id="appSceneName"></strong></span></button><button class="app-circle-btn" id="appScenicToggle" title="进入观景模式" aria-label="进入观景模式">${archiveIcons.telescope}</button><button class="app-circle-btn" data-top-action="通知" aria-label="通知">${archiveIcons.bell}</button><button class="app-circle-btn" id="appAtmosphere" title="切换氛围" aria-label="切换氛围">${archiveIcons.alchemy}</button><button class="app-circle-btn app-avatar" data-top-action="个人中心" aria-label="个人中心">云</button></div>`;
+document.querySelector('#appScenePrev').innerHTML=`${archiveIcons.return}<span>上一处</span>`;
+document.querySelector('#appSceneNext').innerHTML=`${archiveIcons.astrolabe}<span>下一处</span>`;
+document.querySelector('#appSceneReturn').innerHTML=`${archiveIcons.return}<span>返回工作区</span>`;
+
+function applyAppScene(index){appSceneIndex=(index+appScenes.length)%appScenes.length;const scene=appScenes[appSceneIndex];const backdrop=document.querySelector('.backdrop');backdrop.style.backgroundImage=`url('${scene.image}')`;backdrop.style.backgroundPosition=scene.position;document.querySelector('#appSceneName').textContent=scene.name;appSceneCaption.innerHTML=`<small>云天幻境 · 当前窗景</small><h2>${scene.name}</h2><p>${scene.region}</p>`}
+function setAppScenic(enabled){document.body.classList.toggle('is-app-scenic',enabled);document.querySelector('#appScenicToggle').setAttribute('aria-pressed',String(enabled))}
+applyAppScene(0);
+document.querySelector('#appSceneStatus').addEventListener('click',()=>{applyAppScene(appSceneIndex+1);showToast(`已切换至：${appScenes[appSceneIndex].name}`)});
+document.querySelector('#appScenicToggle').addEventListener('click',()=>setAppScenic(true));
+document.querySelector('#appScenePrev').addEventListener('click',()=>applyAppScene(appSceneIndex-1));
+document.querySelector('#appSceneNext').addEventListener('click',()=>applyAppScene(appSceneIndex+1));
+document.querySelector('#appSceneReturn').addEventListener('click',()=>setAppScenic(false));
+document.querySelector('#appAtmosphere').addEventListener('click',()=>document.body.classList.toggle('app-dimmed'));
+document.querySelectorAll('[data-top-action]').forEach(button=>button.addEventListener('click',()=>showToast(`${button.dataset.topAction}功能开发中`)));
+document.addEventListener('keydown',event=>{if(event.key==='Escape'&&document.body.classList.contains('is-app-scenic'))setAppScenic(false)});
 
 function showToast(text){toast.textContent=text;toast.classList.add('show');clearTimeout(showToast.t);showToast.t=setTimeout(()=>toast.classList.remove('show'),1800)}
 function metrics(items){return `<div class="metric-strip">${items.map(x=>`<div class="metric"><span class="metric-icon">${x[0]}</span><span><small>${x[1]}</small><strong>${x[2]}</strong></span></div>`).join('')}</div>`}
-function topActions(search=true){return `<div class="top-actions">${search?'<label class="searchbox">⌕<input id="globalSearch" placeholder="搜索书名、作者或标签..."></label>':''}<button class="bell" aria-label="通知">♧</button><span class="avatar">云</span></div>`}
+function topActions(search=true){return search?'<div class="top-actions"><label class="searchbox">⌕<input id="globalSearch" placeholder="搜索书名、作者或标签..."></label></div>':''}
 function setActive(page){document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page))}
 
 function renderLibrary(){
@@ -98,7 +124,7 @@ function renderStudioV3(){
   createAiWorkshopPage(app,{showToast,bindNavigation:bindGlobal});
 }
 
-function bindGlobal(){document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{if(b.dataset.page==='library')renderLibrary();else if(b.dataset.page==='studio')renderStudioV3();else if(b.dataset.page==='categories')renderCategories();else showToast(`${b.textContent.trim()}功能即将开放`)});document.querySelectorAll('[data-toast]').forEach(b=>b.onclick=()=>showToast(b.dataset.toast))}
+function bindGlobal(){document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{setAppScenic(false);if(b.dataset.page==='home')window.location.href='home.html';else if(b.dataset.page==='library')renderLibrary();else if(b.dataset.page==='studio')renderStudioV3();else if(b.dataset.page==='categories')renderCategories();else showToast(`${b.textContent.trim()}功能即将开放`)});document.querySelectorAll('[data-toast]').forEach(b=>b.onclick=()=>showToast(b.dataset.toast))}
 sidebar.addEventListener('click',()=>sidebar.classList.remove('open'));document.querySelector('#menuButton').addEventListener('click',()=>sidebar.classList.toggle('open'));
-const route=()=>location.hash==='#studio'?renderStudioV3():location.hash==='#categories'?renderCategories():renderLibrary();route();
+const route=()=>location.hash==='#studio'?renderStudioV3():location.hash==='#categories'?renderCategories():location.hash==='#library'?renderLibrary():window.location.replace('home.html');route();
 window.addEventListener('hashchange',route);
