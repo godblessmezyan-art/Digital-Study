@@ -12,10 +12,14 @@ desktop.ini
 
 # ---- 依赖 ----
 node_modules/
+.env
+.env.*
+!.env.example
 
 # ---- 构建产物 ----
 dist/
 build/
+coverage/
 
 # ---- 临时文件 ----
 *.log

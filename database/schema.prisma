@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum BookStatus {
+  DRAFT
+  PUBLISHED
+}
+
+model Category {
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique @db.VarChar(100)
+  name        String   @db.VarChar(120)
+  description String?  @db.Text
+  books       Book[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("categories")
+}
+
+model Book {
+  id           Int        @id @default(autoincrement())
+  slug         String     @unique @db.VarChar(160)
+  title        String     @db.VarChar(255)
+  author       String?    @db.VarChar(160)
+  summary      String?    @db.Text
+  cover        String?    @db.VarChar(255)
+  contentPath  String     @db.VarChar(500)
+  status       BookStatus @default(DRAFT)
+  publishedAt  DateTime?
+  categoryId   Int?
+  category     Category?  @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@index([status, publishedAt])
+  @@index([categoryId])
+  @@map("books")
+}
