@@ -36,8 +36,9 @@ export class GenerationsService implements OnApplicationBootstrap {
   }
 
   async create(input: CreateGenerationRequest) {
-    if (!this.provider.isConfigured()) {
-      throw new BadRequestException('AI provider is not configured. Set AI_API_KEY and AI_MODEL, or use AI_PROVIDER=mock.');
+    const runtime = await this.provider.runtimeConfiguration();
+    if (!runtime.configured) {
+      throw new BadRequestException('AI provider is not configured. Add a model in AI Workshop settings or configure the environment fallback.');
     }
     const template = await this.templates.get(input.templateId);
     const allowed = new Set(template.modules.map((module) => module.key));
@@ -52,8 +53,8 @@ export class GenerationsService implements OnApplicationBootstrap {
         title: input.title,
         author: input.author ?? null,
         slug: input.slug,
-        provider: this.provider.provider,
-        model: this.provider.model,
+        provider: runtime.provider,
+        model: runtime.model,
         inputJson: normalized as unknown as Prisma.InputJsonValue,
         currentStep: '等待生成',
       },

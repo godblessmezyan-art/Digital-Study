@@ -32,6 +32,7 @@ services:
       AI_MAX_CONCURRENCY: ${AI_MAX_CONCURRENCY:-1}
       AI_TIMEOUT_MS: ${AI_TIMEOUT_MS:-120000}
       AI_WORKSHOP_TOKEN: ${AI_WORKSHOP_TOKEN:-}
+      AI_SETTINGS_ENCRYPTION_KEY: ${AI_SETTINGS_ENCRYPTION_KEY:-}
     volumes:
       - ../content:/workspace/content
     depends_on:

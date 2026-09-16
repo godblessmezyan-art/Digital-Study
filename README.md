@@ -34,7 +34,7 @@ pnpm dev:api
 
 另开终端运行 `pnpm dev:web`。前端默认是 `http://localhost:5173`，API 默认是 `http://localhost:3000/api`。
 
-`.env.example` 默认启用 `AI_PROVIDER=mock`，无需外部服务即可验证 AI 工坊完整流程。接入真实模型时改为 `openai-compatible`，并设置 `AI_BASE_URL`、`AI_API_KEY` 和 `AI_MODEL`。公网环境必须设置 `AI_WORKSHOP_TOKEN`。
+`.env.example` 默认启用 `AI_PROVIDER=mock`，无需外部服务即可验证 AI 工坊完整流程。真实模型可在 AI 工坊的“配置模型”中添加；服务端需设置稳定的 `AI_SETTINGS_ENCRYPTION_KEY` 来加密保存 API Key。环境变量 `AI_BASE_URL`、`AI_API_KEY` 和 `AI_MODEL` 仍可作为回退。公网环境必须设置 `AI_WORKSHOP_TOKEN`。
 
 ## 新服务器恢复
 

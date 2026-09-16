@@ -1,23 +1,23 @@
-import { BadGatewayException, Injectable, ServiceUnavailableException } from '@nestjs/common';
+import { BadGatewayException, Injectable } from '@nestjs/common';
+import { AiModelConfigsService, type AiRuntimeConfig } from './ai-model-configs.service';
 import type { AiTemplate, GeneratedBook, GeneratedSection, GenerationInput } from './ai.types';
 
 @Injectable()
 export class AiProviderService {
-  get provider(): string {
-    return process.env.AI_PROVIDER ?? 'openai-compatible';
+  constructor(private readonly modelConfigs: AiModelConfigsService) {}
+
+  configuration() {
+    return this.modelConfigs.publicConfiguration();
   }
 
-  get model(): string {
-    return process.env.AI_MODEL ?? (this.provider === 'mock' ? 'mock-editor-v1' : '');
-  }
-
-  isConfigured(): boolean {
-    return this.provider === 'mock' || Boolean(process.env.AI_API_KEY && this.model);
+  runtimeConfiguration() {
+    return this.modelConfigs.resolveRuntimeConfig();
   }
 
   async generate(input: GenerationInput, template: AiTemplate): Promise<GeneratedBook> {
-    if (this.provider === 'mock') return this.mockBook(input, template);
-    return this.callCompatibleApi(input, template);
+    const runtime = await this.runtimeConfiguration();
+    if (runtime.provider === 'mock') return this.mockBook(input, template);
+    return this.callCompatibleApi(input, template, runtime);
   }
 
   async regenerateSection(
@@ -28,7 +28,8 @@ export class AiProviderService {
   ): Promise<GeneratedSection> {
     const module = template.modules.find((item) => item.key === sectionKey);
     if (!module) throw new Error(`Unknown template module: ${sectionKey}`);
-    if (this.provider === 'mock') {
+    const runtime = await this.runtimeConfiguration();
+    if (runtime.provider === 'mock') {
       return {
         key: module.key,
         title: module.title,
@@ -38,14 +39,16 @@ export class AiProviderService {
     const book = await this.callCompatibleApi(
       { ...input, modules: [sectionKey], style: `${input.style ?? ''}。额外修订要求：${instruction ?? '提升清晰度'}` },
       template,
+      runtime,
     );
     return book.sections[0];
   }
 
-  private async callCompatibleApi(input: GenerationInput, template: AiTemplate): Promise<GeneratedBook> {
-    if (!this.isConfigured()) {
-      throw new ServiceUnavailableException('AI provider is not configured');
-    }
+  private async callCompatibleApi(
+    input: GenerationInput,
+    template: AiTemplate,
+    runtime: AiRuntimeConfig,
+  ): Promise<GeneratedBook> {
     const modules = template.modules.filter((item) => input.modules.includes(item.key));
     const schemaHint = modules.map((item) => ({ key: item.key, title: item.title, content: '正文' }));
     const prompt = [
@@ -59,28 +62,15 @@ export class AiProviderService {
       `参考资料：\n${input.sourceText}`,
       `仅返回 JSON：${JSON.stringify({ title: input.title, summary: '简介', tags: ['标签'], sections: schemaHint })}`,
     ].join('\n\n');
-    const baseUrl = (process.env.AI_BASE_URL ?? 'https://api.openai.com/v1').replace(/\/$/, '');
-    const response = await fetch(`${baseUrl}/chat/completions`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${process.env.AI_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: this.model,
-        temperature: 0.3,
-        response_format: { type: 'json_object' },
-        messages: [
-          { role: 'system', content: template.systemPrompt },
-          { role: 'user', content: prompt },
-        ],
-      }),
-      signal: AbortSignal.timeout(Number(process.env.AI_TIMEOUT_MS ?? 120000)),
+    const response = await this.modelConfigs.sendChat(runtime, {
+      model: runtime.model,
+      temperature: 0.3,
+      response_format: { type: 'json_object' },
+      messages: [
+        { role: 'system', content: template.systemPrompt },
+        { role: 'user', content: prompt },
+      ],
     });
-    if (!response.ok) {
-      const detail = (await response.text()).slice(0, 500);
-      throw new BadGatewayException(`AI provider returned ${response.status}: ${detail}`);
-    }
     const payload = (await response.json()) as { choices?: Array<{ message?: { content?: string } }> };
     const content = payload.choices?.[0]?.message?.content;
     if (!content) throw new BadGatewayException('AI provider returned an empty response');

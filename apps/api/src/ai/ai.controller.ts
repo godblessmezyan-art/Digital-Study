@@ -1,8 +1,10 @@
-import { Body, Controller, Get, HttpCode, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { AiModelConfigsService } from './ai-model-configs.service';
 import { AiProviderService } from './ai-provider.service';
 import { AiTokenGuard } from './ai-token.guard';
 import { CreateGenerationRequest } from './dto/create-generation.dto';
 import { RegenerateSectionRequest } from './dto/regenerate-section.dto';
+import { SaveModelConfigRequest } from './dto/save-model-config.dto';
 import { GenerationsService } from './generations.service';
 import { TemplatesService } from './templates.service';
 
@@ -12,16 +14,51 @@ export class AiController {
     private readonly templates: TemplatesService,
     private readonly generations: GenerationsService,
     private readonly provider: AiProviderService,
+    private readonly modelConfigs: AiModelConfigsService,
   ) {}
 
   @Get('config')
-  config() {
+  async config() {
     return {
-      configured: this.provider.isConfigured(),
-      provider: this.provider.provider,
-      model: this.provider.model || null,
+      ...(await this.provider.configuration()),
       tokenRequired: Boolean(process.env.AI_WORKSHOP_TOKEN),
     };
+  }
+
+  @Get('models')
+  @UseGuards(AiTokenGuard)
+  listModels() {
+    return this.modelConfigs.list();
+  }
+
+  @Post('models')
+  @UseGuards(AiTokenGuard)
+  createModel(@Body() input: SaveModelConfigRequest) {
+    return this.modelConfigs.create(input);
+  }
+
+  @Patch('models/:id')
+  @UseGuards(AiTokenGuard)
+  updateModel(@Param('id') id: string, @Body() input: SaveModelConfigRequest) {
+    return this.modelConfigs.update(id, input);
+  }
+
+  @Post('models/:id/activate')
+  @UseGuards(AiTokenGuard)
+  activateModel(@Param('id') id: string) {
+    return this.modelConfigs.activate(id);
+  }
+
+  @Post('models/:id/test')
+  @UseGuards(AiTokenGuard)
+  testModel(@Param('id') id: string) {
+    return this.modelConfigs.test(id);
+  }
+
+  @Delete('models/:id')
+  @UseGuards(AiTokenGuard)
+  removeModel(@Param('id') id: string) {
+    return this.modelConfigs.remove(id);
   }
 
   @Get('templates')

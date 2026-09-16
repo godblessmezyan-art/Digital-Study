@@ -93,3 +93,21 @@ model GenerationRevision {
   @@index([taskId, createdAt])
   @@map("generation_revisions")
 }
+
+model AiModelConfig {
+  id               String   @id @default(uuid()) @db.VarChar(36)
+  apiFormat        String   @default("openai-chat-completions") @db.VarChar(60)
+  baseUrl          String   @db.VarChar(500)
+  useFullUrl       Boolean  @default(false)
+  modelId          String   @db.VarChar(160)
+  displayName      String   @db.VarChar(160)
+  apiKeyCiphertext String   @db.Text
+  apiKeyIv         String   @db.VarChar(64)
+  apiKeyAuthTag    String   @db.VarChar(64)
+  isActive         Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([isActive, updatedAt])
+  @@map("ai_model_configs")
+}

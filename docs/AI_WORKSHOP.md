@@ -16,6 +16,16 @@ AI 工坊以用户提供的资料为主要事实来源。模型返回结构化 J
 
 ## Provider 配置
 
+推荐在 AI 工坊页面点击“配置模型”，保存 OpenAI Chat Completions 兼容服务。支持保存多个模型、切换当前模型、完整请求 URL、自定义显示名称和连接测试。数据库没有当前模型时，才使用下方环境变量配置作为回退。
+
+页面保存 API Key 前，服务端必须配置稳定的加密主密钥：
+
+```env
+AI_SETTINGS_ENCRYPTION_KEY=至少32位的随机字符串
+```
+
+API Key 使用 AES-256-GCM 加密后写入 MySQL。主密钥只存在服务器 `.env` 中；迁移服务器时必须一并安全迁移，否则旧密钥无法解密。浏览器只能看到 `hasApiKey`，不能读取 API Key 或数据库中的密文。
+
 离线验证：
 
 ```env
@@ -40,6 +50,12 @@ Provider 使用 `POST {AI_BASE_URL}/chat/completions` 和 JSON object 输出。�
 
 - `GET /api/ai/config`：公开返回是否配置、Provider 和模型名称，不返回密钥。
 - `GET /api/ai/templates`：公开返回 Git 模板的前端字段，不返回系统 Prompt。
+- `GET /api/ai/models`：列出安全的模型元数据，不返回密钥或密文。
+- `POST /api/ai/models`：加密保存模型配置。
+- `PATCH /api/ai/models/:id`：修改模型配置；不传 API Key 时保留原值。
+- `POST /api/ai/models/:id/activate`：切换当前模型。
+- `POST /api/ai/models/:id/test`：发送一次最小真实请求测试连接，可能产生少量费用。
+- `DELETE /api/ai/models/:id`：删除模型配置。
 - `POST /api/ai/generations`：创建任务。
 - `GET /api/ai/generations`：最近 20 条任务。
 - `GET /api/ai/generations/:id`：任务进度和结果。
@@ -52,7 +68,8 @@ Provider 使用 `POST {AI_BASE_URL}/chat/completions` 和 JSON object 输出。�
 
 ## 安全边界
 
-- API Key 永远不发送到浏览器。
+- API Key 在提交后不再发送到浏览器，数据库仅保存 AES-256-GCM 密文。
+- 模型管理和测试接口受 `AI_WORKSHOP_TOKEN` 保护；公网部署必须设置该 Token。
 - 模型内容按纯文本处理，HTML 特殊字符会转义。
 - 输入限制为 100,000 字符，请求体限制为 2 MB。
 - 模板明确要求不编造引用；仍需人工审阅，不能把模型结果当作事实证明。
