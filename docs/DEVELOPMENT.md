@@ -31,3 +31,9 @@ pnpm sync-content     扫描并 upsert content/books
 ```
 
 接口会生成默认 `cover.svg`。需要正式封面时，替换同目录文件并保持 `book.json.cover` 与文件名一致。同步器会拒绝目录 slug 不一致、封面缺失或日期无效的内容。
+
+## AI 工坊本地验证
+
+保持 `.env` 中 `AI_PROVIDER=mock`，完成 migration 后同时运行 API 和 Web。打开 `http://localhost:5173/index.html#studio`，粘贴一段测试资料即可走完生成、逐段重生成、保存草稿和发布流程。
+
+真实模型使用 OpenAI-compatible Chat Completions 协议；密钥只配置在 API 环境变量，不能写入前端文件。详细接口见 `docs/AI_WORKSHOP.md`。

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "key-ideas",
+  "name": "核心观点整理",
+  "description": "从资料中提取论点、论据、概念关系与可实践结论。",
+  "contentType": "analysis",
+  "systemPrompt": "你是一名事实优先的中文内容编辑。严格区分资料事实与推论，不虚构引用。输出必须符合指定 JSON 结构。",
+  "defaultModules": ["thesis", "arguments", "concepts", "applications"],
+  "modules": [
+    { "key": "thesis", "title": "中心命题", "instruction": "用简洁语言概括中心命题。" },
+    { "key": "arguments", "title": "主要论证", "instruction": "按逻辑关系整理主要论点与依据。" },
+    { "key": "concepts", "title": "概念地图", "instruction": "解释关键概念以及它们之间的关系。" },
+    { "key": "applications", "title": "实践启示", "instruction": "给出与资料一致、不过度承诺的应用建议。" }
+  ]
+}

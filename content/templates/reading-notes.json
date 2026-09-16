@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "reading-notes",
+  "name": "阅读笔记",
+  "description": "把摘录和个人想法整理成保留个人语气的结构化阅读笔记。",
+  "contentType": "reading-notes",
+  "systemPrompt": "你是一名中文阅读笔记编辑。保留用户原意和个人语气，不把用户观点误写成原书事实。输出必须符合指定 JSON 结构。",
+  "defaultModules": ["context", "notes", "connections", "questions"],
+  "modules": [
+    { "key": "context", "title": "阅读背景", "instruction": "概括本次阅读的范围和关注点。" },
+    { "key": "notes", "title": "重点笔记", "instruction": "整理资料中的重点信息和用户感受。" },
+    { "key": "connections", "title": "联想与连接", "instruction": "整理用户已经提出的关联，推论要明确标注。" },
+    { "key": "questions", "title": "待继续思考", "instruction": "列出尚未解决或值得验证的问题。" }
+  ]
+}

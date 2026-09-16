@@ -1,4 +1,4 @@
-import { createAiWorkshopPage } from './studio-page.js?v=1';
+import { createAiWorkshopPage } from './studio-page.js?v=2';
 import { icons as archiveIcons } from './icons.js?v=cloud-realm-study-29';
 
 const icon = (name) => {

@@ -31,3 +31,40 @@ export interface CreateBookDto {
   contentHtml: string;
   cover?: string;
 }
+
+export type GenerationStatus =
+  | 'queued'
+  | 'generating'
+  | 'reviewing'
+  | 'completed'
+  | 'failed'
+  | 'cancelled';
+
+export interface AiTemplateModuleDto {
+  key: string;
+  title: string;
+  instruction: string;
+}
+
+export interface AiTemplateDto {
+  id: string;
+  name: string;
+  description: string;
+  contentType: string;
+  defaultModules: string[];
+  modules: AiTemplateModuleDto[];
+}
+
+export interface GeneratedSectionDto {
+  key: string;
+  title: string;
+  content: string;
+}
+
+export interface GeneratedBookDto {
+  title: string;
+  summary: string;
+  tags: string[];
+  sections: GeneratedSectionDto[];
+  renderedHtml: string;
+}

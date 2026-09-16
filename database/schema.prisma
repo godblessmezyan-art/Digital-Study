@@ -12,6 +12,15 @@ enum BookStatus {
   PUBLISHED
 }
 
+enum GenerationStatus {
+  QUEUED
+  GENERATING
+  REVIEWING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
 model Category {
   id          Int      @id @default(autoincrement())
   slug        String   @unique @db.VarChar(100)
@@ -42,4 +51,45 @@ model Book {
   @@index([status, publishedAt])
   @@index([categoryId])
   @@map("books")
+}
+
+model GenerationTask {
+  id           String               @id @default(uuid()) @db.VarChar(36)
+  templateId   String               @db.VarChar(100)
+  title        String               @db.VarChar(255)
+  author       String?              @db.VarChar(160)
+  slug         String               @db.VarChar(160)
+  provider     String               @db.VarChar(60)
+  model        String               @db.VarChar(120)
+  status       GenerationStatus     @default(QUEUED)
+  progress     Int                  @default(0)
+  currentStep  String?              @db.VarChar(160)
+  inputJson    Json
+  resultJson   Json?
+  error        String?              @db.Text
+  bookSlug     String?              @db.VarChar(160)
+  revisions    GenerationRevision[]
+  createdAt    DateTime             @default(now())
+  startedAt    DateTime?
+  completedAt  DateTime?
+  updatedAt    DateTime             @updatedAt
+
+  @@index([status, createdAt])
+  @@index([bookSlug])
+  @@map("generation_tasks")
+}
+
+model GenerationRevision {
+  id          Int            @id @default(autoincrement())
+  taskId      String         @db.VarChar(36)
+  sectionKey  String         @db.VarChar(100)
+  version     Int
+  instruction String?        @db.Text
+  resultJson  Json
+  task        GenerationTask @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  createdAt   DateTime       @default(now())
+
+  @@unique([taskId, sectionKey, version])
+  @@index([taskId, createdAt])
+  @@map("generation_revisions")
 }

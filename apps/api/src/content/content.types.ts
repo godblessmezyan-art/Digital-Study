@@ -18,3 +18,13 @@ export interface SyncResult {
   synced: number;
   slugs: string[];
 }
+
+export interface GeneratedDraftInput {
+  slug: string;
+  title: string;
+  author?: string;
+  summary?: string;
+  categorySlug?: string;
+  categoryName?: string;
+  contentHtml: string;
+}
