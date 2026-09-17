@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { IsNotEmpty, IsOptional, IsString, Matches, MaxLength } from 'class-validator';
+import { ArrayMaxSize, IsArray, IsNotEmpty, IsOptional, IsString, Matches, MaxLength } from 'class-validator';
 
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
@@ -34,6 +34,13 @@ export class CreateBookRequest {
   @IsString()
   @MaxLength(120)
   categoryName?: string;
+
+  @IsOptional()
+  @IsArray()
+  @ArrayMaxSize(30)
+  @IsString({ each: true })
+  @MaxLength(80, { each: true })
+  tags?: string[];
 
   @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsString()

@@ -26,6 +26,7 @@ export interface CreateBookDto {
   title: string;
   author?: string;
   summary?: string;
+  tags?: string[];
   categorySlug?: string;
   categoryName?: string;
   contentHtml: string;

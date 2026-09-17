@@ -20,4 +20,9 @@ export class BooksController {
   create(@Body() input: CreateBookRequest) {
     return this.booksService.create(input);
   }
+
+  @Post('drafts')
+  saveDraft(@Body() input: CreateBookRequest) {
+    return this.booksService.saveDraft(input);
+  }
 }

@@ -14,6 +14,15 @@ AI 工坊以用户提供的资料为主要事实来源。模型返回结构化 J
   → 保存草稿 / 发布 / sync Book 索引
 ```
 
+## 手动创建与 HTML 导入
+
+手动编辑或导入 HTML 后有两种持久化方式：
+
+- 后端可用时，“保存草稿”或“发布”通过 API 原子写入 `content/books/{slug}`，再更新数据库索引。
+- 后端或 MySQL 暂不可用时，点击“写入 Git 内容目录”，并在浏览器目录选择器中选择当前仓库的 `content/books`。浏览器会直接创建 `{slug}/book.json`、`content.html` 和封面文件。
+
+直接写目录需要支持 File System Access API 的最新版 Chrome 或 Edge。该操作只修改本地 Git 工作区，不会自动 commit 或 push；保存后应使用 `git status` 检查，再由维护者提交到 GitHub。
+
 ## Provider 配置
 
 推荐在 AI 工坊页面点击“配置模型”，保存 OpenAI Chat Completions 兼容服务。支持保存多个模型、切换当前模型、完整请求 URL、自定义显示名称和连接测试。数据库没有当前模型时，才使用下方环境变量配置作为回退。
@@ -63,6 +72,8 @@ Provider 使用 `POST {AI_BASE_URL}/chat/completions` 和 JSON object 输出。�
 - `POST /api/ai/generations/:id/sections/:key/regenerate`：重新生成单个模块并记录修订。
 - `POST /api/ai/generations/:id/save-draft`：原子写入草稿内容目录并同步索引。
 - `POST /api/ai/generations/:id/publish`：确保草稿已落盘，将状态改为 published 并同步索引。
+- `POST /api/books/drafts`：将手动创建或导入的 HTML 保存为长期草稿内容。
+- `POST /api/books`：写入或更新长期内容，并将书籍标记为 published。
 
 除 config 和 templates 外，设置 `AI_WORKSHOP_TOKEN` 后，以上端点要求 `x-ai-workshop-token` 请求头。
 

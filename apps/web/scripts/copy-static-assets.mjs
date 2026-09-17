@@ -7,3 +7,8 @@ await cp(resolve(webRoot, 'assets'), resolve(webRoot, 'dist', 'assets'), {
   recursive: true,
   force: true,
 });
+await mkdir(resolve(webRoot, 'dist', 'content'), { recursive: true });
+await cp(resolve(webRoot, '..', '..', 'content', 'books'), resolve(webRoot, 'dist', 'content', 'books'), {
+  recursive: true,
+  force: true,
+});

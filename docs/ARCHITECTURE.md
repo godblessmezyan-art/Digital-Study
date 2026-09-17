@@ -15,6 +15,8 @@ NestJS API: 查询索引，并从 content/books 读取正文
 
 Git 中的内容文件是长期事实来源。数据库可以丢弃并由 migration、seed 和 `sync-content` 重建。阅读进度、用户状态等未来运行时数据可以进入数据库，但不应替代正文源文件。
 
+`content/books/index.json` 是由 `book.json` 派生的静态目录索引。分类页会合并 `/api/books` 和该索引：同一 Slug 以 API 数据优先，Git 中尚未同步到数据库的书籍仍可显示。API 保存、浏览器直接写目录以及 `pnpm build-content-index` 都会更新索引。
+
 ## 请求边界
 
 - `GET /api/books`：返回已发布书籍的元数据列表；封面字段是 `/content/books/{slug}/{cover}` URL。

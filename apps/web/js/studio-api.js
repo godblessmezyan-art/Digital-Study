@@ -52,3 +52,4 @@ export const regenerateSection = (id, key, instruction) => request(`/ai/generati
 export const saveGenerationDraft = (id) => request(`/ai/generations/${id}/save-draft`, { method: 'POST' });
 export const publishGeneration = (id) => request(`/ai/generations/${id}/publish`, { method: 'POST' });
 export const publishBook = (input) => request('/books', { method: 'POST', body: JSON.stringify(input) });
+export const saveBookDraft = (input) => request('/books/drafts', { method: 'POST', body: JSON.stringify(input) });

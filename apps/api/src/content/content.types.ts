@@ -4,6 +4,7 @@ export interface BookMetadata {
   title: string;
   author?: string;
   summary?: string;
+  tags?: string[];
   cover: string;
   status: 'draft' | 'published';
   publishedAt?: string;
@@ -24,6 +25,7 @@ export interface GeneratedDraftInput {
   title: string;
   author?: string;
   summary?: string;
+  tags?: string[];
   categorySlug?: string;
   categoryName?: string;
   contentHtml: string;

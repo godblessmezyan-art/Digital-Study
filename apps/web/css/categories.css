@@ -22,3 +22,8 @@
 @media(max-width:1200px){.category-hero{padding-left:42px}.category-tabs{left:42px;right:30px;overflow:auto;grid-template-columns:repeat(10,115px)}.category-library{padding-left:42px;padding-right:35px}.category-books{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:820px){.category-hero{height:335px;padding:50px 18px 0}.category-hero h1{font-size:33px}.category-search{width:100%;max-width:560px}.category-tabs{left:18px;right:18px;bottom:12px;height:67px;grid-template-columns:repeat(10,105px);overflow:auto}.category-library{padding:22px 18px}.category-heading{align-items:flex-start;gap:15px}.category-heading p{max-width:230px}.category-sort{display:none}.category-books{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 14px}.category-cover{height:180px}}
 @media(max-width:520px){.category-hero{height:310px;padding-top:38px}.category-hero>p{font-size:14px}.category-tabs{grid-template-columns:repeat(10,95px)}.category-heading p{display:none}.category-heading h2{font-size:22px}.category-books{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 12px}.category-cover{height:185px}.category-books.list-view{grid-template-columns:1fr}}
+
+.category-loading{min-height:calc(100vh - 80px);display:grid;place-items:center;color:#d5c4a4;background:rgba(7,17,25,.82);font:500 16px var(--serif)}
+.category-tabs{grid-template-columns:repeat(auto-fit,minmax(105px,1fr))}
+@media(max-width:1200px){.category-tabs{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:115px}}
+@media(max-width:520px){.category-tabs{grid-template-columns:none;grid-auto-columns:95px}}

@@ -29,6 +29,8 @@ export class ContentService {
       await this.syncBook(slug);
     }
 
+    await this.rebuildContentIndex();
+
     return { scanned: slugs.length, synced: slugs.length, slugs };
   }
 
@@ -89,6 +91,7 @@ export class ContentService {
       title: input.title,
       author: input.author,
       summary: input.summary,
+      tags: input.tags,
       cover: 'cover.svg',
       status: 'published',
       publishedAt,
@@ -111,6 +114,8 @@ export class ContentService {
       throw error;
     }
 
+    await this.rebuildContentIndex();
+
     return metadata;
   }
 
@@ -130,6 +135,7 @@ export class ContentService {
       title: input.title,
       author: input.author,
       summary: input.summary,
+      tags: input.tags,
       cover: 'cover.svg',
       status: 'draft',
       category: input.categorySlug
@@ -153,6 +159,7 @@ export class ContentService {
       await rm(temporaryDirectory, { recursive: true, force: true });
       throw error;
     }
+    await this.rebuildContentIndex();
     return metadata;
   }
 
@@ -178,6 +185,7 @@ export class ContentService {
       throw error;
     }
     await rm(backup, { force: true });
+    await this.rebuildContentIndex();
     return this.syncBook(slug);
   }
 
@@ -203,6 +211,9 @@ export class ContentService {
     }
     if (value.category && (!SLUG_PATTERN.test(value.category.slug) || !value.category.name)) {
       throw new Error(`Invalid category metadata: ${slug}/book.json`);
+    }
+    if (value.tags && (!Array.isArray(value.tags) || value.tags.some((tag) => typeof tag !== 'string' || tag.length > 80))) {
+      throw new Error(`Invalid tags metadata: ${slug}/book.json`);
     }
     if (value.publishedAt && Number.isNaN(Date.parse(value.publishedAt))) {
       throw new Error(`Invalid publishedAt: ${slug}/book.json`);
@@ -236,6 +247,29 @@ export class ContentService {
       if ((error as NodeJS.ErrnoException).code === 'ENOENT') return false;
       throw error;
     }
+  }
+
+  private async rebuildContentIndex(): Promise<void> {
+    const entries = await readdir(this.contentRoot, { withFileTypes: true });
+    const books: Array<BookMetadata & { coverUrl: string; contentUrl: string }> = [];
+    for (const entry of entries) {
+      if (!entry.isDirectory() || entry.name.startsWith('.') || entry.name.startsWith('_')) continue;
+      const metadata = await this.readMetadata(entry.name);
+      books.push({
+        ...metadata,
+        coverUrl: `/content/books/${metadata.slug}/${metadata.cover}`,
+        contentUrl: `/content/books/${metadata.slug}/content.html`,
+      });
+    }
+    books.sort((left, right) => {
+      const dateOrder = String(right.publishedAt ?? '').localeCompare(String(left.publishedAt ?? ''));
+      return dateOrder || left.title.localeCompare(right.title, 'zh-CN');
+    });
+    await writeFile(
+      join(this.contentRoot, 'index.json'),
+      `${JSON.stringify({ schemaVersion: 1, books }, null, 2)}\n`,
+      'utf8',
+    );
   }
 
   private createPlaceholderCover(title: string): string {

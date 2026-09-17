@@ -1,4 +1,5 @@
-import { createAiWorkshopPage } from './studio-page.js?v=4';
+import { createAiWorkshopPage } from './studio-page.js?v=5';
+import { loadCatalogBooks } from './book-catalog.js?v=1';
 import { icons as archiveIcons } from './icons.js?v=cloud-realm-study-29';
 
 const icon = (name) => {
@@ -79,17 +80,23 @@ const categoryBooks=[
  {title:'存在主义是一种人道主义',author:'萨特',status:'未读',tone:'grey',art:'../assets/categories/philosophy.png'}
 ];
 
-function renderCategories(){
+async function renderCategories(){
  setActive('categories');document.title='书籍分类 · 云天幻境';document.body.classList.remove('studio-v2-mode','studio-workshop-mode');document.body.classList.add('category-mode');
- const categoryTabs=[['全部','238'],['哲学思想','62'],['科幻宇宙','31'],['历史人文','27'],['文学经典','45'],['社会科学','28'],['心理心灵','24'],['艺术审美','19'],['传记纪实','15'],['其他','7']];
- app.innerHTML=`<section class="category-page"><header class="category-hero">${topActions(false)}<h1>书籍分类</h1><p>探索不同领域的知识与故事</p><label class="category-search">${icon('search')}<input id="categorySearch" placeholder="搜索书名、作者或关键词..."></label><div class="category-tabs">${categoryTabs.map((x,i)=>`<button class="category-tab ${i===1?'active':''}" data-category-name="${x[0]}"><strong>${x[0]}</strong><small>${x[1]}</small></button>`).join('')}</div></header><section class="category-library"><div class="category-heading"><div><h2 id="categoryTitle">哲学思想 <span>62 本书</span></h2><p>探索存在、理性、伦理与人生，理解人类如何思考世界与自身。</p></div><div class="category-controls"><button class="category-sort">排序：<strong>最近更新</strong>　⌄</button><button class="category-view active" data-view="grid">▦</button><button class="category-view" data-view="list">☷</button></div></div><div class="category-books" id="categoryBooks"></div></section></section>`;
+ app.innerHTML='<div class="category-loading">正在读取 Git 内容索引…</div>';
+ const catalogBooks=await loadCatalogBooks();
+ const categoryCounts=new Map();catalogBooks.forEach(book=>{const name=book.category?.name||'其他';categoryCounts.set(name,(categoryCounts.get(name)||0)+1)});
+ const categoryTabs=[['全部',catalogBooks.length],...[...categoryCounts.entries()].sort((a,b)=>a[0].localeCompare(b[0],'zh-CN'))];
+ app.innerHTML=`<section class="category-page"><header class="category-hero">${topActions(false)}<h1>书籍分类</h1><p>探索不同领域的知识与故事</p><label class="category-search">${icon('search')}<input id="categorySearch" placeholder="搜索书名、作者或关键词..."></label><div class="category-tabs">${categoryTabs.map((x,i)=>`<button class="category-tab ${i===0?'active':''}" data-category-name="${x[0]}"><strong>${x[0]}</strong><small>${x[1]}</small></button>`).join('')}</div></header><section class="category-library"><div class="category-heading"><div><h2 id="categoryTitle">全部 <span>${catalogBooks.length} 本书</span></h2><p>内容来自 Git 仓库，数据库可用时会自动合并最新索引。</p></div><div class="category-controls"><button class="category-sort">排序：<strong>最近更新</strong>　⌄</button><button class="category-view active" data-view="grid">▦</button><button class="category-view" data-view="list">☷</button></div></div><div class="category-books" id="categoryBooks"></div></section></section>`;
  const list=document.querySelector('#categoryBooks');
- const paint=(items)=>{list.innerHTML=items.length?items.map(b=>`<article class="category-book" data-title="${b.title}"><div class="category-cover ${b.tone}" style="--book-art:url('${b.art}')"><div class="cover-shade"></div><strong>${b.title}</strong><small>${b.author}</small></div><div class="category-book-meta"><h3>${b.title}</h3><p>${b.author}</p><span class="reading-status ${b.status==='在读'?'reading':b.status==='未读'?'unread':''}">${b.status}</span></div></article>`).join(''):'<div class="category-empty">云端书架中暂未找到相关书籍</div>'};
- paint(categoryBooks);
- document.querySelector('#categorySearch').addEventListener('input',e=>{const q=e.target.value.trim().toLowerCase();paint(categoryBooks.filter(b=>`${b.title}${b.author}`.toLowerCase().includes(q)))});
- document.querySelectorAll('.category-tab').forEach(tab=>tab.addEventListener('click',()=>{document.querySelectorAll('.category-tab').forEach(x=>x.classList.remove('active'));tab.classList.add('active');const name=tab.dataset.categoryName;document.querySelector('#categoryTitle').innerHTML=`${name} <span>${name==='全部'?'238':tab.querySelector('small').textContent} 本书</span>`;showToast(`已切换至${name}`)}));
+ let activeCategory='全部',query='';
+ const escapeValue=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+ const filtered=()=>catalogBooks.filter(book=>(activeCategory==='全部'||(book.category?.name||'其他')===activeCategory)&&`${book.title}${book.author}${book.summary}${book.tags.join('')}`.toLowerCase().includes(query));
+ const paint=()=>{const items=filtered();list.innerHTML=items.length?items.map(book=>`<article class="category-book" data-title="${escapeValue(book.title)}" data-content-url="${escapeValue(book.contentUrl)}"><div class="category-cover" style="--book-art:url('${escapeValue(book.coverUrl||'assets/cloud-realm-study-v2.png')}')"><div class="cover-shade"></div><strong>${escapeValue(book.title)}</strong><small>${escapeValue(book.author)}</small></div><div class="category-book-meta"><h3>${escapeValue(book.title)}</h3><p>${escapeValue(book.author)}</p><span class="reading-status ${book.status==='draft'?'unread':''}">${book.status==='published'?'已发布':'草稿'}</span></div></article>`).join(''):'<div class="category-empty">Git 内容目录中暂未找到相关书籍</div>';document.querySelector('#categoryTitle').innerHTML=`${escapeValue(activeCategory)} <span>${items.length} 本书</span>`;document.querySelectorAll('.category-book').forEach(card=>card.addEventListener('click',()=>{const url=card.dataset.contentUrl;if(url)window.open(url,'_blank','noopener')}))};
+ paint();
+ document.querySelector('#categorySearch').addEventListener('input',event=>{query=event.target.value.trim().toLowerCase();paint()});
+ document.querySelectorAll('.category-tab').forEach(tab=>tab.addEventListener('click',()=>{document.querySelectorAll('.category-tab').forEach(x=>x.classList.remove('active'));tab.classList.add('active');activeCategory=tab.dataset.categoryName;paint();showToast(`已切换至${activeCategory}`)}));
  document.querySelectorAll('.category-view').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.category-view').forEach(x=>x.classList.remove('active'));btn.classList.add('active');list.classList.toggle('list-view',btn.dataset.view==='list')}));
- document.querySelectorAll('.category-book').forEach(card=>card.addEventListener('click',()=>showToast(`正在打开《${card.dataset.title}》`)));bindGlobal();
+ bindGlobal();
 }
 
 function renderStudio(){

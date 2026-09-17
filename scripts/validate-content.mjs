@@ -6,6 +6,15 @@ const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const entries = await readdir(booksRoot, { withFileTypes: true });
 const failures = [];
 let checked = 0;
+const indexedSlugs = new Set();
+
+try {
+  const index = JSON.parse(await readFile(resolve(booksRoot, 'index.json'), 'utf8'));
+  if (index.schemaVersion !== 1 || !Array.isArray(index.books)) throw new Error('invalid index structure');
+  index.books.forEach((book) => indexedSlugs.add(book.slug));
+} catch (error) {
+  failures.push(`index.json: ${error.message}`);
+}
 
 for (const entry of entries) {
   if (!entry.isDirectory() || entry.name.startsWith('.') || entry.name.startsWith('_')) continue;
@@ -27,9 +36,14 @@ for (const entry of entries) {
       access(resolve(directory, 'content.html')),
       access(resolve(directory, metadata.cover)),
     ]);
+    if (!indexedSlugs.has(entry.name)) throw new Error('book is missing from index.json');
   } catch (error) {
     failures.push(`${entry.name}: ${error.message}`);
   }
+}
+
+if (indexedSlugs.size !== checked) {
+  failures.push(`index.json: expected ${checked} unique book entries, found ${indexedSlugs.size}`);
 }
 
 if (failures.length) {

@@ -35,9 +35,15 @@ export class BooksService {
   }
 
   async create(input: CreateBookRequest): Promise<BookDetailDto> {
-    await this.content.publish(input);
-    await this.content.syncBook(input.slug);
+    await this.content.saveGeneratedDraft(input, true);
+    await this.content.publishDraft(input.slug);
     return this.findOne(input.slug);
+  }
+
+  async saveDraft(input: CreateBookRequest): Promise<BookSummaryDto> {
+    await this.content.saveGeneratedDraft(input, true);
+    const book = await this.content.syncBook(input.slug);
+    return this.toSummary(book);
   }
 
   private toSummary(book: Prisma.BookGetPayload<{ include: { category: true } }>): BookSummaryDto {
