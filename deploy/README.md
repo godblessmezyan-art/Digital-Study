@@ -22,7 +22,7 @@ Cloudflare 第一阶段仅用于部署静态前端，配置与 Dashboard 命令�
 
 ```bash
 docker compose -f deploy/wxhappylife.compose.yml build
-docker compose -f deploy/wxhappylife.compose.yml run --rm api pnpm prisma:migrate
-docker compose -f deploy/wxhappylife.compose.yml run --rm api pnpm sync-content
+docker compose -f deploy/wxhappylife.compose.yml run --rm api ./node_modules/.bin/prisma migrate deploy --schema database/schema.prisma
+docker compose -f deploy/wxhappylife.compose.yml run --rm api node apps/api/dist/scripts/sync-content.js
 docker compose -f deploy/wxhappylife.compose.yml up -d
 ```
