@@ -1,4 +1,5 @@
 import { withAppBase } from './runtime-paths.js';
+import { GIT_BOOK_INDEX } from './generated-book-index.js';
 
 const isLocalStaticPreview = ['localhost', '127.0.0.1'].includes(window.location.hostname)
   && window.location.port === '5175';
@@ -46,9 +47,10 @@ export async function loadCatalogBooks() {
   ]);
   if (apiResult.status === 'rejected') console.warn('API book catalog unavailable:', apiResult.reason);
   if (indexResult.status === 'rejected') console.warn('Git book catalog unavailable:', indexResult.reason);
-  const indexBooks = indexResult.status === 'fulfilled' && Array.isArray(indexResult.value?.books)
-    ? indexResult.value.books.map(normalizeBook)
-    : [];
+  const indexedSource = indexResult.status === 'fulfilled' && Array.isArray(indexResult.value?.books)
+    ? indexResult.value.books
+    : GIT_BOOK_INDEX;
+  const indexBooks = indexedSource.map(normalizeBook);
   const apiBooks = apiResult.status === 'fulfilled' && Array.isArray(apiResult.value)
     ? apiResult.value.map(normalizeBook)
     : [];
