@@ -26,6 +26,7 @@
     "prisma:seed": "pnpm --filter @digital-study/api prisma:seed"
   },
   "devDependencies": {
+    "@prisma/client": "6.16.2",
     "prisma": "6.16.2",
     "wrangler": "4.135.0"
   },

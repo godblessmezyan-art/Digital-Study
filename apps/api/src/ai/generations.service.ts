@@ -77,7 +77,12 @@ export class GenerationsService implements OnApplicationBootstrap {
 
   async cancel(id: string) {
     const task = await this.requireTask(id);
-    if (![GenerationStatus.QUEUED, GenerationStatus.GENERATING, GenerationStatus.REVIEWING].includes(task.status)) {
+    const cancellableStatuses: GenerationStatus[] = [
+      GenerationStatus.QUEUED,
+      GenerationStatus.GENERATING,
+      GenerationStatus.REVIEWING,
+    ];
+    if (!cancellableStatuses.includes(task.status)) {
       throw new ConflictException('Only active generation tasks can be cancelled');
     }
     return this.present(

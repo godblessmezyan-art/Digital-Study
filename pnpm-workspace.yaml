@@ -1,3 +1,14 @@
 packages:
   - apps/*
   - packages/*
+
+# pnpm 11 blocks dependency install scripts unless they are explicitly trusted.
+# Keep this policy narrow: frontend/Workers native binaries plus the existing
+# Prisma toolchain required by the traditional NestJS + MySQL deployment.
+allowBuilds:
+  '@nestjs/core': false # Funding-message hook; not required at runtime.
+  '@prisma/client': true
+  '@prisma/engines': true
+  esbuild: true
+  prisma: true
+  workerd: true
