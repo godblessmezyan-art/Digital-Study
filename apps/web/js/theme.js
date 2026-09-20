@@ -27,6 +27,7 @@ export const THEMES = {
         description: '从外环航港眺望天空主城、远方浮岛与往返云海的飞空艇。',
         image: 'assets/sky-city-panorama-forbidden-archive.png',
         focus: { desktop: '50% 48%', tablet: '54% 48%', mobile: '62% 48%' },
+        globe: { latitude: 52, longitude: 58, label: '天空之城' },
       },
       {
         id: 'hidden-sanctuary',

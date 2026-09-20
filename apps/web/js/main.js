@@ -3,6 +3,7 @@ import {
   books, categories, dailyBookmarks, notes, popularCategories, quotes, stats,
 } from './data.js?v=cloud-realm-study-29';
 import { applyScene, initTheme } from './theme.js?v=cloud-realm-study-35';
+import { createCelestialGlobe } from './celestial-globe.js?v=1';
 
 const theme = initTheme();
 const app = document.querySelector('#app');
@@ -15,6 +16,8 @@ let query = '';
 let bookmarkIndex = 0;
 let atlasSceneId = document.documentElement.dataset.scene;
 let atlasViewId = document.documentElement.dataset.sceneView || 'default';
+let globeController = null;
+let worldMapReturnFocus = null;
 
 const navItems = [
   ['首页', 'tower', '#top'], ['我的书架', 'tome', '#shelf'], ['书籍分类', 'astrolabe', '#categories'],
@@ -32,6 +35,7 @@ sidebar.innerHTML = `
 
 topbar.innerHTML = `<div class="topbar__inner">
   <button class="scene-status" id="scene-status" type="button" aria-label="打开天空城航行图"><span class="scene-status__astrolabe" aria-hidden="true">${icons.astrolabe}</span><span><small>当前窗景</small><strong id="scene-status-name"></strong></span></button>
+  <button class="world-map-button" id="world-map-toggle" type="button" aria-label="世界地图" aria-haspopup="dialog" aria-controls="world-map-modal">${icons.astrolabe}<span>世界地图</span></button>
   <button class="circle-btn scenic-toggle" id="scenic-toggle" aria-label="进入观景模式" title="进入观景模式">${icons.telescope}</button>
   <button class="circle-btn" aria-label="通知">${icons.bell}</button>
   <button class="circle-btn" id="theme-button" aria-label="主题设置">${icons.settings}</button>
@@ -52,7 +56,7 @@ app.innerHTML = `
       <p>${theme.subtitle}</p>
       <label class="hero-search">${icons.search}<span class="sr-only">搜索书籍</span><input id="search" placeholder="搜索书籍、笔记或灵感……"><button type="button" id="search-go" aria-label="开始搜索">→</button></label>
     </div>
-    <button class="daily-bookmark" id="daily-bookmark" type="button" aria-label="切换今日书签">
+    <button class="daily-bookmark daily-bookmark--hero" id="daily-bookmark" type="button" aria-label="切换今日书签">
       <span class="daily-bookmark__cord" aria-hidden="true"></span>
       <small>今日书签</small><i aria-hidden="true">✦</i>
       <q id="bookmark-text">${dailyBookmarks[0].text}</q>
@@ -70,6 +74,25 @@ app.innerHTML = `
     <section class="category-section" id="categories"><div class="section-head"><div><span>漫游云端藏书世界</span><h2>热门分类</h2></div><a href="#shelf">查看全部分类 →</a></div><div class="category-grid">${categoryHTML}</div></section>
     <section class="panel shelf" id="shelf"><div class="shelf__head"><h2>我的书架</h2><div class="tabs">${categories.map((c, i) => `<button class="tab ${i === 0 ? 'is-active' : ''}" data-category="${c.id}">${c.label}</button>`).join('')}</div><span class="shelf__more">共 24 本藏书</span></div><div class="books" id="books"></div></section>
   </div>
+  <aside class="world-map-modal" id="world-map-modal" role="dialog" aria-modal="true" aria-labelledby="world-map-title" aria-hidden="true">
+    <div class="world-map-modal__backdrop" data-world-map-close aria-hidden="true"></div>
+    <section class="world-map-modal__panel">
+      <header class="world-map-modal__head">
+        <span class="world-map-modal__sigil" aria-hidden="true">${icons.astrolabe}</span>
+        <span><small>OTHERWORLD CELESTIAL ATLAS</small><h2 id="world-map-title">异世界航行图</h2><p>拖动星球，寻找云海之外的天空之城</p></span>
+        <button class="world-map-modal__close" id="world-map-close" type="button" aria-label="关闭世界地图">×</button>
+      </header>
+      <div class="world-map-modal__body">
+        <span class="world-map-modal__tick world-map-modal__tick--top" aria-hidden="true"></span>
+        <span class="world-map-modal__tick world-map-modal__tick--bottom" aria-hidden="true"></span>
+        <div class="celestial-globe" id="celestial-globe"></div>
+      </div>
+      <footer class="world-map-modal__foot">
+        <span><i aria-hidden="true"></i> 已发现坐标：天空之城</span>
+        <button type="button" id="globe-map">查看天空城地图 →</button>
+      </footer>
+    </section>
+  </aside>
   <aside class="scene-atlas" id="settings" role="dialog" aria-modal="true" aria-labelledby="atlas-title" aria-hidden="true">
     <button class="scene-atlas__backdrop" type="button" data-atlas-close aria-label="关闭航行图"></button>
     <section class="scene-atlas__panel">
@@ -106,7 +129,7 @@ app.innerHTML = `
 
 // The atlas is rendered with the page template, then moved to the viewport root
 // so its modal layer is not constrained by the main content stacking context.
-document.body.append(document.querySelector('#settings'));
+document.body.append(document.querySelector('#world-map-modal'), document.querySelector('#settings'));
 
 document.querySelector('#scenic-prev').innerHTML = `${icons.return}<span>上一处</span>`;
 document.querySelector('#scenic-next').innerHTML = `${icons.astrolabe}<span>下一处</span>`;
@@ -132,6 +155,60 @@ function showToast(text) {
   toast.classList.add('is-visible');
   clearTimeout(showToast.timer);
   showToast.timer = setTimeout(() => toast.classList.remove('is-visible'), 1800);
+}
+
+function getDialogControls(dialog) {
+  return [...dialog.querySelectorAll('button:not([disabled]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled])')]
+    .filter((element) => !element.hidden && element.getClientRects().length);
+}
+
+function trapDialogFocus(event, dialog) {
+  if (event.key !== 'Tab') return;
+  const controls = getDialogControls(dialog);
+  if (!controls.length) return;
+  const first = controls[0];
+  const last = controls[controls.length - 1];
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
+}
+
+function ensureGlobe() {
+  if (globeController) return globeController;
+  globeController = createCelestialGlobe(document.querySelector('#celestial-globe'), {
+    locations: theme.scenes.filter((scene) => scene.globe),
+    activeId: document.documentElement.dataset.scene,
+    textureUrl: 'assets/fantasy-world-map-v1.webp',
+    onSelect(id) {
+      closeWorldMap({ restoreFocus: false });
+      openAtlas(id);
+    },
+  });
+  return globeController;
+}
+
+function openWorldMap() {
+  const modal = document.querySelector('#world-map-modal');
+  worldMapReturnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : document.querySelector('#world-map-toggle');
+  ensureGlobe().start();
+  modal.classList.add('is-open');
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('is-world-map-open');
+  window.setTimeout(() => document.querySelector('#world-map-close').focus(), 80);
+}
+
+function closeWorldMap({ restoreFocus = true } = {}) {
+  const modal = document.querySelector('#world-map-modal');
+  if (!modal.classList.contains('is-open')) return;
+  modal.classList.remove('is-open');
+  modal.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('is-world-map-open');
+  globeController?.pause();
+  if (restoreFocus) worldMapReturnFocus?.focus({ preventScroll: true });
 }
 
 function updateSceneUI(scene) {
@@ -165,11 +242,13 @@ function updateAtlasSelection(id, viewId = null) {
   return scene;
 }
 
-function openAtlas() {
+function openAtlas(sceneId = null, viewId = null) {
   const atlas = document.querySelector('#settings');
   const mapImage = atlas.querySelector('[data-atlas-src]');
   if (!mapImage.getAttribute('src')) mapImage.setAttribute('src', mapImage.dataset.atlasSrc);
-  updateAtlasSelection(document.documentElement.dataset.scene, document.documentElement.dataset.sceneView);
+  const requestedScene = typeof sceneId === 'string' ? sceneId : document.documentElement.dataset.scene;
+  const requestedView = typeof viewId === 'string' ? viewId : (requestedScene === document.documentElement.dataset.scene ? document.documentElement.dataset.sceneView : null);
+  updateAtlasSelection(requestedScene, requestedView);
   atlas.classList.add('is-open');
   atlas.setAttribute('aria-hidden', 'false');
   document.body.classList.add('is-atlas-open');
@@ -225,6 +304,7 @@ function preloadSceneNeighbors(id) {
 function setScenicMode(enabled) {
   if (enabled) window.scrollTo({ top: 0, behavior: 'instant' });
   document.body.classList.toggle('is-scenic', enabled);
+  closeWorldMap({ restoreFocus: false });
   closeAtlas();
   const toggle = document.querySelector('#scenic-toggle');
   toggle.setAttribute('aria-pressed', String(enabled));
@@ -291,6 +371,15 @@ document.querySelector('#daily-bookmark').addEventListener('click', () => {
   document.querySelector('#bookmark-source').textContent = `—— ${dailyBookmarks[bookmarkIndex].source}`;
 });
 document.addEventListener('keydown', (event) => {
+  if (document.body.classList.contains('is-world-map-open')) {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      closeWorldMap();
+      return;
+    }
+    trapDialogFocus(event, document.querySelector('#world-map-modal'));
+    return;
+  }
   if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); document.querySelector('#search').focus(); }
   if (document.body.classList.contains('is-atlas-open') && event.key === 'ArrowLeft') { event.preventDefault(); changeAtlasSelection(-1); }
   if (document.body.classList.contains('is-atlas-open') && event.key === 'ArrowRight') { event.preventDefault(); changeAtlasSelection(1); }
@@ -302,6 +391,13 @@ document.addEventListener('keydown', (event) => {
 document.querySelector('#scenic-toggle').addEventListener('click', () => setScenicMode(true));
 document.querySelector('#scene-enter').addEventListener('click', () => setScenicMode(true));
 document.querySelector('#scene-status').addEventListener('click', openAtlas);
+document.querySelector('#world-map-toggle').addEventListener('click', openWorldMap);
+document.querySelector('#world-map-close').addEventListener('click', () => closeWorldMap());
+document.querySelector('[data-world-map-close]').addEventListener('click', () => closeWorldMap());
+document.querySelector('#globe-map').addEventListener('click', () => {
+  closeWorldMap({ restoreFocus: false });
+  openAtlas(theme.defaultScene);
+});
 document.querySelector('#scenic-return').addEventListener('click', () => setScenicMode(false));
 document.querySelector('#scenic-prev').addEventListener('click', () => changeScene(-1));
 document.querySelector('#scenic-next').addEventListener('click', () => changeScene(1));
@@ -330,3 +426,7 @@ document.querySelector('#books').addEventListener('click', (event) => {
   if (book) showToast(`已选中《${book.dataset.title}》`);
   if (event.target.closest('[data-action="add-book"]')) showToast('添加书籍入口已打开');
 });
+window.addEventListener('pagehide', () => {
+  globeController?.destroy();
+  globeController = null;
+}, { once: true });

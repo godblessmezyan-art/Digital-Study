@@ -5,3 +5,5 @@
 生产使用前至少需要：修改 `.env` 密码、设置真实 `CORS_ORIGIN`、配置 HTTPS，并在公网开放 `POST /api/books` 前增加鉴权或网络访问控制。
 
 AI 生成接口支持单独的 `AI_WORKSHOP_TOKEN`。生产环境应设置长随机值，并通过 HTTPS 访问；Token 只保存在工坊页面的浏览器会话中。
+
+Cloudflare 第一阶段仅用于部署静态前端，配置与 Dashboard 命令见 [`docs/CLOUDFLARE.md`](../docs/CLOUDFLARE.md)。本目录中的 NestJS、MySQL 与 Nginx 传统部署方案保持不变。
