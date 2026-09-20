@@ -23,13 +23,20 @@ function normalizeBook(book) {
   };
 }
 
-async function fetchJson(url, timeoutMs = 1800) {
-  const response = await fetch(url, {
-    cache: 'no-store',
-    signal: AbortSignal.timeout(timeoutMs),
-  });
-  if (!response.ok) throw new Error(`${url} returned ${response.status}`);
-  return response.json();
+async function fetchJson(url, timeoutMs = 5000) {
+  const controller = new AbortController();
+  const timeoutId = window.setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const response = await fetch(url, {
+      cache: 'no-store',
+      signal: controller.signal,
+    });
+    if (!response.ok) throw new Error(`${url} returned ${response.status}`);
+    return response.json();
+  } finally {
+    window.clearTimeout(timeoutId);
+  }
 }
 
 export async function loadCatalogBooks() {
@@ -37,6 +44,8 @@ export async function loadCatalogBooks() {
     fetchJson(`${apiBase}/books`),
     fetchJson(`${withAppBase('/content/books/index.json')}?time=${Date.now()}`),
   ]);
+  if (apiResult.status === 'rejected') console.warn('API book catalog unavailable:', apiResult.reason);
+  if (indexResult.status === 'rejected') console.warn('Git book catalog unavailable:', indexResult.reason);
   const indexBooks = indexResult.status === 'fulfilled' && Array.isArray(indexResult.value?.books)
     ? indexResult.value.books.map(normalizeBook)
     : [];
