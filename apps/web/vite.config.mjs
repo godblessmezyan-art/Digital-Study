@@ -41,6 +41,7 @@ function contentBooksPlugin() {
 }
 
 export default defineConfig({
+  base: './',
   plugins: [contentBooksPlugin()],
   build: {
     rollupOptions: {

@@ -18,6 +18,7 @@ RUN corepack enable
 COPY --from=build /workspace/node_modules ./node_modules
 COPY --from=build /workspace/package.json /workspace/pnpm-lock.yaml /workspace/pnpm-workspace.yaml ./
 COPY --from=build /workspace/apps/api/package.json apps/api/package.json
+COPY --from=build /workspace/apps/api/node_modules apps/api/node_modules
 COPY --from=build /workspace/apps/api/dist apps/api/dist
 COPY --from=build /workspace/apps/api/src apps/api/src
 COPY --from=build /workspace/packages/shared/package.json packages/shared/package.json

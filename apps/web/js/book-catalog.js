@@ -1,7 +1,9 @@
+import { withAppBase } from './runtime-paths.js';
+
 const isLocalStaticPreview = ['localhost', '127.0.0.1'].includes(window.location.hostname)
   && window.location.port === '5175';
 const apiBase = globalThis.DIGITAL_STUDY_API_BASE
-  || (isLocalStaticPreview ? `http://${window.location.hostname}:3000/api` : '/api');
+  || (isLocalStaticPreview ? `http://${window.location.hostname}:3000/api` : withAppBase('/api'));
 
 function normalizeBook(book) {
   const category = book.category
@@ -16,8 +18,8 @@ function normalizeBook(book) {
     status: book.status || 'draft',
     publishedAt: book.publishedAt || null,
     category,
-    coverUrl: book.coverUrl || book.cover || '',
-    contentUrl: book.contentUrl || `/content/books/${book.slug}/content.html`,
+    coverUrl: withAppBase(book.coverUrl || book.cover || ''),
+    contentUrl: withAppBase(book.contentUrl || `/content/books/${book.slug}/content.html`),
   };
 }
 
@@ -33,7 +35,7 @@ async function fetchJson(url, timeoutMs = 1800) {
 export async function loadCatalogBooks() {
   const [apiResult, indexResult] = await Promise.allSettled([
     fetchJson(`${apiBase}/books`),
-    fetchJson(`/content/books/index.json?time=${Date.now()}`),
+    fetchJson(`${withAppBase('/content/books/index.json')}?time=${Date.now()}`),
   ]);
   const indexBooks = indexResult.status === 'fulfilled' && Array.isArray(indexResult.value?.books)
     ? indexResult.value.books.map(normalizeBook)

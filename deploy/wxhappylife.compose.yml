@@ -1,0 +1,43 @@
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: deploy/api.Dockerfile
+    container_name: digital-study-api
+    restart: unless-stopped
+    env_file:
+      - ../.env.production
+    environment:
+      API_PORT: 3000
+      CONTENT_ROOT: content/books
+    volumes:
+      - ../content:/workspace/content
+    networks:
+      - default
+      - onepanel
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+  web:
+    build:
+      context: ..
+      dockerfile: deploy/web.Dockerfile
+    container_name: digital-study-web
+    restart: unless-stopped
+    ports:
+      - 127.0.0.1:8780:80
+    volumes:
+      - ../content:/srv/content:ro
+    depends_on:
+      - api
+    deploy:
+      resources:
+        limits:
+          memory: 64M
+
+networks:
+  onepanel:
+    external: true
+    name: 1panel-network

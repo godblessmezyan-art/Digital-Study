@@ -1,7 +1,9 @@
+import { withAppBase } from './runtime-paths.js';
+
 const isLocalStaticPreview = ['localhost', '127.0.0.1'].includes(window.location.hostname)
   && window.location.port === '5175';
 const API_BASE = globalThis.DIGITAL_STUDY_API_BASE
-  || (isLocalStaticPreview ? `http://${window.location.hostname}:3000/api` : '/api');
+  || (isLocalStaticPreview ? `http://${window.location.hostname}:3000/api` : withAppBase('/api'));
 
 function workshopToken() {
   return sessionStorage.getItem('ai-workshop-token') || '';
