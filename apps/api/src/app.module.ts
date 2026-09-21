@@ -6,6 +6,7 @@ import { CategoriesModule } from './categories/categories.module';
 import { WORKSPACE_ROOT } from './config/paths';
 import { AiModule } from './ai/ai.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { PrismaModule } from './prisma/prisma.module';
       envFilePath: [join(WORKSPACE_ROOT, '.env'), join(process.cwd(), '.env')],
     }),
     PrismaModule,
+    AuthModule,
     AiModule,
     BooksModule,
     CategoriesModule,

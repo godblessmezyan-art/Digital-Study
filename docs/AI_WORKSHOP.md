@@ -50,7 +50,7 @@ AI_API_KEY=replace-me
 AI_MODEL=replace-me
 AI_MAX_CONCURRENCY=1
 AI_TIMEOUT_MS=120000
-AI_WORKSHOP_TOKEN=replace-with-a-long-random-token
+STUDY_AUTH_BASE_URL=https://wxhappylife.top/study/api/auth
 ```
 
 Provider 使用 `POST {AI_BASE_URL}/chat/completions` 和 JSON object 输出。若目标服务不支持 `response_format: {"type":"json_object"}`，需要在 provider 适配层中针对该服务调整，不能把兼容差异放进前端。
@@ -75,12 +75,12 @@ Provider 使用 `POST {AI_BASE_URL}/chat/completions` 和 JSON object 输出。�
 - `POST /api/books/drafts`：将手动创建或导入的 HTML 保存为长期草稿内容。
 - `POST /api/books`：写入或更新长期内容，并将书籍标记为 published。
 
-除 config 和 templates 外，设置 `AI_WORKSHOP_TOKEN` 后，以上端点要求 `x-ai-workshop-token` 请求头。
+除 config 和 templates 外，以上端点要求 `Authorization: Bearer <JWT>`。JWT 由现有 `/study/api/auth/login` 使用 Halo 账号密码签发，并且写操作要求 `admin` 角色。
 
 ## 安全边界
 
 - API Key 在提交后不再发送到浏览器，数据库仅保存 AES-256-GCM 密文。
-- 模型管理和测试接口受 `AI_WORKSHOP_TOKEN` 保护；公网部署必须设置该 Token。
+- 模型管理和测试接口受现有 Study/Halo 管理员登录保护；密码不会保存在 Digital Study 数据库中。
 - 模型内容按纯文本处理，HTML 特殊字符会转义。
 - 输入限制为 100,000 字符，请求体限制为 2 MB。
 - 模板明确要求不编造引用；仍需人工审阅，不能把模型结果当作事实证明。

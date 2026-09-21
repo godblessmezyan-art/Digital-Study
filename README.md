@@ -36,7 +36,7 @@ pnpm dev:api
 
 如果暂时没有安装前端依赖或不启动后端，可运行 `pnpm dev:static`。它在 `http://localhost:5175` 同时提供 `apps/web` 和 `content/books`，并在后端恢复后把 `/api` 代理到 3000 端口。
 
-`.env.example` 默认启用 `AI_PROVIDER=mock`，无需外部服务即可验证 AI 工坊完整流程。真实模型可在 AI 工坊的“配置模型”中添加；服务端需设置稳定的 `AI_SETTINGS_ENCRYPTION_KEY` 来加密保存 API Key。环境变量 `AI_BASE_URL`、`AI_API_KEY` 和 `AI_MODEL` 仍可作为回退。公网环境必须设置 `AI_WORKSHOP_TOKEN`。
+`.env.example` 默认启用 `AI_PROVIDER=mock`，无需外部服务即可验证 AI 工坊完整流程。真实模型可在 AI 工坊的“配置模型”中添加；服务端需设置稳定的 `AI_SETTINGS_ENCRYPTION_KEY` 来加密保存 API Key。环境变量 `AI_BASE_URL`、`AI_API_KEY` 和 `AI_MODEL` 仍可作为回退。写入书籍、生成内容和模型管理统一复用 `wxhappylife.top` 的 Halo/Study 登录，且只允许管理员账号。
 
 MySQL 或 API 暂时不可用时，AI 工坊的手动创建和 HTML 导入模式可使用“写入 Git 内容目录”，选择仓库的 `content/books` 后直接生成长期内容文件。该功能不会自动执行 Git commit 或 push。
 

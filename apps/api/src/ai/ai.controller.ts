@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { AiModelConfigsService } from './ai-model-configs.service';
 import { AiProviderService } from './ai-provider.service';
-import { AiTokenGuard } from './ai-token.guard';
+import { StudyAdminGuard } from '../auth/study-auth.guard';
 import { CreateGenerationRequest } from './dto/create-generation.dto';
 import { RegenerateSectionRequest } from './dto/regenerate-section.dto';
 import { SaveModelConfigRequest } from './dto/save-model-config.dto';
@@ -21,42 +21,42 @@ export class AiController {
   async config() {
     return {
       ...(await this.provider.configuration()),
-      tokenRequired: Boolean(process.env.AI_WORKSHOP_TOKEN),
+      authRequired: true,
     };
   }
 
   @Get('models')
-  @UseGuards(AiTokenGuard)
+  @UseGuards(StudyAdminGuard)
   listModels() {
     return this.modelConfigs.list();
   }
 
   @Post('models')
-  @UseGuards(AiTokenGuard)
+  @UseGuards(StudyAdminGuard)
   createModel(@Body() input: SaveModelConfigRequest) {
     return this.modelConfigs.create(input);
   }
 
   @Patch('models/:id')
-  @UseGuards(AiTokenGuard)
+  @UseGuards(StudyAdminGuard)
   updateModel(@Param('id') id: string, @Body() input: SaveModelConfigRequest) {
     return this.modelConfigs.update(id, input);
   }
 
   @Post('models/:id/activate')
-  @UseGuards(AiTokenGuard)
+  @UseGuards(StudyAdminGuard)
   activateModel(@Param('id') id: string) {
     return this.modelConfigs.activate(id);
   }
 
   @Post('models/:id/test')
-  @UseGuards(AiTokenGuard)
+  @UseGuards(StudyAdminGuard)
   testModel(@Param('id') id: string) {
     return this.modelConfigs.test(id);
   }
 
   @Delete('models/:id')
-  @UseGuards(AiTokenGuard)
+  @UseGuards(StudyAdminGuard)
   removeModel(@Param('id') id: string) {
     return this.modelConfigs.remove(id);
   }
@@ -67,32 +67,32 @@ export class AiController {
   }
 
   @Post('generations')
-  @UseGuards(AiTokenGuard)
+  @UseGuards(StudyAdminGuard)
   @HttpCode(202)
   create(@Body() input: CreateGenerationRequest) {
     return this.generations.create(input);
   }
 
   @Get('generations')
-  @UseGuards(AiTokenGuard)
+  @UseGuards(StudyAdminGuard)
   list() {
     return this.generations.list();
   }
 
   @Get('generations/:id')
-  @UseGuards(AiTokenGuard)
+  @UseGuards(StudyAdminGuard)
   get(@Param('id') id: string) {
     return this.generations.get(id);
   }
 
   @Post('generations/:id/cancel')
-  @UseGuards(AiTokenGuard)
+  @UseGuards(StudyAdminGuard)
   cancel(@Param('id') id: string) {
     return this.generations.cancel(id);
   }
 
   @Post('generations/:id/sections/:key/regenerate')
-  @UseGuards(AiTokenGuard)
+  @UseGuards(StudyAdminGuard)
   regenerate(
     @Param('id') id: string,
     @Param('key') key: string,
@@ -102,13 +102,13 @@ export class AiController {
   }
 
   @Post('generations/:id/save-draft')
-  @UseGuards(AiTokenGuard)
+  @UseGuards(StudyAdminGuard)
   saveDraft(@Param('id') id: string) {
     return this.generations.saveDraft(id);
   }
 
   @Post('generations/:id/publish')
-  @UseGuards(AiTokenGuard)
+  @UseGuards(StudyAdminGuard)
   publish(@Param('id') id: string) {
     return this.generations.publish(id);
   }

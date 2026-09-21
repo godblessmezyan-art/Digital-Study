@@ -1,6 +1,7 @@
 import { createAiWorkshopPage } from './studio-page.js?v=5';
 import { loadCatalogBooks } from './book-catalog.js?v=1';
 import { icons as archiveIcons } from './icons.js?v=cloud-realm-study-29';
+import { clearAuth, getStoredUser, login, validateAuth } from './auth-client.js';
 
 const icon = (name) => {
   const paths = {home:'<path d="M3 11 12 3l9 8v9a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',book:'<path d="M4 5a3 3 0 0 1 3-3h13v17H7a3 3 0 0 0-3 3z"/><path d="M4 5v17"/>',grid:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',pen:'<path d="m4 20 4-1 11-11-3-3L5 16z"/><path d="m14 6 3 3"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',star:'<path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',spark:'<path d="m12 3 1.4 4.1L17 9l-3.6 1.9L12 15l-1.4-4.1L7 9l3.6-1.9z"/><path d="m19 14 .8 2.2L22 17l-2.2.8L19 20l-.8-2.2L16 17l2.2-.8z"/>',tag:'<path d="M20 13 13 20l-9-9V4h7z"/><circle cx="8.5" cy="8.5" r="1.5"/>',settings:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3A1.7 1.7 0 0 0 10 3V2.8h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1z"/>',upload:'<path d="M12 16V3m0 0L7 8m5-5 5 5"/><path d="M5 13v7h14v-7"/>'};
@@ -28,7 +29,7 @@ const appScenes=[
 ];
 let appSceneIndex=0;
 const appTopbar=document.querySelector('#appTopbar'),appSceneCaption=document.querySelector('#appSceneCaption');
-appTopbar.innerHTML=`<div class="app-topbar-inner"><button class="app-scene-status" id="appSceneStatus"><span>${archiveIcons.astrolabe}</span><span><small>当前窗景</small><strong id="appSceneName"></strong></span></button><button class="app-circle-btn" id="appScenicToggle" title="进入观景模式" aria-label="进入观景模式">${archiveIcons.telescope}</button><button class="app-circle-btn" data-top-action="通知" aria-label="通知">${archiveIcons.bell}</button><button class="app-circle-btn" id="appAtmosphere" title="切换氛围" aria-label="切换氛围">${archiveIcons.alchemy}</button><button class="app-circle-btn app-avatar" data-top-action="个人中心" aria-label="个人中心">云</button></div>`;
+appTopbar.innerHTML=`<div class="app-topbar-inner"><button class="app-scene-status" id="appSceneStatus"><span>${archiveIcons.astrolabe}</span><span><small>当前窗景</small><strong id="appSceneName"></strong></span></button><button class="app-circle-btn" id="appScenicToggle" title="进入观景模式" aria-label="进入观景模式">${archiveIcons.telescope}</button><button class="app-circle-btn" data-top-action="通知" aria-label="通知">${archiveIcons.bell}</button><button class="app-circle-btn" id="appAtmosphere" title="切换氛围" aria-label="切换氛围">${archiveIcons.alchemy}</button><button class="app-circle-btn app-avatar" id="appAuthButton" aria-label="账号登录">登录</button></div>`;
 document.querySelector('#appScenePrev').innerHTML=`${archiveIcons.return}<span>上一处</span>`;
 document.querySelector('#appSceneNext').innerHTML=`${archiveIcons.astrolabe}<span>下一处</span>`;
 document.querySelector('#appSceneReturn').innerHTML=`${archiveIcons.return}<span>返回工作区</span>`;
@@ -44,6 +45,34 @@ document.querySelector('#appSceneReturn').addEventListener('click',()=>setAppSce
 document.querySelector('#appAtmosphere').addEventListener('click',()=>document.body.classList.toggle('app-dimmed'));
 document.querySelectorAll('[data-top-action]').forEach(button=>button.addEventListener('click',()=>showToast(`${button.dataset.topAction}功能开发中`)));
 document.addEventListener('keydown',event=>{if(event.key==='Escape'&&document.body.classList.contains('is-app-scenic'))setAppScenic(false)});
+
+const authDialog=document.createElement('dialog');
+authDialog.className='auth-dialog';
+document.body.append(authDialog);
+const authButton=document.querySelector('#appAuthButton');
+const escapeAuthText=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+
+function updateAuthButton(){
+ const user=getStoredUser();
+ authButton.textContent=user?(user.display_name||user.username||'我').slice(0,2):'登录';
+ authButton.setAttribute('aria-label',user?`账号：${user.display_name||user.username}`:'账号登录');
+ authButton.classList.toggle('signed-in',Boolean(user));
+}
+
+function renderAuthDialog(){
+ const user=getStoredUser();
+ const displayName=escapeAuthText(user?.display_name||user?.username||'我'),username=escapeAuthText(user?.username||'');
+ authDialog.innerHTML=user?`<section><header><small>WXHAPPYLIFE ACCOUNT</small><h2>账号信息</h2><button type="button" data-auth-close aria-label="关闭">×</button></header><div class="auth-account"><span>${displayName.slice(0,2)}</span><div><b>${displayName}</b><small>@${username} · ${user.role==='admin'?'管理员':'读者'}</small></div></div>${user.role==='admin'?'<p class="auth-success">已获得书籍发布和 AI 模型配置权限。</p>':'<p class="auth-warning">当前账号为读者，只能浏览内容；发布需要管理员账号。</p>'}<button type="button" class="auth-secondary" data-auth-logout>退出登录</button></section>`:`<form method="dialog" id="authLoginForm"><header><small>WXHAPPYLIFE ACCOUNT</small><h2>登录云天幻境</h2><button type="button" data-auth-close aria-label="关闭">×</button></header><p>使用 wxhappylife.top / Halo 的现有账号密码。</p><label><span>用户名</span><input name="username" autocomplete="username" maxlength="64" required autofocus></label><label><span>密码</span><input name="password" type="password" autocomplete="current-password" maxlength="256" required></label><div class="auth-error" role="alert"></div><button type="submit" class="auth-primary">登录</button></form>`;
+ authDialog.querySelector('[data-auth-close]').onclick=()=>authDialog.close();
+ authDialog.querySelector('[data-auth-logout]')?.addEventListener('click',()=>{clearAuth();updateAuthButton();renderAuthDialog();showToast('已退出登录')});
+ authDialog.querySelector('#authLoginForm')?.addEventListener('submit',async event=>{event.preventDefault();const form=event.currentTarget,error=form.querySelector('.auth-error'),button=form.querySelector('[type="submit"]');error.textContent='';button.disabled=true;button.textContent='正在登录…';try{const data=new FormData(form);const user=await login(String(data.get('username')||'').trim(),String(data.get('password')||''));if(user.role!=='admin')showToast('登录成功；当前账号为只读用户');else showToast('登录成功，已获得发布权限');updateAuthButton();authDialog.close();if(location.hash==='#studio')renderStudioV3()}catch(reason){error.textContent=reason instanceof Error?reason.message:String(reason);button.disabled=false;button.textContent='登录'}});
+}
+
+function openAuthDialog(){renderAuthDialog();if(!authDialog.open)authDialog.showModal()}
+authButton.addEventListener('click',openAuthDialog);
+window.addEventListener('study-auth-required',()=>{openAuthDialog();showToast('请先登录管理员账号')});
+updateAuthButton();
+void validateAuth().then(()=>updateAuthButton());
 
 function showToast(text){toast.textContent=text;toast.classList.add('show');clearTimeout(showToast.t);showToast.t=setTimeout(()=>toast.classList.remove('show'),1800)}
 function metrics(items){return `<div class="metric-strip">${items.map(x=>`<div class="metric"><span class="metric-icon">${x[0]}</span><span><small>${x[1]}</small><strong>${x[2]}</strong></span></div>`).join('')}</div>`}

@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
-import { AiTokenGuard } from '../ai/ai-token.guard';
+import { StudyAdminGuard } from '../auth/study-auth.guard';
 import { BooksService } from './books.service';
 import { CreateBookRequest } from './dto/create-book.dto';
 
@@ -18,13 +18,13 @@ export class BooksController {
   }
 
   @Post()
-  @UseGuards(AiTokenGuard)
+  @UseGuards(StudyAdminGuard)
   create(@Body() input: CreateBookRequest) {
     return this.booksService.create(input);
   }
 
   @Post('drafts')
-  @UseGuards(AiTokenGuard)
+  @UseGuards(StudyAdminGuard)
   saveDraft(@Body() input: CreateBookRequest) {
     return this.booksService.saveDraft(input);
   }

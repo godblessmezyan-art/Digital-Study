@@ -1,18 +1,14 @@
 import { withAppBase } from './runtime-paths.js';
+import { authHeaders, clearAuth } from './auth-client.js';
 
 const isLocalStaticPreview = ['localhost', '127.0.0.1'].includes(window.location.hostname)
   && window.location.port === '5175';
 const API_BASE = globalThis.DIGITAL_STUDY_API_BASE
   || (isLocalStaticPreview ? `http://${window.location.hostname}:3000/api` : withAppBase('/api'));
 
-function workshopToken() {
-  return sessionStorage.getItem('ai-workshop-token') || '';
-}
-
 async function request(path, options = {}) {
-  const headers = new Headers(options.headers || {});
+  const headers = new Headers({ ...authHeaders(), ...(options.headers || {}) });
   if (options.body) headers.set('Content-Type', 'application/json');
-  if (workshopToken()) headers.set('x-ai-workshop-token', workshopToken());
   let response;
   try {
     response = await fetch(`${API_BASE}${path}`, { ...options, headers });
@@ -25,17 +21,16 @@ async function request(path, options = {}) {
     if (response.status === 501 && contentType.includes('text/html')) {
       throw new Error('API 请求被发送到了静态文件服务器，请使用 pnpm dev:web 启动前端并确认 API 运行在 3000 端口');
     }
+    if (response.status === 401) {
+      clearAuth();
+      window.dispatchEvent(new CustomEvent('study-auth-required'));
+    }
     const message = Array.isArray(payload?.message)
       ? payload.message.join('；')
       : payload?.message || `请求失败（${response.status}）`;
     throw new Error(message);
   }
   return payload;
-}
-
-export function setWorkshopToken(value) {
-  if (value) sessionStorage.setItem('ai-workshop-token', value);
-  else sessionStorage.removeItem('ai-workshop-token');
 }
 
 export const getAiConfig = () => request('/ai/config');
