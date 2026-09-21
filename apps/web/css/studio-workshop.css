@@ -79,3 +79,166 @@
   .quick-preview{height:100%;min-height:650px;position:sticky;top:10px}
   .preview-thumb{min-height:310px;flex:1}
 }
+
+/* Unified single-column content workbench */
+.ai-workshop-page{padding-bottom:46px}
+.ai-workshop-page .workshop-header{min-height:116px;height:auto;margin-bottom:10px;padding:22px 28px;background:linear-gradient(115deg,rgba(7,25,42,.88),rgba(12,37,57,.62));border:1px solid rgba(190,151,87,.2);box-shadow:0 16px 45px rgba(1,10,18,.16)}
+.ai-workshop-page .workshop-header h1{font-size:28px}.ai-workshop-page .workshop-header p{margin-top:5px}.ai-workshop-page .workshop-header blockquote{opacity:.62;font-size:13px}
+.workshop-statusbar{min-height:38px;margin:0 0 14px;padding:8px 15px;display:flex;align-items:center;gap:10px;color:#93a5b2;background:rgba(7,25,41,.76);border:1px solid rgba(190,151,87,.16);border-radius:7px;backdrop-filter:blur(10px);font-size:11px}
+.workshop-statusbar b{color:#dcc08b;font-weight:600}.workshop-statusbar>i{color:#6a7881;font-style:normal}.workshop-statusbar button{padding:2px 0;color:#aebcc5;background:none;border:0;font:inherit;cursor:pointer}.workshop-statusbar button:hover{color:#e0c58d}
+.ai-workshop-page .workshop-surface{max-width:1180px;min-height:0;margin-inline:auto;display:block;overflow:visible;background:rgba(5,20,34,.88);border:1px solid rgba(186,147,82,.24);box-shadow:0 24px 70px rgba(0,8,15,.28);backdrop-filter:blur(14px)}
+.ai-workshop-page .creation-tabs{height:62px;padding:0 16px;gap:6px;background:rgba(5,17,29,.72);border-bottom:1px solid rgba(190,151,87,.16)}
+.ai-workshop-page .creation-tabs button{height:100%;color:#879aa8;background:transparent;border:0;border-bottom:2px solid transparent;border-radius:0}.ai-workshop-page .creation-tabs button:hover{color:#c7d0d5;background:rgba(255,255,255,.025)}.ai-workshop-page .creation-tabs button.active{color:#e1c58c;background:rgba(190,151,87,.06);border-bottom-color:#bd9251;box-shadow:none}.ai-workshop-page .creation-tabs button i{opacity:.72}
+.workshop-main{padding:22px}.creation-panel-slot{width:min(100%,980px);margin-inline:auto}
+.ai-workshop-page .ai-panel,.ai-workshop-page .import-panel,.ai-workshop-page .manual-create-panel{min-height:0;height:auto;overflow:visible;padding:0;color:#dbe3e8;background:transparent;border:0;box-shadow:none}
+.mode-heading{margin:0 0 18px!important;padding:0 2px 16px;display:flex!important;align-items:flex-end!important;justify-content:space-between;border-bottom:1px solid rgba(186,147,82,.18)}.mode-heading small{color:#a37b43;font-size:9px;letter-spacing:.18em}.mode-heading h2{margin:5px 0 0!important;color:#f0e7d4!important;font:600 20px var(--serif)!important}.mode-heading>p{max-width:460px;margin:0!important;color:#8093a0!important;font-size:11px!important;text-align:right}
+.service-strip{min-height:44px;margin-bottom:14px;padding:8px 10px;display:flex;align-items:center;gap:9px;color:#90a2ad;background:rgba(12,35,52,.75);border:1px solid rgba(110,137,153,.2);border-radius:6px;font-size:10px}.service-strip>b{color:#c6d0d6}.service-strip>em{min-width:0;overflow:hidden;color:#df8d80;font-style:normal;text-overflow:ellipsis;white-space:nowrap}.service-strip>button{margin-left:auto;padding:6px 9px;color:#c8b086;background:transparent;border:1px solid rgba(190,151,87,.3);border-radius:4px}.service-strip>button+button{margin-left:0}.service-strip .dev-badge{position:static;padding:4px 7px}.service-strip .dev-badge.ready{color:#8fcaa8;background:rgba(50,126,82,.18)}.service-strip .dev-badge.warning{color:#dfbd7f;background:rgba(155,111,45,.18)}
+.workshop-form-section{margin-bottom:14px;padding:18px;background:linear-gradient(145deg,rgba(12,36,54,.88),rgba(8,27,43,.92));border:1px solid rgba(127,153,168,.15);border-radius:8px;box-shadow:0 10px 28px rgba(0,8,15,.12)}
+.section-heading{margin-bottom:15px;display:flex;align-items:center;gap:11px}.section-heading>span{width:28px;height:28px;display:grid;place-items:center;color:#d2b273;background:rgba(190,151,87,.1);border:1px solid rgba(190,151,87,.25);border-radius:50%;font:600 9px Georgia,serif}.section-heading h3{margin:0;color:#e4e8e9;font:600 14px var(--serif)}.section-heading p{margin:3px 0 0;color:#738996;font-size:9px}
+.ai-workshop-page .ai-form{display:grid;grid-template-columns:1fr 1fr;gap:13px 16px}.ai-workshop-page .ai-form label,.ai-workshop-page .ai-source{display:grid;gap:7px;color:#cbd4d9;font-size:10px}.ai-workshop-page .ai-form b,.ai-workshop-page .ai-source b{font-size:10px}.ai-workshop-page .ai-form input,.ai-workshop-page .ai-form select,.ai-workshop-page .ai-source textarea,.ai-workshop-page .meta-grid input,.ai-workshop-page .meta-grid select,.ai-workshop-page .paste-import textarea{color:#dce4e8;background:rgba(3,17,29,.72);border:1px solid rgba(110,137,153,.26);outline:0}.ai-workshop-page .ai-form input:focus,.ai-workshop-page .ai-form select:focus,.ai-workshop-page .ai-source textarea:focus,.ai-workshop-page .meta-grid input:focus,.ai-workshop-page .meta-grid select:focus,.ai-workshop-page .paste-import textarea:focus{border-color:#a77d43;box-shadow:0 0 0 2px rgba(167,125,67,.13)}.ai-workshop-page .ai-source{margin:0}.ai-workshop-page .ai-source textarea{min-height:180px;padding:12px;border-radius:5px}.ai-workshop-page .ai-source small{color:#6f8491}
+.reference-actions{margin-top:11px;display:flex;align-items:center;gap:12px}.reference-actions button,.prompt-tools button{padding:7px 10px;color:#cbb383;background:rgba(190,151,87,.06);border:1px solid rgba(190,151,87,.25);border-radius:4px}.reference-actions span{color:#6f8491;font-size:9px}
+.advanced-settings{margin-bottom:14px;background:rgba(8,27,42,.82);border:1px solid rgba(127,153,168,.15);border-radius:8px}.advanced-settings>summary{padding:14px 17px;display:flex;align-items:center;justify-content:space-between;color:#cbd4d9;cursor:pointer;list-style:none}.advanced-settings>summary::-webkit-details-marker{display:none}.advanced-settings>summary:after{content:'＋';color:#b89155}.advanced-settings[open]>summary:after{content:'−'}.advanced-settings summary small{color:#70838f;font-size:9px}.advanced-settings>div{padding:0 17px 17px}.advanced-settings fieldset{margin:0 0 13px;padding:12px;border-color:rgba(127,153,168,.18)}.advanced-settings fieldset label{color:#9eafb8}.prompt-tools{display:flex;gap:8px;margin:12px 0 8px}.ai-workshop-page .prompt-output{color:#8fa1ac;background:#061827;border-color:rgba(127,153,168,.18)}
+.generation-progress,.generated-sections,.generation-history,.generation-result{color:#cbd4d9;background:rgba(8,28,43,.9);border-color:rgba(127,153,168,.18)}.generation-progress h3,.generated-sections h3,.generation-history h3{color:#e4e9eb}.generation-progress__bar{background:#142f40}.generated-sections article{color:#cbd4d9;background:#0c273b;border-color:rgba(127,153,168,.16)}.generated-sections article p{color:#8da0ab}.generation-result{margin:14px 0;padding:15px;display:flex;align-items:center;justify-content:space-between;border:1px solid rgba(89,154,113,.3);border-radius:8px}.generation-result>div{display:flex;align-items:center;gap:10px}.generation-result i{width:30px;height:30px;display:grid;place-items:center;color:#8fd2a8;background:rgba(65,143,94,.18);border-radius:50%;font-style:normal}.generation-result span{display:grid;gap:3px}.generation-result b{color:#dce7e0;font-size:12px}.generation-result small{color:#7f9489;font-size:9px}.generation-result button{height:34px;padding:0 12px;color:#b8c5cc;background:#102e43;border:1px solid rgba(127,153,168,.24);border-radius:5px}.generation-result button.primary{color:#1d2730;background:#d0ad70;border-color:#d0ad70}
+.generation-history>article{padding:12px 2px;border-bottom:1px solid rgba(127,153,168,.14)}.generation-history>article:last-child{border-bottom:0}.generation-history article>div{display:flex;align-items:center;justify-content:space-between}.generation-history article span{display:grid;gap:4px}.generation-history article b{color:#d7e0e4;font-size:11px}.generation-history article small,.generation-history article em{color:#718590;font-size:9px;font-style:normal}.generation-history article p{margin:8px 0;padding:8px;color:#d98b82;background:rgba(143,59,52,.13);border-radius:4px;font-size:9px}.generation-history article footer{text-align:right}.generation-history article button{padding:6px 9px;color:#c7b080;background:transparent;border:1px solid rgba(190,151,87,.24);border-radius:4px}.generation-history.empty{padding:30px;text-align:center;color:#718590}
+.workshop-actionbar{position:sticky;z-index:4;bottom:10px;margin-top:16px;padding:11px 13px;display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(4,18,30,.94);border:1px solid rgba(190,151,87,.25);border-radius:8px;box-shadow:0 12px 34px rgba(0,7,14,.34);backdrop-filter:blur(14px)}.workshop-actionbar>div{display:flex;gap:8px}.workshop-actionbar>span{color:#718590;font-size:9px}.workshop-actionbar button{height:36px;padding:0 14px;color:#abb9c1;background:#102c40;border:1px solid rgba(127,153,168,.23);border-radius:5px}.workshop-actionbar button.primary{color:#1a252d;background:linear-gradient(#dfc185,#c99e5d);border-color:#d6b270;font-weight:700;box-shadow:0 5px 16px rgba(176,126,52,.18)}
+.ai-workshop-page .meta-form,.ai-workshop-page .html-editor-panel,.ai-workshop-page .recognized-result{color:#cbd4d9;background:rgba(10,32,49,.88);border-color:rgba(127,153,168,.16)}.ai-workshop-page .meta-form h2,.ai-workshop-page .html-editor-panel h2,.ai-workshop-page .recognized-result h3{color:#e2e7e9}.ai-workshop-page .meta-form p,.ai-workshop-page .html-editor-panel p,.ai-workshop-page .meta-grid b,.ai-workshop-page .recognized-result dt{color:#8295a0}.ai-workshop-page .html-editor-shell{border-color:rgba(127,153,168,.2)}.ai-workshop-page .html-editor-shell textarea,.ai-workshop-page .editor-lines{color:#b9c8d0;background:#061a29}.ai-workshop-page .editor-lines{color:#536d7b;border-color:#17364a}.ai-workshop-page .drop-zone{color:#aebcc4;background:rgba(10,32,49,.78);border-color:rgba(190,151,87,.28)}.ai-workshop-page .drop-zone:hover{background:rgba(18,43,59,.82);border-color:#a77d43}.ai-workshop-page .paste-import button{color:#cfb47f;background:#102c40;border-color:rgba(190,151,87,.28)}.ai-workshop-page .validation-list{background:rgba(8,27,42,.78);border-color:rgba(127,153,168,.16)}
+body.preview-open{overflow:hidden}.preview-drawer[hidden]{display:none}.preview-drawer{position:fixed;z-index:110;inset:0;display:flex;justify-content:flex-end}.preview-drawer__backdrop{position:absolute;inset:0;background:rgba(2,10,17,.7);border:0;backdrop-filter:blur(5px)}.preview-drawer>aside{position:relative;width:min(1080px,calc(100vw - 220px));height:100%;display:grid;grid-template-rows:66px minmax(0,1fr) auto;color:#d8e0e4;background:#071b2b;border-left:1px solid rgba(190,151,87,.35);box-shadow:-24px 0 70px rgba(0,0,0,.42);animation:preview-enter .2s ease-out}.preview-drawer>aside>header{padding:0 18px;display:grid;grid-template-columns:1fr auto 38px;align-items:center;gap:14px;background:#091f31;border-bottom:1px solid rgba(190,151,87,.22)}.preview-drawer>aside>header small{color:#967245;font-size:8px;letter-spacing:.14em}.preview-drawer h2{margin:3px 0 0;color:#ece4d4;font:600 16px var(--serif)}.preview-close{width:34px;height:34px;color:#b9c4ca;background:transparent;border:1px solid rgba(127,153,168,.23);border-radius:5px;font-size:22px}.preview-drawer>aside>main{min-height:0;padding:20px;overflow:auto;background:radial-gradient(circle at 50% 0,rgba(39,77,101,.2),transparent 48%),#04131f}.preview-drawer .device-frame{height:100%;min-height:600px;margin:auto;overflow:hidden;background:#fff;border:1px solid rgba(190,151,87,.34);border-radius:5px;box-shadow:0 18px 50px rgba(0,0,0,.3);transition:width .2s}.preview-drawer .device-frame.desktop{width:100%}.preview-drawer .device-frame.tablet{width:min(820px,100%)}.preview-drawer .device-frame.mobile{width:min(390px,100%)}.preview-drawer iframe{width:100%;height:100%;border:0;background:#fff}.preview-drawer>aside>footer{padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:14px;background:#091f31;border-top:1px solid rgba(190,151,87,.18)}.preview-drawer>aside>footer .validation-list{margin:0;padding:0;display:flex;align-items:center;gap:8px;background:none;border:0}.preview-drawer>aside>footer .validation-list header{display:none}.preview-drawer>aside>footer .validation-list>div{padding:0;border:0;font-size:8px}.preview-drawer>aside>footer>div{display:flex;gap:8px}.preview-drawer>aside>footer button{height:34px;padding:0 11px;color:#b9c6cd;background:#102d42;border:1px solid rgba(127,153,168,.24);border-radius:5px}.preview-drawer>aside>footer button.primary{color:#1d2730;background:#d0ad70;border-color:#d0ad70}.preview-drawer .device-switch{padding:3px;background:#061724;border:1px solid rgba(127,153,168,.2);border-radius:5px}.preview-drawer .device-switch button{padding:6px 10px;color:#778d99;background:transparent;border:0;border-radius:3px}.preview-drawer .device-switch button.active{color:#e0c188;background:rgba(190,151,87,.13)}
+@keyframes preview-enter{from{transform:translateX(24px);opacity:.4}to{transform:none;opacity:1}}
+@media(max-width:900px){.ai-workshop-page .workshop-header blockquote{display:none}.workshop-main{padding:14px}.mode-heading{align-items:flex-start!important;flex-direction:column;gap:7px}.mode-heading>p{text-align:left}.preview-drawer>aside{width:100vw}.preview-drawer>aside>footer{align-items:stretch;flex-direction:column}.preview-drawer>aside>footer .validation-list{display:none}.preview-drawer>aside>footer>div{justify-content:flex-end}}
+@media(max-width:620px){.ai-workshop-page .workshop-header{padding:17px 18px}.workshop-statusbar{overflow-x:auto;white-space:nowrap}.ai-workshop-page .creation-tabs{height:auto;padding:6px;grid-template-columns:1fr 1fr}.ai-workshop-page .creation-tabs button{height:46px;border:1px solid transparent;border-radius:5px}.ai-workshop-page .creation-tabs button.active{border-color:rgba(190,151,87,.26)}.ai-workshop-page .ai-form{grid-template-columns:1fr}.workshop-form-section{padding:14px}.service-strip{align-items:flex-start;flex-wrap:wrap}.service-strip>button{margin-left:0}.reference-actions,.generation-result,.workshop-actionbar{align-items:stretch;flex-direction:column}.workshop-actionbar>div,.generation-result>div:last-child{display:grid;grid-template-columns:1fr 1fr}.generation-result>div:last-child .primary{grid-column:1/-1}.preview-drawer>aside>header{grid-template-columns:1fr 34px}.preview-drawer .device-switch{display:none}.preview-drawer>aside>main{padding:8px}.preview-drawer .device-frame{min-height:calc(100vh - 150px);width:100%!important;border-radius:0}.preview-drawer>aside>footer>div{display:grid;grid-template-columns:1fr 1fr}.preview-drawer>aside>footer>div .primary{grid-column:1/-1}}
+
+/* Desktop legibility and wide-screen use */
+@media(min-width:1200px){
+  .ai-workshop-page .workshop-surface{width:calc(100% - 56px);max-width:1500px}
+  .workshop-main{padding:26px 34px 34px}
+  .creation-panel-slot{width:100%;max-width:1320px}
+  .workshop-statusbar{min-height:42px;padding:9px 16px;font-size:12px}
+  .ai-workshop-page .creation-tabs{height:68px;padding-inline:20px}
+  .ai-workshop-page .creation-tabs button{font-size:13px}
+  .mode-heading{padding-bottom:18px}
+  .mode-heading small{font-size:10px}
+  .mode-heading h2{font-size:23px!important}
+  .mode-heading>p{max-width:560px;font-size:13px!important;line-height:1.6}
+  .service-strip{min-height:50px;padding:10px 13px;font-size:12px}
+  .service-strip>button{padding:7px 11px;font-size:11px}
+  .workshop-form-section{padding:22px 24px}
+  .section-heading{margin-bottom:18px;gap:13px}
+  .section-heading>span{width:32px;height:32px;font-size:10px}
+  .section-heading h3{font-size:16px}
+  .section-heading p{margin-top:4px;font-size:11px;line-height:1.5}
+  .ai-workshop-page .ai-form{gap:16px 22px}
+  .ai-workshop-page .ai-form label,.ai-workshop-page .ai-source{gap:8px;font-size:12px}
+  .ai-workshop-page .ai-form b,.ai-workshop-page .ai-source b{font-size:12px}
+  .ai-workshop-page .ai-form input,.ai-workshop-page .ai-form select,.ai-workshop-page .meta-grid input,.ai-workshop-page .meta-grid select{height:42px;padding-inline:12px;font-size:13px}
+  .ai-workshop-page .ai-source textarea{min-height:205px;padding:14px;font-size:13px;line-height:1.7}
+  .ai-workshop-page .ai-source small,.reference-actions span,.advanced-settings summary small,.workshop-actionbar>span{font-size:11px}
+  .reference-actions button,.prompt-tools button{padding:8px 12px;font-size:12px}
+  .advanced-settings>summary{padding:16px 20px;font-size:13px}
+  .advanced-settings>div{padding:0 20px 20px}
+  .advanced-settings fieldset label,.ai-background{font-size:12px}
+  .generation-progress h3,.generated-sections h3,.generation-history h3{font-size:14px}
+  .generation-progress header p,.generation-progress>footer,.generated-sections article p{font-size:11px}
+  .generation-result b{font-size:14px}
+  .generation-result small,.generation-history article small,.generation-history article em{font-size:11px}
+  .generation-history article b{font-size:13px}
+  .workshop-actionbar{padding:13px 15px}
+  .workshop-actionbar button,.generation-result button{height:40px;padding-inline:16px;font-size:13px}
+  .ai-workshop-page .meta-form h2,.ai-workshop-page .html-editor-panel h2{font-size:16px}
+  .ai-workshop-page .meta-form p,.ai-workshop-page .html-editor-panel p,.ai-workshop-page .meta-grid b,.ai-workshop-page .recognized-result dt{font-size:11px}
+}
+
+@media(min-width:1800px){
+  .ai-workshop-page .workshop-surface{max-width:1580px}
+  .creation-panel-slot{max-width:1400px}
+}
+
+/* Fantasy desk color system — keep navigation and editor visually continuous. */
+@media(min-width:1200px){
+  .ai-workshop-page{display:grid;grid-template-columns:minmax(420px,1fr) auto;align-items:end;gap:12px 28px}
+  .ai-workshop-page .workshop-header{min-height:100px;margin:0;padding:18px 24px;background:linear-gradient(90deg,rgba(5,23,39,.78),rgba(8,32,52,.28) 72%,transparent);border:0;border-radius:10px;box-shadow:none}
+  .ai-workshop-page .workshop-header blockquote{display:none}
+  .ai-workshop-page .workshop-header h1{display:flex;align-items:center;gap:13px;color:#f1eadc;font-size:31px;letter-spacing:.08em;text-shadow:0 2px 15px rgba(0,0,0,.45)}
+  .ai-workshop-page .workshop-header h1:before{content:'✦';color:#e4bd72;font-size:25px;text-shadow:0 0 14px rgba(225,177,91,.72)}
+  .ai-workshop-page .workshop-header p{color:#b3c1c9;font-size:14px;letter-spacing:.04em}
+  .ai-workshop-page .workshop-kicker{color:#c89e5d;font-size:10px;letter-spacing:.2em}
+  .workshop-statusbar{min-width:530px;margin:0 28px 14px 0;padding-inline:18px;color:#a8bbc6;background:linear-gradient(180deg,rgba(15,51,76,.86),rgba(7,31,50,.9));border-color:rgba(105,151,178,.38);box-shadow:inset 0 1px rgba(255,255,255,.04),0 10px 30px rgba(0,9,17,.2)}
+  .workshop-statusbar b{color:#ebd092}.workshop-statusbar>i{color:#57798d}.workshop-statusbar button{color:#d3b77f}
+  .ai-workshop-page .workshop-surface{position:relative;grid-column:1/-1;width:calc(100% - 56px);overflow:hidden;background:linear-gradient(155deg,rgba(8,35,57,.97),rgba(4,22,37,.97) 58%,rgba(7,31,49,.96));border-color:rgba(207,166,94,.62);border-radius:12px;box-shadow:inset 0 1px rgba(255,255,255,.07),inset 0 0 50px rgba(37,96,131,.09),0 28px 80px rgba(0,8,16,.42)}
+  .ai-workshop-page .workshop-surface:before,.ai-workshop-page .workshop-surface:after{content:'';position:absolute;z-index:3;top:0;width:72px;height:2px;background:linear-gradient(90deg,#e4be76,transparent);pointer-events:none}
+  .ai-workshop-page .workshop-surface:before{left:14px}.ai-workshop-page .workshop-surface:after{right:14px;transform:scaleX(-1)}
+  .ai-workshop-page .creation-tabs{height:72px;margin:14px 24px 0;padding:0 8px;gap:0;overflow:hidden;background:linear-gradient(180deg,rgba(6,28,46,.94),rgba(4,21,35,.96));border:1px solid rgba(72,119,148,.4);border-radius:9px;box-shadow:inset 0 1px rgba(255,255,255,.035),0 12px 30px rgba(0,8,15,.18)}
+  .ai-workshop-page .creation-tabs button{position:relative;color:#91a8b6;border:0;border-radius:7px;font-size:13px;transition:color .18s,background .18s,box-shadow .18s}
+  .ai-workshop-page .creation-tabs button:not(:last-child):after{content:'';position:absolute;right:0;top:20%;width:1px;height:60%;background:linear-gradient(transparent,rgba(75,113,137,.42),transparent)}
+  .ai-workshop-page .creation-tabs button i{color:#83a3b7;font-size:15px}
+  .ai-workshop-page .creation-tabs button:hover{color:#d5e0e5;background:rgba(34,83,113,.14)}
+  .ai-workshop-page .creation-tabs button.active{color:#f1d9a2;background:linear-gradient(180deg,rgba(204,165,96,.18),rgba(190,144,69,.08));border:1px solid rgba(226,185,108,.34);box-shadow:inset 0 -3px #e4b861,inset 0 0 24px rgba(221,173,87,.09),0 0 18px rgba(196,143,59,.1)}
+  .ai-workshop-page .creation-tabs button.active i{color:#f1ca7a;text-shadow:0 0 10px rgba(234,184,91,.65)}
+  .workshop-main{position:relative;margin-top:0;padding-top:24px;background:linear-gradient(180deg,rgba(15,52,78,.16),transparent 170px);border-top:1px solid rgba(72,119,148,.12)}
+  .mode-heading{border-bottom-color:rgba(76,126,154,.34)}
+  .mode-heading small{color:#c79b59}.mode-heading h2{color:#f3ead7!important}.mode-heading>p{color:#8fa5b1!important}
+  .service-strip{background:linear-gradient(90deg,rgba(11,45,68,.92),rgba(8,34,53,.92));border-color:rgba(65,116,146,.42);box-shadow:inset 0 1px rgba(255,255,255,.03)}
+  .workshop-form-section{background:linear-gradient(135deg,rgba(13,51,78,.94),rgba(7,35,56,.96));border-color:rgba(65,116,146,.48);box-shadow:inset 0 1px rgba(255,255,255,.035),inset 0 0 35px rgba(52,116,151,.045),0 12px 30px rgba(0,8,16,.15)}
+  .workshop-form-section:hover{border-color:rgba(86,141,172,.55)}
+  .section-heading>span{color:#f0cf8b;background:radial-gradient(circle,rgba(210,161,76,.2),rgba(103,73,33,.08));border-color:#bc8f4c;box-shadow:0 0 0 3px rgba(196,147,69,.06),0 0 14px rgba(204,154,74,.1)}
+  .section-heading h3{color:#f0e8d8}.section-heading p{color:#86a0ae}
+  .ai-workshop-page .ai-form input,.ai-workshop-page .ai-form select,.ai-workshop-page .meta-grid input,.ai-workshop-page .meta-grid select,.ai-workshop-page .ai-source textarea,.ai-workshop-page .paste-import textarea{background:linear-gradient(180deg,rgba(3,22,37,.9),rgba(4,27,43,.9));border-color:rgba(72,123,152,.54);box-shadow:inset 0 1px 3px rgba(0,0,0,.22)}
+  .ai-workshop-page .ai-form input:hover,.ai-workshop-page .ai-form select:hover,.ai-workshop-page .meta-grid input:hover,.ai-workshop-page .meta-grid select:hover{border-color:rgba(101,153,181,.65)}
+  .ai-workshop-page .ai-form input:focus,.ai-workshop-page .ai-form select:focus,.ai-workshop-page .ai-source textarea:focus,.ai-workshop-page .meta-grid input:focus,.ai-workshop-page .meta-grid select:focus,.ai-workshop-page .paste-import textarea:focus{border-color:#c79a56;box-shadow:0 0 0 2px rgba(205,157,85,.13),inset 0 1px 3px rgba(0,0,0,.2)}
+  .advanced-settings{background:linear-gradient(135deg,rgba(12,47,72,.9),rgba(7,33,52,.94));border-color:rgba(65,116,146,.42)}
+  .advanced-settings>summary{color:#e5ddce}.advanced-settings>summary:after{color:#e0b663}
+  .workshop-actionbar{background:linear-gradient(180deg,rgba(7,31,49,.98),rgba(4,22,36,.98));border-color:rgba(190,145,75,.42);box-shadow:0 15px 42px rgba(0,5,11,.42),inset 0 1px rgba(255,255,255,.035)}
+  .workshop-actionbar button{color:#c5d2d8;background:linear-gradient(180deg,#123b57,#0b2a40);border-color:rgba(91,137,162,.48)}
+  .workshop-actionbar button:hover{border-color:#a88450;color:#efe5d2}
+  .workshop-actionbar button.primary{color:#17232b;background:linear-gradient(110deg,#ead39b,#d2a658 58%,#f0d89e);border-color:#e8c67f;box-shadow:0 0 22px rgba(218,169,83,.25),inset 0 1px rgba(255,255,255,.52)}
+  .ai-workshop-page .meta-form,.ai-workshop-page .html-editor-panel,.ai-workshop-page .recognized-result{background:linear-gradient(135deg,rgba(13,51,78,.94),rgba(7,35,56,.96));border-color:rgba(65,116,146,.48)}
+}
+
+/* Classic workshop palette: blue navigation above, paper-white editor below. */
+@media(min-width:900px){
+  .ai-workshop-page .workshop-surface{background:#f3f1ea;border-color:rgba(177,136,72,.58);box-shadow:inset 0 1px rgba(255,255,255,.9),0 24px 70px rgba(0,12,23,.32)}
+  .ai-workshop-page .creation-tabs{background:linear-gradient(180deg,#0d2c43,#081e30);border-color:#294c64;box-shadow:inset 0 1px rgba(255,255,255,.05),0 10px 24px rgba(0,15,27,.2)}
+  .ai-workshop-page .creation-tabs button{color:#9fb2bf}
+  .ai-workshop-page .creation-tabs button i{color:#9cb4c3}
+  .ai-workshop-page .creation-tabs button:hover{color:#eef3f5;background:rgba(70,116,145,.16)}
+  .ai-workshop-page .creation-tabs button.active{color:#f3d89d;background:linear-gradient(180deg,rgba(213,174,105,.2),rgba(183,135,61,.1));border-color:rgba(230,192,122,.38);box-shadow:inset 0 -3px #dfb25f,inset 0 0 20px rgba(222,177,95,.08)}
+  .workshop-main{background:linear-gradient(180deg,#f6f4ee,#efede6);border-top-color:#d8d3c8}
+  .ai-workshop-page .ai-panel,.ai-workshop-page .import-panel,.ai-workshop-page .manual-create-panel{color:#324858}
+  .mode-heading{border-bottom-color:#d7d2c7}
+  .mode-heading small{color:#9a6d31}
+  .mode-heading h2{color:#253e51!important;text-shadow:none}
+  .mode-heading>p{color:#738693!important}
+  .service-strip{color:#657b89;background:linear-gradient(90deg,#edf3f5,#e7eef1);border-color:#c9d6dc;box-shadow:inset 0 1px #fff}
+  .service-strip>b{color:#29485b}.service-strip>em{color:#b34f48}
+  .service-strip>button{color:#78562e;background:#fff;border-color:#cdb58c}
+  .service-strip .dev-badge.ready{color:#28724d;background:#dceee3}.service-strip .dev-badge.warning{color:#895d25;background:#f2e4cc}
+  .workshop-form-section{color:#334b5b;background:linear-gradient(145deg,#fff,#f8f8f5);border-color:#d4dadd;box-shadow:inset 0 1px #fff,0 9px 24px rgba(32,55,69,.07)}
+  .workshop-form-section:hover{border-color:#bdc9cf}
+  .section-heading>span{color:#815b29;background:#f6edda;border-color:#c49a59;box-shadow:0 0 0 3px rgba(190,145,72,.07)}
+  .section-heading h3{color:#2b4455}.section-heading p{color:#7b8d98}
+  .ai-workshop-page .ai-form label,.ai-workshop-page .ai-source{color:#405665}
+  .ai-workshop-page .ai-form input,.ai-workshop-page .ai-form select,.ai-workshop-page .meta-grid input,.ai-workshop-page .meta-grid select,.ai-workshop-page .ai-source textarea,.ai-workshop-page .paste-import textarea{color:#253c4b;background:#fff;border-color:#cbd4d9;box-shadow:inset 0 1px 2px rgba(29,52,67,.04)}
+  .ai-workshop-page .ai-form input:hover,.ai-workshop-page .ai-form select:hover,.ai-workshop-page .meta-grid input:hover,.ai-workshop-page .meta-grid select:hover{border-color:#9eb0ba}
+  .ai-workshop-page .ai-form input:focus,.ai-workshop-page .ai-form select:focus,.ai-workshop-page .ai-source textarea:focus,.ai-workshop-page .meta-grid input:focus,.ai-workshop-page .meta-grid select:focus,.ai-workshop-page .paste-import textarea:focus{border-color:#a87839;box-shadow:0 0 0 2px rgba(174,126,57,.13)}
+  .ai-workshop-page .ai-source small,.reference-actions span{color:#82919a}
+  .reference-actions button,.prompt-tools button{color:#74532b;background:#fbf8f1;border-color:#cdbb9b}
+  .advanced-settings{color:#374e5d;background:#fff;border-color:#d4dadd;box-shadow:0 7px 20px rgba(32,55,69,.05)}
+  .advanced-settings>summary{color:#334b5b}.advanced-settings>summary:after{color:#9c7138}.advanced-settings summary small{color:#83929b}
+  .advanced-settings fieldset{border-color:#d9dee0}.advanced-settings fieldset label,.ai-background{color:#5c707d}
+  .ai-workshop-page .prompt-output{color:#536b79;background:#f3f5f5;border-color:#d8dddf}
+  .generation-progress,.generated-sections,.generation-history,.generation-result{color:#405562;background:#fff;border-color:#d8dddf}
+  .generation-progress h3,.generated-sections h3,.generation-history h3{color:#2e4656}.generation-progress__bar{background:#e0e5e7}
+  .generated-sections article{color:#3d5260;background:#f8f9f8;border-color:#dce1e3}.generated-sections article p{color:#607581}
+  .generation-result{border-color:#b8d1c1;background:#f8fcf9}.generation-result b{color:#315342}.generation-result small{color:#748b7d}
+  .generation-history article b{color:#334b5b}.generation-history article small,.generation-history article em{color:#82929b}
+  .workshop-actionbar{background:rgba(255,255,255,.96);border-color:#d1c3a8;box-shadow:0 12px 30px rgba(28,49,62,.14),inset 0 1px #fff}
+  .workshop-actionbar>span{color:#7d8d96}
+  .workshop-actionbar button{color:#3a5363;background:#f7f8f7;border-color:#cbd4d8}
+  .workshop-actionbar button:hover{color:#6f4e26;background:#fff;border-color:#b9955e}
+  .workshop-actionbar button.primary{color:#17232b;background:linear-gradient(110deg,#ead39b,#d2a658 58%,#f0d89e);border-color:#d8af66}
+  .ai-workshop-page .meta-form,.ai-workshop-page .html-editor-panel,.ai-workshop-page .recognized-result{color:#405562;background:#fff;border-color:#d4dadd;box-shadow:0 9px 24px rgba(32,55,69,.06)}
+  .ai-workshop-page .meta-form h2,.ai-workshop-page .html-editor-panel h2,.ai-workshop-page .recognized-result h3{color:#2b4455}
+  .ai-workshop-page .meta-form p,.ai-workshop-page .html-editor-panel p,.ai-workshop-page .meta-grid b,.ai-workshop-page .recognized-result dt{color:#70838f}
+  .ai-workshop-page .drop-zone{color:#526977;background:#fbfbf8;border-color:#c8b184}.ai-workshop-page .drop-zone:hover{background:#fffdf8;border-color:#a87839}
+  .ai-workshop-page .paste-import button{color:#74532b;background:#fbf8f1;border-color:#cdbb9b}
+  .ai-workshop-page .validation-list{color:#405562;background:#fff;border-color:#d8dddf}
+}
