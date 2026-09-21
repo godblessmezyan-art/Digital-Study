@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>当尼采哭泣 · 睡前听完一本书</title>
+<link rel="preconnect" href="https://fonts.loli.net" crossorigin>
+<link href="https://fonts.loli.net/css2?family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+/* ============ 主题变量 ============ */
+body.theme-default{--bg:#151a26;--text:#e9e4d8;--text2:#98a1b3;--card:#1d2434;--border:#2f3950;--accent:#d4a24e;--accent2:#7fa8c9;--accent3:#c0705a;--soft:#232c40;--gold:#e3b563;--hero-top:#0d1120;--hero-via:#1a2138;--hero-bot:#2a2030;--quote-bg:#1f2739;--shadow:rgba(0,0,0,.45)}
+body.theme-mint{--bg:#f2f7f3;--text:#27352c;--text2:#6c7f72;--card:#fbfdfb;--border:#d8e5da;--accent:#047857;--accent2:#0891b2;--accent3:#ca8a04;--soft:#e6f0e8;--gold:#b08948;--hero-top:#d8f0e0;--hero-via:#c7e8d3;--hero-bot:#e6f0e8;--quote-bg:#ecfdf5;--shadow:rgba(4,120,87,.1)}
+body.theme-cloud{--bg:#f5f7fa;--text:#333a45;--text2:#7b8494;--card:#ffffff;--border:#e3e8ef;--accent:#2563eb;--accent2:#64748b;--accent3:#7c3aed;--soft:#eff6ff;--gold:#b4873f;--hero-top:#e0e7ff;--hero-via:#dbeafe;--hero-bot:#f5f3ff;--quote-bg:#eff6ff;--shadow:rgba(37,99,235,.1)}
+body.theme-bamboo{--bg:#f4f6ef;--text:#31382a;--text2:#75806b;--card:#fcfdf8;--border:#dde3cf;--accent:#4d7c0f;--accent2:#15803d;--accent3:#a16207;--soft:#ecfccb;--gold:#a16207;--hero-top:#d9f99d;--hero-via:#d1fae5;--hero-bot:#fef9c3;--quote-bg:#ecfccb;--shadow:rgba(77,124,15,.1)}
+body.theme-amber{--bg:#faf4e8;--text:#3d3121;--text2:#8a7a5f;--card:#fffaf1;--border:#ecdfc5;--accent:#b45309;--accent2:#0e7490;--accent3:#7c2d12;--soft:#fef3c7;--gold:#b45309;--hero-top:#fde68a;--hero-via:#fed7aa;--hero-bot:#fef3c7;--quote-bg:#fffbeb;--shadow:rgba(180,83,9,.12)}
+body.theme-dawn{--bg:#f7f0ea;--text:#3a2f33;--text2:#8a7078;--card:#fdf8f4;--border:#ead9d3;--accent:#be123c;--accent2:#0e7490;--accent3:#b45309;--soft:#fce7f3;--gold:#b45309;--hero-top:#fecdd3;--hero-via:#fbcfe8;--hero-bot:#fde68a;--quote-bg:#fff1f2;--shadow:rgba(190,18,60,.1)}
+body.theme-lavender{--bg:#f5f3f9;--text:#363044;--text2:#837897;--card:#fcfbfe;--border:#e4def0;--accent:#7c3aed;--accent2:#0891b2;--accent3:#be185d;--soft:#ede9fe;--gold:#a16207;--hero-top:#ddd6fe;--hero-via:#e9d5ff;--hero-bot:#f5f3ff;--quote-bg:#f5f3ff;--shadow:rgba(124,58,237,.1)}
+body.theme-slate{--bg:#f2f4f5;--text:#333a3d;--text2:#79848a;--card:#fbfcfc;--border:#dfe4e6;--accent:#475569;--accent2:#0369a1;--accent3:#be123c;--soft:#f1f5f9;--gold:#a16207;--hero-top:#e2e8f0;--hero-via:#cbd5e1;--hero-bot:#f1f5f9;--quote-bg:#f8fafc;--shadow:rgba(71,85,105,.1)}
+body.theme-rose{--bg:#faf1f2;--text:#432d31;--text2:#96747b;--card:#fffafa;--border:#efd8dc;--accent:#be123c;--accent2:#1d4ed8;--accent3:#b45309;--soft:#fce7f3;--gold:#a16207;--hero-top:#fecdd3;--hero-via:#fda4af;--hero-bot:#fce7f3;--quote-bg:#fff1f2;--shadow:rgba(190,18,60,.1)}
+body.theme-sakura{--bg:#fdf4f6;--text:#47333a;--text2:#9c7f89;--card:#fffafb;--border:#f3dee4;--accent:#db2777;--accent2:#0d9488;--accent3:#c2410c;--soft:#fce7f3;--gold:#b45309;--hero-top:#fbcfe8;--hero-via:#f9a8d4;--hero-bot:#fce7f3;--quote-bg:#fdf2f8;--shadow:rgba(219,39,119,.1)}
+body.theme-forest{--bg:#f1f5f0;--text:#293629;--text2:#6b7d68;--card:#fafcf9;--border:#dbe5d6;--accent:#15803d;--accent2:#0369a1;--accent3:#b45309;--soft:#dcfce7;--gold:#a16207;--hero-top:#bbf7d0;--hero-via:#d9f99d;--hero-bot:#dcfce7;--quote-bg:#f0fdf4;--shadow:rgba(21,128,61,.1)}
+body.theme-ocean{--bg:#eff5f8;--text:#243842;--text2:#647e8b;--card:#f9fcfe;--border:#d7e4eb;--accent:#0369a1;--accent2:#0e7490;--accent3:#be123c;--soft:#e0f2fe;--gold:#a16207;--hero-top:#bae6fd;--hero-via:#7dd3fc;--hero-bot:#e0f2fe;--quote-bg:#f0f9ff;--shadow:rgba(3,105,161,.1)}
+body.theme-sand{--bg:#f8f3ea;--text:#413628;--text2:#8f8067;--card:#fdfaf3;--border:#eadfca;--accent:#b45309;--accent2:#0e7490;--accent3:#7c2d12;--soft:#fef3c7;--gold:#b45309;--hero-top:#fde68a;--hero-via:#fcd34d;--hero-bot:#fef9c3;--quote-bg:#fffbeb;--shadow:rgba(180,83,9,.12)}
+body.theme-night{--bg:#1d2130;--text:#e8e6e1;--text2:#9aa0b0;--card:#262b3d;--border:#3a4157;--accent:#60a5fa;--accent2:#34d399;--accent3:#fbbf24;--soft:#2c3247;--gold:#fbbf24;--hero-top:#1e293b;--hero-via:#0f172a;--hero-bot:#1e1b4b;--quote-bg:#1f2937;--shadow:rgba(0,0,0,.4)}
+body.theme-charcoal{--bg:#212121;--text:#ebe7e0;--text2:#a09a90;--card:#2b2b2b;--border:#404040;--accent:#60a5fa;--accent2:#4ade80;--accent3:#fb923c;--soft:#303030;--gold:#fbbf24;--hero-top:#292524;--hero-via:#1c1917;--hero-bot:#27272a;--quote-bg:#292524;--shadow:rgba(0,0,0,.45)}
+body.theme-deepsea{--bg:#12222b;--text:#e2ece9;--text2:#8ba8a4;--card:#1a2f3a;--border:#2c4652;--accent:#38bdf8;--accent2:#2dd4bf;--accent3:#fcd34d;--soft:#1e3540;--gold:#fcd34d;--hero-top:#082f49;--hero-via:#0c4a6e;--hero-bot:#164e63;--quote-bg:#0c4a6e;--shadow:rgba(0,0,0,.45)}
+
+/* ============ 基础 ============ */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden}
+svg{max-width:100%}
+body{
+  background-color:var(--bg);
+  color:var(--text);
+  font-family:'Noto Serif SC',serif;
+  line-height:1.9;
+  transition:background .6s,color .6s;
+  overflow-x:hidden;
+  -webkit-text-size-adjust:100%;text-size-adjust:100%;
+  background-image:
+    radial-gradient(var(--border) 1px,transparent 1.4px),
+    radial-gradient(var(--border) 1.6px,transparent 2px);
+  background-size:26px 26px,150px 150px;
+  background-position:0 0,48px 70px;
+  background-attachment:fixed;
+}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);opacity:.55;pointer-events:none;z-index:0}
+main,header,footer,.theme-select,.markmap-box{position:relative;z-index:1}
+
+.theme-select{position:fixed;top:16px;right:16px;z-index:999;padding:8px 14px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text);font-family:'Noto Serif SC',serif;font-size:13px;cursor:pointer;box-shadow:0 4px 14px var(--shadow);outline:none;transition:all .4s}
+.theme-select:hover{border-color:var(--accent)}
+
+/* ============ 首屏 ============ */
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;overflow:hidden;padding:64px 24px;background:linear-gradient(165deg,var(--hero-top) 0%,var(--hero-via) 55%,var(--hero-bot) 100%)}
+.hero::before{
+  content:'';position:absolute;top:0;left:0;right:0;bottom:0;z-index:0;
+  background-image:
+    radial-gradient(rgba(255,255,255,.5) 1px,transparent 1.6px),
+    radial-gradient(rgba(255,255,255,.28) 1px,transparent 1.4px);
+  background-size:130px 130px,70px 70px;
+  background-position:20px 30px,0 0;
+  mask-image:radial-gradient(ellipse at center,#000 30%,transparent 82%);
+  -webkit-mask-image:radial-gradient(ellipse at center,#000 30%,transparent 82%);
+  animation:star-glint 6s ease-in-out infinite;
+}
+@keyframes star-glint{0%,100%{opacity:.75}50%{opacity:1}}
+.hero *{position:relative;z-index:2}
+.hero-series{font-size:13px;letter-spacing:.6em;text-indent:.6em;color:rgba(227,181,99,.6);margin-bottom:30px;font-variant:small-caps}
+.book-title{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(2.1rem,6.8vw,3.7rem);letter-spacing:.2em;text-indent:.2em;color:#f0e7d2;font-weight:400;text-shadow:0 0 34px rgba(227,181,99,.35),0 4px 24px rgba(0,0,0,.5);margin-bottom:24px}
+
+/* 双星轨迹 */
+.fall-stars{width:min(78vw,430px);margin:0 auto 22px}
+.fall-stars svg{width:100%;height:auto;overflow:visible}
+.fs-trail{fill:none;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:fs-draw 3s .5s ease-out forwards}
+.fs-t1{stroke:rgba(227,181,99,.75)}
+.fs-t2{stroke:rgba(127,168,201,.75)}
+@keyframes fs-draw{to{stroke-dashoffset:0}}
+.fs-star{animation:fs-pulse 3s 3.2s ease-in-out infinite}
+@keyframes fs-pulse{0%,100%{opacity:1}50%{opacity:.45}}
+.fs-txt{fill:rgba(233,228,216,.62);font-family:'Noto Serif SC',serif;font-size:11px;letter-spacing:.08em}
+
+.hero-quote{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(15px,2.6vw,19px);letter-spacing:.12em;color:rgba(240,231,210,.85);margin-bottom:22px;line-height:2}
+.hero-sub{font-size:clamp(13px,2vw,15.5px);letter-spacing:.2em;color:rgba(233,228,216,.6);margin-bottom:10px}
+.hero-author{font-size:13px;letter-spacing:.14em;color:rgba(233,228,216,.42);margin-top:4px}
+.hero-line{width:1px;height:50px;background:linear-gradient(180deg,rgba(227,181,99,0),rgba(227,181,99,.55));margin:30px auto 0}
+
+/* 烛火 */
+.candle{display:inline-flex;flex-direction:column;align-items:center;gap:0}
+.flame{width:16px;height:16px;background:linear-gradient(135deg,#ffe9b0,#f2a63c 70%);border-radius:50% 0 50% 50%;transform:rotate(-45deg);box-shadow:0 0 22px 6px rgba(242,166,60,.35);animation:flicker 2.8s ease-in-out infinite;margin-bottom:8px}
+@keyframes flicker{0%,100%{transform:rotate(-45deg) scale(1)}25%{transform:rotate(-45deg) scale(1.12)}55%{transform:rotate(-45deg) scale(.94)}80%{transform:rotate(-45deg) scale(1.06)}}
+.wick{width:2px;height:7px;background:rgba(233,228,216,.35)}
+
+/* ============ 章节 ============ */
+main{position:relative;max-width:900px;margin:0 auto;padding:0 26px}
+.chapter{padding:84px 0 30px;opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform .9s ease}
+.chapter.visible{opacity:1;transform:none}
+.chapter-static{padding:60px 0 30px}
+
+.ch-head{display:flex;align-items:flex-start;gap:18px;margin-bottom:28px}
+.badge{flex:none;width:52px;height:52px;border:1.5px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--card);color:var(--accent);font-family:'ZCOOL XiaoWei',serif;font-size:20px;box-shadow:0 4px 16px var(--shadow);position:relative}
+.badge::before{content:attr(data-no);position:absolute;top:-10px;right:-10px;background:var(--accent);color:#fff;font-size:10px;padding:2px 7px;border-radius:10px;letter-spacing:.1em;font-family:'Noto Serif SC',serif}
+.ch-kicker{font-size:12px;letter-spacing:.4em;text-indent:.4em;color:var(--text2);margin-bottom:4px;text-transform:uppercase;font-variant:small-caps}
+.ch-title{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(22px,4.2vw,30px);letter-spacing:.06em;line-height:1.3}
+.ch-lead{color:var(--text2);font-size:15px;margin-bottom:22px}
+.chapter p,.chapter-static p{margin-bottom:16px}
+.center{text-align:center}
+
+.quote-block{background:var(--quote-bg);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:22px 26px;margin:26px 0;font-weight:600;font-size:16px;letter-spacing:.03em}
+.quote-block .small{font-weight:400;font-size:13px;color:var(--text2);margin-top:8px;display:block}
+
+.big-quote{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(18px,3.4vw,24px);line-height:2.2;letter-spacing:.08em;text-align:center;color:var(--text);background:var(--card);border:1px solid var(--border);border-radius:18px;padding:44px 30px;margin:30px 0;box-shadow:0 6px 26px var(--shadow);position:relative}
+.big-quote em{font-style:normal;color:var(--accent)}
+.big-quote .deco{position:absolute;color:var(--gold);opacity:.5;font-size:14px}
+.big-quote .deco.a{top:14px;left:18px}
+.big-quote .deco.b{bottom:14px;right:18px}
+
+/* 双雄卡 */
+.duel-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:26px 0}
+@media(max-width:640px){.duel-grid{grid-template-columns:1fr}}
+.duel-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px 24px;box-shadow:0 6px 22px var(--shadow);position:relative;overflow:hidden}
+.duel-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+.duel-card.b::before{background:linear-gradient(90deg,var(--gold),transparent)}
+.duel-card.n::before{background:linear-gradient(90deg,var(--accent2),transparent)}
+.duel-card .yr{font-size:11.5px;letter-spacing:.24em;color:var(--text2);font-variant:small-caps}
+.duel-card h4{font-family:'ZCOOL XiaoWei',serif;font-size:21px;letter-spacing:.1em;margin:6px 0 4px}
+.duel-card.b h4{color:var(--gold)}
+.duel-card.n h4{color:var(--accent2)}
+.duel-card .role{font-size:12.5px;color:var(--text2);margin-bottom:14px}
+.duel-card ul{list-style:none}
+.duel-card li{padding:7px 0;border-bottom:1px dashed var(--border);font-size:13.5px}
+.duel-card li:last-child{border-bottom:none}
+.duel-card li b{color:var(--accent);font-weight:600}
+
+/* 圈套三策 */
+.scheme{margin:26px 0;position:relative;padding-left:34px}
+.scheme::before{content:'';position:absolute;left:13px;top:12px;bottom:12px;width:1px;border-left:1px dashed var(--border)}
+.scheme-step{position:relative;margin-bottom:22px}
+.scheme-step .no{position:absolute;left:-34px;top:2px;width:28px;height:28px;border-radius:50%;background:var(--card);border:1.5px solid var(--accent);color:var(--accent);display:flex;align-items:center;justify-content:center;font-family:'ZCOOL XiaoWei',serif;font-size:14px}
+.scheme-step h4{font-family:'ZCOOL XiaoWei',serif;font-size:16.5px;letter-spacing:.06em;margin-bottom:6px}
+.scheme-step p{font-size:14.5px;color:var(--text2);margin:0}
+.scheme-step p b{color:var(--text)}
+
+/* 对白 */
+.dialog{margin:28px 0}
+.dl{display:flex;gap:14px;margin-bottom:16px;align-items:flex-start}
+.dl .who{flex:none;width:56px;font-family:'ZCOOL XiaoWei',serif;font-size:15px;letter-spacing:.08em;text-align:right;padding-top:12px}
+.dl.b .who{color:var(--gold)}
+.dl.n .who{color:var(--accent2)}
+.dl .line{flex:1;background:var(--card);border:1px solid var(--border);border-radius:3px 14px 14px 14px;padding:13px 18px;font-size:15px;box-shadow:0 3px 12px var(--shadow)}
+.dl.n .line{border-radius:14px 3px 14px 14px;background:var(--quote-bg)}
+.stage{text-align:center;color:var(--text2);font-size:12.5px;letter-spacing:.14em;margin:18px 0;font-style:italic}
+
+/* 尼采三问 */
+.ins-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px 26px 24px;margin-bottom:20px;box-shadow:0 5px 20px var(--shadow);position:relative;overflow:hidden}
+.ins-card .rn{position:absolute;top:6px;right:18px;font-family:'ZCOOL XiaoWei',serif;font-size:64px;line-height:1;color:var(--border);opacity:.7}
+.ins-card h4{font-family:'ZCOOL XiaoWei',serif;font-size:18px;letter-spacing:.06em;color:var(--accent);margin-bottom:12px}
+.ins-card p{font-size:15px;margin-bottom:10px}
+.ins-card p:last-child{margin-bottom:0}
+.ins-card .say{font-weight:600;color:var(--text)}
+
+/* 永劫回归 */
+.eternity{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:36px 28px;margin:28px 0;box-shadow:0 8px 28px var(--shadow);text-align:center;position:relative;overflow:hidden}
+.et-ring{width:130px;height:130px;margin:0 auto 18px;position:relative}
+.et-ring svg{width:100%;height:100%;animation:et-spin 24s linear infinite}
+@keyframes et-spin{to{transform:rotate(360deg)}}
+.et-ring .inf{position:absolute;top:50%;left:50%;transform:translate(-50%,-52%);font-family:'ZCOOL XiaoWei',serif;font-size:44px;color:var(--accent)}
+.et-q{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(19px,3.6vw,25px);letter-spacing:.1em;line-height:2;margin-bottom:16px}
+.et-q em{font-style:normal;color:var(--accent)}
+.et-note{font-size:13.5px;color:var(--text2)}
+.verdict-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
+@media(max-width:640px){.verdict-row{grid-template-columns:1fr}}
+.verdict{border-radius:14px;padding:20px 22px;text-align:center;font-family:'ZCOOL XiaoWei',serif;font-size:17px;letter-spacing:.08em}
+.verdict.dim{background:var(--card);border:1px dashed var(--border);color:var(--text2)}
+.verdict.lit{background:var(--quote-bg);border:1.5px solid var(--accent);color:var(--accent);box-shadow:0 5px 18px var(--shadow)}
+.verdict span{display:block;font-family:'Noto Serif SC',serif;font-size:12.5px;letter-spacing:.05em;margin-top:8px;font-weight:400}
+
+/* 梦境旅程 */
+.dream-path{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:26px 0}
+@media(max-width:640px){.dream-path{grid-template-columns:repeat(2,1fr)}}
+.dp-node{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 14px;text-align:center;box-shadow:0 3px 12px var(--shadow);position:relative}
+.dp-node .ico{font-size:24px;display:block;margin-bottom:8px}
+.dp-node h5{font-family:'ZCOOL XiaoWei',serif;font-size:15px;letter-spacing:.06em;margin-bottom:6px}
+.dp-node p{font-size:12.5px;color:var(--text2);margin:0;line-height:1.7}
+.dp-node.end{border-color:var(--accent3)}
+.dp-node.dawn{border-color:var(--accent2)}
+
+/* 存在卡 */
+.presence{background:linear-gradient(155deg,var(--card),var(--soft));border:1px solid var(--accent);border-radius:18px;padding:44px 30px;margin:30px 0;text-align:center;box-shadow:0 10px 34px var(--shadow)}
+.presence .big{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(24px,5vw,34px);letter-spacing:.18em;color:var(--accent);margin:18px 0 14px}
+.presence .sub{font-size:14px;color:var(--text2);line-height:2.1}
+
+/* 今晚行动卡 */
+.tonight{background:var(--card);border:1px solid var(--accent);border-radius:20px;padding:44px 34px;margin:34px 0 10px;box-shadow:0 10px 34px var(--shadow)}
+.tonight h3{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(19px,3.4vw,24px);letter-spacing:.1em;text-align:center;color:var(--accent)}
+.tonight .sub{text-align:center;font-size:11.5px;letter-spacing:.3em;color:var(--text2);margin:8px 0 26px;font-variant:small-caps}
+.tonight-step{display:flex;gap:16px;margin-bottom:20px;align-items:flex-start}
+.tonight-step .n{flex:none;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;margin-top:5px;font-family:'ZCOOL XiaoWei',serif}
+.tonight-step p{font-size:15px;margin:0}
+.tonight-step .hint{display:block;font-size:12.5px;color:var(--text2);margin-top:2px}
+.end-line{text-align:center;color:var(--text2);font-size:14px;margin-top:26px;line-height:2.1}
+
+/* ============ 思维导图 ============ */
+.markmap-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;box-shadow:0 6px 24px var(--shadow);margin-top:20px;width:100%;max-width:100%;overflow:hidden}
+.markmap{min-height:560px;width:100%;max-width:100%;overflow:hidden}
+.markmap svg{display:block;width:100%;max-width:100%;height:auto}
+.markmap-foreign{color:var(--text)!important}
+.markmap-foreign *{color:inherit}
+
+/* 页脚 */
+footer{padding:90px 26px 70px;text-align:center;position:relative;z-index:1;max-width:900px;margin:0 auto}
+.goodnight{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(30px,6vw,44px);letter-spacing:.5em;text-indent:.5em;margin-bottom:34px;color:var(--text)}
+.wish{max-width:620px;margin:0 auto;color:var(--text2);font-size:15px;line-height:2.2}
+.wish .moon{display:block;margin:30px auto 0;width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 34% 30%,var(--gold),transparent 72%),var(--soft);border:1px solid var(--border);box-shadow:0 0 26px var(--shadow)}
+.src-note{margin-top:44px;font-size:12px;letter-spacing:.3em;color:var(--text2);opacity:.6}
+
+/* 移动端适配 */
+@media (max-width:768px){
+  body{background-attachment:scroll}
+  .theme-select{top:10px;right:10px;padding:6px 12px;font-size:12px}
+  .tonight{padding:34px 22px}
+}
+</style>
+</head>
+<body class="theme-default">
+<script>!function(){var t=["theme-default","theme-mint","theme-cloud","theme-bamboo","theme-amber","theme-dawn","theme-lavender","theme-slate","theme-rose","theme-sakura","theme-forest","theme-ocean","theme-sand","theme-night","theme-charcoal","theme-deepsea"];document.body.className=t[Math.floor(Math.random()*t.length)]}()</script>
+
+<select class="theme-select" onchange="document.body.className=this.value">
+  <option value="theme-default">🕯 夜话</option>
+  <option value="theme-mint">🌿 薄荷</option>
+  <option value="theme-cloud">☁️ 云朵</option>
+  <option value="theme-bamboo">🎋 竹青</option>
+  <option value="theme-amber">🍯 琥珀</option>
+  <option value="theme-dawn">🌅 破晓</option>
+  <option value="theme-lavender">🪻 雾紫</option>
+  <option value="theme-slate">🌫 石板</option>
+  <option value="theme-rose">🌹 玫瑰</option>
+  <option value="theme-sakura">🌸 樱粉</option>
+  <option value="theme-forest">🌲 森林</option>
+  <option value="theme-ocean">🌊 海洋</option>
+  <option value="theme-sand">🏜 沙丘</option>
+  <option value="theme-night">🌙 夜幕</option>
+  <option value="theme-charcoal">🖤 炭墨</option>
+  <option value="theme-deepsea">🌌 深海</option>
+</select>
+
+<header class="hero">
+  <p class="hero-series">30 分钟读透一本书</p>
+  <h1 class="book-title">当尼采哭泣</h1>
+
+  <div class="fall-stars">
+    <svg viewBox="0 0 430 200" preserveAspectRatio="xMidYMid meet">
+      <path class="fs-trail fs-t1" pathLength="1" d="M30,18 C120,40 180,90 208,150"/>
+      <path class="fs-trail fs-t2" pathLength="1" d="M400,18 C310,40 250,90 222,150"/>
+      <circle class="fs-star" cx="208" cy="152" r="4.5" fill="#e3b563"/>
+      <circle class="fs-star" cx="222" cy="152" r="4.5" fill="#7fa8c9"/>
+      <text class="fs-txt" x="26" y="14" text-anchor="start">医生</text>
+      <text class="fs-txt" x="404" y="14" text-anchor="end">哲学家</text>
+      <text class="fs-txt" x="215" y="186" text-anchor="middle">1882 · 维也纳</text>
+    </svg>
+  </div>
+
+  <p class="hero-quote">「我们是从怎样的星辰，<br>朝彼此坠落而到达此处来的？」</p>
+  <p class="hero-sub">一场医生与哲学家的深夜对谈</p>
+  <p class="hero-author">欧文·亚隆 · 存在主义心理治疗大师</p>
+  <div class="hero-line"></div>
+  <div style="margin-top:26px"><span class="candle"><span class="flame"></span><span class="wick"></span></span></div>
+</header>
+
+<main>
+
+<!-- 壹 · 引子 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·01">1</div>
+    <div><div class="ch-kicker">引子</div><h2 class="ch-title">一场历史上从未发生的相遇</h2></div>
+  </div>
+  <p>今晚这本书有点特别——它既是一部心理学小说，又是一场惊心动魄的哲学对话。作者欧文·亚隆，是斯坦福大学的终身教授，也是当今世界最具影响力的心理治疗师之一。他做了一件让所有历史学家都瞠目结舌的事：<strong>他把弗里德里希·尼采和约瑟夫·布雷尔安排在了同一个时空里对话。</strong></p>
+  <p>你没听错——那个喊出「上帝已死」的疯狂哲学家，和弗洛伊德的导师、维也纳最著名的医学大师，这两个人在历史上从未见过面。但亚龙做了一个大胆的虚构：他把这两位真实存在的巨人放进一间维也纳的诊疗室，让他们进行为期一个月的谈话。</p>
+  <div class="quote-block">让医生变成病人，让病人变成医生；让理性的医学，碰撞疯狂的哲学。<span class="small">—— 本书的设定</span></div>
+  <p>现在，让我们把时间拨回 1882 年的维也纳。那是一个思想激荡的年代：弗洛伊德还只是一个初出茅庐的年轻医生，精神分析学的大厦还没奠基。而我们的两位主角，就生活在这个时代。</p>
+</section>
+
+<!-- 贰 · 两个受困的人 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·02">2</div>
+    <div><div class="ch-kicker">人物</div><h2 class="ch-title">两个被各自困境困住的人</h2></div>
+  </div>
+
+  <div class="duel-grid">
+    <div class="duel-card b">
+      <div class="yr">VIENNA · 1882</div>
+      <h4>约瑟夫·布雷尔</h4>
+      <div class="role">欧洲最著名的医学专家 · 弗洛伊德的导师</div>
+      <ul>
+        <li>在所有人眼中，他<b>拥有一切</b>：宽敞的公寓、优雅的妻子、五个可爱的孩子、数不清的荣誉头衔。</li>
+        <li>可在光鲜的外壳下，他正经历一场<b>无声的海啸</b>。</li>
+        <li>海啸的源头，是他的病人<b>贝莎</b>——心理学史上著名的「安娜·欧」的原型。</li>
+      </ul>
+    </div>
+    <div class="duel-card n">
+      <div class="yr">WANDERER · 1882</div>
+      <h4>弗里德里希·尼采</h4>
+      <div class="role">《悲剧的诞生》作者 · 孤独而耀眼的彗星</div>
+      <ul>
+        <li>思想超前于整个时代，却饱受<b>偏头痛与视力衰退</b>的折磨。</li>
+        <li>居无定所，几乎没有朋友，没人真正理解他的思想。</li>
+        <li>刚经历一场毁灭性的感情创伤：向莎乐美求婚被拒，又被好友与妹妹「背叛」，陷入前所未有的抑郁，<b>甚至流露出自杀的念头</b>。</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>几年前，布雷尔用他开创性的谈话疗法，奇迹般地治愈了贝莎的歇斯底里症，这在医学界引起巨大轰动——弗洛伊德后来将这个病历写进了《癔症研究》，成为精神分析诞生的基石之一。</p>
+  <p>但布雷尔没有告诉任何人：在治疗过程中，他不可救药地爱上了这个年轻、脆弱、充满病态魅力的女子。她出院后，这份迷恋不仅没有消退，反而像藤蔓一样缠绕得越来越紧。</p>
+  <p>你可能会说，这不就是一个中年男人的婚外情幻想吗？但亚龙借尼采之口告诉我们：<strong>这远不止是情欲，这是执念，是对未曾活过的生命的深深哀悼。</strong>布雷尔迷恋的从来不是真实的贝莎，而是贝莎所代表的东西——青春、未被驯服的激情、无限的可能性。她在他眼中是一扇通往另一种人生的窗户；透过她，布雷尔看见了自己在日复一日的例行公事中，正在一点点枯萎的灵魂。他怕自己就这样老去，而从未真正活过。</p>
+</section>
+
+<!-- 叁 · 莎乐美的圈套 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·03">3</div>
+    <div><div class="ch-kicker">圈套</div><h2 class="ch-title">莎乐美的精妙设计</h2></div>
+  </div>
+  <p class="ch-lead">故事的转折来自一个神秘女人。她看起来二十出头，眼神清澈而锐利，像是能直接看穿人心。她开口说话时声音平静，却带着一种不容拒绝的力量——「我叫莎乐美。」这个名字在当时欧洲思想圈如流星般耀眼：年仅 21 岁，却智识超群、风情万种，让无数天才倾倒，包括诗人里尔克，也包括尼采。</p>
+
+  <p>她请求布雷尔治疗一位朋友的绝望——这位朋友就是尼采。但莎乐美深知尼采的骄傲：如果直接告诉他「你需要看医生」，尼采一定会勃然大怒。于是她设计了一个精妙的圈套：</p>
+
+  <div class="scheme">
+    <div class="scheme-step">
+      <span class="no">壹</span>
+      <h4>表面 · 治疗偏头痛</h4>
+      <p>请布雷尔以<b>身体疾病</b>为由接诊，给尼采一个不伤尊严的台阶。</p>
+    </div>
+    <div class="scheme-step">
+      <span class="no">贰</span>
+      <h4>暗地 · 治愈绝望</h4>
+      <p>布雷尔真正要治的不是头痛，而是尼采深不见底的<b>绝望</b>。</p>
+    </div>
+    <div class="scheme-step">
+      <span class="no">叁</span>
+      <h4>铁律 · 绝不能让他知道真相</h4>
+      <p>任何一个带有拯救意味的目光，都会被尼采视为冒犯。</p>
+    </div>
+  </div>
+
+  <div class="dialog">
+    <div class="dl b"><span class="who">布雷尔</span><div class="line">为什么来找我？</div></div>
+    <div class="dl n"><span class="who">莎乐美</span><div class="line">因为你是唯一一个他可能会信任的人。你是医生，不是哲学家——你代表的是实践的智慧，而不是理论的争辩。而且……（她停顿了一下）你也有你的痛苦，对吗，教授？</div></div>
+  </div>
+
+  <p>布雷尔心头一跳：这个年轻女人，怎么会知道他的痛苦？他答应了——半是出于医者的责任，半是被莎乐美身上那种说不清、道不明的引力所俘获。他不知道，这个决定将彻底颠覆他的人生。</p>
+</section>
+
+<!-- 肆 · 初次交锋 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·04">4</div>
+    <div><div class="ch-kicker">初次交锋</div><h2 class="ch-title">「我宁可痛苦，也不要麻木」</h2></div>
+  </div>
+  <p>几天后，尼采来到了布雷尔的疗养院。布雷尔做好了迎接一个垂死病人的准备，但他见到的，却是一个周身散发着「拒人于千里之外」气息的战士。尼采坐在窗边的椅子上，瘦削得像一柄淬过火的剑。他没有抬头，只是盯着窗外枯槁的树枝，声音低沉而沙哑，像是很久没有和人说过话：</p>
+
+  <div class="dialog">
+    <div class="dl n"><span class="who">尼采</span><div class="line">我不知道莎乐美跟你说了什么，但我告诉你：我不需要治疗，我不需要任何人的怜悯。我来这里并非出于我自己的意愿，是朋友们不断催促我、劝我来见你。</div></div>
+    <div class="dl b"><span class="who">布雷尔</span><div class="line">尼采先生，我理解你的感受，但你的身体需要我——</div></div>
+    <div class="dl n"><span class="who">尼采</span><div class="line">不需要。（他终于转过头来）我的痛苦是我的一部分，是我的老师，是我思想生长的土壤。你想给我止痛药，是想连我的灵魂一起麻痹吗？</div></div>
+  </div>
+
+  <p class="stage">— 壁炉的火光在两人之间摇晃 —</p>
+
+  <div class="dialog">
+    <div class="dl n"><span class="who">尼采</span><div class="line">我听说你是谈话疗法的专家。你想让我坐在这张椅子上，向你倾诉童年的创伤、爱情的幻灭、对死亡的恐惧，然后你点点头，告诉我「一切都过去了」——让我的棱角被磨平，把我变成一个温顺的、合群的、不再痛苦的普通人？（他冷冷地笑了一下）<b>我宁可痛苦，也不要麻木。</b></div></div>
+  </div>
+
+  <p>布雷尔感到了一种从未有过的挫败感。他行医二十多年，从没有一个人像尼采这样，<strong>把治疗本身视为一种侵犯</strong>。尼采太聪明了——聪明到可以看穿每一句话背后的动机，聪明到可以把任何一次靠近都解读成一种规训。布雷尔进退两难：他想要救这个人，但这个人拒绝被救。</p>
+</section>
+
+<!-- 伍 · 反转 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·05">5</div>
+    <div><div class="ch-kicker">反转</div><h2 class="ch-title">医生向病人求助</h2></div>
+  </div>
+  <p>一天傍晚，布雷尔坐在书房里，看着夕阳一点点沉下去，感到前所未有的疲惫。这时他忽然想起了莎乐美那句话：「你也有你的痛苦，对吗，教授？」他低头看了看自己的手——那是一双救死扶伤的手，一双受人尊敬的手。但他心里清楚：<strong>这双手，从来没有为自己做过任何事。</strong></p>
+  <p>然后他做了一个决定：不再试图治疗尼采，反而请求尼采治疗自己。如果布雷尔是那个求助者，尼采就成了掌控局面的人——这符合尼采对尊严的敏感，会让他放下防御，主动走进对话。</p>
+
+  <div class="dialog">
+    <div class="dl b"><span class="who">布雷尔</span><div class="line">尼采先生，你说得对，我帮不了你——因为我才是那个真正需要帮助的人。我被一个病人困住了，一个叫贝莎的女人。我的脑海里全是她的影子。我厌恶自己的生活，却又没有勇气改变。我每天都在扮演一个称职的丈夫、一个成功的医生，可我感觉自己像个空心人。</div></div>
+    <div class="dl b"><span class="who">布雷尔</span><div class="line">你说过，痛苦是思想的土壤。那我的痛苦呢？我的痛苦只会让我虚弱。我很绝望，找不到出路。我需要一个真正智慧的人帮助我——你是唯一可能理解我的人。请你帮助我。</div></div>
+  </div>
+
+  <p>你能想象那一刻的场景吗？一位功成名就的医学大师，在他的书房里，向一个穷困潦倒、被世人当作怪物的哲学家，袒露了自己最羞耻的秘密。</p>
+  <p>这个反转，让尼采的眼神第一次出现了裂缝。他沉默了很久，然后问了一句很轻的话：</p>
+
+  <div class="dialog">
+    <div class="dl n"><span class="who">尼采</span><div class="line">你信任我？</div></div>
+    <div class="dl b"><span class="who">布雷尔</span><div class="line">我不知道还能信任谁。</div></div>
+  </div>
+
+  <p>尼采的呼吸似乎停了一瞬。他被人这样信任过吗？在他的生命里，他收获的永远是仰视、恐惧、误解或者疏远——<strong>从来没有人如此诚恳地对他说：我需要你。</strong>于是，尼采点了点头。</p>
+</section>
+
+<!-- 陆 · 思想盛宴 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·06">6</div>
+    <div><div class="ch-kicker">思想盛宴</div><h2 class="ch-title">尼采的三把手术刀</h2></div>
+  </div>
+  <p class="ch-lead">那一个月，他们每天下午在中央咖啡馆，或在古老墓园里散步，或在诊室书房面对面一杯咖啡，从黄昏聊到深夜。真正的思想盛宴开始了——尼采的第一句话就直插心脏。</p>
+
+  <div class="ins-card">
+    <span class="rn">I</span>
+    <h4>你爱的，是欲望本身</h4>
+    <p class="say">「布雷尔，告诉我——你爱的是贝莎这个人，还是你内心因为渴望她而燃起的火焰？」</p>
+    <p>你把自己对生命的不满、对自由的渴望、被压抑的激情，都装进了「贝莎」这个容器里。你以为你渴望她，其实你渴望的是渴望本身那种燃烧感——那种「还活着」的证明。如果没有贝莎，也会有其他人。<strong>人对欲望，比对欲望的对象，爱得更多。</strong></p>
+  </div>
+
+  <div class="ins-card">
+    <span class="rn">II</span>
+    <h4>贝莎只是一座桥</h4>
+    <p class="say">「贝莎只是一座桥，通往你再也回不去的彼岸。」</p>
+    <p>布雷尔感到一阵眩晕。他想反驳，却发现尼采说的每一个字都精准地击中了他的要害。是的——在贝莎之前，他也曾迷恋过另一个女人。他一直在寻找，一直在投射：他把内心的空洞当成爱情，把对生活的厌倦当成对某个人的渴望。他从来没想过，问题从来不在外面，而在里面。</p>
+  </div>
+
+  <div class="ins-card">
+    <span class="rn">III</span>
+    <h4>你是在过生活，还是活在生活里</h4>
+    <p class="say">「你站在生活之外，为你从来没有活过的生活而悲伤。你一生都在为别人活——为你的病人、为你的名声、为你的家庭。你什么时候曾为你自己活过一秒钟？」</p>
+    <p>这句话让布雷尔几乎喘不过气来。他想起自己曾经想学绘画，想做一个流浪的艺术家；想起自己曾经对哲学充满热忱，渴望追问那些关于存在的大问题。但这些念头都被现实压下去了：父母告诉他那样太不靠谱，社会要求他做一个有用的人，婚姻需要他提供稳定的收入。于是，他一步步走进了这座<strong>由「正确」砌成的宫殿——却发现宫殿里没有窗户。</strong></p>
+  </div>
+
+  <p>「我该怎么办？」布雷尔问。尼采没有直接回答。他沉默了很长一段时间，然后说出了哲学史上最惊心动魄的思想实验。</p>
+</section>
+
+<!-- 柒 · 永劫回归 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·07">7</div>
+    <div><div class="ch-kicker">思想实验</div><h2 class="ch-title">永劫回归：你敢热爱这样的人生吗</h2></div>
+  </div>
+
+  <div class="eternity">
+    <div class="et-ring">
+      <svg viewBox="0 0 130 130">
+        <circle cx="65" cy="65" r="58" fill="none" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="4 7"/>
+        <circle cx="65" cy="7" r="4" fill="var(--accent)"/>
+      </svg>
+      <span class="inf">∞</span>
+    </div>
+    <div class="et-q">想象你的人生将<em>无限次地重复</em>——<br>每一个痛苦、每一个欢乐、每一个遗憾，<br>都将分毫不差地重演亿万次。<br>现在告诉我：<em>你热爱这种永恒重复的人生吗？</em></div>
+    <p class="et-note">—— 尼采 · 永劫回归（Eternal Recurrence）</p>
+  </div>
+
+  <p>布雷尔紧闭双眼，开始在脑海中回放自己的人生：那些痛苦的时刻远远多于欢愉，那些遗憾堆叠得像一座山。他怎么能热爱这样的永恒重复？他连一秒钟都不想多待。</p>
+  <p>尼采的声音再次响起：</p>
+  <div class="quote-block">如果你不热爱它，那就意味着你的人生中，有太多你未曾真正活过的部分。你一直在容忍，而不是在拥抱；你一直在忍受，而不是在选择。</div>
+
+  <div class="verdict-row">
+    <div class="verdict dim">忍受人生<span>容忍 · 忍受 · 被推着走</span></div>
+    <div class="verdict lit">选择人生<span>选择你的选择，然后全心全意地热爱它</span></div>
+  </div>
+
+  <p>「选择，布雷尔——这才是问题的核心。不是因为别人让你这样做，而是因为你自己选择了它，然后全心全意地去热爱你所选择的。」布雷尔睁开眼睛，泪光闪烁。</p>
+</section>
+
+<!-- 捌 · 平行人生 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·08">8</div>
+    <div><div class="ch-kicker">梦的实验</div><h2 class="ch-title">平行人生：逃到天涯海角，也逃不开自己</h2></div>
+  </div>
+  <p>「但我怎么知道什么才是我自己的选择？」布雷尔说，「我被关在笼子里太久了，我已经分不清哪些是我的愿望，哪些是别人的。」尼采想了想，说：有一个办法——一个实验。你可以去做一个梦：在梦里，你放弃现在的一切，去追求你以为是自由的东西；你去寻找贝莎，去寻找另一种人生，然后走到尽头，看看你得到的是什么。醒来之后，你就会明白自己真正想要的是什么。</p>
+  <p>布雷尔接受了这个建议。他找到了弗洛伊德，请求他为自己做一次催眠。在催眠中，布雷尔经历了一个平行人生：</p>
+
+  <div class="dream-path">
+    <div class="dp-node"><span class="ico">🚪</span><h5>出走</h5><p>抛弃妻子、孩子、医院，抛弃维也纳的一切，独自出走。</p></div>
+    <div class="dp-node"><span class="ico">🧭</span><h5>流浪</h5><p>辗转各地，试图在不同的风景里找到自由，却到哪里都是孤独的。</p></div>
+    <div class="dp-node end"><span class="ico">🌫</span><h5>旷野</h5><p>梦的终点，白发苍苍的他独自站在荒凉的旷野里，环顾四周——什么也没有。</p></div>
+    <div class="dp-node dawn"><span class="ico">🌅</span><h5>醒来</h5><p>在熟悉的诊室里泪流满面——那是释然的泪。</p></div>
+  </div>
+
+  <p>他忽然崩溃了，哭得像个孩子。他明白了：<strong>他一直在逃避的不是婚姻、不是责任，而是自己。</strong>他把存在的不安投射到了外部，以为换一个环境就能得救——但逃到天涯海角，他逃不开的始终是自己。</p>
+  <div class="quote-block">没有完美的选择，只有选择之后的承担。<span class="small">布雷尔走回了自己的生活。他走了很远的路，最后发现：真正的自由不在远处，而在自己心里。</span></div>
+</section>
+
+<!-- 玖 · 尼采的孤独 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·09">9</div>
+    <div><div class="ch-kicker">哲学家的深渊</div><h2 class="ch-title">尼采的绝望，比布雷尔更深</h2></div>
+  </div>
+  <p class="ch-lead">那么尼采呢？这个锋利如刀的哲学家，他的痛苦又是什么？随着谈话的深入，布雷尔发现尼采的绝望远比自己更深——布雷尔是「不能成为自己」，而尼采是「太清楚地知道自己是谁了」。</p>
+  <p>他知道自己的思想超前于整个时代，注定孤独一生。但他越是宣扬孤独的价值，就越是孤独到窒息。书中有一段尼采的独白：</p>
+  <div class="big-quote"><span class="deco a">✦</span>我有我的黑暗时期，谁没有呢？<br>但是他们不曾拥有<em>我</em>——<br>它们并非源于我的病痛，而是源于我的存在。<br>有些人无法解除他们自身的枷锁，<br>却可以救赎他们的朋友。<span class="deco b">✦</span></div>
+  <p>他拒绝承认孤独伤害了他，因为他认为那是一种软弱。他宁愿把自己封闭在思想的堡垒里，也不愿向任何人伸出手。他那么骄傲，骄傲到连自己的痛苦都要包装成哲学教义。</p>
+  <p>直到有一次深夜谈话，布雷尔试探着问：「你真的从来不渴望陪伴吗？从来不渴望有人倾听你的心声？」</p>
+  <div class="quote-block">「我梦见我死在一间廉价的小旅馆里，尸体散发着腐烂的气味，过了好几天才被人发现。没有人知道我是谁，没有人来认领我。」<span class="small">他说这些话的时候，声音平静得像在谈论天气——但布雷尔看到了他的手指在微微颤抖。</span></div>
+  <p>布雷尔没有追问，没有评判。他只是安静地坐在那里，用沉默告诉尼采：<strong>我在听。</strong></p>
+</section>
+
+<!-- 拾 · 尼采哭了 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·10">10</div>
+    <div><div class="ch-kicker">第 29 天</div><h2 class="ch-title">尼采哭了</h2></div>
+  </div>
+  <p>在这三十天的相处中，尼采一直在观察、在倾听：他看到了一个男人如何勇敢地面对自己的内心，如何承认自己的软弱，如何在绝望的深渊中找到重生的路。布雷尔的坦诚像一束光，缓缓地照进尼采那座冰冷的堡垒。那种震撼是无声的——<strong>原来一个人可以坦然地承认「我需要帮助」；原来承认脆弱本身，就是一种无与伦比的强大。</strong></p>
+  <p>第 29 天的傍晚，是他们最后一次谈话。尼采试图用一贯的冷静分析做总结，但布雷尔打断了他，用真诚的目光说：</p>
+
+  <div class="dialog">
+    <div class="dl b"><span class="who">布雷尔</span><div class="line">弗里德里希，你帮助了我，现在让我也帮助你。<b>你不需要永远这么坚强。</b>你可以承认——你也是孤独的，你也是痛苦的。</div></div>
+  </div>
+
+  <p class="stage">— 这个一辈子用哲学武装自己、用孤傲保护自己的天才，第一次在另一个人面前流下了眼泪 —</p>
+
+  <p>布雷尔没有动。他没有说安慰的话，没有打破这个神圣的时刻。他只是安静地坐在尼采对面，用他的在场、用他的目光告诉尼采：</p>
+
+  <div class="presence">
+    <span class="candle"><span class="flame"></span><span class="wick"></span></span>
+    <div class="big">此刻，我在这里</div>
+    <p class="sub">你不再是孤独的。<br>我看见了真实的你。</p>
+  </div>
+
+  <p>这一刻，尼采被治愈了。治愈他的不是布雷尔的任何技术，而是那份「我在这里」的陪伴——他被看见了，被接纳了，被允许脆弱了。这对于一个一生都在扮演超人的人来说，是比任何哲学都更深的救赎。</p>
+  <div class="quote-block">「我一直以为我不需要任何人，其实是因为我害怕——害怕被拒绝、害怕被嫌弃。我从来没有真正信任过任何人。所以你向我求助的那一刻，我崩溃了。你信任我，让我第一次觉得：也许，我也可以信任别人。」<span class="small">—— 尼采对布雷尔说</span></div>
+  <p>这一刻，医生和病人的界限消失了。布雷尔治好了尼采的绝望，尼采撕下了布雷尔的面具。通过彼此袒露最深的恐惧与羞耻，他们都找到了某种程度的自由。</p>
+</section>
+
+<!-- 拾壹 · 星辰告别 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·11">11</div>
+    <div><div class="ch-kicker">告别</div><h2 class="ch-title">从怎样的星辰，朝彼此坠落</h2></div>
+  </div>
+  <p>故事的结尾，尼采选择独自离开维也纳。他对布雷尔说：</p>
+  <div class="quote-block">我必须独自面对我的命运。不是因为傲慢，而是因为我的思想需要我的痛苦来滋养。如果我变得太幸福，也许我就再也写不出那些字了。</div>
+  <p>布雷尔看着这个瘦削的身影，忽然想起了两人初次见面时的剑拔弩张——如今，那些敌意都化作了深深的敬意。</p>
+
+  <div class="dialog">
+    <div class="dl b"><span class="who">布雷尔</span><div class="line">弗里德里希，我们是从怎样的星辰，朝彼此坠落而到达此处来的？</div></div>
+    <div class="dl n"><span class="who">尼采</span><div class="line">（他笑了——那是布雷尔见过的、他唯一一次真心实意的笑）是的，约瑟夫。万千星辰，无尽时空，我们竟然能在此处相遇，彼此成为对方的镜子——这本身就是一件值得敬畏的事。</div></div>
+  </div>
+
+  <p>告别了尼采，布雷尔站在原地，很久没有离开。他知道，从此以后，他的人生将不再一样；而尼采也将带着这份被接纳的温暖，继续走向他注定伟大的孤独。</p>
+</section>
+
+<!-- 拾贰 · 回响 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·12">12</div>
+    <div><div class="ch-kicker">回响</div><h2 class="ch-title">留给我们的：选择的勇气</h2></div>
+  </div>
+  <p>故事到这里就说完了，但它留在我们心里的回响，还会持续很久。我们不是布雷尔，也没有尼采坐在对面的椅子上——但我们每个人，都面临着类似的困境：那些未曾活过的生命，那些「如果当初」的遗憾，那些「不得不」的叹息。</p>
+  <p>也许此刻的你，也在为一个得不到的人辗转难眠；也许你也在被日复一日的例行公事消磨着热情；也许你在夜深人静时也问过自己：<strong>这真的是我想要的人生吗？</strong></p>
+  <p>这本书没有给我们现成的答案，但它给了我们一种勇气——<strong>选择的勇气</strong>：不是选择那个「正确」的选项，而是选择不再把命运的遥控器交给别人。</p>
+  <div class="big-quote"><span class="deco a">✦</span>你不是要忍受生命，<br>而是要<em>热烈地拥抱它</em>。<br>如果你在活着的时候真正地活过，<br>那么死亡就丧失了它所有的可怕——<br>它只是一个句号，<br>一个圆满的、可以平静接受的句号。<span class="deco b">✦</span></div>
+
+  <div class="tonight">
+    <h3>今晚的微小实验</h3>
+    <p class="sub">A TINY EXPERIMENT FOR TONIGHT</p>
+    <div class="tonight-step">
+      <span class="n">1</span>
+      <p>睡前安静一分钟，问自己那个问题：<span class="hint">「如果此生将无限重复，我该如何度过当下这一秒？」</span></p>
+    </div>
+    <div class="tonight-step">
+      <span class="n">2</span>
+      <p>留意浮现出的第一个念头——不评判、不压抑，只是看见它。<span class="hint">那可能是你真实愿望的轮廓</span></p>
+    </div>
+    <div class="tonight-step">
+      <span class="n">3</span>
+      <p>明天，为它做一个微小的选择——不必惊天动地，只要是你自己选的。<span class="hint">选择你的选择，然后热爱它</span></p>
+    </div>
+    <p class="end-line">然后带着那份清醒，<br>做一个自己命运的主人。</p>
+  </div>
+</section>
+
+<!-- 思维导图 -->
+<section class="chapter-static">
+  <div class="ch-head">
+    <div class="badge" data-no="MAP">全</div>
+    <div><div class="ch-kicker">一图回望</div><h2 class="ch-title">当尼采哭泣全景图</h2></div>
+  </div>
+  <div class="markmap-box">
+    <div class="markmap">
+      <script type="text/template">
+# 当尼采哭泣
+## 一场不可能的相遇
+### 1882 · 维也纳
+### 尼采 × 布雷尔 · 历史上从未谋面
+### 莎乐美的圈套 · 明治头痛暗治绝望
+## 两个受困的灵魂
+### 布雷尔 · 拥有一切却被执念困住
+### 贝莎是通往另一种人生的窗
+### 尼采 · 被拒绝被背叛的孤独彗星
+## 反转 · 医生向病人求助
+### 「你信任我？」
+### 尊严被安放，防御才放下
+## 尼采的三问
+### 你爱的是欲望本身
+### 贝莎只是一座桥
+### 你是在过生活，还是活在生活中
+## 永劫回归
+### 此生无限重复，你热爱吗
+### 你在忍受，而不是在选择
+### 选择你的选择，并热爱它
+## 平行人生之梦
+### 逃到天涯海角，逃不开自己
+### 没有完美的选择，只有选择之后的承担
+## 尼采的眼泪
+### 孤独堡垒 · 廉价旅馆之梦
+### 第 29 天 · 「你不需要永远坚强」
+### 治愈是陪伴 · 「此刻我在这里」
+## 告别与回响
+### 从怎样的星辰朝彼此坠落
+### 选择的勇气 · 不再交出命运的遥控器
+### 真正活过，死亡只是句号
+      </script>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="goodnight">晚安</div>
+  <p class="wish">愿你从今晚起，不再只是忍受生命，<br>而是热烈地拥抱每一个当下。<br>真正活过的人，睡得也安稳。
+  <span class="moon"></span></p>
+  <p class="src-note">睡前听完一本书 · 当尼采哭泣</p>
+</footer>
+
+<script>
+// 滚动显现
+!function(){
+  var els=document.querySelectorAll('.chapter');
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});
+  },{threshold:.12});
+  els.forEach(function(el){io.observe(el);});
+}();
+// 同步主题选择器
+document.querySelector('.theme-select').value=document.body.className;
+// 强制 markmap 按最终容器宽度重绘
+window.addEventListener('load',function(){
+  window.dispatchEvent(new Event('resize'));
+  setTimeout(function(){window.dispatchEvent(new Event('resize'));},500);
+  setTimeout(function(){window.dispatchEvent(new Event('resize'));},1500);
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+</body>
+</html>

@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生命之书：365天心冥想</title>
+<link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+    --primary: #4A9FD4;
+    --primary-light: #4a9fd422;
+    --primary-mid: #4a9fd455;
+    --bg: #f7fafc;
+    --card-bg: #ffffff;
+    --text: #2c3e50;
+    --text-light: #5a6d7e;
+    --hero-bg: #1a2a3a;
+    --mm-filter: grayscale(1) sepia(.9) hue-rotate(169deg) saturate(2.2) brightness(.95);
+}
+body.theme-sky { --primary:#4A9FD4; --primary-light:#4a9fd422; --primary-mid:#4a9fd455; --bg:#f7fafc; --card-bg:#ffffff; --text:#2c3e50; --text-light:#5a6d7e; --hero-bg:#1a2a3a; --mm-filter:grayscale(1) sepia(.9) hue-rotate(169deg) saturate(2.2) brightness(.95); }
+body.theme-moon { --primary:#46759B; --primary-light:#46759b22; --primary-mid:#46759b55; --bg:#f5f8fa; --card-bg:#ffffff; --text:#2b3a48; --text-light:#57718a; --hero-bg:#16222e; --mm-filter:grayscale(1) sepia(.9) hue-rotate(172deg) saturate(2) brightness(.9); }
+body.theme-haze { --primary:#7D99AE; --primary-light:#7d99ae22; --primary-mid:#7d99ae55; --bg:#f7f9fb; --card-bg:#ffffff; --text:#33424f; --text-light:#64798b; --hero-bg:#24303a; --mm-filter:grayscale(1) sepia(.9) hue-rotate(170deg) saturate(1.6) brightness(1); }
+body.theme-indigo { --primary:#4A6FA5; --primary-light:#4a6fa522; --primary-mid:#4a6fa555; --bg:#f6f8fc; --card-bg:#ffffff; --text:#2a3550; --text-light:#5a6a8a; --hero-bg:#182238; --mm-filter:grayscale(1) sepia(.9) hue-rotate(182deg) saturate(2.2) brightness(.92); }
+body.theme-teal { --primary:#4E9B8F; --primary-light:#4e9b8f22; --primary-mid:#4e9b8f55; --bg:#f5fbfa; --card-bg:#ffffff; --text:#2a403c; --text-light:#577a74; --hero-bg:#14302b; --mm-filter:grayscale(1) sepia(.9) hue-rotate(136deg) saturate(2) brightness(.95); }
+body.theme-bamboo { --primary:#7A9B76; --primary-light:#7a9b7622; --primary-mid:#7a9b7655; --bg:#f7fbf6; --card-bg:#ffffff; --text:#33442f; --text-light:#63795e; --hero-bg:#22301f; --mm-filter:grayscale(1) sepia(.9) hue-rotate(80deg) saturate(1.8) brightness(.95); }
+body.theme-vermilion { --primary:#C0564F; --primary-light:#c0564f22; --primary-mid:#c0564f55; --bg:#fdf8f7; --card-bg:#ffffff; --text:#4a2f2c; --text-light:#8a5f5a; --hero-bg:#381a17; --mm-filter:grayscale(1) sepia(.9) hue-rotate(-31deg) saturate(2.4) brightness(.95); }
+body.theme-sakura { --primary:#D19090; --primary-light:#d1909022; --primary-mid:#d1909055; --bg:#fdf9f9; --card-bg:#ffffff; --text:#4f3636; --text-light:#96686a; --hero-bg:#3a2222; --mm-filter:grayscale(1) sepia(.9) hue-rotate(-35deg) saturate(1.8) brightness(1.05); }
+body.theme-lotus { --primary:#C48F9B; --primary-light:#c48f9b22; --primary-mid:#c48f9b55; --bg:#fdf8fa; --card-bg:#ffffff; --text:#4a333a; --text-light:#8d6572; --hero-bg:#35202a; --mm-filter:grayscale(1) sepia(.9) hue-rotate(310deg) saturate(1.8) brightness(1); }
+body.theme-rose { --primary:#A78B8B; --primary-light:#a78b8b22; --primary-mid:#a78b8b55; --bg:#fbf8f8; --card-bg:#ffffff; --text:#443535; --text-light:#7d6464; --hero-bg:#2e2222; --mm-filter:grayscale(1) sepia(.9) hue-rotate(-35deg) saturate(1.4) brightness(1); }
+body.theme-purple { --primary:#9B87B5; --primary-light:#9b87b522; --primary-mid:#9b87b555; --bg:#faf8fd; --card-bg:#ffffff; --text:#3a3350; --text-light:#6f6490; --hero-bg:#251f38; --mm-filter:grayscale(1) sepia(.9) hue-rotate(232deg) saturate(1.8) brightness(1); }
+body.theme-amber { --primary:#C08A3E; --primary-light:#c08a3e22; --primary-mid:#c08a3e55; --bg:#fdfaf4; --card-bg:#ffffff; --text:#4a3a22; --text-light:#8a7044; --hero-bg:#352810; --mm-filter:grayscale(1) sepia(.9) hue-rotate(0deg) saturate(2.2) brightness(1); }
+body.theme-caramel { --primary:#A06B3F; --primary-light:#a06b3f22; --primary-mid:#a06b3f55; --bg:#fcf8f4; --card-bg:#ffffff; --text:#44331f; --text-light:#7d6040; --hero-bg:#2e2010; --mm-filter:grayscale(1) sepia(.9) hue-rotate(-7deg) saturate(2) brightness(.95); }
+body.theme-wood { --primary:#B08D57; --primary-light:#b08d5722; --primary-mid:#b08d5755; --bg:#fcfaf5; --card-bg:#ffffff; --text:#463a26; --text-light:#806a45; --hero-bg:#302512; --mm-filter:grayscale(1) sepia(.9) hue-rotate(0deg) saturate(1.8) brightness(1); }
+body.theme-ink { --primary:#5A6670; --primary-light:#5a667022; --primary-mid:#5a667055; --bg:#f7f8f9; --card-bg:#ffffff; --text:#2e363d; --text-light:#5c6a75; --hero-bg:#1c2228; --mm-filter:grayscale(1) sepia(.9) hue-rotate(175deg) saturate(1.2) brightness(.9); }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Noto Serif SC', serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 2;
+    transition: background .5s, color .5s;
+}
+.hero {
+    min-height: 72vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: var(--hero-bg);
+    color: #fff;
+    padding: 4rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: background .5s;
+}
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 120%, var(--primary-mid), transparent 70%);
+}
+.hero > * { position: relative; }
+.hero h1 {
+    font-size: clamp(2.4rem, 7.5vw, 4.2rem);
+    font-weight: 900;
+    letter-spacing: .12em;
+    margin-bottom: 1.2rem;
+}
+.hero-sub {
+    font-size: clamp(1rem, 3vw, 1.35rem);
+    opacity: .85;
+    max-width: 34em;
+    letter-spacing: .08em;
+}
+.hero-author {
+    margin-top: 2.2rem;
+    font-size: .95rem;
+    opacity: .6;
+    letter-spacing: .2em;
+}
+.container { max-width: 760px; margin: 0 auto; padding: 3rem 1.5rem 2rem; }
+.chapter {
+    margin-bottom: 3.5rem;
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .8s ease, transform .8s ease;
+}
+.chapter.visible { opacity: 1; transform: none; }
+.chapter-label {
+    display: inline-block;
+    font-size: .8rem;
+    letter-spacing: .25em;
+    color: var(--primary);
+    border: 1px solid var(--primary-mid);
+    border-radius: 20px;
+    padding: .15rem 1rem;
+    margin-bottom: 1rem;
+}
+.chapter h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+    color: var(--text);
+}
+.lead { font-size: 1.05rem; color: var(--text-light); margin-bottom: 1.4rem; }
+p { margin-bottom: 1.1rem; text-align: justify; }
+.quote-block {
+    background: var(--card-bg);
+    border-left: 4px solid var(--primary);
+    border-radius: 0 12px 12px 0;
+    padding: 1.4rem 1.6rem;
+    margin: 1.6rem 0;
+    font-size: 1.05rem;
+    box-shadow: 0 2px 12px var(--primary-light);
+}
+.quote-src { display: block; margin-top: .6rem; font-size: .85rem; color: var(--text-light); }
+.scene-card {
+    background: var(--card-bg);
+    border-radius: 14px;
+    padding: 1.6rem;
+    margin: 1.6rem 0;
+    box-shadow: 0 3px 16px var(--primary-light);
+    border: 1px solid var(--primary-light);
+}
+.scene-card h4 { color: var(--primary); font-size: 1.05rem; margin-bottom: .8rem; }
+.key-list { margin: 1.4rem 0; display: flex; flex-direction: column; gap: 1rem; }
+.key-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.2rem 1.4rem;
+    box-shadow: 0 2px 10px var(--primary-light);
+}
+.key-num {
+    flex-shrink: 0;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .85rem;
+    font-weight: 700;
+    margin-top: .3rem;
+}
+.insight-card {
+    background: linear-gradient(135deg, var(--primary-light), var(--card-bg));
+    border: 1px solid var(--primary-mid);
+    border-radius: 14px;
+    padding: 1.6rem;
+    margin: 1.8rem 0;
+}
+.insight-card h4 { color: var(--primary); margin-bottom: .8rem; font-size: 1.05rem; }
+.divider-orn { text-align: center; color: var(--primary); letter-spacing: 1em; margin: 2.5rem 0; opacity: .6; }
+.mindmap-section h3 { text-align: center; }
+.markmap {
+    background: var(--card-bg);
+    border-radius: 14px;
+    box-shadow: 0 3px 16px var(--primary-light);
+    min-height: 420px;
+    overflow: hidden;
+}
+.markmap svg { filter: var(--mm-filter); transition: filter .5s; }
+.epilogue {
+    background: var(--hero-bg);
+    color: #fff;
+    padding: 4rem 1.5rem;
+    text-align: center;
+}
+.epilogue-inner { max-width: 640px; margin: 0 auto; }
+.final-quote {
+    font-size: 1.15rem;
+    line-height: 2.2;
+    opacity: .9;
+    margin-bottom: 2.5rem;
+}
+.goodnight {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: .5em;
+    color: var(--primary);
+    filter: brightness(1.5);
+}
+/* 换肤 */
+.theme-toggle {
+    position: fixed;
+    top: 1.2rem; right: 1.2rem;
+    z-index: 999;
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    border: none;
+    background: var(--primary);
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 3px 12px rgba(0,0,0,.25);
+    transition: transform .3s, background .5s;
+}
+.theme-toggle:hover { transform: scale(1.12); }
+.theme-panel {
+    position: fixed;
+    top: 4.2rem; right: 1.2rem;
+    z-index: 998;
+    background: var(--card-bg);
+    border-radius: 14px;
+    box-shadow: 0 6px 24px rgba(0,0,0,.18);
+    padding: 1rem;
+    display: none;
+    grid-template-columns: repeat(2, 1fr);
+    gap: .5rem;
+    width: 220px;
+}
+.theme-panel.open { display: grid; }
+.theme-option {
+    display: flex;
+    align-items: center;
+    gap: .45rem;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: .35rem .55rem;
+    cursor: pointer;
+    font-size: .78rem;
+    background: none;
+    font-family: inherit;
+    color: var(--text);
+    transition: border-color .2s;
+}
+.theme-option .dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+.theme-option.active { border-color: var(--primary); }
+@media (max-width: 600px) {
+    .container { padding: 2rem 1.1rem; }
+    .hero { min-height: 60vh; }
+}
+</style>
+</head>
+<body class="theme-sky">
+<script>
+    // 默认配色：每次打开随机一套
+    (function () {
+        var themes = ['sky','moon','haze','indigo','teal','bamboo','vermilion','sakura','lotus','rose','purple','amber','caramel','wood','ink'];
+        document.body.className = 'theme-' + themes[Math.floor(Math.random() * themes.length)];
+    })();
+</script>
+
+<button class="theme-toggle" id="themeToggle" aria-label="换肤">🎨</button>
+<div class="theme-panel" id="themePanel">
+    <button class="theme-option" data-theme="sky"><span class="dot" style="background:#4A9FD4"></span>天青蓝</button>
+    <button class="theme-option" data-theme="moon"><span class="dot" style="background:#46759B"></span>月海蓝</button>
+    <button class="theme-option" data-theme="haze"><span class="dot" style="background:#7D99AE"></span>雾霾蓝</button>
+    <button class="theme-option" data-theme="indigo"><span class="dot" style="background:#4A6FA5"></span>靛青蓝</button>
+    <button class="theme-option" data-theme="teal"><span class="dot" style="background:#4E9B8F"></span>松石绿</button>
+    <button class="theme-option" data-theme="bamboo"><span class="dot" style="background:#7A9B76"></span>竹青色</button>
+    <button class="theme-option" data-theme="vermilion"><span class="dot" style="background:#C0564F"></span>朱砂红</button>
+    <button class="theme-option" data-theme="sakura"><span class="dot" style="background:#D19090"></span>绯樱色</button>
+    <button class="theme-option" data-theme="lotus"><span class="dot" style="background:#C48F9B"></span>藕荷色</button>
+    <button class="theme-option" data-theme="rose"><span class="dot" style="background:#A78B8B"></span>玫瑰灰</button>
+    <button class="theme-option" data-theme="purple"><span class="dot" style="background:#9B87B5"></span>暮山紫</button>
+    <button class="theme-option" data-theme="amber"><span class="dot" style="background:#C08A3E"></span>琥珀色</button>
+    <button class="theme-option" data-theme="caramel"><span class="dot" style="background:#A06B3F"></span>焦糖色</button>
+    <button class="theme-option" data-theme="wood"><span class="dot" style="background:#B08D57"></span>木头色</button>
+    <button class="theme-option" data-theme="ink"><span class="dot" style="background:#5A6670"></span>墨玉色</button>
+</div>
+
+<header class="hero">
+    <h1>生命之书</h1>
+    <p class="hero-sub">它不提供答案，而是赋予你清醒看待世界的勇气</p>
+    <p class="hero-author">克里希那穆提 著</p>
+</header>
+
+<main class="container">
+
+<section class="chapter">
+    <span class="chapter-label">序</span>
+    <h3>拒绝成为救世主的人</h3>
+    <p class="lead">很多人称他为20世纪最伟大的心灵导师，但如果你真的了解他，就会知道他其实最讨厌"导师"这个身份。他穷尽一生只想做一件事——告诉你：不要跟随任何人，包括他。</p>
+    <p>1895年，克里希那穆提出生在印度一个婆罗门家庭。一次偶然的机会，他被通神学会发现——这个组织相信世界正等待一位新的救世主降临，他们看中了这个温和而敏感的少年，认定他就是那个"世界导师"。于是他被带到英国，接受严格的教育和训练，全世界的信徒都在热切等待这位救世主开口宣说真理。</p>
+    <p>可在1929年，他做出了震惊世界的选择——亲手解散为他成立的组织，退还所有信徒的捐款，拒绝一切头衔与光环。</p>
+    <div class="quote-block">
+        真理是无路之国。任何形式化的宗教、组织、导师都无法带你接近真理。真理纯属个人了悟——你要用自己的光照亮自己。
+        <span class="quote-src">——克里希那穆提，1929年解散"世界明星社"时的演讲</span>
+    </div>
+    <p>他拒绝扮演上帝，拒绝成为权威，因为他深知：一旦你依赖任何人，你就失去了自己的光。此后近60年，他走遍世界，只是安静地演讲、对话、陪伴，直到90岁去世。他从不自称老师，也不收弟子，他说他只是在和朋友们聊天，分享他对生命的观察。</p>
+    <p>而这本《生命之书》，是他一生教诲的精选集——按照一年12个月，分成365天的静心冥想。每一天只有一小段话，你可以从1月1日开始读，也可以在任何一个深夜随手翻开当天的篇章，就像和自己内心一场不期而遇的对话。</p>
+</section>
+
+<div class="divider-orn">· · ·</div>
+
+<section class="chapter">
+    <span class="chapter-label">第一章</span>
+    <h3>聆听的艺术：毫不费力的觉察</h3>
+    <p class="lead">这本书是这样开始的——他用一个问题轻轻叩响你的心门：你可曾安静地坐着，既不专注于任何事物，也不费力地集中注意力，而是非常安详地坐着？</p>
+    <p>想象一下此刻的你。你正躺在床上，也许耳边还有窗外经过的汽车声，又或者是你自己的心跳声。你不需要刻意去屏蔽它们，也不需要产生任何烦躁。你只是听着——听见远处的狗吠，也听见枕边的呼吸声；你听见自己的思绪像云一样飘过，却不抓住它们。</p>
+    <div class="quote-block">
+        你会发现你越是倾听一切就越宁静，并且这种宁静不会被噪音打破。只有在你抵抗时，在你和不愿听的声音中间设置障碍时，才有挣扎。
+    </div>
+    <p>这种宁静不是死寂，而是一种充满生机的寂静——就像深夜的森林，表面上静悄悄的，但你仔细听，能听到无数细小的生命在呼吸。</p>
+    <p>我们平时总是活得很用力：用力集中注意力，用力思考问题，用力控制情绪。但在克里希那穆提看来，真正的智慧恰恰来自一种毫不费力的觉察。当你听任何人说话时，试着去"倾听"，而不仅仅是"听见"——很多时候我们只是在听自己的回声，别人刚开口，我们心里已经在判断、在准备反驳。我们带着自己的投射、野心和焦虑，像戴着一副有色眼镜去听，听到的其实只是自己的欲望。</p>
+    <div class="scene-card">
+        <h4>语言是一面镜子</h4>
+        <p>当你真正在听的时候，语言就像一面镜子——你听着听着会发现内心升起了共鸣或者抗拒，你看到了自己的喜悦或者自己的伤疤。也许是一段尘封的记忆，也许是一份隐隐的渴望。这时候你其实是在通过语言观察你自己。你才是你真正的老师。</p>
+    </div>
+    <p>聆听也可以成为日常练习。等车时试着去听听周围的声音——汽车的引擎声、行人的脚步声、远处孩子的笑声——不要去分别哪个好听哪个讨厌，只是让它们全部进入耳朵。你会发现，当你不抗拒时，那些声音不再是打扰，反而像交响乐的不同声部，组成了一首属于当下的乐章。</p>
+    <div class="insight-card">
+        <h4>真正的安静</h4>
+        <p>真正的安静不是没有噪音，而是在噪音中依然如如不动。你越是能容纳一切声音，你的内心就越安静。</p>
+    </div>
+</section>
+
+<div class="divider-orn">· · ·</div>
+
+<section class="chapter">
+    <span class="chapter-label">第二章</span>
+    <h3>关系之境：一面无比诚实的镜子</h3>
+    <p class="lead">我们总以为关系是用来取暖的、用来依靠的——我们渴望在关系里被爱、被认可、被看见。但克里希那穆提说：关系其实是一面无比诚实的镜子。</p>
+    <p>你在和伴侣、家人、朋友相处中所有的反应——愤怒、占有、嫉妒、依赖、控制——都会清晰地映照在这面镜子里。很多时候我们不喜欢镜中的自己，于是本能地伸手去"擦镜子"：指责对方，"是因为你这样做，我才生气的""如果你能改掉这个毛病，我就不会这么痛苦"。我们试图修正镜子里的脸，却不知道真正需要被看见的，是那个正在产生情绪的自己。</p>
+    <p>试着想一想最近困扰你的一段关系。不要判断对错，只是像看电影一样，看着自己在关系里的反应——你会看见一个渴望被爱的人，一个害怕失去的人，一个紧紧抓住安全感不放的人。这份"看见"本身就是一种疗愈，因为一旦看见，你就不再是无意识的奴隶，那个情绪的能量就开始消融。</p>
+    <div class="quote-block">
+        一个总想依赖的心是不可能自由的。我们在关系里寻求依赖、安全感、永恒，但恰恰是这种寻求带来了无尽的恐惧——因为你依赖的那个人终有一天会改变、离开、老去。你把房子建在沙滩上，却怪海浪不守信用。
+    </div>
+    <p>也许真正的安全感不是从外界抓住什么，而是你内心本身就拥有安全的能力。当你不再依赖时，你反而能够真正地去爱。</p>
+    <div class="scene-card">
+        <h4>什么是真正的爱</h4>
+        <p>一个有爱的人是没有信仰的——他只是去爱，就够了。爱不是一个概念，不是道德约束，它就像河水一样，是一种流动的状态。当你真的处在爱里，那个自我是消失的，你不会计较得失，你只是去爱。</p>
+        <p>真正的爱是简单的，就像阳光普照大地，不分善恶，不求回报。当你看到一朵花心生欢喜，那一刻你没有想占有它、没有想把它摘回家插在花瓶里——你只是欣赏它，那种纯粹的欢喜，就是爱的雏形。</p>
+    </div>
+    <p>他鼓励我们在关系里保持觉察，尤其是感到受伤时——那个受伤的感觉不是对方给你的，而是你自己内心有一个旧伤被触动了。关系就像一根针，它只是恰好刺到了你的痛处。真正需要处理的不是那根针，而是那个痛处。所以每次冲突都是一次疗愈的机会：当你不再指责对方，而是回头看看自己的反应，你会发现自己内在有那么多未曾愈合的伤口。慢慢地，你不再把关系当成战场，而是当成一座花园——你开始为这座花园除草浇水，而不是指责隔壁花园的杂草长到了你这边。</p>
+</section>
+
+<div class="divider-orn">· · ·</div>
+
+<section class="chapter">
+    <span class="chapter-label">第三章</span>
+    <h3>恐惧的面孔：所有抓取背后的秘密</h3>
+    <p class="lead">很多人翻开这本书，是因为被恐惧和痛苦困扰。克里希那穆提没有给你鸡汤，他做了一件更根本的事——帮你把恐惧拆开来看看，它到底是什么东西。</p>
+    <div class="quote-block">
+        逃避恐惧——对空虚、孤独、没有成就的恐惧——就是我们接受各种信仰或信念的理由。
+    </div>
+    <p>这句话戳破了很多自欺欺人的泡泡。我们为什么拼命工作？可能是害怕自己没有成就。为什么一定要挤进一段关系？可能是害怕孤独。为什么信仰这个、相信那个？可能是害怕面对未知的空虚。我们所有的抓取背后，都藏着一个不敢面对的恐惧——那些我们紧紧抓住的东西，财富、名声、爱情、信仰，其实都是我们用来遮挡恐惧的盾牌。</p>
+    <p>那么如何摆脱恐惧？他没有教你念咒语，也没有教你转移注意力，他只是让你去<strong>看着它</strong>。当恐惧升起的那个瞬间，你不要给它命名，不要说"我好害怕"，也不要赶走它——你只是静静地看着那个恐惧的能量在身体里是什么感觉：是胸口发紧，是胃部抽搐，还是喉咙发干？你像科学家观察标本一样，不带任何评价地观察它。</p>
+    <p>你会发现，当你全然地去感受恐惧时，恐惧反而消失了。因为恐惧来自于对"未来可能会发生什么"的想象，而当你完全回到当下，面对那个真实的感受时，那里其实什么都没有——只有一个单纯的能量振动。那个振动，如果你不抗拒它，它会自己流过去，就像天空中的乌云，如果你不抓住它，它自己会飘走。</p>
+    <div class="insight-card">
+        <h4>真正的定力</h4>
+        <p>真正的定力不是造一堵墙把风浪挡在外面，而是你坐在风浪的中心，看着它们来来去去，而你如如不动。越是能把一切恐惧都请进来——不抗拒、不逃避——你的心反而越安定。</p>
+    </div>
+</section>
+
+<div class="divider-orn">· · ·</div>
+
+<section class="chapter">
+    <span class="chapter-label">第四章</span>
+    <h3>学习的迷思：从已知进入未知</h3>
+    <p class="lead">这个时代我们都在拼命学习，生怕落后于人。但作者对学习的定义完全刷新了我们的认知：学习不是一种累积，它是一种持续不断的觉察。</p>
+    <p>我们通常以为的学习是往大脑里装东西，然后带着这个装满的行李箱去面对人生。但真正的学习恰恰相反——它是一场清空。就像倒掉杯子里的旧水才能装进新水，清空过去的经验，才能看到当下鲜活的事实。</p>
+    <p>他打了一个比方：如果你真的想了解一朵花，你会怎么做？你会把昨天看到的那朵花拿出来跟今天这朵做比较吗？你会翻遍植物百科全书，然后就觉得自己懂了吗？不——真正的了解是此刻全神贯注地看着这朵花，用你全部的感官去感受它的颜色、纹理、香气。那一刻没有知识，只有经验——那是属于你独有的、活生生的经验。</p>
+    <div class="quote-block">
+        你为什么只想做书本的学生，而不想做人生的门徒？生活本身就是你最大的老师——你的每一次愤怒、伤心、喜悦，都是一堂课。
+    </div>
+    <p>如果你总是带着已知的滤镜去看当下，你就永远看不到当下真正的样子，你看到的只是过去的回放。就像你带着去年的地图试图找到今年的路——怎么找得到呢？如果你只沉迷于书本里的二手信息，从不翻开自己这本正在呼吸的生命之书，那你学到的永远只是别人的真理。别人的真理穿在你身上，总是不合身的。</p>
+    <div class="scene-card">
+        <h4>知识与智慧</h4>
+        <p>现代教育只是训练我们成为某种工具——工程师、医生、商人。我们被教导如何谋生，却从未被教导如何生活。智慧不是知识的积累，而是对生命的整体洞察。就像一个人从未尝过苹果，却背诵了所有关于苹果的论文——他仍然不知道苹果的味道。</p>
+    </div>
+    <p>所以试着放下"我知道"的傲慢，用一颗初学者的心去面对每一天。你会发现每一天的阳光都是新的，每一阵风都是新的，甚至你的呼吸都是新的。</p>
+</section>
+
+<div class="divider-orn">· · ·</div>
+
+<section class="chapter">
+    <span class="chapter-label">第五章</span>
+    <h3>实相与当下：甘愿什么都不是</h3>
+    <p class="lead">在书里，克里希那穆提反复提到一个词——实相。它不是某种神秘的宗教体验，也不是死后才能抵达的极乐世界。实相就是眼前的真相，是此时此刻正在发生的一切。</p>
+    <p>你听到的声音、皮肤上的触感、脑海里的念头、胸口的一丝悸动——这些都是实相。</p>
+    <div class="quote-block">
+        实相是无法累积的。凡是能累积的东西一定会被摧毁，它会逐渐衰萎。实相不可能衰萎——因为你会在每个当下的念头、关系、语言、姿态和泪水中发现它。
+    </div>
+    <p>这是一句很美的话，它把我们从遥远的未来拉回到了此时此刻。你不需要等到功成名就才快乐，不需要等到修成正果才安宁——实相就在你正在听的这一秒里，在你翻身的触感里，在被子的温度里，在这个安静的呼吸里。</p>
+    <p>有一位读者在读这本书时写下一篇笔记，标题叫《甘愿做个什么都不是的人》。是啊，我们一辈子都在努力"成为"什么——成为一个成功的人、一个好脾气的人、一个有价值的人。我们背着这些沉重的标签，活得越来越累。而克里希那穆提却说：真正的自由是甘愿什么都不是。</p>
+    <p>这不是消极，不是摆烂，而是你终于不再需要靠任何外在的定义来确认自己的价值。你不需要是某某公司的总监、某某人的配偶——你只是一个纯粹的存在。当你放下了所有关于自己的故事，你会发现你反而拥有了整个宇宙。就像一滴水落入大海，它不再是一滴水，但它拥有了整个海洋。</p>
+    <div class="insight-card">
+        <h4>细微之美的浮现</h4>
+        <p>你可曾安静地坐着，什么都不想，什么都不在意？这时候那些美丽而细微的一切才慢慢浮现——你会发现原来窗外的月光如此温柔，原来自己的呼吸如此绵长，原来活着本身就是一件值得感恩的事。</p>
+    </div>
+</section>
+
+<div class="divider-orn">· · ·</div>
+
+<section class="chapter">
+    <span class="chapter-label">第六章</span>
+    <h3>自我的幻想与欲望的本质</h3>
+    <p class="lead">作者有一个核心观点：自我是一个幻想。它不是永恒的实体，而是由无数念头、记忆、经验、欲望编织而成的一个故事。</p>
+    <p>我们把这个故事当成了自己，然后拼命保护它、喂养它、强化它。有人赞美这个"我"，我们就高兴；有人批评这个"我"，我们就生气。这个"我"如此脆弱，需要不断从外界汲取能量来维持。但如果你安静下来仔细观察，你会发现这个"我"其实是空的——它只是思想的一个产物。当你把思想放下，那个"我"在哪里？你还能找到它吗？</p>
+    <div class="quote-block">
+        你所是的样子就是世界的状态。你的内心如果充满了冲突、分裂和恐惧，那么你的世界也必然如此——因为世界是你内心的投射。当你开始了解自己，不再认同那个虚假的"我"，你就开始为世界带来真正的和平。
+    </div>
+    <p>关于欲望，我们常常被教导要控制它、甚至消灭它。但作者说：欲望本身并不是问题，问题在于我们对欲望的反应——要么执着，要么压抑。欲望就像生命力本身，它是自然的流动。你看到一件漂亮的衣服，心里升起想要的感觉，这是很自然的。但接下来思想介入，开始编织——"如果我穿上它，别人会怎么看我"——于是欲望变成了占有欲、嫉妒、焦虑。</p>
+    <p>当欲望升起时，不要急着去满足它，也不要急着去谴责它，只是观察它，看看那个欲望的能量是如何流动的。当你能够不带评判地观察欲望，欲望就不再控制你，它反而成了你了解自己的一个入口。你会发现，欲望背后往往藏着更深的渴望——被爱、被认可、被看见。当你看见了那份渴望本身，你就不需要透过外在的事物来填补了。</p>
+</section>
+
+<div class="divider-orn">· · ·</div>
+
+<section class="chapter">
+    <span class="chapter-label">第七章</span>
+    <h3>孤独与爱：两盏灯各自发光</h3>
+    <p class="lead">很多人害怕孤独，所以拼命往人群里挤，用热闹来掩盖内心的空洞。但作者说：孤独和爱是同一枚硬币的两面——如果你不能面对孤独，你就不可能真正去爱。</p>
+    <p>因为当你依赖别人来逃避孤独时，你爱的是那个能帮你逃避孤独的人，而不是那个人本身。真正的爱是：当你独自一人时，内心依然饱满；然后你遇到另一个人，你不是从他那里索取，而是分享你的饱满。</p>
+    <div class="quote-block">
+        就像两盏灯各自发光，彼此照亮——而不是一盏灯拼命去吸另一盏灯的光。
+    </div>
+    <p>所以试着偶尔享受孤独吧。一个人待着，什么都不做，什么都不想。刚开始可能会感到空虚，但如果你能穿越那层空虚，你会触碰到一个非常丰富的内在世界。那时候你再回到人群中，你将不再是一个乞讨者，而是一个分享者。</p>
+</section>
+
+<div class="divider-orn">· · ·</div>
+
+<section class="chapter">
+    <span class="chapter-label">第八章</span>
+    <h3>冥想：一颗空无的心</h3>
+    <p class="lead">很多人以为冥想就是盘腿打坐、集中注意力。但克里希那穆提说：冥想其实是一种生活方式，一种时刻觉察的状态。它不是你在某个时间段做的事，而是你整个生命的态度。</p>
+    <div class="quote-block">
+        冥想就是一颗空无的心。空无不是否定——空无是爱。
+    </div>
+    <p>当你的心不再被念头塞满，不再被欲望捆绑，不再被恐惧折磨，它就空了。但这个"空"不是空虚，而是一种充满可能性的状态——就像一片空白画布，可以画出最美的画；就像一片寂静的夜空，可以容纳无数的星星。</p>
+    <p>真正的冥想是在日常生活中，时时刻刻对自己的思想、情感、行为保持警觉。当你走路时知道自己在走路，当你吃饭时知道自己在吃饭，当你生气时知道自己在生气——这份"知道"就是冥想。它不需要你闭上眼睛，它需要你睁开眼睛，清醒地活在每一个当下。</p>
+</section>
+
+<div class="divider-orn">· · ·</div>
+
+<section class="chapter">
+    <span class="chapter-label">第九章</span>
+    <h3>痛苦、死亡与重生</h3>
+    <p class="lead">人生不可能没有痛苦——亲人离去、梦想破灭、疾病缠身。作者没有告诉我们如何避免痛苦，而是引导我们去理解痛苦的本质。</p>
+    <p>他说：痛苦是因为我们抗拒事实。我们希望事情不是这个样子，希望亲人永远活着，希望一切如我所愿——但事实是一切都在变化。当你完全接受事实，不再抗拒，痛苦就会转化为一种深刻的宁静。那不是冷漠，而是一种与生命真相和解的智慧。</p>
+    <p>就像一棵树在暴风雨中折断，但伤口处会慢慢长出新的枝桠，甚至开出花来。痛苦就是那个伤口——如果你允许自己彻底感受它，它会在你心里开辟出新的空间，让你变得更柔软、更宽容、更懂得爱。所以不必害怕痛苦，它可能是你最深刻的老师。</p>
+    <div class="scene-card">
+        <h4>每一天都是一次死亡与重生</h4>
+        <p>死亡和生命是不可分割的。每一天都有无数细胞在死去，无数念头在死去，无数旧我在死去。死亡不是发生在未来的一件事——它每时每刻都在发生。如果你能学会在每一个当下"死去"，也就是放下过去的包袱，不带着昨天的记忆进入今天，那么你就活在了永恒的新鲜里。</p>
+        <p>你能否在每一天结束时，把这一天所有的经验、烦恼、成就都放下，就像死去一样？第二天醒来，你是一个全新的人，带着新鲜的眼光看世界。这种每时每刻的死去，就是真正的自由。</p>
+    </div>
+</section>
+
+<div class="divider-orn">· · ·</div>
+
+<section class="chapter">
+    <span class="chapter-label">第十章</span>
+    <h3>爱与慈悲：你的存在本身就是爱</h3>
+    <p class="lead">在《生命之书》的最后，克里希那穆提回到了爱。他说：爱不是情感，不是情绪，不是快乐——爱是一种存在的状态。</p>
+    <p>当你彻底了解了自己，当你不再被自我中心束缚，爱就会自然流露。这种爱里没有分别、没有选择，它像阳光一样平等地照耀一切。这种爱就是慈悲——对他人的痛苦感同身受，对世界的苦难心怀怜悯。</p>
+    <div class="quote-block">
+        你无法修习慈悲，你只能去除那些阻碍慈悲的东西——比如自私、恐惧、仇恨。当你内心清明了，慈悲就像泉水一样自动涌出。那时候你不需要刻意去爱任何人——你的存在本身就是爱。
+    </div>
+    <p>我们今晚只是轻轻翻开了这本书的几个篇章，像是用手指轻轻触碰了一下水面，泛起几圈涟漪——但真正的海洋在你心里。</p>
+</section>
+
+<section class="chapter mindmap-section">
+    <h3>全书思维导图</h3>
+    <div class="markmap">
+<script type="text/template">
+---
+markmap:
+  colorFreezeLevel: 2
+---
+# 生命之书
+## 作者：克里希那穆提
+### 被认定为"世界导师"
+### 1929年解散组织
+### 真理是无路之国
+### 用自己的光照亮自己
+## 聆听的艺术
+### 毫不费力的觉察
+### 宁静不被噪音打破
+### 语言是镜子：倾听自己
+### 在噪音中如如不动
+## 关系之境
+### 关系是诚实的镜子
+### 不擦镜子：看见自己的情绪
+### 依赖带来恐惧
+### 爱是流动，不是占有
+### 每次冲突是疗愈的机会
+## 恐惧的面孔
+### 抓取背后藏着恐惧
+### 不命名、不赶走：观察它
+### 全然感受时恐惧消失
+### 定力：坐在风浪中心
+## 学习的迷思
+### 学习是觉察，不是累积
+### 清空已知，看见当下
+### 做人生的门徒
+### 智慧≠知识
+## 实相与当下
+### 实相在每时每刻
+### 甘愿什么都不是
+### 一滴水拥有整个海洋
+## 自我与欲望
+### 自我是念头编织的故事
+### 世界是内心的投射
+### 观察欲望而非执着或压抑
+### 欲望背后：渴望被爱
+## 孤独与爱
+### 孤独与爱是硬币两面
+### 独处时饱满，相遇时分享
+### 两盏灯各自发光
+## 冥想
+### 时刻觉察的生活方式
+### 空无不是否定，空无是爱
+### 知道自己在走路——这就是冥想
+## 痛苦与死亡
+### 痛苦源于抗拒事实
+### 接受→宁静
+### 每天死去，每天重生
+## 爱与慈悲
+### 爱是存在的状态
+### 去除阻碍，慈悲自涌
+### 你的存在本身就是爱
+## 核心信息
+### 别往外看，往里看
+### 你就是这本生命之书
+</script>
+    </div>
+</section>
+
+</main>
+
+<footer class="epilogue">
+    <div class="epilogue-inner">
+        <p class="final-quote">你就是这本生命之书——无穷的经验、深植于内心的恐惧与焦虑、痛苦与快乐，以及人类数千年来所累积的信念，全都在你的内心深处。别往外看，往里看。真理不在任何经典里，而在你每一个当下的觉察里。当你开始观察自己，你就开始了真正的阅读——阅读你这本独一无二的生命之书。愿你成为你自己的光。</p>
+        <p class="goodnight">晚安</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+<script>
+const toggle = document.getElementById('themeToggle');
+const panel = document.getElementById('themePanel');
+const options = document.querySelectorAll('.theme-option');
+const currentTheme = document.body.className.replace('theme-', '');
+options.forEach(o => o.classList.toggle('active', o.dataset.theme === currentTheme));
+toggle.addEventListener('click', (e) => { e.stopPropagation(); panel.classList.toggle('open'); });
+document.addEventListener('click', (e) => { if (!panel.contains(e.target)) panel.classList.remove('open'); });
+options.forEach(opt => {
+    opt.addEventListener('click', () => {
+        document.body.className = 'theme-' + opt.dataset.theme;
+        options.forEach(o => o.classList.toggle('active', o === opt));
+        panel.classList.remove('open');
+    });
+});
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+    });
+}, { threshold: 0.08 });
+document.querySelectorAll('.chapter').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

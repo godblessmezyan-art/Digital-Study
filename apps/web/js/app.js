@@ -2,6 +2,8 @@ import { createAiWorkshopPage } from './studio-page.js?v=5';
 import { createLibraryPage } from './library-page.js?v=1';
 import { loadCatalogBooks } from './book-catalog.js?v=1';
 import { icons as archiveIcons } from './icons.js?v=cloud-realm-study-29';
+import { renderSidebar } from './navigation.js?v=1';
+import { createReadingSpacePage } from './reading-space.js?v=1';
 import { clearAuth, getStoredUser, login, validateAuth } from './auth-client.js';
 
 const icon = (name) => {
@@ -17,10 +19,8 @@ const books=[
  {title:'三体',author:'刘慈欣',desc:'当文明与宇宙相遇，人类的命运将何去何从。',main:'科幻宇宙',tags:['科幻','宇宙','文明'],status:'已发布',date:'2025/08/18',time:'16:40',cover:'linear-gradient(145deg,#203b55,#050b12)'},
  {title:'乌合之众',author:'古斯塔夫·勒庞',desc:'群体心理如何影响个体判断，揭示社会行为的深层逻辑。',main:'社会科学',tags:['群体心理','社会','大众行为'],status:'待完善',date:'2025/08/15',time:'13:25',cover:'linear-gradient(145deg,#51483d,#11100f)'}
 ];
-const navTop=[['首页','home','home'],['我的书架','book'],['书籍分类','grid','categories'],['阅读笔记','pen'],['精选书摘','star'],['时间线','clock'],['设置','settings']];
-const navManage=[['藏书管理','book','library'],['AI 工坊','spark','studio'],['导入记录','upload']];
 const sidebar=document.querySelector('#sidebar'),app=document.querySelector('#app'),toast=document.querySelector('#toast');
-sidebar.innerHTML=`<button class="brand" data-page="home"><div class="brand-mark">${archiveIcons.astrolabe}</div><h2>云天幻境</h2><small>CLOUD REALM ARCHIVE</small></button><span class="sidebar-rule"></span><nav class="nav">${navTop.map(x=>`<button data-page="${x[2]||''}">${icon(x[1])}<span>${x[0]}</span></button>`).join('')}<div class="nav-section">管理</div>${navManage.map(x=>`<button data-page="${x[2]||''}">${icon(x[1])}<span>${x[0]}</span></button>`).join('')}</nav><div class="nav-card"><div class="mini-scene"></div><strong>独处 · 阅读 · 思考</strong><small>让思想在云海之上生长</small></div>`;
+renderSidebar(sidebar,{variant:'app',brandIcon:archiveIcons.astrolabe});
 
 const appScenes=[
  {name:'云端书斋',region:'晨光穿过拱窗，照亮等待书写的篇章。',image:'assets/cloud-realm-study-v2.png',position:'center 45%'},
@@ -78,7 +78,7 @@ void validateAuth().then(()=>updateAuthButton());
 function showToast(text){toast.textContent=text;toast.classList.add('show');clearTimeout(showToast.t);showToast.t=setTimeout(()=>toast.classList.remove('show'),1800)}
 function metrics(items){return `<div class="metric-strip">${items.map(x=>`<div class="metric"><span class="metric-icon">${x[0]}</span><span><small>${x[1]}</small><strong>${x[2]}</strong></span></div>`).join('')}</div>`}
 function topActions(search=true){return search?'<div class="top-actions"><label class="searchbox">⌕<input id="globalSearch" placeholder="搜索书名、作者或标签..."></label></div>':''}
-function setActive(page){document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page))}
+function setActive(page){document.querySelectorAll('[data-nav-id]').forEach(item=>{const active=item.dataset.navId===page;item.classList.toggle('active',active);item.toggleAttribute('aria-current',active)})}
 
 function renderLibraryLegacy(){
  document.body.classList.remove('category-mode','studio-v2-mode','studio-workshop-mode');
@@ -98,8 +98,8 @@ function renderLibraryLegacy(){
 async function renderLibrary(){
  document.body.classList.remove('category-mode','studio-v2-mode','studio-workshop-mode');
  document.body.classList.add('library-management-mode');
- setActive('library');
- document.title='藏书管理 · 云天幻境';
+ setActive('content');
+ document.title='内容管理 · 云天幻境';
  await createLibraryPage(app,{
   showToast,
   navigateToStudio:book=>{
@@ -130,15 +130,19 @@ async function renderCategories(){
  const catalogBooks=await loadCatalogBooks();
  const categoryCounts=new Map();catalogBooks.forEach(book=>{const name=book.category?.name||'其他';categoryCounts.set(name,(categoryCounts.get(name)||0)+1)});
  const categoryTabs=[['全部',catalogBooks.length],...[...categoryCounts.entries()].sort((a,b)=>a[0].localeCompare(b[0],'zh-CN'))];
- app.innerHTML=`<section class="category-page"><header class="category-hero">${topActions(false)}<h1>书籍分类</h1><p>探索不同领域的知识与故事</p><label class="category-search">${icon('search')}<input id="categorySearch" placeholder="搜索书名、作者或关键词..."></label><div class="category-tabs">${categoryTabs.map((x,i)=>`<button class="category-tab ${i===0?'active':''}" data-category-name="${x[0]}"><strong>${x[0]}</strong><small>${x[1]}</small></button>`).join('')}</div></header><section class="category-library"><div class="category-heading"><div><h2 id="categoryTitle">全部 <span>${catalogBooks.length} 本书</span></h2><p>内容来自 Git 仓库，数据库可用时会自动合并最新索引。</p></div><div class="category-controls"><button class="category-sort">排序：<strong>最近更新</strong>　⌄</button><button class="category-view active" data-view="grid">▦</button><button class="category-view" data-view="list">☷</button></div></div><div class="category-books" id="categoryBooks"></div></section></section>`;
+ app.innerHTML=`<section class="category-page"><header class="category-hero">${topActions(false)}<h1>书籍分类</h1><p>探索不同领域的知识与故事</p><label class="category-search">${icon('search')}<input id="categorySearch" placeholder="搜索书名、作者、分类或标签..."></label><div class="category-tabs">${categoryTabs.map(x=>`<button class="category-tab" data-category-name="${x[0]}"><strong>${x[0]}</strong><small>${x[1]}</small></button>`).join('')}</div></header><section class="category-library"><div class="category-heading"><div><h2 id="categoryTitle">全部 <span>${catalogBooks.length} 本书</span></h2><p>内容来自 Git 仓库，数据库可用时会自动合并最新索引。</p></div><div class="category-controls"><select class="category-sort" id="categorySort" aria-label="排序"><option value="updated">最近更新</option><option value="title">书名</option><option value="author">作者</option></select><button class="category-view active" data-view="grid">▦</button><button class="category-view" data-view="list">☷</button></div></div><div class="category-books" id="categoryBooks"></div></section></section>`;
  const list=document.querySelector('#categoryBooks');
- let activeCategory='全部',query='';
+ const params=new URLSearchParams(location.hash.split('?')[1]||'');
+ let activeCategory=params.get('category')||'全部',query='',sort='updated';
+ if(activeCategory!=='全部'&&!categoryCounts.has(activeCategory))activeCategory='全部';
  const escapeValue=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
- const filtered=()=>catalogBooks.filter(book=>(activeCategory==='全部'||(book.category?.name||'其他')===activeCategory)&&`${book.title}${book.author}${book.summary}${book.tags.join('')}`.toLowerCase().includes(query));
+ const filtered=()=>catalogBooks.filter(book=>(activeCategory==='全部'||(book.category?.name||'其他')===activeCategory)&&`${book.title}${book.author}${book.summary}${book.category?.name||''}${book.tags.join('')}`.toLowerCase().includes(query)).sort((a,b)=>sort==='title'?a.title.localeCompare(b.title,'zh-CN'):sort==='author'?a.author.localeCompare(b.author,'zh-CN'):String(b.updatedAt||b.publishedAt||'').localeCompare(String(a.updatedAt||a.publishedAt||'')));
  const paint=()=>{const items=filtered();list.innerHTML=items.length?items.map(book=>`<article class="category-book" data-title="${escapeValue(book.title)}" data-content-url="${escapeValue(book.contentUrl)}"><div class="category-cover" style="--book-art:url('${escapeValue(book.coverUrl||'assets/cloud-realm-study-v2.png')}')"><div class="cover-shade"></div><strong>${escapeValue(book.title)}</strong><small>${escapeValue(book.author)}</small></div><div class="category-book-meta"><h3>${escapeValue(book.title)}</h3><p>${escapeValue(book.author)}</p><span class="reading-status ${book.status==='draft'?'unread':''}">${book.status==='published'?'已发布':'草稿'}</span></div></article>`).join(''):'<div class="category-empty">Git 内容目录中暂未找到相关书籍</div>';document.querySelector('#categoryTitle').innerHTML=`${escapeValue(activeCategory)} <span>${items.length} 本书</span>`;document.querySelectorAll('.category-book').forEach(card=>card.addEventListener('click',()=>{const url=card.dataset.contentUrl;if(url)window.open(url,'_blank','noopener')}))};
  paint();
+ document.querySelectorAll('.category-tab').forEach(tab=>tab.classList.toggle('active',tab.dataset.categoryName===activeCategory));
  document.querySelector('#categorySearch').addEventListener('input',event=>{query=event.target.value.trim().toLowerCase();paint()});
- document.querySelectorAll('.category-tab').forEach(tab=>tab.addEventListener('click',()=>{document.querySelectorAll('.category-tab').forEach(x=>x.classList.remove('active'));tab.classList.add('active');activeCategory=tab.dataset.categoryName;paint();showToast(`已切换至${activeCategory}`)}));
+ document.querySelector('#categorySort').addEventListener('change',event=>{sort=event.target.value;paint()});
+ document.querySelectorAll('.category-tab').forEach(tab=>tab.addEventListener('click',()=>{document.querySelectorAll('.category-tab').forEach(x=>x.classList.remove('active'));tab.classList.add('active');activeCategory=tab.dataset.categoryName;history.replaceState(null,'',activeCategory==='全部'?'#categories':`#categories?category=${encodeURIComponent(activeCategory)}`);paint();showToast(`已切换至${activeCategory}`)}));
  document.querySelectorAll('.category-view').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.category-view').forEach(x=>x.classList.remove('active'));btn.classList.add('active');list.classList.toggle('list-view',btn.dataset.view==='list')}));
  bindGlobal();
 }
@@ -175,7 +179,14 @@ function renderStudioV3(){
   createAiWorkshopPage(app,{showToast,bindNavigation:bindGlobal});
 }
 
-function bindGlobal(){document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{setAppScenic(false);if(b.dataset.page==='home')window.location.href='home.html';else if(b.dataset.page==='library')renderLibrary();else if(b.dataset.page==='studio')renderStudioV3();else if(b.dataset.page==='categories')renderCategories();else showToast(`${b.textContent.trim()}功能即将开放`)});document.querySelectorAll('[data-toast]').forEach(b=>b.onclick=()=>showToast(b.dataset.toast))}
+function renderReadingSpace(){
+  setActive('reading');document.title='阅读空间 · 云天幻境';
+  document.body.classList.remove('category-mode','studio-v2-mode','studio-workshop-mode','library-management-mode');
+  const params=new URLSearchParams(location.hash.split('?')[1]||'');
+  createReadingSpacePage(app,params.get('tab')||'notes');
+}
+
+function bindGlobal(){document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{setAppScenic(false);if(b.dataset.page==='home')window.location.href='home.html';else if(b.dataset.page==='library'||b.dataset.page==='content')location.hash='#content';else if(b.dataset.page==='studio')location.hash='#studio';else if(b.dataset.page==='categories')location.hash='#categories';else showToast(`${b.textContent.trim()}功能即将开放`)});document.querySelectorAll('[data-toast]').forEach(b=>b.onclick=()=>showToast(b.dataset.toast))}
 sidebar.addEventListener('click',()=>sidebar.classList.remove('open'));document.querySelector('#menuButton').addEventListener('click',()=>sidebar.classList.toggle('open'));
-const route=()=>location.hash==='#studio'?renderStudioV3():location.hash==='#categories'?renderCategories():location.hash==='#library'?renderLibrary():window.location.replace('home.html');route();
+const route=()=>{const page=location.hash.slice(1).split('?')[0];if(page==='studio')return renderStudioV3();if(page==='categories')return renderCategories();if(page==='reading')return renderReadingSpace();if(page==='content'||page==='library')return renderLibrary();window.location.replace('home.html')};route();
 window.addEventListener('hashchange',route);

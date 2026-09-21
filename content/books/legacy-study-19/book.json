@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "slug": "legacy-study-19",
+  "title": "自卑与超越",
+  "author": "阿尔弗雷德·阿德勒",
+  "summary": "从旧 Study 项目迁移的书籍内容。",
+  "tags": [],
+  "cover": "cover.svg",
+  "status": "published",
+  "publishedAt": "2026-07-27T01:16:49.000Z",
+  "category": {
+    "slug": "legacy-category-63",
+    "name": "个人成长"
+  }
+}

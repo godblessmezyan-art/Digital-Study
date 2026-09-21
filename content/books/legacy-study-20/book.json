@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "slug": "legacy-study-20",
+  "title": "青铜葵花",
+  "author": "曹文轩",
+  "summary": "从旧 Study 项目迁移的书籍内容。",
+  "tags": [],
+  "cover": "cover.svg",
+  "status": "published",
+  "publishedAt": "2026-08-11T12:58:35.000Z",
+  "category": {
+    "slug": "legacy-category-59",
+    "name": "文学经典"
+  }
+}

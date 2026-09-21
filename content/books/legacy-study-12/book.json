@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "slug": "legacy-study-12",
+  "title": "心流",
+  "author": "米哈里·契克森米哈赖",
+  "summary": "从旧 Study 项目迁移的书籍内容。",
+  "tags": [],
+  "cover": "cover.svg",
+  "status": "published",
+  "publishedAt": "2026-07-26T22:28:18.000Z",
+  "category": {
+    "slug": "legacy-category-63",
+    "name": "个人成长"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "slug": "legacy-study-13",
+  "title": "丰盛",
+  "author": "杨定一",
+  "summary": "从旧 Study 项目迁移的书籍内容。",
+  "tags": [],
+  "cover": "cover.svg",
+  "status": "published",
+  "publishedAt": "2026-07-27T01:03:03.000Z",
+  "category": {
+    "slug": "legacy-category-60",
+    "name": "心灵修炼"
+  }
+}

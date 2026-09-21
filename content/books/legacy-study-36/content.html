@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>原子习惯 · 微小改变，非凡结果</title>
+<link href="https://fonts.loli.net/css2?family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* === 16 Themes === */
+body.theme-atom{--bg:#0a0e1a;--text:#e8ecf4;--card:#131a2e;--accent:#00d4aa;--accent2:#7c5cfc;--border:#1e2a45;--shadow:0 8px 32px rgba(0,212,170,.08);--hero-bg:linear-gradient(160deg,#0a0e1a 0%,#0f1832 50%,#0a1628 100%);--muted:#8892a8}
+body.theme-ink{--bg:#faf8f5;--text:#2c2c2c;--card:#fff;--accent:#333;--accent2:#666;--border:#e0dcd6;--shadow:0 4px 20px rgba(0,0,0,.06);--hero-bg:linear-gradient(160deg,#2c2c2c,#4a4a4a);--muted:#888}
+body.theme-forest{--bg:#f4f8f4;--text:#1a3320;--card:#fff;--accent:#2d8a4e;--accent2:#5cb87a;--border:#d4e8d8;--shadow:0 4px 20px rgba(45,138,78,.08);--hero-bg:linear-gradient(160deg,#1a3320,#2d5a3a);--muted:#5a7a62}
+body.theme-wine{--bg:#faf5f6;--text:#3d1a24;--card:#fff;--accent:#a03050;--accent2:#d4607a;--border:#f0d8de;--shadow:0 4px 20px rgba(160,48,80,.08);--hero-bg:linear-gradient(160deg,#3d1a24,#6a2a3a);--muted:#9a6a76}
+body.theme-ocean{--bg:#f2f8fc;--text:#1a2e3d;--card:#fff;--accent:#1a7ab5;--accent2:#4aa8d8;--border:#d0e8f4;--shadow:0 4px 20px rgba(26,122,181,.08);--hero-bg:linear-gradient(160deg,#0f2a3d,#1a4a6a);--muted:#5a8a9e}
+body.theme-sand{--bg:#faf7f2;--text:#3d3020;--card:#fff;--accent:#b8862a;--accent2:#d4a84a;--border:#ede0cc;--shadow:0 4px 20px rgba(184,134,42,.08);--hero-bg:linear-gradient(160deg,#3d3020,#6a5030);--muted:#9a8a6a}
+body.theme-plum{--bg:#f8f4fa;--text:#2e1a3d;--card:#fff;--accent:#7a3aa0;--accent2:#a86ad0;--border:#e8d8f2;--shadow:0 4px 20px rgba(122,58,160,.08);--hero-bg:linear-gradient(160deg,#2e1a3d,#4a2a6a);--muted:#8a6a9e}
+body.theme-slate{--bg:#f5f6f8;--text:#2a2e35;--card:#fff;--accent:#4a6a8a;--accent2:#6a9aba;--border:#dde2e8;--shadow:0 4px 20px rgba(74,106,138,.08);--hero-bg:linear-gradient(160deg,#2a2e35,#3a4a5a);--muted:#7a8a9a}
+body.theme-coral{--bg:#fef6f4;--text:#3d2420;--card:#fff;--accent:#e05a3a;--accent2:#f08a5a;--border:#f8ddd6;--shadow:0 4px 20px rgba(224,90,58,.08);--hero-bg:linear-gradient(160deg,#3d2420,#6a3a2a);--muted:#9a7a6a}
+body.theme-teal{--bg:#f2faf8;--text:#1a3330;--card:#fff;--accent:#0a8a7a;--accent2:#3abaa8;--border:#d0ece8;--shadow:0 4px 20px rgba(10,138,122,.08);--hero-bg:linear-gradient(160deg,#1a3330,#2a5a50);--muted:#5a8a80}
+body.theme-midnight{--bg:#0d1117;--text:#c9d1d9;--card:#161b22;--accent:#58a6ff;--accent2:#a371f7;--border:#21262d;--shadow:0 8px 32px rgba(88,166,255,.06);--hero-bg:linear-gradient(160deg,#0d1117,#161b22);--muted:#8b949e}
+body.theme-charcoal{--bg:#1a1a1e;--text:#e0ddd8;--card:#242428;--accent:#f0c040;--accent2:#e08030;--border:#333338;--shadow:0 8px 32px rgba(240,192,64,.06);--hero-bg:linear-gradient(160deg,#1a1a1e,#2a2a30);--muted:#8a8a8e}
+body.theme-abyss{--bg:#080c14;--text:#b8c8e0;--card:#0f1520;--accent:#00b4d8;--accent2:#0077b6;--border:#1a2535;--shadow:0 8px 32px rgba(0,180,216,.06);--hero-bg:linear-gradient(160deg,#080c14,#0a1a2a);--muted:#5a7a9a}
+body.theme-moss{--bg:#f6f8f2;--text:#2a3320;--card:#fff;--accent:#5a8a2a;--accent2:#8ab84a;--border:#dde8cc;--shadow:0 4px 20px rgba(90,138,42,.08);--hero-bg:linear-gradient(160deg,#2a3320,#4a5a30);--muted:#7a8a5a}
+body.theme-ember{--bg:#14100e;--text:#e8ddd4;--card:#1e1814;--accent:#ff6b35;--accent2:#ffa040;--border:#2e2420;--shadow:0 8px 32px rgba(255,107,53,.06);--hero-bg:linear-gradient(160deg,#14100e,#2a1a10);--muted:#9a8070}
+body.theme-orchid{--bg:#faf4fc;--text:#301a3d;--card:#fff;--accent:#b040d0;--accent2:#d870f0;--border:#eedaf6;--shadow:0 4px 20px rgba(176,64,208,.08);--hero-bg:linear-gradient(160deg,#301a3d,#5a2a6a);--muted:#8a5a9e}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Serif SC',serif;background:var(--bg);color:var(--text);line-height:2;overflow-x:hidden;transition:background .5s,color .5s}
+
+/* Theme select */
+.theme-select{position:fixed;top:20px;right:20px;z-index:999;padding:8px 14px;border-radius:10px;border:2px solid var(--border);background:var(--card);color:var(--text);font-size:.85rem;font-family:'Noto Serif SC',serif;cursor:pointer;box-shadow:var(--shadow);transition:all .3s;appearance:auto}
+.theme-select:hover{border-color:var(--accent)}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:var(--hero-bg);position:relative;overflow:hidden;padding:60px 20px}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 80%,rgba(0,212,170,.06) 0%,transparent 60%)}
+.hero-particles{position:absolute;inset:0;pointer-events:none}
+.particle{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--accent);opacity:.4;animation:drift 8s infinite ease-in-out}
+@keyframes drift{0%,100%{transform:translateY(0) scale(1);opacity:.3}50%{transform:translateY(-30px) scale(1.5);opacity:.7}}
+.hero-subtitle{font-size:.95rem;color:var(--accent);letter-spacing:.3em;text-transform:uppercase;margin-bottom:20px;font-weight:400}
+.hero h1{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(2.2rem,7vw,3.8rem);color:#fff;line-height:1.3;margin-bottom:16px;text-shadow:0 0 40px rgba(0,212,170,.2)}
+.hero-author{font-size:.9rem;color:rgba(255,255,255,.6);margin-bottom:30px}
+.hero-tagline{max-width:560px;font-size:1rem;color:rgba(255,255,255,.75);line-height:1.9}
+
+/* Growth curve SVG */
+.growth-curve{margin:40px auto 0;max-width:320px;width:100%}
+.growth-curve svg{width:100%;height:auto}
+.curve-line{stroke:var(--accent);stroke-width:2.5;fill:none;stroke-dasharray:400;stroke-dashoffset:400;animation:drawCurve 3s ease forwards 1s}
+@keyframes drawCurve{to{stroke-dashoffset:0}}
+.curve-label{font-size:11px;fill:rgba(255,255,255,.6);font-family:'Noto Serif SC',serif}
+.curve-highlight{font-size:13px;fill:var(--accent);font-weight:700;font-family:'Noto Serif SC',serif}
+
+/* Chapter */
+.chapter{max-width:720px;margin:0 auto;padding:90px 24px;opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
+.chapter.visible{opacity:1;transform:translateY(0)}
+.chapter-label{display:inline-block;font-size:.75rem;letter-spacing:.25em;color:var(--accent);border:1px solid var(--accent);padding:4px 14px;border-radius:20px;margin-bottom:20px}
+.chapter h2{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(1.5rem,4vw,2rem);margin-bottom:28px;color:var(--text);line-height:1.5}
+.chapter p{margin-bottom:1.6em;font-size:1.02rem;color:var(--text)}
+
+/* Quote */
+.quote{border-left:3px solid var(--accent);padding:20px 24px;margin:36px 0;background:var(--card);border-radius:0 12px 12px 0;box-shadow:var(--shadow)}
+.quote p{margin:0;font-style:italic;color:var(--muted);font-size:.98rem}
+
+/* Atom divider */
+.atom-divider{display:flex;align-items:center;justify-content:center;gap:12px;margin:60px auto;max-width:720px;padding:0 24px}
+.atom-divider::before,.atom-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.atom-icon{width:28px;height:28px;position:relative;animation:spin 6s linear infinite}
+.atom-icon::before{content:'';position:absolute;inset:0;border:1.5px solid var(--accent);border-radius:50%;transform:rotateX(60deg)}
+.atom-icon::after{content:'';position:absolute;top:50%;left:50%;width:6px;height:6px;background:var(--accent);border-radius:50%;transform:translate(-50%,-50%)}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+/* Law cards */
+.law-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:36px 0}
+.law-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px 22px;box-shadow:var(--shadow);transition:transform .3s,border-color .3s}
+.law-card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.law-num{font-size:2rem;font-weight:700;color:var(--accent);opacity:.3;font-family:'ZCOOL XiaoWei',serif}
+.law-title{font-family:'ZCOOL XiaoWei',serif;font-size:1.1rem;margin:8px 0 12px;color:var(--text)}
+.law-desc{font-size:.9rem;color:var(--muted);line-height:1.8}
+
+/* Habit loop */
+.loop-container{display:flex;justify-content:center;margin:40px 0}
+.loop-ring{position:relative;width:280px;height:280px}
+.loop-node{position:absolute;width:90px;height:90px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;font-size:.82rem;font-weight:600;background:var(--card);border:2px solid var(--accent);color:var(--text);box-shadow:var(--shadow)}
+.loop-node:nth-child(1){top:0;left:50%;transform:translateX(-50%)}
+.loop-node:nth-child(2){top:50%;right:0;transform:translateY(-50%)}
+.loop-node:nth-child(3){bottom:0;left:50%;transform:translateX(-50%)}
+.loop-node:nth-child(4){top:50%;left:0;transform:translateY(-50%)}
+.loop-arrow{position:absolute;top:50%;left:50%;width:200px;height:200px;transform:translate(-50%,-50%);border:2px dashed var(--border);border-radius:50%;animation:spin 20s linear infinite}
+
+/* Insight box */
+.insight{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;margin:32px 0;box-shadow:var(--shadow)}
+.insight-title{font-family:'ZCOOL XiaoWei',serif;font-size:1rem;color:var(--accent);margin-bottom:12px}
+.insight p{font-size:.95rem;color:var(--text);margin-bottom:.8em}
+.insight p:last-child{margin-bottom:0}
+
+/* Formula */
+.formula{text-align:center;margin:40px 0;padding:30px;background:var(--card);border-radius:16px;border:1px solid var(--border)}
+.formula-text{font-size:1.3rem;font-family:'ZCOOL XiaoWei',serif;color:var(--accent);letter-spacing:.05em}
+.formula-note{font-size:.85rem;color:var(--muted);margin-top:10px}
+
+/* Markmap */
+.markmap-section{max-width:900px;margin:80px auto;padding:0 24px}
+.markmap-section h2{font-family:'ZCOOL XiaoWei',serif;text-align:center;font-size:1.4rem;margin-bottom:30px;color:var(--text)}
+.markmap{width:100%;height:500px;border-radius:16px;border:1px solid var(--border);background:var(--card);box-shadow:var(--shadow)}
+.markmap svg{background:transparent!important}
+.markmap-foreign{color:var(--text)!important;font-size:14px!important}
+
+/* Goodnight */
+.goodnight{text-align:center;padding:100px 24px 120px}
+.goodnight p{font-family:'ZCOOL XiaoWei',serif;font-size:1.6rem;letter-spacing:.5em;color:var(--muted)}
+
+/* Responsive */
+@media(max-width:600px){
+  .law-grid{grid-template-columns:1fr}
+  .loop-ring{width:220px;height:220px}
+  .loop-node{width:72px;height:72px;font-size:.72rem}
+  .loop-arrow{width:150px;height:150px}
+  .chapter{padding:60px 20px}
+}
+</style>
+</head>
+<body class="theme-atom">
+<script>!function(){var t=['theme-atom','theme-ink','theme-forest','theme-wine','theme-ocean','theme-sand','theme-plum','theme-slate','theme-coral','theme-teal','theme-midnight','theme-charcoal','theme-abyss','theme-moss','theme-ember','theme-orchid'];document.body.className=t[Math.floor(Math.random()*t.length)]}()</script>
+
+<select class="theme-select" onchange="document.body.className=this.value">
+  <option value="theme-atom">⚛️ 原子蓝绿</option>
+  <option value="theme-ink">🖋 水墨</option>
+  <option value="theme-forest">🌲 松林</option>
+  <option value="theme-wine">🍷 酒红</option>
+  <option value="theme-ocean">🌊 海洋</option>
+  <option value="theme-sand">🏜 沙丘</option>
+  <option value="theme-plum">🌸 梅紫</option>
+  <option value="theme-slate">🪨 石灰</option>
+  <option value="theme-coral">🪸 珊瑚</option>
+  <option value="theme-teal">🍃 青瓷</option>
+  <option value="theme-midnight">🌌 午夜</option>
+  <option value="theme-charcoal">🔥 炭金</option>
+  <option value="theme-abyss">🐋 深渊</option>
+  <option value="theme-moss">🌿 苔藓</option>
+  <option value="theme-ember">🕯 余烬</option>
+  <option value="theme-orchid">🦋 兰紫</option>
+</select>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-particles" id="particles"></div>
+  <p class="hero-subtitle">Atomic Habits</p>
+  <h1>原子习惯</h1>
+  <p class="hero-author">詹姆斯·克利尔 James Clear</p>
+  <p class="hero-tagline">真正带来非凡结果的，往往是那些微小到几乎看不见的原子习惯。每天进步1%，一年后你将比开始时强大37倍。</p>
+  <div class="growth-curve">
+    <svg viewBox="0 0 300 160">
+      <line x1="40" y1="130" x2="280" y2="130" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
+      <line x1="40" y1="130" x2="40" y2="20" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
+      <path class="curve-line" d="M40,128 C100,126 160,120 200,100 C240,75 260,40 275,18"/>
+      <text class="curve-label" x="45" y="145">第1天</text>
+      <text class="curve-label" x="245" y="145">365天</text>
+      <text class="curve-highlight" x="220" y="14">×37</text>
+      <text class="curve-label" x="50" y="30">每天+1%</text>
+    </svg>
+  </div>
+</header>
+
+<!-- 序 -->
+<section class="chapter">
+  <span class="chapter-label">序</span>
+  <h2>微小的原子，非凡的结果</h2>
+  <p>想象一下英国自行车队的故事。他们曾经在长达100年的时间里表现平平无奇，简直就是体育界的小透明。别说环法自行车赛的冠军了，连奥运金牌都只拿到过一枚。甚至有顶级的自行车制造商都不愿意把车卖给他们，生怕影响自家品牌形象。</p>
+  <p>但就在2003年，奇迹发生了。他们请来了一位新教练戴夫·布雷斯福德，这位老兄搞了一个听起来有点玄乎的策略——叫做"边际增益的聚合"。说白了就是死磕细节，在能想到的所有跟骑自行车相关的事情上，都争取哪怕只有1%的提升。</p>
+  <p>他们可不只是换换坐垫或者用酒精擦擦轮胎增加抓地力这么简单。他们测试了各种按摩凝胶，看哪种能让肌肉恢复得更快；请外科医生来教队员怎么洗手才能最大限度避免感冒；甚至把后勤卡车的内部漆成了白色，就是为了更容易发现那些可能影响精密器材性能的微小灰尘。</p>
+  <p>这些改进单独看哪个都不是什么大事。但结果呢？短短5年后，在2008年的北京奥运会上，英国自行车队像开了挂一样，拿走了场地自行车项目60%的金牌。4年后的伦敦奥运会，他们更是打破了九项奥运纪录和七项世界纪录。</p>
+  <div class="formula">
+    <p class="formula-text">1.01³⁶⁵ = 37.78</p>
+    <p class="formula-note">每天进步1%，一年后你会比开始时强大37倍</p>
+  </div>
+  <p>习惯就像是自我提升领域的复利。一开始不起眼，但时间越长，威力越惊人。我们常常高估某个决定性瞬间的重要性，却低估了每天坚持微小改进的价值。</p>
+  <p>为什么？因为改变太慢了。我们跑了一个月步，好像身材也没啥变化；学了一晚上外语，感觉还是个菜鸟。看不到立竿见影的效果，就很容易泄气，退回老样子。</p>
+  <div class="quote">
+    <p>就像给冰块加热，从零下五度升到零下一度，冰块纹丝不动。但你的努力并没有白费，能量在积蓄，直到突破那个融化的临界点。很多所谓的"一夜成名"，其实都是无数个日夜默默积累的结果。</p>
+  </div>
+  <p>所以重要的不是你现在有多成功或者多失败，而是你现在的习惯是否把你引向你期望的方向。你的每一个选择无论多么微小，都在为你想要成为什么样的人投票。就像飞机航线，哪怕偏离几度，最终的目的地也会相差千里。</p>
+</section>
+
+<div class="atom-divider"><div class="atom-icon"></div></div>
+
+<!-- 壹 -->
+<section class="chapter">
+  <span class="chapter-label">壹</span>
+  <h2>忘记目标，专注系统</h2>
+  <p>很多人可能会想：那好办，我这就定个大目标，然后靠意志力把它拆解成小习惯去执行。听起来很燃对吧？但这本书要给我们泼一盆冷水了——如果你只盯着那个远大的目标，很有可能你又会掉进习惯养成的老坑里。</p>
+  <p>作者詹姆斯·克利尔曾经也是个"目标控"，给自己的学习、健身、事业都定下过各种目标。结果呢？有些成功了，但更多的是失败。后来他发现，他最终能取得什么样的结果，跟他设定的目标关系不大，反而跟他遵循的系统息息相关。</p>
+  <p>目标是你想要达到的结果，比如赢得冠军、赚到100万。而系统则是那些能带你到达结果的过程——你如何训练、如何分解难点、如何接受反馈。</p>
+  <div class="quote">
+    <p>你不会提升到自己目标的高度，而只会跌落到自己系统的水平。</p>
+  </div>
+  <p>过度关注目标，反而会带来几个大问题：</p>
+  <div class="law-grid">
+    <div class="law-card">
+      <div class="law-num">01</div>
+      <div class="law-title">赢家和输家目标相同</div>
+      <div class="law-desc">每个参加奥运会的选手都想拿金牌。如果目标是区分成败的关键，那为什么目标相同的人，结果却天差地别？</div>
+    </div>
+    <div class="law-card">
+      <div class="law-num">02</div>
+      <div class="law-title">改变往往只是暂时的</div>
+      <div class="law-desc">房间收拾干净了，但随手乱扔的坏习惯没改，用不了多久又会恢复原样。治标不治本。</div>
+    </div>
+    <div class="law-card">
+      <div class="law-num">03</div>
+      <div class="law-title">目标会限制快乐</div>
+      <div class="law-desc">"等我实现了目标就会快乐"——这把快乐推迟到了未来某个不确定的节点，制造非黑即白的成功观。</div>
+    </div>
+    <div class="law-card">
+      <div class="law-num">04</div>
+      <div class="law-title">与长期进步相悖</div>
+      <div class="law-desc">马拉松跑者冲过终点线就停止训练。当所有努力只为了一个特定目标，达成之后你靠什么继续前进？</div>
+    </div>
+  </div>
+  <p>设定目标是为了赢得这场比赛，而建立系统是为了能一直玩下去。真正着眼长远的人，思考的是如何持续改进、如何不断精进，而不是某一次的成败。</p>
+</section>
+
+<div class="atom-divider"><div class="atom-icon"></div></div>
+
+<!-- 贰 -->
+<section class="chapter">
+  <span class="chapter-label">贰</span>
+  <h2>改变身份，而非结果</h2>
+  <p>还有比系统更深层、更关键的东西——那就是"你是谁"，或者说你认为自己是谁。</p>
+  <p>行为改变有三个层次，就像洋葱一样一层包着一层：最外层是改变你的结果（减肥成功、赢得比赛）；中间一层是改变你的过程（新的健身计划、整理办公桌）；而最核心最深的那一层，是改变你的身份认同。</p>
+  <p>想象两个人戒烟的场景。有人递给他们烟，第一个人说："不了谢谢，我正在努力戒烟。"这听起来很合理，但她心里仍然认为自己是个"正在尝试做点别的什么的吸烟者"。第二个人则说："不了谢谢，我不抽烟。"</p>
+  <div class="quote">
+    <p>这微小的措辞差异背后，是身份认同的巨大转变。对他来说，吸烟已经是过去式了。他不再认为自己是那个需要香烟的人。</p>
+  </div>
+  <p>我们内心深处有一种强大的力量，要保持行为和身份的一致性。你可能很想更有钱，但如果你内心深处认为自己是个"消费者"而不是"创造者"，那你还是会倾向于花钱而不是赚钱。</p>
+  <p>书里有个叫布莱恩·克拉克的人，从小就有咬指甲的坏习惯，试了很多次都改不掉。有一天他下定决心，不仅停止咬指甲，还让妻子帮他预约了人生第一次专业美甲。他的想法是：如果我开始花钱保养指甲了，应该就不会再咬了吧。结果效果出奇的好——因为他开始把自己视为"一个爱护指甲的人"。</p>
+  <div class="insight">
+    <p class="insight-title">身份驱动行为</p>
+    <p>每一次你执行一个习惯，都是在为你想成为的那个身份投一票。你不需要做到完美，只需要比不行动多投几票。真正的行为改变，是身份的改变。</p>
+  </div>
+</section>
+
+<div class="atom-divider"><div class="atom-icon"></div></div>
+
+<!-- 叁 -->
+<section class="chapter">
+  <span class="chapter-label">叁</span>
+  <h2>习惯回路：四步循环</h2>
+  <p>每个习惯的形成都遵循一个四步循环：提示、渴求、反应、奖励。这个循环不断重复，最终让行为变得自动化。</p>
+  <div class="loop-container">
+    <div class="loop-ring">
+      <div class="loop-arrow"></div>
+      <div class="loop-node">提示<br><small>触发信号</small></div>
+      <div class="loop-node">渴求<br><small>内在动力</small></div>
+      <div class="loop-node">反应<br><small>实际行为</small></div>
+      <div class="loop-node">奖励<br><small>满足感</small></div>
+    </div>
+  </div>
+  <p>提示触发你的大脑启动某种行为，比如手机震动；渴求是对状态改变的内在动力，比如想知道谁发了消息；反应是你实际做出的习惯，比如拿起手机查看；奖励是最终获得的满足感，比如看到了有趣的内容。</p>
+  <p>如果某个行为在这四个阶段中的任何一个环节做得不够充分，它就不会成为习惯。消除提示，你的习惯根本不会启动；降低渴求，你就没有足够的动力去行动；让行为变得困难，你就无法付诸实施；如果奖励不能满足你的欲望，那么下次你就没有理由再这样做了。</p>
+  <div class="quote">
+    <p>没有前三个步骤，行为不会发生。没有这四个步骤的完整循环，行为不会重复。习惯回路是理解所有习惯的底层框架。</p>
+  </div>
+  <p>基于这个回路，克利尔提出了改变行为的四大定律——分别对应四个环节，让好习惯变得容易建立，让坏习惯变得难以维持。</p>
+</section>
+
+<div class="atom-divider"><div class="atom-icon"></div></div>
+
+<!-- 肆 -->
+<section class="chapter">
+  <span class="chapter-label">肆</span>
+  <h2>第一定律：让它显而易见</h2>
+  <p>习惯的起点是"提示"。大多数时候，我们甚至没有意识到触发习惯的提示是什么。改变的第一步，是提高觉察——把无意识的行为变成有意识的选择。</p>
+  <p>克利尔介绍了一个极其有效的工具：执行意图。不是含糊地说"我要多运动"，而是明确写下：我将在[时间]，在[地点]，做[行为]。比如"我将在早上7点，在客厅，做20个俯卧撑"。研究表明，有明确执行意图的人，执行率比没有的人高出两到三倍。</p>
+  <div class="insight">
+    <p class="insight-title">习惯叠加公式</p>
+    <p>在[当前习惯]之后，我将[新习惯]。比如："在我倒完早晨的咖啡之后，我将冥想一分钟。"把新习惯锚定在已有的稳固习惯上，利用已有行为的惯性来带动新行为。</p>
+  </div>
+  <p>另一个强大的策略是环境设计。你的环境塑造你的行为远比你想象的多。如果你想多喝水，就把水瓶放在桌上最显眼的位置。如果你想少刷手机，就把手机放到另一个房间。让好习惯的提示显而易见，让坏习惯的提示隐而不见。</p>
+  <div class="quote">
+    <p>人们往往不是缺乏动力，而是缺乏清晰的提示。你不需要更多的意志力，你需要的是更好的环境设计。</p>
+  </div>
+  <p>反过来，要戒除坏习惯，就让它变得"隐而不见"。把零食锁进柜子里，把电视遥控器藏到抽屉深处。看不见，就不容易想起；不容易想起，就不容易触发。</p>
+</section>
+
+<div class="atom-divider"><div class="atom-icon"></div></div>
+
+<!-- 伍 -->
+<section class="chapter">
+  <span class="chapter-label">伍</span>
+  <h2>第二定律：让它有吸引力</h2>
+  <p>光有提示还不够，你还需要"想要"去做。多巴胺驱动的反馈回路告诉我们：预期奖励时释放的多巴胺，比实际获得奖励时还要多。正是这种"渴望"在推动我们行动。</p>
+  <p>利用这一点，克利尔提出了"诱惑绑定"策略：把你需要做的事和你想做的事绑定在一起。比如，只有在跑步机上锻炼的时候，才允许自己看最喜欢的电视剧。把"应该做的"和"想要做的"捆绑，让好习惯自带吸引力。</p>
+  <div class="insight">
+    <p class="insight-title">社会规范的三种力量</p>
+    <p>我们会模仿三种人的习惯：亲近的人（家人朋友）、多数人（社会潮流）、有权势的人（偶像领袖）。加入一个把你想要的行为视为"正常"的群体，你的新习惯就有了社会支撑。</p>
+  </div>
+  <p>如果你想养成读书的习惯，就加入一个读书会。在那个环境里，读书不是苦差事，而是大家习以为常的事。当你的身份认同和群体认同重叠时，坚持就不再需要额外的意志力。</p>
+  <p>反过来，要让坏习惯失去吸引力，就重新定义它的含义。不是"我在牺牲娱乐时间来锻炼"，而是"我在为自己的身体投资"。改变你与习惯之间的情感关系，从"不得不"变成"我选择"。</p>
+</section>
+
+<div class="atom-divider"><div class="atom-icon"></div></div>
+
+<!-- 陆 -->
+<section class="chapter">
+  <span class="chapter-label">陆</span>
+  <h2>第三定律：让它简便易行</h2>
+  <p>人类的天性遵循"最小努力定律"——在两个选项中，我们自然会倾向于需要更少能量的那个。这不是懒惰，而是进化的智慧。所以，不要对抗天性，要利用它。</p>
+  <p>关键不在于"做多久"，而在于"开始做"。克利尔提出了著名的"两分钟法则"：任何新习惯，开始时都应该能在两分钟内完成。不是"每天跑步30分钟"，而是"穿上跑鞋"。不是"每晚读一章书"，而是"翻开书读一页"。</p>
+  <div class="quote">
+    <p>习惯的秘诀在于：先标准化，再优化。你不能改善一个不存在的习惯。先让行为发生，哪怕它微不足道，然后再慢慢提升。</p>
+  </div>
+  <p>减少摩擦力同样重要。想晨跑？前一晚就把运动服放在床边。想画画？把画板和颜料摆在桌上随时可取。每一个减少的步骤，都在降低启动的门槛。</p>
+  <p>反过来，要戒除坏习惯，就增加摩擦力。把社交媒体App从手机主屏幕移到第三页的文件夹里。把游戏机拔掉电源收进柜子。每多一个步骤，你就多了一次"要不要做"的思考机会。</p>
+  <div class="insight">
+    <p class="insight-title">预备环境</p>
+    <p>每天结束时，花两分钟为明天做好准备。把明天要做的事的工具摆好，把干扰源移远。你不是在"做"习惯，你是在为习惯铺路。</p>
+  </div>
+</section>
+
+<div class="atom-divider"><div class="atom-icon"></div></div>
+
+<!-- 柒 -->
+<section class="chapter">
+  <span class="chapter-label">柒</span>
+  <h2>第四定律：让它令人愉悦</h2>
+  <p>我们更可能重复那些让我们感到愉悦的行为。这是习惯回路的最后一步——奖励。但问题在于：好习惯的奖励往往是长期的（健身几个月才看到变化），而坏习惯的奖励是即时的（刷手机马上获得快感）。</p>
+  <p>解决方案是：给好习惯添加即时奖励。完成一次锻炼后，允许自己享受一杯好茶。坚持一周早起后，给自己一个小礼物。让大脑立刻感受到"做这件事是愉快的"。</p>
+  <p>另一个强大的工具是"习惯追踪器"——在日历上每完成一天就画一个叉。连续画了十天之后，你不想打破那个链条。这个简单的视觉反馈，把抽象的坚持变成了看得见的成就。</p>
+  <div class="quote">
+    <p>不要打破链条。当你看到连续30天的对勾时，放弃的代价变得可视化了。追踪本身就是奖励。</p>
+  </div>
+  <p>最后，找一个"问责伙伴"。知道有人在看着你，会极大地增加你放弃的成本。和朋友约定：如果这周没有完成三次运动，就请对方吃饭。社会压力是最有效的即时惩罚。</p>
+</section>
+
+<div class="atom-divider"><div class="atom-icon"></div></div>
+
+<!-- 捌 -->
+<section class="chapter">
+  <span class="chapter-label">捌</span>
+  <h2>进阶：永不错过两次</h2>
+  <p>完美是不存在的。你总会有一天因为生病、出差、突发事件而中断习惯。这没关系。克利尔说，区分成功者和失败者的关键，不在于他们从不跌倒，而在于他们跌倒后多快站起来。</p>
+  <div class="formula">
+    <p class="formula-text">永不错过两次</p>
+    <p class="formula-note">错过一次是意外，错过两次就是新习惯的开始</p>
+  </div>
+  <p>错过一天不会毁掉你所有的积累，但连续错过两天，就是滑向旧习惯的信号。所以，黄金法则是：如果你今天没做到，明天无论如何都要做。哪怕只做两分钟版本，也要保持链条不断。</p>
+  <p>习惯的复利效应意味着：重要的不是某一次的表现有多完美，而是你能否持续出现在那条轨道上。就像投资一样，真正创造财富的不是某一次的高回报，而是长年累月的持续投入。</p>
+  <div class="quote">
+    <p>成功不是目标，也不是终点。成功是一个持续改进的系统，一个永无止境的精进过程。微小的改变，带来非凡的结果。</p>
+  </div>
+  <p>所以，不要等到"准备好了"才开始。不要等到"有动力了"才行动。穿上跑鞋，翻开书，写下第一个字。让原子开始裂变，让复利开始运转。一年后回头看，你会感谢今天这个微不足道的开始。</p>
+</section>
+
+<!-- Markmap -->
+<section class="markmap-section">
+  <h2>全书脉络</h2>
+  <div class="markmap">
+    <script type="text/template">
+---
+markmap:
+  colorFreezeLevel: 3
+---
+# 原子习惯
+## 核心理念
+### 每天进步1% → 一年×37
+### 习惯是自我提升的复利
+### 潜能蓄积期（失望之谷）
+## 系统 > 目标
+### 赢家输家目标相同
+### 目标带来的改变是暂时的
+### 目标限制快乐
+### 目标与长期进步相悖
+## 身份认同
+### 三层：结果→过程→身份
+### 从内向外改变
+### 每个行为都是一票
+## 习惯回路
+### 提示 → 渴求 → 反应 → 奖励
+## 四大定律
+### ①让它显而易见
+#### 执行意图
+#### 习惯叠加
+#### 环境设计
+### ②让它有吸引力
+#### 诱惑绑定
+#### 社会规范
+### ③让它简便易行
+#### 两分钟法则
+#### 减少摩擦力
+#### 预备环境
+### ④让它令人愉悦
+#### 即时奖励
+#### 习惯追踪器
+#### 问责伙伴
+## 黄金法则
+### 永不错过两次
+### 先标准化再优化
+    </script>
+  </div>
+</section>
+
+<!-- 晚安 -->
+<footer class="goodnight">
+  <p>晚安</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+<script>
+// Sync select with random theme
+document.querySelector('.theme-select').value=document.body.className;
+
+// Particles
+(function(){
+  var c=document.getElementById('particles');
+  for(var i=0;i<40;i++){
+    var p=document.createElement('div');
+    p.className='particle';
+    p.style.left=Math.random()*100+'%';
+    p.style.top=Math.random()*100+'%';
+    p.style.animationDelay=Math.random()*8+'s';
+    p.style.animationDuration=(6+Math.random()*6)+'s';
+    p.style.width=p.style.height=(2+Math.random()*4)+'px';
+    c.appendChild(p);
+  }
+})();
+
+// Scroll animation
+var obs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})
+},{threshold:0.1});
+document.querySelectorAll('.chapter').forEach(function(el){obs.observe(el)});
+</script>
+</body>
+</html>

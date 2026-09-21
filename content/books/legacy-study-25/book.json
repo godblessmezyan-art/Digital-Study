@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "slug": "legacy-study-25",
+  "title": "断舍离",
+  "author": "佚名",
+  "summary": "从旧 Study 项目迁移的书籍内容。",
+  "tags": [],
+  "cover": "cover.svg",
+  "status": "published",
+  "publishedAt": "2026-08-24T23:38:42.000Z",
+  "category": {
+    "slug": "legacy-category-60",
+    "name": "心灵修炼"
+  }
+}

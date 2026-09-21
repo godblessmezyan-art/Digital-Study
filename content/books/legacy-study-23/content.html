@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>掌控习惯 · 睡前听完一本书</title>
+<link rel="preconnect" href="https://fonts.loli.net" crossorigin>
+<link href="https://fonts.loli.net/css2?family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+/* ============ 主题变量 ============ */
+body.theme-default{--bg:#f7f1e5;--text:#2f2a23;--text2:#8a7d6b;--card:#fffcf5;--border:#e4d8c3;--accent:#b0791f;--accent2:#4a7c59;--accent3:#b3541e;--soft:#f3ead8;--gold:#c2933a;--hero-top:#f5e3c0;--hero-via:#efd5a4;--hero-bot:#e8c98f;--quote-bg:#faf3e3;--shadow:rgba(120,90,40,.12)}
+body.theme-mint{--bg:#f2f7f3;--text:#27352c;--text2:#6c7f72;--card:#fbfdfb;--border:#d8e5da;--accent:#047857;--accent2:#0891b2;--accent3:#ca8a04;--soft:#e6f0e8;--gold:#b08948;--hero-top:#d8f0e0;--hero-via:#c7e8d3;--hero-bot:#e6f0e8;--quote-bg:#ecfdf5;--shadow:rgba(4,120,87,.1)}
+body.theme-cloud{--bg:#f5f7fa;--text:#333a45;--text2:#7b8494;--card:#ffffff;--border:#e3e8ef;--accent:#2563eb;--accent2:#64748b;--accent3:#7c3aed;--soft:#eff6ff;--gold:#b4873f;--hero-top:#e0e7ff;--hero-via:#dbeafe;--hero-bot:#f5f3ff;--quote-bg:#eff6ff;--shadow:rgba(37,99,235,.1)}
+body.theme-bamboo{--bg:#f4f6ef;--text:#31382a;--text2:#75806b;--card:#fcfdf8;--border:#dde3cf;--accent:#4d7c0f;--accent2:#15803d;--accent3:#a16207;--soft:#ecfccb;--gold:#a16207;--hero-top:#d9f99d;--hero-via:#d1fae5;--hero-bot:#fef9c3;--quote-bg:#ecfccb;--shadow:rgba(77,124,15,.1)}
+body.theme-amber{--bg:#faf4e8;--text:#3d3121;--text2:#8a7a5f;--card:#fffaf1;--border:#ecdfc5;--accent:#b45309;--accent2:#0e7490;--accent3:#7c2d12;--soft:#fef3c7;--gold:#b45309;--hero-top:#fde68a;--hero-via:#fed7aa;--hero-bot:#fef3c7;--quote-bg:#fffbeb;--shadow:rgba(180,83,9,.12)}
+body.theme-dawn{--bg:#f7f0ea;--text:#3a2f33;--text2:#8a7078;--card:#fdf8f4;--border:#ead9d3;--accent:#be123c;--accent2:#0e7490;--accent3:#b45309;--soft:#fce7f3;--gold:#b45309;--hero-top:#fecdd3;--hero-via:#fbcfe8;--hero-bot:#fde68a;--quote-bg:#fff1f2;--shadow:rgba(190,18,60,.1)}
+body.theme-lavender{--bg:#f5f3f9;--text:#363044;--text2:#837897;--card:#fcfbfe;--border:#e4def0;--accent:#7c3aed;--accent2:#0891b2;--accent3:#be185d;--soft:#ede9fe;--gold:#a16207;--hero-top:#ddd6fe;--hero-via:#e9d5ff;--hero-bot:#f5f3ff;--quote-bg:#f5f3ff;--shadow:rgba(124,58,237,.1)}
+body.theme-slate{--bg:#f2f4f5;--text:#333a3d;--text2:#79848a;--card:#fbfcfc;--border:#dfe4e6;--accent:#475569;--accent2:#0369a1;--accent3:#be123c;--soft:#f1f5f9;--gold:#a16207;--hero-top:#e2e8f0;--hero-via:#cbd5e1;--hero-bot:#f1f5f9;--quote-bg:#f8fafc;--shadow:rgba(71,85,105,.1)}
+body.theme-rose{--bg:#faf1f2;--text:#432d31;--text2:#96747b;--card:#fffafa;--border:#efd8dc;--accent:#be123c;--accent2:#1d4ed8;--accent3:#b45309;--soft:#fce7f3;--gold:#a16207;--hero-top:#fecdd3;--hero-via:#fda4af;--hero-bot:#fce7f3;--quote-bg:#fff1f2;--shadow:rgba(190,18,60,.1)}
+body.theme-sakura{--bg:#fdf4f6;--text:#47333a;--text2:#9c7f89;--card:#fffafb;--border:#f3dee4;--accent:#db2777;--accent2:#0d9488;--accent3:#c2410c;--soft:#fce7f3;--gold:#b45309;--hero-top:#fbcfe8;--hero-via:#f9a8d4;--hero-bot:#fce7f3;--quote-bg:#fdf2f8;--shadow:rgba(219,39,119,.1)}
+body.theme-forest{--bg:#f1f5f0;--text:#293629;--text2:#6b7d68;--card:#fafcf9;--border:#dbe5d6;--accent:#15803d;--accent2:#0369a1;--accent3:#b45309;--soft:#dcfce7;--gold:#a16207;--hero-top:#bbf7d0;--hero-via:#d9f99d;--hero-bot:#dcfce7;--quote-bg:#f0fdf4;--shadow:rgba(21,128,61,.1)}
+body.theme-ocean{--bg:#eff5f8;--text:#243842;--text2:#647e8b;--card:#f9fcfe;--border:#d7e4eb;--accent:#0369a1;--accent2:#0e7490;--accent3:#be123c;--soft:#e0f2fe;--gold:#a16207;--hero-top:#bae6fd;--hero-via:#7dd3fc;--hero-bot:#e0f2fe;--quote-bg:#f0f9ff;--shadow:rgba(3,105,161,.1)}
+body.theme-sand{--bg:#f8f3ea;--text:#413628;--text2:#8f8067;--card:#fdfaf3;--border:#eadfca;--accent:#b45309;--accent2:#0e7490;--accent3:#7c2d12;--soft:#fef3c7;--gold:#b45309;--hero-top:#fde68a;--hero-via:#fcd34d;--hero-bot:#fef9c3;--quote-bg:#fffbeb;--shadow:rgba(180,83,9,.12)}
+body.theme-night{--bg:#1d2130;--text:#e8e6e1;--text2:#9aa0b0;--card:#262b3d;--border:#3a4157;--accent:#60a5fa;--accent2:#34d399;--accent3:#fbbf24;--soft:#2c3247;--gold:#fbbf24;--hero-top:#1e293b;--hero-via:#0f172a;--hero-bot:#1e1b4b;--quote-bg:#1f2937;--shadow:rgba(0,0,0,.4)}
+body.theme-charcoal{--bg:#212121;--text:#ebe7e0;--text2:#a09a90;--card:#2b2b2b;--border:#404040;--accent:#60a5fa;--accent2:#4ade80;--accent3:#fb923c;--soft:#303030;--gold:#fbbf24;--hero-top:#292524;--hero-via:#1c1917;--hero-bot:#27272a;--quote-bg:#292524;--shadow:rgba(0,0,0,.45)}
+body.theme-deepsea{--bg:#12222b;--text:#e2ece9;--text2:#8ba8a4;--card:#1a2f3a;--border:#2c4652;--accent:#38bdf8;--accent2:#2dd4bf;--accent3:#fcd34d;--soft:#1e3540;--gold:#fcd34d;--hero-top:#082f49;--hero-via:#0c4a6e;--hero-bot:#164e63;--quote-bg:#0c4a6e;--shadow:rgba(0,0,0,.45)}
+
+/* ============ 基础 ============ */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden}
+svg{max-width:100%}
+body{
+  background-color:var(--bg);
+  color:var(--text);
+  font-family:'Noto Serif SC',serif;
+  line-height:1.9;
+  transition:background .6s,color .6s;
+  overflow-x:hidden;
+  -webkit-text-size-adjust:100%;text-size-adjust:100%;
+  background-image:radial-gradient(var(--border) 1px,transparent 1px);
+  background-size:24px 24px;
+  background-attachment:fixed;
+}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);opacity:.55;pointer-events:none;z-index:0}
+main,header,footer,.theme-select,.markmap-box{position:relative;z-index:1}
+
+.theme-select{position:fixed;top:16px;right:16px;z-index:999;padding:8px 14px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text);font-family:'Noto Serif SC',serif;font-size:13px;cursor:pointer;box-shadow:0 4px 14px var(--shadow);outline:none;transition:all .4s}
+.theme-select:hover{border-color:var(--accent)}
+
+/* ============ 首屏 ============ */
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;overflow:hidden;padding:60px 24px;background:linear-gradient(160deg,var(--hero-top) 0%,var(--hero-via) 50%,var(--hero-bot) 100%)}
+.hero::before{
+  content:'';position:absolute;top:0;left:0;right:0;bottom:0;z-index:0;
+  background-image:radial-gradient(rgba(122,86,26,.14) 1.2px,transparent 1.2px);
+  background-size:26px 26px;
+  mask-image:radial-gradient(ellipse at center,#000 30%,transparent 78%);
+  -webkit-mask-image:radial-gradient(ellipse at center,#000 30%,transparent 78%);
+}
+.hero *{position:relative;z-index:2}
+.hero-series{font-size:13px;letter-spacing:.6em;text-indent:.6em;color:rgba(90,64,20,.55);margin-bottom:30px;font-variant:small-caps}
+.book-title{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(2.2rem,7vw,3.8rem);letter-spacing:.22em;text-indent:.22em;color:#3a2c15;font-weight:400;text-shadow:0 4px 26px rgba(255,252,240,.8);margin-bottom:26px}
+
+/* 复利曲线 */
+.curve-hero{width:min(76vw,430px);margin:0 auto 24px}
+.curve-hero svg{width:100%;height:auto;overflow:visible}
+.cvh-axis{stroke:rgba(90,64,20,.35);stroke-width:1}
+.cvh-dash{stroke:rgba(90,64,20,.4);stroke-width:1.4;stroke-dasharray:5 6;fill:none}
+.cvh-line{stroke:var(--accent);stroke-width:3;fill:none;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:draw-curve 2.6s .4s ease-out forwards}
+@keyframes draw-curve{to{stroke-dashoffset:0}}
+.cvh-dot{fill:var(--gold);animation:end-glow 2.4s 2.8s ease-in-out infinite}
+@keyframes end-glow{0%,100%{opacity:1;r:5}50%{opacity:.55;r:8}}
+.cvh-txt{fill:rgba(90,64,20,.62);font-family:'Noto Serif SC',serif;font-size:11px}
+.cvh-big{fill:var(--accent);font-family:'ZCOOL XiaoWei',serif;font-size:20px;font-weight:700}
+
+/* 1.01 公式行 */
+.growth-formula{display:flex;justify-content:center;align-items:baseline;gap:26px;flex-wrap:wrap;margin-bottom:22px;font-family:'ZCOOL XiaoWei',serif}
+.gf-item{line-height:1.25}
+.gf-item .fx{font-size:clamp(16px,2.6vw,21px);letter-spacing:.04em;display:block}
+.gf-item .fy{font-size:clamp(26px,4.6vw,40px);display:block;margin-top:2px}
+.gf-up{color:var(--accent)}
+.gf-up .fy{font-weight:700;text-shadow:0 3px 18px rgba(176,121,31,.35)}
+.gf-down{color:rgba(90,64,20,.42)}
+.gf-sep{color:rgba(90,64,20,.35);font-size:22px;align-self:center}
+
+.hero-sub{font-size:clamp(14px,2.2vw,17px);letter-spacing:.18em;color:rgba(90,64,20,.78);margin-bottom:12px}
+.hero-author{font-size:13.5px;letter-spacing:.14em;color:rgba(90,64,20,.5);margin-top:4px}
+.hero-line{width:1px;height:50px;background:linear-gradient(180deg,rgba(90,64,20,0),rgba(90,64,20,.5));margin:32px auto 0}
+
+/* +1% 漂浮粒子 */
+.pct{position:absolute;z-index:1;font-family:'ZCOOL XiaoWei',serif;color:rgba(176,121,31,.5);font-size:15px;letter-spacing:.06em;animation:rise 7s linear infinite;pointer-events:none}
+.pct.p1{left:14%;bottom:16%;animation-delay:0s}
+.pct.p2{left:80%;bottom:22%;animation-delay:2.4s;font-size:13px}
+.pct.p3{left:26%;bottom:8%;animation-delay:4.6s;font-size:12px}
+.pct.p4{left:68%;bottom:10%;animation-delay:1.2s;font-size:17px}
+@keyframes rise{0%{transform:translateY(0);opacity:0}12%{opacity:.85}85%{opacity:.25}100%{transform:translateY(-46vh);opacity:0}}
+
+/* ============ 章节 ============ */
+main{position:relative;max-width:900px;margin:0 auto;padding:0 26px}
+.chapter{padding:84px 0 30px;opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform .9s ease}
+.chapter.visible{opacity:1;transform:none}
+.chapter-static{padding:60px 0 30px}
+
+.ch-head{display:flex;align-items:flex-start;gap:18px;margin-bottom:28px}
+.badge{flex:none;width:52px;height:52px;border:1.5px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--card);color:var(--accent);font-family:'ZCOOL XiaoWei',serif;font-size:20px;box-shadow:0 4px 16px var(--shadow);position:relative}
+.badge::before{content:attr(data-no);position:absolute;top:-10px;right:-10px;background:var(--accent);color:#fff;font-size:10px;padding:2px 7px;border-radius:10px;letter-spacing:.1em;font-family:'Noto Serif SC',serif}
+.ch-kicker{font-size:12px;letter-spacing:.4em;text-indent:.4em;color:var(--text2);margin-bottom:4px;text-transform:uppercase;font-variant:small-caps}
+.ch-title{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(22px,4.2vw,30px);letter-spacing:.06em;line-height:1.3}
+.ch-lead{color:var(--text2);font-size:15px;margin-bottom:22px}
+.chapter p,.chapter-static p{margin-bottom:16px}
+.center{text-align:center}
+
+.quote-block{background:var(--quote-bg);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:22px 26px;margin:26px 0;font-weight:600;font-size:16px;letter-spacing:.03em}
+.quote-block .small{font-weight:400;font-size:13px;color:var(--text2);margin-top:8px;display:block}
+
+/* 复利数字卡 */
+.compound-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:36px 26px;margin:28px 0;box-shadow:0 6px 22px var(--shadow);text-align:center;position:relative;overflow:hidden}
+.compound-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent2),var(--gold),var(--accent3))}
+.cc-row{display:flex;justify-content:center;align-items:baseline;gap:34px;flex-wrap:wrap}
+.cc-item .cc-fx{font-family:'Noto Serif SC',serif;font-size:clamp(15px,2.4vw,18px);letter-spacing:.06em;color:var(--text2);display:block}
+.cc-item .cc-num{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(42px,8vw,64px);line-height:1.15;display:block;margin-top:6px}
+.cc-up .cc-num{color:var(--accent);font-weight:700}
+.cc-down .cc-num{color:var(--text2);opacity:.55}
+.cc-note{margin-top:18px;font-size:13.5px;color:var(--text2);letter-spacing:.05em}
+
+/* 图示卡 */
+.figure-wrap{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 20px 16px;margin:26px 0;box-shadow:0 4px 16px var(--shadow)}
+.figure-wrap h5{font-family:'ZCOOL XiaoWei',serif;font-size:15px;letter-spacing:.1em;color:var(--text2);text-align:center;margin-bottom:12px}
+.figure-wrap svg{display:block;width:100%;height:auto;margin:0 auto}
+.fig-txt{fill:var(--text2);font-family:'Noto Serif SC',serif}
+.fig-acc{fill:var(--accent)}
+.fig-acc2{fill:var(--accent2)}
+.fig-acc3{fill:var(--accent3)}
+.fig-cap{text-align:center;font-size:12.5px;color:var(--text2);margin-top:10px}
+
+/* 习惯循环 */
+.loop-wrap{max-width:430px;margin:28px auto}
+.loop-svg .orbit{fill:none;stroke:var(--border);stroke-width:2;stroke-dasharray:6 9;animation:orbit-spin 46s linear infinite;transform-origin:180px 180px}
+@keyframes orbit-spin{to{transform:rotate(360deg)}}
+.loop-node{stroke-width:2}
+.loop-txt{font-family:'ZCOOL XiaoWei',serif;font-size:17px;text-anchor:middle}
+.loop-sub{font-family:'Noto Serif SC',serif;font-size:9px;text-anchor:middle;letter-spacing:.12em;opacity:.65}
+.loop-step-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px}
+@media(max-width:640px){.loop-step-row{grid-template-columns:repeat(2,1fr)}}
+.loop-step{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 10px;text-align:center;box-shadow:0 3px 10px var(--shadow)}
+.loop-step .ico{font-size:22px;display:block;margin-bottom:6px}
+.loop-step .k{font-family:'ZCOOL XiaoWei',serif;font-size:14.5px;display:block}
+.loop-step .v{font-size:12px;color:var(--text2);display:block;margin-top:4px;line-height:1.6}
+
+/* 对比卡 */
+.vs-wrap{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:26px 0}
+@media(max-width:640px){.vs-wrap{grid-template-columns:1fr}}
+.vs-card{border-radius:14px;padding:24px 22px;position:relative}
+.vs-card h4{font-family:'ZCOOL XiaoWei',serif;font-size:17.5px;letter-spacing:.08em;margin-bottom:14px}
+.vs-card ul{list-style:none}
+.vs-card li{padding:8px 0;border-bottom:1px dashed var(--border);font-size:14px}
+.vs-card li:last-child{border-bottom:none}
+.vs-old{background:var(--card);border:1px dashed var(--border);color:var(--text2)}
+.vs-old h4{color:var(--text2)}
+.vs-new{background:var(--card);border:1px solid var(--accent);box-shadow:0 6px 22px var(--shadow)}
+.vs-new h4{color:var(--accent)}
+.vs-new li{color:var(--text);font-weight:600}
+.vs-tag{position:absolute;top:-11px;left:18px;background:var(--bg);padding:0 10px;font-size:12px;letter-spacing:.22em;color:var(--text2);font-variant:small-caps}
+
+/* 定律卡 */
+.law-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:32px 28px;margin-bottom:24px;box-shadow:0 6px 24px var(--shadow);position:relative;overflow:hidden}
+.law-card::before{content:'';position:absolute;top:0;left:0;width:6px;height:100%}
+.law-card.l1::before{background:#0e7490}
+.law-card.l2::before{background:#be185d}
+.law-card.l3::before{background:#4a7c59}
+.law-card.l4::before{background:#b0791f}
+.law-head{display:flex;align-items:center;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+.law-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;flex:none}
+.law-card.l1 .law-icon{background:#0e7490}
+.law-card.l2 .law-icon{background:#be185d}
+.law-card.l3 .law-icon{background:#4a7c59}
+.law-card.l4 .law-icon{background:#b0791f}
+.law-cn{font-family:'ZCOOL XiaoWei',serif;font-size:14px;letter-spacing:.3em;display:block}
+.law-card.l1 .law-cn{color:#0e7490}
+.law-card.l2 .law-cn{color:#be185d}
+.law-card.l3 .law-cn{color:#4a7c59}
+.law-card.l4 .law-cn{color:#b0791f}
+.law-name{font-family:'ZCOOL XiaoWei',serif;font-size:21px;letter-spacing:.06em;line-height:1.3}
+.law-en{font-size:12px;color:var(--text2);letter-spacing:.14em}
+.law-list{list-style:none;margin-top:6px}
+.law-list li{padding:12px 0;border-bottom:1px dashed var(--border);font-size:15px}
+.law-list li:last-child{border-bottom:none}
+.law-list strong{color:var(--accent)}
+
+/* 公式小卡 */
+.fx-card{background:var(--quote-bg);border:1px dashed var(--accent);border-radius:12px;padding:18px 22px;margin:14px 0;text-align:center}
+.fx-card .fx-line{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(17px,3vw,21px);letter-spacing:.08em;color:var(--accent)}
+.fx-card .fx-eg{font-size:13px;color:var(--text2);margin-top:8px}
+
+/* 2分钟大字卡 */
+.two-min{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:38px 26px;margin:26px 0;box-shadow:0 6px 24px var(--shadow);text-align:center}
+.tm-big{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(46px,9vw,72px);color:var(--accent2);line-height:1.1;font-weight:700}
+.tm-big small{font-size:.42em;letter-spacing:.2em}
+.tm-eg{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:18px}
+.tm-eg span{background:var(--soft);border:1px solid var(--border);border-radius:20px;padding:7px 18px;font-size:13.5px;color:var(--text)}
+
+/* 打卡条 */
+.tracker{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:20px 0}
+.tk{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--accent2)}
+.tk.on{background:var(--soft);border-color:var(--accent2)}
+.tk.miss{border-style:dashed;color:var(--text2)}
+
+/* 反转对照表 */
+.rev-row{display:grid;grid-template-columns:120px 1fr 1fr;gap:0;background:var(--card);border:1px solid var(--border);border-radius:14px;margin-bottom:14px;overflow:hidden;box-shadow:0 3px 12px var(--shadow)}
+@media(max-width:640px){.rev-row{grid-template-columns:1fr}}
+.rev-law{background:var(--soft);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px 12px;text-align:center}
+.rev-law .ico{font-size:22px;display:block;margin-bottom:6px}
+.rev-law .nm{font-family:'ZCOOL XiaoWei',serif;font-size:15px}
+.rev-cell{padding:16px 20px;border-left:1px dashed var(--border);font-size:14px}
+@media(max-width:640px){.rev-cell{border-left:none;border-top:1px dashed var(--border)}}
+.rev-cell .tag{display:inline-block;font-size:11.5px;letter-spacing:.14em;padding:2px 10px;border-radius:10px;margin-bottom:8px}
+.tag-good{background:rgba(74,124,89,.14);color:var(--accent2)}
+.tag-bad{background:rgba(179,84,30,.14);color:var(--accent3)}
+
+/* 身份气泡 + 选票 */
+.bubble-row{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;margin:26px 0}
+.say-bubble{max-width:300px;border-radius:16px;padding:20px 24px;position:relative;font-size:16.5px;font-weight:600;letter-spacing:.04em}
+.say-bubble .who{display:block;font-size:12px;font-weight:400;color:var(--text2);margin-bottom:8px;letter-spacing:.12em}
+.say-dim{background:var(--card);border:1px dashed var(--border);color:var(--text2)}
+.say-lit{background:var(--card);border:1.5px solid var(--accent);color:var(--accent);box-shadow:0 6px 20px var(--shadow)}
+.vote-card{background:linear-gradient(150deg,var(--card),var(--soft));border:1px solid var(--accent);border-radius:18px;padding:40px 30px;margin:28px 0;text-align:center;box-shadow:0 8px 28px var(--shadow);position:relative}
+.vote-card::before{content:'✦';position:absolute;top:14px;left:20px;color:var(--gold);opacity:.6}
+.vote-card::after{content:'✦';position:absolute;bottom:14px;right:20px;color:var(--gold);opacity:.6}
+.vote-txt{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(20px,4vw,27px);letter-spacing:.1em;line-height:1.8;color:var(--text)}
+.vote-txt em{font-style:normal;color:var(--accent)}
+.vote-sub{margin-top:12px;font-size:13px;color:var(--text2);letter-spacing:.1em}
+
+/* 链条 */
+.chain-wrap{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px 22px;margin:24px 0;box-shadow:0 4px 16px var(--shadow)}
+.chain-title{font-family:'ZCOOL XiaoWei',serif;font-size:15px;letter-spacing:.1em;color:var(--text2);text-align:center;margin-bottom:16px}
+.chain{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.chain i{width:22px;height:22px;border-radius:50%;background:var(--soft);border:1.5px solid var(--accent2);display:flex;align-items:center;justify-content:center;font-style:normal;font-size:9px;color:var(--accent2)}
+.chain i.broken{background:rgba(179,84,30,.12);border:1.5px dashed var(--accent3);color:var(--accent3)}
+.chain-note{text-align:center;font-size:13px;color:var(--text2);margin-top:14px}
+.chain-note em{font-style:normal;color:var(--accent3);font-weight:600}
+
+/* 进阶四卡 */
+.adv-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:26px 0}
+@media(max-width:640px){.adv-grid{grid-template-columns:1fr}}
+.adv-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px 22px;box-shadow:0 4px 16px var(--shadow)}
+.adv-card .ico{font-size:26px;display:block;margin-bottom:10px}
+.adv-card h4{font-family:'ZCOOL XiaoWei',serif;font-size:17px;letter-spacing:.06em;margin-bottom:10px;color:var(--accent)}
+.adv-card p{font-size:14px;margin-bottom:0}
+
+/* 人物卡 */
+.people-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:26px 0}
+@media(max-width:640px){.people-row{grid-template-columns:1fr}}
+.people-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px 20px;text-align:center;box-shadow:0 4px 16px var(--shadow)}
+.people-card .ico{font-size:32px;display:block;margin-bottom:10px}
+.people-card h4{font-family:'ZCOOL XiaoWei',serif;font-size:16.5px;letter-spacing:.06em;margin-bottom:8px}
+.people-card p{font-size:13.5px;color:var(--text2);margin-bottom:0;line-height:1.8}
+
+/* 大引言 */
+.big-quote{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(18px,3.4vw,24px);line-height:2.2;letter-spacing:.08em;text-align:center;color:var(--text);background:var(--card);border:1px solid var(--border);border-radius:18px;padding:44px 30px;margin:30px 0;box-shadow:0 6px 26px var(--shadow)}
+.big-quote em{font-style:normal;color:var(--accent)}
+
+/* 今晚行动卡 */
+.tonight{background:var(--card);border:1px solid var(--accent);border-radius:20px;padding:44px 34px;margin:34px 0 10px;box-shadow:0 10px 34px var(--shadow)}
+.tonight h3{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(19px,3.4vw,24px);letter-spacing:.1em;text-align:center;color:var(--accent)}
+.tonight .sub{text-align:center;font-size:11.5px;letter-spacing:.3em;color:var(--text2);margin:8px 0 26px;font-variant:small-caps}
+.tonight-step{display:flex;gap:16px;margin-bottom:20px;align-items:flex-start}
+.tonight-step .n{flex:none;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;margin-top:5px;font-family:'ZCOOL XiaoWei',serif}
+.tonight-step p{font-size:15px;margin:0}
+.tonight-step .hint{display:block;font-size:12.5px;color:var(--text2);margin-top:2px}
+.end-line{text-align:center;color:var(--text2);font-size:14px;margin-top:26px;line-height:2.1}
+
+/* ============ 思维导图 ============ */
+.markmap-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;box-shadow:0 6px 24px var(--shadow);margin-top:20px;width:100%;max-width:100%;overflow:hidden}
+.markmap{min-height:560px;width:100%;max-width:100%;overflow:hidden}
+.markmap svg{display:block;width:100%;max-width:100%;height:auto}
+.markmap-foreign{color:var(--text)!important}
+.markmap-foreign *{color:inherit}
+
+/* 页脚 */
+footer{padding:90px 26px 70px;text-align:center;position:relative;z-index:1;max-width:900px;margin:0 auto}
+.goodnight{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(30px,6vw,44px);letter-spacing:.5em;text-indent:.5em;margin-bottom:34px;color:var(--text)}
+.wish{max-width:620px;margin:0 auto;color:var(--text2);font-size:15px;line-height:2.2}
+.wish .moon{display:block;margin:30px auto 0;width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 34% 30%,var(--gold),transparent 72%),var(--soft);border:1px solid var(--border);box-shadow:0 0 26px var(--shadow)}
+.src-note{margin-top:44px;font-size:12px;letter-spacing:.3em;color:var(--text2);opacity:.6}
+
+/* 移动端适配 */
+@media (max-width:768px){
+  body{background-attachment:scroll}
+  .theme-select{top:10px;right:10px;padding:6px 12px;font-size:12px}
+  .tonight{padding:34px 22px}
+}
+</style>
+</head>
+<body class="theme-default">
+<script>!function(){var t=["theme-default","theme-mint","theme-cloud","theme-bamboo","theme-amber","theme-dawn","theme-lavender","theme-slate","theme-rose","theme-sakura","theme-forest","theme-ocean","theme-sand","theme-night","theme-charcoal","theme-deepsea"];document.body.className=t[Math.floor(Math.random()*t.length)]}()</script>
+
+<select class="theme-select" onchange="document.body.className=this.value">
+  <option value="theme-default">📒 手账</option>
+  <option value="theme-mint">🌿 薄荷</option>
+  <option value="theme-cloud">☁️ 云朵</option>
+  <option value="theme-bamboo">🎋 竹青</option>
+  <option value="theme-amber">🍯 琥珀</option>
+  <option value="theme-dawn">🌅 破晓</option>
+  <option value="theme-lavender">🪻 雾紫</option>
+  <option value="theme-slate">🌫 石板</option>
+  <option value="theme-rose">🌹 玫瑰</option>
+  <option value="theme-sakura">🌸 樱粉</option>
+  <option value="theme-forest">🌲 森林</option>
+  <option value="theme-ocean">🌊 海洋</option>
+  <option value="theme-sand">🏜 沙丘</option>
+  <option value="theme-night">🌙 夜幕</option>
+  <option value="theme-charcoal">🖤 炭墨</option>
+  <option value="theme-deepsea">🌌 深海</option>
+</select>
+
+<header class="hero">
+  <span class="pct p1">+1%</span><span class="pct p2">+1%</span><span class="pct p3">+1%</span><span class="pct p4">+1%</span>
+  <p class="hero-series">30 分钟读透一本书</p>
+  <h1 class="book-title">掌控习惯</h1>
+
+  <div class="curve-hero">
+    <svg viewBox="0 0 430 210" preserveAspectRatio="xMidYMid meet">
+      <line class="cvh-axis" x1="36" y1="180" x2="410" y2="180"/>
+      <line class="cvh-axis" x1="36" y1="180" x2="36" y2="16"/>
+      <path class="cvh-dash" d="M36,176 L400,52"/>
+      <path class="cvh-line" pathLength="1" d="M36,178 C150,176 250,168 300,128 C340,96 372,52 400,20"/>
+      <circle class="cvh-dot" cx="400" cy="20" r="5"/>
+      <text class="cvh-txt" x="140" y="198">每一天的重复</text>
+      <text class="cvh-txt" x="396" y="206" text-anchor="end">时间</text>
+      <text class="cvh-big" x="396" y="44" text-anchor="end">×37.78</text>
+      <text class="cvh-txt" x="46" y="30">习惯的复利</text>
+    </svg>
+  </div>
+
+  <div class="growth-formula">
+    <div class="gf-item gf-up"><span class="fx">1.01³⁶⁵ =</span><span class="fy">37.78</span></div>
+    <span class="gf-sep">·</span>
+    <div class="gf-item gf-down"><span class="fx">0.99³⁶⁵ =</span><span class="fy">0.03</span></div>
+  </div>
+
+  <p class="hero-sub">每天进步一点点，一年后看见惊人的变化</p>
+  <p class="hero-author">詹姆斯·克利尔 · 美国习惯研究专家</p>
+  <div class="hero-line"></div>
+</header>
+
+<main>
+
+<!-- 壹 · 引子 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·01">1</div>
+    <div><div class="ch-kicker">引子</div><h2 class="ch-title">为什么立下的 flag 总是倒下</h2></div>
+  </div>
+  <p>先问问大家：你们是不是也经常立 flag，结果没几天就打脸了？有没有想过，为什么有些人能轻轻松松实现目标、走向人生巅峰，而有些人却总在原地踏步、干啥都不成？</p>
+  <p>这里面，习惯起了大作用。研究显示，人有 <strong>40% 到 50% 的行为，都取决于无意识的习惯</strong>。可以说，习惯就是一只无形的大手，在悄悄地掌控着我们的生活。</p>
+  <div class="quote-block">我们常常高估某个决定性时刻的影响力，却严重低估每日微小改进所蕴含的巨大价值。<span class="small">—— 詹姆斯·克利尔《掌控习惯》</span></div>
+  <p>在追求成功的道路上，我们总是渴望一蹴而就，期待某个关键时刻的到来能让我们瞬间实现目标。无论是减肥、创业，还是写书，我们往往给自己施加巨大压力，试图做出惊天动地的改变。然而事实却并非如此——真正改变人生的，是那些不起眼的日常习惯。</p>
+</section>
+
+<!-- 贰 · 习惯的惊人力量 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·02">2</div>
+    <div><div class="ch-kicker">习惯的惊人力量</div><h2 class="ch-title">习惯，是自我提高的复利</h2></div>
+  </div>
+  <p>克利尔在书中明确指出：<strong>习惯实则是自我提高的复利</strong>。它的效果并非立竿见影，而是随着不断重复，如同滚雪球一般逐渐倍增——刚开始只是个小雪球，越滚越大，最后变成一个巨大的雪球。</p>
+
+  <div class="compound-card">
+    <div class="cc-row">
+      <div class="cc-item cc-up"><span class="cc-fx">每天进步 1%，一年后</span><span class="cc-num" data-count="37.78">0.00</span></div>
+      <div class="cc-item cc-down"><span class="cc-fx">每天退步 1%，一年后</span><span class="cc-num">0.03</span></div>
+    </div>
+    <p class="cc-note">1.01³⁶⁵ ≈ 37.78 · 0.99³⁶⁵ ≈ 0.03 —— 微小的差距，被时间无限放大</p>
+  </div>
+
+  <p>一个小小的习惯改变，可能当时看着没什么，但时间一长，就能带来超级大的变化。反过来，一点点坏习惯的累积，也足以让人偏离原本的方向。</p>
+
+  <div class="figure-wrap">
+    <h5>3.5 度的偏差，会把你带去哪里</h5>
+    <svg viewBox="0 0 560 250" preserveAspectRatio="xMidYMid meet">
+      <text x="30" y="118" font-size="22">✈️</text>
+      <path d="M64,128 L510,58" stroke="var(--accent2)" stroke-width="2.5" fill="none"/>
+      <path d="M64,128 L510,198" stroke="var(--accent3)" stroke-width="2.5" stroke-dasharray="7 7" fill="none"/>
+      <path d="M150,114 A90,90 0 0 1 150,142" stroke="var(--text2)" stroke-width="1.2" fill="none" opacity=".6"/>
+      <text class="fig-txt fig-acc3" x="166" y="133" font-size="11">仅 3.5°</text>
+      <circle cx="510" cy="58" r="5" fill="var(--accent2)"/>
+      <circle cx="510" cy="198" r="5" fill="var(--accent3)"/>
+      <text class="fig-txt fig-acc2" x="502" y="44" font-size="13" text-anchor="end">纽约 · 原本的目的地</text>
+      <text class="fig-txt fig-acc3" x="502" y="222" font-size="13" text-anchor="end">华盛顿 · 差了好几百英里</text>
+      <text class="fig-txt" x="64" y="158" font-size="11">洛杉矶起飞</text>
+    </svg>
+    <p class="fig-cap">起飞时航向只朝南微调了 3.5 度，降落时就到了完全不同的城市。</p>
+  </div>
+
+  <p>这就好比我们的生活：日常习惯稍微有点改变，人生道路就能通向完全不同的终点。</p>
+
+  <p>以健身为例，假设你原本毫无运动习惯，从今天开始每天坚持做五个俯卧撑。在最初的几天甚至几周内，你可能看不到身体有任何明显变化——体重没有减轻，肌肉也没有明显增长，你或许会沮丧，怀疑自己的努力付诸东流。但请不要忽视，每一次俯卧撑都在不知不觉中锻炼你的肌肉力量、提升你的耐力。坚持几个月甚至几年后，你会惊讶地发现：身体素质极大改善，能轻松完成更多高难度动作，抵抗力也增强了。这就是习惯的力量——它在悄无声息中改变着我们。</p>
+  <p>再比如阅读，每天抽出 15 分钟读一本好书，看似微不足道，然而日复一日，你会发现自己的知识储备在不断增加，思维方式也在逐渐转变。一年下来，你可能读完了十几本甚至几十本书，这些知识如同养分滋养着你的心灵，让你面对生活中的各种问题时更加从容不迫。</p>
+
+  <div class="figure-wrap">
+    <h5>失望之谷：为什么我们总在临界点前放弃</h5>
+    <svg viewBox="0 0 560 260" preserveAspectRatio="xMidYMid meet">
+      <line x1="56" y1="220" x2="524" y2="220" stroke="var(--text2)" stroke-width="1" opacity=".5"/>
+      <line x1="56" y1="220" x2="56" y2="26" stroke="var(--text2)" stroke-width="1" opacity=".5"/>
+      <path d="M56,214 L510,66" stroke="var(--text2)" stroke-width="1.6" stroke-dasharray="6 7" fill="none" opacity=".55"/>
+      <path d="M56,216 C180,214 260,208 330,170 C390,138 450,80 510,34" stroke="var(--accent)" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <circle cx="330" cy="170" r="5.5" fill="var(--gold)"/>
+      <line x1="330" y1="170" x2="330" y2="220" stroke="var(--gold)" stroke-width="1.2" stroke-dasharray="4 5"/>
+      <text class="fig-txt" x="150" y="244" font-size="12">积累期 · 看不见变化，最想放弃</text>
+      <text class="fig-txt fig-acc" x="330" y="150" font-size="12" text-anchor="middle">临界点</text>
+      <text class="fig-txt" x="446" y="66" font-size="12">质的飞跃</text>
+      <text class="fig-txt" x="380" y="112" font-size="11" opacity=".7">期待的直线</text>
+      <text class="fig-txt fig-acc" x="410" y="26" font-size="11">实际的曲线</text>
+    </svg>
+    <p class="fig-cap">习惯的回报曲线总是先平缓、后陡峭。熬过积累期，才能迎来质的飞跃。</p>
+  </div>
+
+  <p>习惯之所以难以改变，一个关键原因是：在习惯养成的初期，它带来的好处往往难以察觉。我们生活在一个快节奏的时代，渴望在短时间内看到成果、获得及时满足，但习惯的养成是一个渐进的过程。最初的阶段就像在黑暗中摸索前行，看不到前方的光亮，很容易让人产生放弃的念头。然而正是这段看似平淡无奇的积累期，为日后的突破奠定了坚实基础——<strong>只有坚持下去，熬过这段艰难时期，我们才能突破临界点，迎来质的飞跃。</strong></p>
+</section>
+
+<!-- 叁 · 身份 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·03">3</div>
+    <div><div class="ch-kicker">改变的方向</div><h2 class="ch-title">先改变身份，再改变行为</h2></div>
+  </div>
+  <p>另一个导致习惯难以改变的重要因素是：我们常常采用错误的方式去改变习惯。许多人把全部注意力集中在想要达到的目标上，例如为了减肥，给自己设定「一个月瘦五斤」的目标，于是每天严格控制饮食、疯狂运动。但这种单纯以目标为导向的方式往往很难持久——一旦短期内没有达到目标，就容易陷入焦虑和沮丧，进而放弃努力。</p>
+
+  <div class="vs-wrap">
+    <div class="vs-card vs-old">
+      <span class="vs-tag">目标导向</span>
+      <h4>盯着结果，容易熄火</h4>
+      <ul>
+        <li>「我要一个月瘦五斤」</li>
+        <li>短期看不到效果就焦虑</li>
+        <li>达成目标后动力消失</li>
+        <li>靠意志力硬撑，难以持久</li>
+      </ul>
+    </div>
+    <div class="vs-card vs-new">
+      <span class="vs-tag">身份导向</span>
+      <h4>成为那样的人</h4>
+      <ul>
+        <li>「我是一个健康生活的人」</li>
+        <li>每次行动都在证明自己</li>
+        <li>行为与自我认知相契合</li>
+        <li>自然而然，无需强迫</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>正确的做法，是培养<strong>基于身份的习惯</strong>。当我们将某种行为与自己的身份认同紧密相连时，会更有动力去坚持。比如当你把自己定义为一个「健康生活的追求者」，那么健康饮食、定期运动就不再是一种痛苦的任务，而是成为了你表达自我身份的一种方式——你会自然而然地选择健康的食物、主动去运动，因为这与你对自己的认知相契合。</p>
+</section>
+
+<!-- 肆 · 习惯循环 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·04">4</div>
+    <div><div class="ch-kicker">底层逻辑</div><h2 class="ch-title">习惯循环：提示 → 渴求 → 反应 → 奖励</h2></div>
+  </div>
+  <p class="ch-lead">那么习惯到底是怎么养成的呢？克利尔告诉我们，习惯的养成可以分成简单的四个步骤：提示、渴求、反应和奖励。这四个步骤就像一条紧密相连的链条，环环相扣，形成一个完整的习惯循环。</p>
+
+  <div class="loop-wrap">
+    <svg class="loop-svg" viewBox="0 0 360 360" preserveAspectRatio="xMidYMid meet">
+      <circle class="orbit" cx="180" cy="180" r="118"/>
+      <circle class="loop-node" cx="180" cy="62" r="40" fill="var(--card)" stroke="#0e7490"/>
+      <text class="loop-txt" x="180" y="60" fill="#0e7490">提示</text>
+      <text class="loop-sub" x="180" y="76" fill="#0e7490">CUE</text>
+      <circle class="loop-node" cx="298" cy="180" r="40" fill="var(--card)" stroke="#be185d"/>
+      <text class="loop-txt" x="298" y="178" fill="#be185d">渴求</text>
+      <text class="loop-sub" x="298" y="194" fill="#be185d">CRAVING</text>
+      <circle class="loop-node" cx="180" cy="298" r="40" fill="var(--card)" stroke="#4a7c59"/>
+      <text class="loop-txt" x="180" y="296" fill="#4a7c59">反应</text>
+      <text class="loop-sub" x="180" y="312" fill="#4a7c59">RESPONSE</text>
+      <circle class="loop-node" cx="62" cy="180" r="40" fill="var(--card)" stroke="#b0791f"/>
+      <text class="loop-txt" x="62" y="178" fill="#b0791f">奖励</text>
+      <text class="loop-sub" x="62" y="194" fill="#b0791f">REWARD</text>
+    </svg>
+  </div>
+
+  <p><strong>提示</strong>就像是一个信号，触发我们的大脑启动某种行为。它是奖励的线索——比如手机屏幕亮了、有新消息提示，就可能触发你拿起手机查看的行为。远古时代，我们的祖先特别留意那些表明食物、水源所在的线索，因为这些线索能帮助他们生存；而现在，我们追求的是金钱、认可、满足感等回报的线索。走在街头，一家咖啡店飘出的浓郁香气就是一个提示，它触发了大脑中的某个开关，让你意识到这里可以享受到一杯美味的咖啡。</p>
+  <p><strong>渴求</strong>是每个习惯背后的动力。我们渴求的不是习惯本身，而是它带来的状态变化——烟民不是真的喜欢抽烟这个动作，而是抽烟带来的解脱感；疲惫时渴求休息，饥饿时渴求食物，孤独时渴求陪伴。很多人喜欢刷短视频，其实是因为它能带来及时的快乐和放松。每一种渴求，都和改变我们内在状态的强烈愿望有关。</p>
+  <p><strong>反应</strong>就是我们思想上或行动上的实际习惯。它会不会发生，取决于两个因素：我们有多大的动力，以及采取行动的难易程度。想每天跑步，可外面下着大雨、家离公园又远，就很难付诸行动；但若天气晴好、楼下就是公园，再加上减肥的动力十足，去跑步的可能性就大多了。</p>
+  <p><strong>奖励</strong>是每个习惯的最终目标，它有两个作用：一是满足我们的需求，二是让我们记住哪些行为值得重复。跑完步后身体舒服、心情变好，你会觉得跑步很棒，下次还想继续；出色完成项目获得表扬和奖金，你会被激励在今后的工作中更加努力。奖励具有强大的教育意义，它教会我们哪些行为值得在未来继续应用。</p>
+
+  <div class="figure-wrap">
+    <h5>以「起床后喝水」为例</h5>
+    <div class="loop-step-row">
+      <div class="loop-step"><span class="ico">🥛</span><span class="k">提示</span><span class="v">起床看到床头的一杯水</span></div>
+      <div class="loop-step"><span class="ico">💧</span><span class="k">渴求</span><span class="v">意识到需要补充水分</span></div>
+      <div class="loop-step"><span class="ico">🤲</span><span class="k">反应</span><span class="v">伸手拿起杯子喝水</span></div>
+      <div class="loop-step"><span class="ico">✨</span><span class="k">奖励</span><span class="v">身体清爽，精神一振</span></div>
+    </div>
+    <p class="fig-cap">经过多次重复，一睁眼看到水就会自然拿起杯子——习惯就这样形成了。</p>
+  </div>
+
+  <p>了解了这个底层逻辑，我们就能更好地理解自己的行为，也能更有针对性地培养好习惯、戒掉坏习惯。那具体该怎么做呢？接下来就是克利尔总结出的<strong>培养习惯的四大定律</strong>。</p>
+</section>
+
+<!-- 伍 · 第一定律 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·05">5</div>
+    <div><div class="ch-kicker">四大定律 · 壹</div><h2 class="ch-title">让它显而易见</h2></div>
+  </div>
+  <p class="ch-lead">许多人决心培养某个好习惯，却总是坚持不下来，一个重要原因就是：我们没有让习惯变得显而易见。只是心里想着要做什么，却没有具体的计划和行动，很容易就把想培养的习惯忽略掉了。比如想多读书，却从来没明确说过每天什么时候读、读多长时间、在哪里读——那这个习惯就很难养成。</p>
+
+  <div class="law-card l1">
+    <div class="law-head">
+      <div class="law-icon">👁</div>
+      <div><span class="law-cn">第一定律</span><span class="law-name">让它显而易见</span><span class="law-en">MAKE IT OBVIOUS</span></div>
+    </div>
+    <ul class="law-list">
+      <li><strong>写下执行意图</strong>：明确规定在何种情况下采取何种行动，把模糊的愿望变成清晰的指令。</li>
+      <li><strong>习惯叠加</strong>：利用行为的关联性，把新习惯绑定在已有的旧习惯之后。</li>
+      <li><strong>改变环境</strong>：创造鲜明的视觉提示，让好习惯的线索无处不在。</li>
+    </ul>
+  </div>
+
+  <div class="fx-card">
+    <div class="fx-line">当 X 情况出现时，我将执行 Y 反应</div>
+    <div class="fx-eg">把「我要多读书」→ 变成「每天晚饭后八点，我在书房读 30 分钟书」</div>
+  </div>
+  <p>有研究表明，写下具体计划的人，完成目标的概率比没有计划的人高出 <strong>2~3 倍</strong>。明确了时间、地点和行为，我们就能更清楚地知道自己要做什么，也更容易去执行。</p>
+
+  <div class="fx-card">
+    <div class="fx-line">做完「当前习惯」之后，我将做「新习惯」</div>
+    <div class="fx-eg">每天早上倒完咖啡之后 → 做一分钟的冥想</div>
+  </div>
+  <p>习惯叠加是个特别巧妙的方法：喝咖啡这个旧习惯，就成了冥想这个新习惯的天然提示。你可以根据自己的实际情况，找到适合自己的叠加方式。</p>
+
+  <p>环境对我们的行为影响可太大了，它在不知不觉中塑造着我们的习惯。在人类的各种感觉器官中，视觉占据着主导地位——我们大约有 1000 万个专门用于视觉的感觉接收器。因此，创造鲜明的视觉提示，能够有效地吸引我们的注意力，引导我们采取想要的行动。走进满是垃圾食品的房间，很容易忍不住吃起来；走进布置温馨、摆满书的书房，就更有读书的欲望。所以，<strong>想多锻炼，就把瑜伽垫铺在客厅最显眼的地方；想少吃零食，就把零食藏进柜子里</strong>——创造一个有利于好习惯养成的环境。</p>
+</section>
+
+<!-- 陆 · 第二定律 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·06">6</div>
+    <div><div class="ch-kicker">四大定律 · 贰</div><h2 class="ch-title">让它有吸引力</h2></div>
+  </div>
+  <p class="ch-lead">提示让我们注意到习惯，而真正推动我们行动的，是渴求——期望值越高，动力越强。所以第二定律要做的事，就是把习惯变得有吸引力，让「想做」的感觉先于行动出现。</p>
+
+  <div class="law-card l2">
+    <div class="law-head">
+      <div class="law-icon">🧲</div>
+      <div><span class="law-cn">第二定律</span><span class="law-name">让它有吸引力</span><span class="law-en">MAKE IT ATTRACTIVE</span></div>
+    </div>
+    <ul class="law-list">
+      <li><strong>喜好绑定</strong>：把「需要做的事」和「喜欢做的事」配对，让习惯沾上快乐的滋味。</li>
+      <li><strong>融入社群</strong>：加入已经拥有你想要的习惯的人群，让社会规范推着你走。</li>
+      <li><strong>链接深层价值</strong>：把习惯与你在乎的身份和价值相连，动力才会源源不断。</li>
+    </ul>
+  </div>
+
+  <p>比如你想养成跑步的习惯，却总觉得枯燥，那就试试<strong>喜好绑定</strong>：只在跑步的时候听最爱的音乐或有声书。慢慢地，大脑会把「跑步」和「享受」联系在一起，到了时间反而会期待出门。</p>
+  <p>人是社会性动物，我们会不自觉地模仿周围人的行为。想养成读书的习惯，就加入一个读书社群；想坚持运动，就多和热爱运动的人待在一起——<strong>当你身处一个把某种行为视为常态的群体里，坚持就不再需要费力</strong>。</p>
+  <p>更进一步，把习惯和你的深层价值联系起来。比如学英语，如果只盯着「背单词」会很痛苦，但如果你把它理解为「成为能与世界对话的人」，每一次练习就都有了意义。习惯有了吸引力，坚持就有了底气。</p>
+</section>
+
+<!-- 柒 · 第三定律 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·07">7</div>
+    <div><div class="ch-kicker">四大定律 · 叁</div><h2 class="ch-title">让它简便易行</h2></div>
+  </div>
+  <p class="ch-lead">有吸引力还不够——反应会不会发生，取决于动力与难易程度的较量。第三定律的答案很简单：别想着把习惯变得更「有毅力」，而是把它变得更「容易」。</p>
+
+  <div class="law-card l3">
+    <div class="law-head">
+      <div class="law-icon">⚡</div>
+      <div><span class="law-cn">第三定律</span><span class="law-name">让它简便易行</span><span class="law-en">MAKE IT EASY</span></div>
+    </div>
+    <ul class="law-list">
+      <li><strong>两分钟规则</strong>：任何新习惯，开始时都把它缩减到两分钟以内。</li>
+      <li><strong>最省力法则</strong>：提前布置环境，减少每一步的阻力。</li>
+      <li><strong>重次数，轻时长</strong>：习惯的养成靠的是重复的次数，而不是单次的时长。</li>
+    </ul>
+  </div>
+
+  <div class="two-min">
+    <div class="tm-big">2 <small>分钟规则</small></div>
+    <div class="tm-eg">
+      <span>📖 每天读书 → 先读一页</span>
+      <span>🏃 每天运动 → 先做一个俯卧撑</span>
+      <span>🧘 每天冥想 → 先静坐一分钟</span>
+    </div>
+  </div>
+
+  <p>「每天读 30 分钟书」这个目标听起来就让人有压力，但「读一页」谁都能做到。先把门槛降到不可能失败，让行为发生，再去谈提升。<strong>一个习惯必须先存在，才能被改进。</strong></p>
+  <p>同时还要善用<strong>最省力法则</strong>：想晨跑，前一晚就把运动服摆在床边；想多读书，就把书放在枕头边、沙发上、包里；想少看手机，就把社交软件放到文件夹深处。每一个被消除的小阻力，都在为习惯铺路。</p>
+  <div class="quote-block">很多人纠结「坚持多少天才能养成习惯」，其实关键不在于时间长短，而在于重复的次数。与其追求一次做多久，不如追求常常做一点。<span class="small">次数到位，习惯才会自动化</span></div>
+</section>
+
+<!-- 捌 · 第四定律 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·08">8</div>
+    <div><div class="ch-kicker">四大定律 · 肆</div><h2 class="ch-title">让它令人愉悦</h2></div>
+  </div>
+  <p class="ch-lead">前三定律负责让习惯「发生」，第四定律负责让习惯「重复」。我们的大脑偏爱即时满足——凡是被立刻奖励过的行为，都更容易被记住并重复。</p>
+
+  <div class="law-card l4">
+    <div class="law-head">
+      <div class="law-icon">🎉</div>
+      <div><span class="law-cn">第四定律</span><span class="law-name">让它令人愉悦</span><span class="law-en">MAKE IT SATISFYING</span></div>
+    </div>
+    <ul class="law-list">
+      <li><strong>习惯追踪</strong>：用打卡记录每一次完成，让进步变得可见。</li>
+      <li><strong>即时奖励</strong>：给完成习惯的自己一个小奖励，但别和目标相冲突。</li>
+      <li><strong>问责伙伴</strong>：找人互相监督，让中断习惯的「代价」变得可见。</li>
+    </ul>
+  </div>
+
+  <div class="tracker">
+    <span class="tk on">✓</span><span class="tk on">✓</span><span class="tk on">✓</span><span class="tk on">✓</span><span class="tk on">✓</span><span class="tk on">✓</span><span class="tk on">✓</span>
+  </div>
+  <p class="center" style="color:var(--text2);font-size:13.5px">看着打卡表一天天被填满，本身就是一种令人愉悦的奖励。</p>
+
+  <p>习惯追踪让「我做到了」变得看得见摸得着：日历上的一串对勾、记账本上不断增长的数字，都在给大脑发送「值得重复」的信号。需要注意的是，即时奖励不能和目标冲突——用「运动完看一集喜欢的剧」来奖励是可以的，用「运动完吃一大块蛋糕」来奖励减肥就南辕北辙了。</p>
+  <p>你还可以找一位<strong>问责伙伴</strong>：互相约定、互相打卡。当知道有人在等着看你的成果时，「今天偷个懒」的心理成本会大大增加，坚持也就容易多了。</p>
+</section>
+
+<!-- 玖 · 反转四定律 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·09">9</div>
+    <div><div class="ch-kicker">戒除坏习惯</div><h2 class="ch-title">把四大定律反过来用</h2></div>
+  </div>
+  <p class="ch-lead">四大定律既能培养好习惯，也能戒除坏习惯——只要把它们逐一反转：让提示隐而不见、让渴求变得无趣、让反应难以执行、让奖励落空。</p>
+
+  <div class="rev-row">
+    <div class="rev-law"><span class="ico">👁</span><span class="nm">提示</span></div>
+    <div class="rev-cell"><span class="tag tag-good">养好习惯 · 显而易见</span>把瑜伽垫铺在最显眼的地方</div>
+    <div class="rev-cell"><span class="tag tag-bad">戒坏习惯 · 隐而不见</span>把手机放到另一个房间，眼不见心不烦</div>
+  </div>
+  <div class="rev-row">
+    <div class="rev-law"><span class="ico">🧲</span><span class="nm">渴求</span></div>
+    <div class="rev-cell"><span class="tag tag-good">养好习惯 · 有吸引力</span>跑步绑定最爱的音乐</div>
+    <div class="rev-cell"><span class="tag tag-bad">戒坏习惯 · 毫无吸引力</span>认清熬夜刷手机的代价，再给自己设一个惩罚机制——破例一次就罚跑 5 公里</div>
+  </div>
+  <div class="rev-row">
+    <div class="rev-law"><span class="ico">⚡</span><span class="nm">反应</span></div>
+    <div class="rev-cell"><span class="tag tag-good">养好习惯 · 简便易行</span>书放在枕头边，随时能读</div>
+    <div class="rev-cell"><span class="tag tag-bad">戒坏习惯 · 难以执行</span>卸载游戏、给账号设置复杂密码、把零食放到够不着的高处</div>
+  </div>
+  <div class="rev-row">
+    <div class="rev-law"><span class="ico">🎉</span><span class="nm">奖励</span></div>
+    <div class="rev-cell"><span class="tag tag-good">养好习惯 · 令人愉悦</span>打卡看见自己的进步</div>
+    <div class="rev-cell"><span class="tag tag-bad">戒坏习惯 · 令人失望</span>记录刷完两小时手机后的空虚感，把熬夜的后果写在纸条贴在床头</div>
+  </div>
+
+  <p>坏习惯之所以顽固，是因为它在四个环节上都「太顺了」。只要逐一在提示、渴求、反应、奖励上设置障碍，再牢固的坏习惯也会慢慢松动。</p>
+</section>
+
+<!-- 拾 · 身份投票 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·10">10</div>
+    <div><div class="ch-kicker">身份认同</div><h2 class="ch-title">每一次行动，都是一张选票</h2></div>
+  </div>
+  <p>同样是戒烟的人，面对别人递来的烟，一种人说：「不用了，谢谢，<strong>我正在戒烟</strong>。」另一种人说：「不用了，谢谢，<strong>我不抽烟</strong>。」</p>
+
+  <div class="bubble-row">
+    <div class="say-bubble say-dim"><span class="who">戒烟者 A</span>「我正在戒烟」—— 他仍然觉得自己是个烟民，只是在努力抗拒诱惑。</div>
+    <div class="say-bubble say-lit"><span class="who">戒烟者 B</span>「我不抽烟」—— 他已经完成了身份的转变，拒绝只是自然的表达。</div>
+  </div>
+
+  <p>两句话看似差别不大，背后却是两种完全不同的身份认同。前者还在和旧身份拉扯，后者已经拥抱了新身份——而后者，往往才是真正戒得掉的人。</p>
+
+  <div class="vote-card">
+    <div class="vote-txt">每一次行动，<br>都是投给「理想自我」的<em>一票</em>。</div>
+    <div class="vote-sub">读一页书，是投给「爱读书的人」的一票；做一个俯卧撑，是投给「健康的人」的一票</div>
+  </div>
+
+  <p>习惯养成的最高境界，不是「我在坚持做某件事」，而是「我就是这样的人」。当你用每一次微小的行动不断为新的身份投票，票数越来越多，新的身份就会从「扮演」变成「本能」。这也是为什么基于身份的习惯如此持久——<strong>你不再是为了目标而行动，而是在成为你自己</strong>。</p>
+</section>
+
+<!-- 拾壹 · 进阶技巧 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·11">11</div>
+    <div><div class="ch-kicker">进阶技巧</div><h2 class="ch-title">让习惯牢不可破的四个方法</h2></div>
+  </div>
+  <p class="ch-lead">掌握了四大定律之后，还有几个进阶技巧，能帮你在漫长岁月里把习惯真正「焊」进生活。</p>
+
+  <div class="adv-grid">
+    <div class="adv-card">
+      <span class="ico">📜</span>
+      <h4>习惯契约</h4>
+      <p>把承诺写下来，找一两位见证人签字，并约定明确的惩罚——比如没做到就请朋友吃大餐。当违约有了看得见的代价，坚持就有了额外的保障。</p>
+    </div>
+    <div class="adv-card">
+      <span class="ico">🔗</span>
+      <h4>别让链条断裂</h4>
+      <p>像游戏签到一样对待你的习惯：每天完成一次，链条就延长一格。看着越来越长的链条，你会舍不得让它断在自己手里。</p>
+    </div>
+    <div class="adv-card">
+      <span class="ico">🎯</span>
+      <h4>提示包围圈</h4>
+      <p>让提示无处不在：想多喝水，就在每个房间都放一个水杯；想背单词，就把单词卡贴在冰箱、镜子和手机壳上。走到哪里，提示就跟到哪里。</p>
+    </div>
+    <div class="adv-card">
+      <span class="ico">🔥</span>
+      <h4>一次失误不是失败</h4>
+      <p>状态再好的运动员也会失误。中断一天不可怕，可怕的是从此一蹶不振。记住：一根火柴不会烧毁整个森林。</p>
+    </div>
+  </div>
+
+  <div class="chain-wrap">
+    <div class="chain-title">坚持的链条 · 别让第 21 天成为终点</div>
+    <div class="chain">
+      <i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i><i>10</i><i>11</i><i>12</i><i>13</i><i>14</i><i>15</i><i>16</i><i>17</i><i>18</i><i>19</i><i>20</i><i class="broken">✕</i><i>22</i><i>23</i><i>24</i><i>25</i><i>26</i><i>27</i><i>28</i><i>29</i><i>30</i><i>31</i>
+    </div>
+    <p class="chain-note">就算第 21 天断了一次，也请马上回到链条上来——<em>错过一次，绝不连续错过两次</em>。</p>
+  </div>
+</section>
+
+<!-- 拾贰 · 长期主义 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·12">12</div>
+    <div><div class="ch-kicker">习惯与成就</div><h2 class="ch-title">了不起的成就，都是长期主义的作品</h2></div>
+  </div>
+  <p class="ch-lead">把目光投向那些取得巨大成就的人，你会发现：他们的过人之处，往往不是某个惊天动地的瞬间，而是日复一日的习惯。习惯，就是长期主义最朴素的表达。</p>
+
+  <div class="people-row">
+    <div class="people-card">
+      <span class="ico">📈</span>
+      <h4>巴菲特</h4>
+      <p>价值投资的本质，就是相信时间的复利。每天阅读财报与书籍、持续做正确的决定，让财富像雪球一样越滚越大。</p>
+    </div>
+    <div class="people-card">
+      <span class="ico">🍎</span>
+      <h4>乔布斯</h4>
+      <p>对完美的极致追求不是一句口号，而是渗透在每一次产品打磨里的日常习惯——细节上的毫不妥协，成就了伟大的产品。</p>
+    </div>
+    <div class="people-card">
+      <span class="ico">🎾</span>
+      <h4>塞雷娜·威廉姆斯</h4>
+      <p>赛场上所向披靡的她，靠的是日复一日雷打不动的训练习惯。冠军不是在一场比赛里诞生的，而是在每一个平凡的训练日里铸就的。</p>
+    </div>
+  </div>
+
+  <p>他们都是习惯的信徒：不迷信捷径，不期待奇迹，只是把正确的小事一遍又一遍地做下去。时间从不辜负这样的人——它会把每一次重复，都兑现成未来的底气。</p>
+</section>
+
+<!-- 拾叁 · 结语 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·13">13</div>
+    <div><div class="ch-kicker">结语</div><h2 class="ch-title">习惯是方向盘，今晚就出发</h2></div>
+  </div>
+
+  <div class="big-quote">习惯就像方向盘，<br>每一个微小的选择，都在悄悄决定你驶向的方向。<br>不必等到「准备好」，<br>从<em>早起五分钟</em>、<em>读一页书</em>开始就好。</div>
+
+  <p>30 分钟读透一本书，但真正读懂《掌控习惯》需要的是往后的每一天。好消息是，你不需要翻天覆地——你只需要比昨天好一点点，然后相信复利。</p>
+
+  <div class="tonight">
+    <h3>今晚就开始 · 你的第一张行动卡</h3>
+    <p class="sub">YOUR FIRST HABIT CARD</p>
+    <div class="tonight-step">
+      <span class="n">1</span>
+      <p>选一个你一直想养成的小习惯。<span class="hint">读书、运动、喝水、早睡都可以</span></p>
+    </div>
+    <div class="tonight-step">
+      <span class="n">2</span>
+      <p>写下一句身份宣言：「我是那种……的人」。<span class="hint">比如「我是那种每天都读一点书的人」</span></p>
+    </div>
+    <div class="tonight-step">
+      <span class="n">3</span>
+      <p>把它缩小到两分钟以内。<span class="hint">读一页书、做一个俯卧撑、静坐一分钟</span></p>
+    </div>
+    <div class="tonight-step">
+      <span class="n">4</span>
+      <p>用习惯叠加给它装上开关：「做完……之后，我就……」。<span class="hint">「刷完牙之后，我就读一页书」</span></p>
+    </div>
+    <div class="tonight-step">
+      <span class="n">5</span>
+      <p>明天完成第一次打卡，别让链条断裂。<span class="hint">错过一次没关系，绝不连续错过两次</span></p>
+    </div>
+    <p class="end-line">愿你往后的每一天，<br>都在为好习惯的复利悄悄加码。</p>
+  </div>
+</section>
+
+<!-- 思维导图 -->
+<section class="chapter-static">
+  <div class="ch-head">
+    <div class="badge" data-no="MAP">全</div>
+    <div><div class="ch-kicker">一图回望</div><h2 class="ch-title">掌控习惯全景图</h2></div>
+  </div>
+  <div class="markmap-box">
+    <div class="markmap">
+      <script type="text/template">
+# 掌控习惯
+## 习惯的惊人力量
+### 习惯是自我提高的复利
+### 1.01³⁶⁵ = 37.78
+### 航向偏 3.5° → 终点差几百英里
+### 熬过积累期，突破临界点
+## 习惯循环 · 四步模型
+### 提示 · 触发行为的信号
+### 渴求 · 习惯背后的动力
+### 反应 · 实际的行动
+### 奖励 · 满足与强化
+## 培养好习惯 · 四大定律
+### 一 显而易见 · 执行意图 / 习惯叠加 / 环境设计
+### 二 有吸引力 · 喜好绑定 / 社群带动 / 深层价值
+### 三 简便易行 · 两分钟规则 / 最省力法则 / 重次数
+### 四 令人愉悦 · 习惯追踪 / 即时奖励 / 问责伙伴
+## 戒除坏习惯 · 反转四定律
+### 提示隐而不见
+### 渴求变得无趣
+### 反应难以执行
+### 奖励令人落空
+## 身份认同
+### 「我不抽烟」胜过「我正在戒烟」
+### 每次行动都是投给理想自我的一票
+## 进阶技巧
+### 习惯契约 · 见证人 + 惩罚
+### 别让链条断裂
+### 提示包围圈
+### 一次失误不是失败
+## 习惯与成就
+### 长期主义
+### 巴菲特 · 乔布斯 · 威廉姆斯
+      </script>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="goodnight">晚安</div>
+  <p class="wish">愿你从今天起，用好习惯的复利，<br>慢慢把自己变成想要的样子。<br>别急，时间看得见。
+  <span class="moon"></span></p>
+  <p class="src-note">睡前听完一本书 · 掌控习惯</p>
+</footer>
+
+<script>
+// 滚动显现
+!function(){
+  var els=document.querySelectorAll('.chapter');
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});
+  },{threshold:.12});
+  els.forEach(function(el){io.observe(el);});
+}();
+// 复利数字滚动
+!function(){
+  var el=document.querySelector('.cc-num[data-count]');
+  if(!el)return;
+  var target=parseFloat(el.getAttribute('data-count')),started=false;
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting&&!started){
+        started=true;io.unobserve(el);
+        var t0=null,dur=1800;
+        function step(ts){
+          if(!t0)t0=ts;
+          var p=Math.min((ts-t0)/dur,1);
+          var eased=1-Math.pow(1-p,3);
+          el.textContent=(target*eased).toFixed(2);
+          if(p<1)requestAnimationFrame(step);else el.textContent=target.toFixed(2);
+        }
+        requestAnimationFrame(step);
+      }
+    });
+  },{threshold:.4});
+  io.observe(el);
+}();
+// 同步主题选择器
+document.querySelector('.theme-select').value=document.body.className;
+// 强制 markmap 按最终容器宽度重绘
+window.addEventListener('load',function(){
+  window.dispatchEvent(new Event('resize'));
+  setTimeout(function(){window.dispatchEvent(new Event('resize'));},500);
+  setTimeout(function(){window.dispatchEvent(new Event('resize'));},1500);
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+</body>
+</html>

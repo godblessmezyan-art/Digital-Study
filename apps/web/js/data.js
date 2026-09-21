@@ -1,8 +1,8 @@
 export const stats = [
-  { icon: 'bookshelf', label: '我的书架', detail: '珍藏所有的阅读时光', target: '#shelf' },
-  { icon: 'compass', label: '书籍分类', detail: '探索不同的知识大陆', target: '#categories' },
-  { icon: 'quill', label: '阅读笔记', detail: '记录思考与灵感', target: '#notes' },
-  { icon: 'scroll', label: '精选书摘', detail: '收集触动心灵的文字', target: '#quotes' },
+  { icon: 'bookshelf', label: '我的书架', detail: '珍藏所有的阅读时光', target: 'home.html#shelf' },
+  { icon: 'compass', label: '书籍分类', detail: '探索不同的知识大陆', target: 'index.html#categories' },
+  { icon: 'quill', label: '阅读笔记', detail: '记录思考与灵感', target: 'index.html#reading?tab=notes' },
+  { icon: 'scroll', label: '精选书摘', detail: '收集触动心灵的文字', target: 'index.html#reading?tab=quotes' },
 ];
 
 export const books = [
@@ -34,12 +34,12 @@ export const dailyBookmarks = [
 ];
 
 export const popularCategories = [
-  { title: '哲学思考', subtitle: '探究生命的意义', category: 'philosophy', image: '/assets/categories/philosophy.png' },
-  { title: '科幻宇宙', subtitle: '想象无垠的可能', category: 'science', image: '/assets/categories/science-fiction.png' },
-  { title: '历史人文', subtitle: '回望文明的轨迹', category: 'history', image: '/assets/categories/history.png' },
-  { title: '心理成长', subtitle: '遇见更好的自己', category: 'mind', image: '/assets/categories/inner-growth.png' },
-  { title: '文学经典', subtitle: '感受文字的力量', category: 'literature', image: '/assets/categories/literature.png' },
-  { title: '艺术审美', subtitle: '发现生活的美好', category: 'all', image: '/assets/categories/art-aesthetics.png' },
+  { title: '哲学思考', subtitle: '探究生命的意义', category: '哲学思考', image: '/assets/categories/philosophy.png' },
+  { title: '幻想文学', subtitle: '想象无垠的可能', category: '幻想文学', image: '/assets/categories/science-fiction.png' },
+  { title: '人物传记', subtitle: '回望生命的轨迹', category: '人物传记', image: '/assets/categories/history.png' },
+  { title: '心灵修炼', subtitle: '遇见更好的自己', category: '心灵修炼', image: '/assets/categories/inner-growth.png' },
+  { title: '文学经典', subtitle: '感受文字的力量', category: '文学经典', image: '/assets/categories/literature.png' },
+  { title: '个人成长', subtitle: '发现生活的可能', category: '个人成长', image: '/assets/categories/art-aesthetics.png' },
 ];
 
 export const categories = [

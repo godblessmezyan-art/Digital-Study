@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "slug": "legacy-study-14",
+  "title": "橘子不是唯一的水果",
+  "author": "珍妮特·温特森",
+  "summary": "从旧 Study 项目迁移的书籍内容。",
+  "tags": [],
+  "cover": "cover.svg",
+  "status": "published",
+  "publishedAt": "2026-07-27T01:07:33.000Z",
+  "category": {
+    "slug": "legacy-category-70",
+    "name": "人物传记"
+  }
+}

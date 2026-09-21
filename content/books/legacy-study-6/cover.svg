@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0b2740"/><stop offset="1" stop-color="#FFF176"/></linearGradient></defs>
+  <rect width="600" height="900" fill="url(#bg)"/><path d="M62 80h476v740H62z" fill="none" stroke="#d7bd82" stroke-width="3" opacity=".65"/>
+  <circle cx="300" cy="250" r="76" fill="none" stroke="#d7bd82" stroke-width="3" opacity=".55"/><path d="M230 250h140M300 180v140" stroke="#d7bd82" stroke-width="2" opacity=".45"/>
+  <text x="300" y="455" fill="#f4ead5" font-family="serif" font-size="42" text-anchor="middle">人生永远没有太晚的开始</text>
+  <text x="300" y="520" fill="#d7bd82" font-family="sans-serif" font-size="22" text-anchor="middle" letter-spacing="5">成功励志</text>
+  <text x="300" y="770" fill="#d7bd82" font-family="serif" font-size="18" text-anchor="middle" letter-spacing="4">CLOUD REALM ARCHIVE</text>
+</svg>

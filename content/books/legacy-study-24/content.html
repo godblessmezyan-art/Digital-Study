@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>福格行为模型 · 睡前听完一本书</title>
+<link rel="preconnect" href="https://fonts.loli.net" crossorigin>
+<link href="https://fonts.loli.net/css2?family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+/* ============ 主题变量 ============ */
+body.theme-default{--bg:#f6f5f1;--text:#1f2937;--text2:#6b7280;--card:#ffffff;--border:#e5e7eb;--accent:#1e40af;--accent2:#059669;--accent3:#d97706;--soft:#eef2ff;--gold:#c2933a;--hero-top:#eef2f7;--hero-via:#dbeafe;--hero-bot:#f3e8d6;--quote-bg:#eff6ff;--shadow:rgba(30,64,175,.08)}
+body.theme-mint{--bg:#f2f7f3;--text:#27352c;--text2:#6c7f72;--card:#fbfdfb;--border:#d8e5da;--accent:#047857;--accent2:#0891b2;--accent3:#ca8a04;--soft:#e6f0e8;--gold:#b08948;--hero-top:#d8f0e0;--hero-via:#c7e8d3;--hero-bot:#e6f0e8;--quote-bg:#ecfdf5;--shadow:rgba(4,120,87,.1)}
+body.theme-cloud{--bg:#f5f7fa;--text:#333a45;--text2:#7b8494;--card:#ffffff;--border:#e3e8ef;--accent:#2563eb;--accent2:#64748b;--accent3:#7c3aed;--soft:#eff6ff;--gold:#b4873f;--hero-top:#e0e7ff;--hero-via:#dbeafe;--hero-bot:#f5f3ff;--quote-bg:#eff6ff;--shadow:rgba(37,99,235,.1)}
+body.theme-bamboo{--bg:#f4f6ef;--text:#31382a;--text2:#75806b;--card:#fcfdf8;--border:#dde3cf;--accent:#4d7c0f;--accent2:#15803d;--accent3:#a16207;--soft:#ecfccb;--gold:#a16207;--hero-top:#d9f99d;--hero-via:#d1fae5;--hero-bot:#fef9c3;--quote-bg:#ecfccb;--shadow:rgba(77,124,15,.1)}
+body.theme-amber{--bg:#faf4e8;--text:#3d3121;--text2:#8a7a5f;--card:#fffaf1;--border:#ecdfc5;--accent:#b45309;--accent2:#0e7490;--accent3:#7c2d12;--soft:#fef3c7;--gold:#b45309;--hero-top:#fde68a;--hero-via:#fed7aa;--hero-bot:#fef3c7;--quote-bg:#fffbeb;--shadow:rgba(180,83,9,.12)}
+body.theme-dawn{--bg:#f7f0ea;--text:#3a2f33;--text2:#8a7078;--card:#fdf8f4;--border:#ead9d3;--accent:#be123c;--accent2:#0e7490;--accent3:#b45309;--soft:#fce7f3;--gold:#b45309;--hero-top:#fecdd3;--hero-via:#fbcfe8;--hero-bot:#fde68a;--quote-bg:#fff1f2;--shadow:rgba(190,18,60,.1)}
+body.theme-lavender{--bg:#f5f3f9;--text:#363044;--text2:#837897;--card:#fcfbfe;--border:#e4def0;--accent:#7c3aed;--accent2:#0891b2;--accent3:#be185d;--soft:#ede9fe;--gold:#a16207;--hero-top:#ddd6fe;--hero-via:#e9d5ff;--hero-bot:#f5f3ff;--quote-bg:#f5f3ff;--shadow:rgba(124,58,237,.1)}
+body.theme-slate{--bg:#f2f4f5;--text:#333a3d;--text2:#79848a;--card:#fbfcfc;--border:#dfe4e6;--accent:#475569;--accent2:#0369a1;--accent3:#be123c;--soft:#f1f5f9;--gold:#a16207;--hero-top:#e2e8f0;--hero-via:#cbd5e1;--hero-bot:#f1f5f9;--quote-bg:#f8fafc;--shadow:rgba(71,85,105,.1)}
+body.theme-rose{--bg:#faf1f2;--text:#432d31;--text2:#96747b;--card:#fffafa;--border:#efd8dc;--accent:#be123c;--accent2:#1d4ed8;--accent3:#b45309;--soft:#fce7f3;--gold:#a16207;--hero-top:#fecdd3;--hero-via:#fda4af;--hero-bot:#fce7f3;--quote-bg:#fff1f2;--shadow:rgba(190,18,60,.1)}
+body.theme-sakura{--bg:#fdf4f6;--text:#47333a;--text2:#9c7f89;--card:#fffafb;--border:#f3dee4;--accent:#db2777;--accent2:#0d9488;--accent3:#c2410c;--soft:#fce7f3;--gold:#b45309;--hero-top:#fbcfe8;--hero-via:#f9a8d4;--hero-bot:#fce7f3;--quote-bg:#fdf2f8;--shadow:rgba(219,39,119,.1)}
+body.theme-forest{--bg:#f1f5f0;--text:#293629;--text2:#6b7d68;--card:#fafcf9;--border:#dbe5d6;--accent:#15803d;--accent2:#0369a1;--accent3:#b45309;--soft:#dcfce7;--gold:#a16207;--hero-top:#bbf7d0;--hero-via:#d9f99d;--hero-bot:#dcfce7;--quote-bg:#f0fdf4;--shadow:rgba(21,128,61,.1)}
+body.theme-ocean{--bg:#eff5f8;--text:#243842;--text2:#647e8b;--card:#f9fcfe;--border:#d7e4eb;--accent:#0369a1;--accent2:#0e7490;--accent3:#be123c;--soft:#e0f2fe;--gold:#a16207;--hero-top:#bae6fd;--hero-via:#7dd3fc;--hero-bot:#e0f2fe;--quote-bg:#f0f9ff;--shadow:rgba(3,105,161,.1)}
+body.theme-sand{--bg:#f8f3ea;--text:#413628;--text2:#8f8067;--card:#fdfaf3;--border:#eadfca;--accent:#b45309;--accent2:#0e7490;--accent3:#7c2d12;--soft:#fef3c7;--gold:#b45309;--hero-top:#fde68a;--hero-via:#fcd34d;--hero-bot:#fef9c3;--quote-bg:#fffbeb;--shadow:rgba(180,83,9,.12)}
+body.theme-night{--bg:#1d2130;--text:#e8e6e1;--text2:#9aa0b0;--card:#262b3d;--border:#3a4157;--accent:#60a5fa;--accent2:#34d399;--accent3:#fbbf24;--soft:#2c3247;--gold:#fbbf24;--hero-top:#1e293b;--hero-via:#0f172a;--hero-bot:#1e1b4b;--quote-bg:#1f2937;--shadow:rgba(0,0,0,.4)}
+body.theme-charcoal{--bg:#212121;--text:#ebe7e0;--text2:#a09a90;--card:#2b2b2b;--border:#404040;--accent:#60a5fa;--accent2:#4ade80;--accent3:#fb923c;--soft:#303030;--gold:#fbbf24;--hero-top:#292524;--hero-via:#1c1917;--hero-bot:#27272a;--quote-bg:#292524;--shadow:rgba(0,0,0,.45)}
+body.theme-deepsea{--bg:#12222b;--text:#e2ece9;--text2:#8ba8a4;--card:#1a2f3a;--border:#2c4652;--accent:#38bdf8;--accent2:#2dd4bf;--accent3:#fcd34d;--soft:#1e3540;--gold:#fcd34d;--hero-top:#082f49;--hero-via:#0c4a6e;--hero-bot:#164e63;--quote-bg:#0c4a6e;--shadow:rgba(0,0,0,.45)}
+
+/* ============ 基础 ============ */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden}
+svg{max-width:100%}
+body{
+  background-color:var(--bg);
+  color:var(--text);
+  font-family:'Noto Serif SC',serif;
+  line-height:1.9;
+  transition:background .6s,color .6s;
+  overflow-x:hidden;
+  -webkit-text-size-adjust:100%;text-size-adjust:100%;
+  background-image:
+    linear-gradient(var(--border) 1px,transparent 1px),
+    linear-gradient(90deg,var(--border) 1px,transparent 1px);
+  background-size:40px 40px;
+  background-attachment:fixed;
+  background-position:center;
+}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);opacity:.55;pointer-events:none;z-index:0}
+main,header,footer,.theme-select,.markmap-box{position:relative;z-index:1}
+
+.theme-select{position:fixed;top:16px;right:16px;z-index:999;padding:8px 14px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text);font-family:'Noto Serif SC',serif;font-size:13px;cursor:pointer;box-shadow:0 4px 14px var(--shadow);outline:none;transition:all .4s}
+.theme-select:hover{border-color:var(--accent)}
+
+/* ============ 首屏 ============ */
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;overflow:hidden;padding:60px 24px;background:linear-gradient(160deg,var(--hero-top) 0%,var(--hero-via) 50%,var(--hero-bot) 100%)}
+.hero::before{
+  content:'';position:absolute;inset:0;z-index:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);
+  background-size:50px 50px;
+  mask-image:radial-gradient(ellipse at center,#000 30%,transparent 75%);
+  -webkit-mask-image:radial-gradient(ellipse at center,#000 30%,transparent 75%);
+}
+.hero *{position:relative;z-index:2}
+.hero-series{font-size:13px;letter-spacing:.6em;text-indent:.6em;color:rgba(255,255,255,.72);margin-bottom:34px;font-variant:small-caps}
+.book-title{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(2rem,6.5vw,3.6rem);letter-spacing:.22em;text-indent:.22em;color:#fff;font-weight:400;text-shadow:0 6px 40px rgba(0,0,0,.35);margin-bottom:30px}
+
+/* 三圆交汇 M·A·P */
+.trio{position:relative;width:min(80vmin,380px);height:min(80vmin,380px);margin:0 auto 28px}
+.trio svg{width:100%;height:100%;overflow:visible}
+.trio .ring{fill:none;stroke-width:2;mix-blend-mode:screen;opacity:.75}
+.trio .r1{stroke:rgba(239,68,68,.85);animation:ring-pulse 4s ease-in-out infinite}
+.trio .r2{stroke:rgba(16,185,129,.85);animation:ring-pulse 4s ease-in-out 1.3s infinite}
+.trio .r3{stroke:rgba(251,191,36,.85);animation:ring-pulse 4s ease-in-out 2.6s infinite}
+.trio text{fill:rgba(255,255,255,.95);font-family:'ZCOOL XiaoWei',serif;font-size:16px;text-anchor:middle;letter-spacing:.08em}
+@keyframes ring-pulse{0%,100%{stroke-width:2;opacity:.7}50%{stroke-width:3.5;opacity:.95}}
+
+.formula{display:flex;justify-content:center;align-items:center;gap:14px;margin-bottom:20px;font-family:'Noto Serif SC',serif;font-weight:700;letter-spacing:.05em;flex-wrap:wrap}
+.formula .f-letter{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(30px,5vw,46px);line-height:1;padding:0 4px}
+.formula .f-letter.m{color:#fca5a5}
+.formula .f-letter.a{color:#6ee7b7}
+.formula .f-letter.p{color:#fcd34d}
+.formula .f-letter.b{color:#fff}
+.formula .f-op{color:rgba(255,255,255,.65);font-size:clamp(20px,3vw,26px);font-weight:400}
+
+.hero-sub{font-size:clamp(14px,2.2vw,17px);letter-spacing:.18em;color:rgba(255,255,255,.88);margin-bottom:12px}
+.hero-author{font-size:13.5px;letter-spacing:.14em;color:rgba(255,255,255,.6);margin-top:4px}
+.hero-line{width:1px;height:50px;background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.5));margin:32px auto 0}
+
+/* ============ 章节 ============ */
+main{position:relative;max-width:900px;margin:0 auto;padding:0 26px}
+.chapter{padding:84px 0 30px;opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform .9s ease}
+.chapter.visible{opacity:1;transform:none}
+.chapter-static{padding:60px 0 30px}
+
+.ch-head{display:flex;align-items:flex-start;gap:18px;margin-bottom:28px}
+.badge{flex:none;width:52px;height:52px;border:1.5px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--card);color:var(--accent);font-family:'ZCOOL XiaoWei',serif;font-size:20px;box-shadow:0 4px 16px var(--shadow);position:relative}
+.badge::before{content:attr(data-no);position:absolute;top:-10px;right:-10px;background:var(--accent);color:#fff;font-size:10px;padding:2px 7px;border-radius:10px;letter-spacing:.1em;font-family:'Noto Serif SC',serif}
+.ch-kicker{font-size:12px;letter-spacing:.4em;text-indent:.4em;color:var(--text2);margin-bottom:4px;text-transform:uppercase;font-variant:small-caps}
+.ch-title{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(22px,4.2vw,30px);letter-spacing:.06em;line-height:1.3}
+.ch-lead{color:var(--text2);font-size:15px;margin-bottom:22px}
+.chapter p, .chapter-static p{margin-bottom:16px}
+.center{text-align:center}
+
+.quote-block{background:var(--quote-bg);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:22px 26px;margin:26px 0;font-weight:600;font-size:16px;letter-spacing:.03em}
+.quote-block .small{font-weight:400;font-size:13px;color:var(--text2);margin-top:8px;display:block}
+
+/* 公式卡 */
+.formula-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:34px 28px;margin:28px 0;box-shadow:0 6px 22px var(--shadow);text-align:center;position:relative;overflow:hidden}
+.formula-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#ef4444,#10b981,#fbbf24)}
+.formula-big{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(36px,7vw,56px);letter-spacing:.1em;margin-bottom:18px;color:var(--text)}
+.formula-big .fm{color:#ef4444}.formula-big .fa{color:#10b981}.formula-big .fp{color:#f59e0b}
+.formula-desc{display:flex;justify-content:center;gap:30px;flex-wrap:wrap;font-size:14px;color:var(--text2);margin-top:8px}
+.formula-desc .d-m{color:#ef4444;font-weight:700}
+.formula-desc .d-a{color:#10b981;font-weight:700}
+.formula-desc .d-p{color:#f59e0b;font-weight:700}
+
+/* 旧逻辑 vs 新逻辑 */
+.vs-wrap{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:26px 0}
+@media(max-width:640px){.vs-wrap{grid-template-columns:1fr}}
+.vs-card{border-radius:14px;padding:24px 22px;position:relative}
+.vs-card h4{font-family:'ZCOOL XiaoWei',serif;font-size:17.5px;letter-spacing:.08em;margin-bottom:14px}
+.vs-card ul{list-style:none}
+.vs-card li{padding:8px 0;border-bottom:1px dashed var(--border);font-size:14px}
+.vs-card li:last-child{border-bottom:none}
+.vs-old{background:var(--card);border:1px dashed var(--border);color:var(--text2)}
+.vs-old h4{color:var(--text2)}
+.vs-new{background:var(--card);border:1px solid var(--accent);box-shadow:0 6px 22px var(--shadow)}
+.vs-new h4{color:var(--accent)}
+.vs-new li{color:var(--text);font-weight:600}
+.vs-tag{position:absolute;top:-11px;left:18px;background:var(--bg);padding:0 10px;font-size:12px;letter-spacing:.22em;color:var(--text2);font-variant:small-caps}
+
+/* 三要素卡 */
+.factor-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:32px 28px;margin-bottom:26px;box-shadow:0 6px 24px var(--shadow);position:relative;overflow:hidden}
+.factor-card::before{content:'';position:absolute;top:0;left:0;width:6px;height:100%}
+.factor-card.m::before{background:#ef4444}
+.factor-card.a::before{background:#10b981}
+.factor-card.p::before{background:#f59e0b}
+.factor-head{display:flex;align-items:center;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+.factor-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;flex:none}
+.factor-card.m .factor-icon{background:#ef4444}
+.factor-card.a .factor-icon{background:#10b981}
+.factor-card.p .factor-icon{background:#f59e0b}
+.factor-letter{font-family:'ZCOOL XiaoWei',serif;font-size:36px;line-height:1;margin-right:10px;color:var(--text)}
+.factor-card.m .factor-letter{color:#ef4444}
+.factor-card.a .factor-letter{color:#10b981}
+.factor-card.p .factor-letter{color:#f59e0b}
+.factor-name{font-family:'ZCOOL XiaoWei',serif;font-size:20px;letter-spacing:.05em}
+.factor-q{font-size:13px;color:var(--text2);letter-spacing:.08em;margin-top:2px}
+.factor-card p{font-size:15px}
+
+/* 动机曲线图 */
+.curve-wrap{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 20px 18px;margin:24px 0;box-shadow:0 4px 16px var(--shadow)}
+.curve-wrap h5{font-family:'ZCOOL XiaoWei',serif;font-size:15px;letter-spacing:.1em;color:var(--text2);text-align:center;margin-bottom:10px}
+.curve-wrap svg{display:block;width:100%;height:auto}
+.curve-legend{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-top:10px;font-size:12.5px;color:var(--text2)}
+.curve-legend i{display:inline-block;width:22px;height:2px;vertical-align:middle;margin-right:6px}
+.curve-legend .l-m{background:#ef4444}
+.curve-legend .l-t{background:var(--text);opacity:.4}
+
+/* 能力六因素 */
+.ability-bars{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:24px 0}
+@media(max-width:640px){.ability-bars{grid-template-columns:1fr}}
+.ab-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:0 3px 10px var(--shadow)}
+.ab-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.ab-name{font-family:'ZCOOL XiaoWei',serif;font-size:15.5px;letter-spacing:.05em;color:var(--accent2)}
+.ab-hint{font-size:11.5px;color:var(--text2)}
+.ab-track{height:6px;background:var(--soft);border-radius:3px;overflow:hidden}
+.ab-fill{height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));border-radius:3px;width:0;transition:width 1.6s ease}
+.visible .ab-fill{width:var(--w)}
+
+/* 提示三类型 */
+.prompt-trio{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0}
+@media(max-width:640px){.prompt-trio{grid-template-columns:1fr}}
+.prompt-cell{background:var(--card);border:1px solid var(--border);border-top:3px solid #f59e0b;border-radius:12px;padding:22px 18px;text-align:center;box-shadow:0 4px 14px var(--shadow)}
+.prompt-cell .ico{font-size:28px;margin-bottom:8px}
+.prompt-cell h5{font-family:'ZCOOL XiaoWei',serif;font-size:16.5px;letter-spacing:.1em;margin-bottom:6px}
+.prompt-cell p{font-size:13px;color:var(--text2);margin:0}
+
+/* 微习惯成长图 */
+.growth-row{display:flex;align-items:flex-end;justify-content:space-around;gap:10px;margin:30px 0 10px;flex-wrap:wrap}
+.growth-dot{text-align:center;flex:1;min-width:60px}
+.growth-dot .bubble{margin:0 auto;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 6px 18px var(--shadow);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'ZCOOL XiaoWei',serif;transition:transform 1s ease}
+.growth-dot .lbl{margin-top:10px;font-size:12px;color:var(--text2);letter-spacing:.05em}
+.growth-dot:nth-child(1) .bubble{width:34px;height:34px;font-size:12px}
+.growth-dot:nth-child(2) .bubble{width:50px;height:50px;font-size:14px}
+.growth-dot:nth-child(3) .bubble{width:70px;height:70px;font-size:16px}
+.growth-dot:nth-child(4) .bubble{width:92px;height:92px;font-size:18px}
+.growth-dot:nth-child(5) .bubble{width:118px;height:118px;font-size:22px}
+
+/* 行为发生图（阈值） */
+.threshold{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;margin:24px 0;box-shadow:0 4px 16px var(--shadow)}
+.threshold h5{font-family:'ZCOOL XiaoWei',serif;font-size:15px;letter-spacing:.1em;color:var(--text2);text-align:center;margin-bottom:10px}
+.threshold svg{display:block;width:100%;height:auto}
+
+/* 让行为发生/让习惯持续 */
+.duo-wrap{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
+@media(max-width:640px){.duo-wrap{grid-template-columns:1fr}}
+.duo-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;box-shadow:0 6px 20px var(--shadow)}
+.duo-card h4{font-family:'ZCOOL XiaoWei',serif;font-size:18px;letter-spacing:.06em;margin-bottom:14px;color:var(--accent)}
+.duo-card ol{padding-left:20px}
+.duo-card li{padding:6px 0;font-size:14.5px}
+
+/* 误区 */
+.pit-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
+@media(max-width:640px){.pit-grid{grid-template-columns:1fr}}
+.pit-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 22px;box-shadow:0 4px 16px var(--shadow);position:relative}
+.pit-num{position:absolute;top:14px;right:20px;font-family:'ZCOOL XiaoWei',serif;font-size:30px;color:var(--accent);opacity:.25}
+.pit-card h4{font-size:16px;letter-spacing:.04em;margin-bottom:10px;color:var(--accent)}
+.pit-card .trap{font-size:13.5px;color:var(--text2);margin-bottom:10px;font-style:italic}
+.pit-card .truth{font-size:14px;color:var(--text);font-weight:600}
+.pit-card .truth em{font-style:normal;color:var(--accent);font-weight:700}
+
+/* 实战场景 */
+.scene-tabs{margin:24px 0}
+.scene-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:26px;margin-bottom:16px;box-shadow:0 5px 18px var(--shadow)}
+.scene-head{display:flex;align-items:center;gap:14px;margin-bottom:16px;flex-wrap:wrap}
+.scene-ico{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex:none;color:#fff;background:var(--accent)}
+.scene-card h4{font-family:'ZCOOL XiaoWei',serif;font-size:18px;letter-spacing:.06em}
+.scene-card .sub{font-size:12.5px;color:var(--text2);letter-spacing:.1em;margin-top:2px}
+.map-row{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:10px 0;border-bottom:1px dashed var(--border);font-size:14px}
+.map-row:last-child{border-bottom:none}
+.map-row .label{font-family:'ZCOOL XiaoWei',serif;font-size:13px;letter-spacing:.1em;padding:3px 10px;border-radius:999px;color:#fff;min-width:60px;text-align:center}
+.map-row .label.m{background:#ef4444}
+.map-row .label.a{background:#10b981}
+.map-row .label.p{background:#f59e0b}
+.map-row .val{color:var(--text)}
+.map-row .arrow{color:var(--text2);font-size:13px}
+
+/* 倒退应对 */
+.recovery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0}
+@media(max-width:640px){.recovery{grid-template-columns:1fr}}
+.rec-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 20px;text-align:center;box-shadow:0 4px 14px var(--shadow);position:relative}
+.rec-card::before{content:attr(data-step);position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;font-size:11px;padding:2px 12px;border-radius:10px;letter-spacing:.2em;font-variant:small-caps}
+.rec-card .ico{font-size:28px;margin-bottom:10px}
+.rec-card h4{font-family:'ZCOOL XiaoWei',serif;font-size:17px;letter-spacing:.06em;margin-bottom:8px}
+.rec-card p{font-size:13px;color:var(--text2);margin:0}
+
+/* 结语 */
+.big-quote{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(20px,3.6vw,28px);letter-spacing:.08em;line-height:1.9;text-align:center;padding:30px 18px;margin:30px 0;color:var(--text)}
+.big-quote em{font-style:normal;color:var(--accent)}
+
+.tonight{background:linear-gradient(150deg,var(--hero-top),var(--hero-via),var(--hero-bot));border-radius:18px;padding:42px 34px;margin-top:26px;color:var(--text);box-shadow:0 10px 30px var(--shadow);border:1px solid var(--border)}
+.tonight h3{font-family:'ZCOOL XiaoWei',serif;font-size:22px;letter-spacing:.16em;text-align:center;margin-bottom:6px}
+.tonight .sub{text-align:center;font-size:12.5px;color:var(--text2);letter-spacing:.2em;margin-bottom:26px;font-variant:small-caps}
+.tonight-step{display:flex;gap:16px;align-items:flex-start;padding:14px 4px;border-bottom:1px dashed var(--border)}
+.tonight-step:last-of-type{border-bottom:none}
+.tonight-step .n{flex:none;width:32px;height:32px;border:1.5px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'ZCOOL XiaoWei',serif;font-size:15px;color:var(--accent)}
+.tonight-step p{margin:0;font-size:15px}
+.tonight-step .hint{display:block;font-size:12.5px;color:var(--text2);margin-top:2px}
+.tonight .end-line{text-align:center;margin-top:22px;font-size:14.5px;letter-spacing:.06em}
+
+/* 思维导图 */
+.markmap-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;box-shadow:0 6px 24px var(--shadow);margin-top:20px;width:100%;max-width:100%;overflow:hidden}
+.markmap{min-height:560px;width:100%;max-width:100%;overflow:hidden}
+.markmap svg{display:block;width:100%;max-width:100%;height:auto}
+.markmap-foreign{color:var(--text)!important}
+.markmap-foreign *{color:inherit}
+
+/* 页脚 */
+footer{padding:90px 26px 70px;text-align:center;position:relative;z-index:1;max-width:900px;margin:0 auto}
+.goodnight{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(30px,6vw,44px);letter-spacing:.5em;text-indent:.5em;margin-bottom:34px;color:var(--text)}
+.wish{max-width:620px;margin:0 auto;color:var(--text2);font-size:15px;line-height:2.2}
+.wish .moon{display:block;margin:30px auto 0;width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 34% 30%,var(--gold),transparent 72%),var(--soft);border:1px solid var(--border);box-shadow:0 0 26px var(--shadow)}
+.src-note{margin-top:44px;font-size:12px;letter-spacing:.3em;color:var(--text2);opacity:.6}
+
+/* 移动端适配 */
+@media (max-width:768px){
+  body{background-attachment:scroll}
+  .theme-select{top:10px;right:10px;padding:6px 12px;font-size:12px}
+  .tonight{padding:34px 22px}
+}
+</style>
+</head>
+<body class="theme-default">
+<script>!function(){var t=["theme-default","theme-mint","theme-cloud","theme-bamboo","theme-amber","theme-dawn","theme-lavender","theme-slate","theme-rose","theme-sakura","theme-forest","theme-ocean","theme-sand","theme-night","theme-charcoal","theme-deepsea"];document.body.className=t[Math.floor(Math.random()*t.length)]}()</script>
+
+<select class="theme-select" onchange="document.body.className=this.value">
+  <option value="theme-default">📐 实验室</option>
+  <option value="theme-mint">🌿 薄荷</option>
+  <option value="theme-cloud">☁️ 云朵</option>
+  <option value="theme-bamboo">🎋 竹青</option>
+  <option value="theme-amber">🍯 琥珀</option>
+  <option value="theme-dawn">🌅 破晓</option>
+  <option value="theme-lavender">🪻 雾紫</option>
+  <option value="theme-slate">🌫 石板</option>
+  <option value="theme-rose">🌹 玫瑰</option>
+  <option value="theme-sakura">🌸 樱粉</option>
+  <option value="theme-forest">🌲 森林</option>
+  <option value="theme-ocean">🌊 海洋</option>
+  <option value="theme-sand">🏜 沙丘</option>
+  <option value="theme-night">🌙 夜幕</option>
+  <option value="theme-charcoal">🖤 炭墨</option>
+  <option value="theme-deepsea">🌌 深海</option>
+</select>
+
+<header class="hero">
+  <p class="hero-series">30 分钟读透一本书</p>
+  <h1 class="book-title">福格行为模型</h1>
+
+  <div class="trio">
+    <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+      <circle class="ring r1" cx="150" cy="100" r="72"/>
+      <circle class="ring r2" cx="100" cy="195" r="72"/>
+      <circle class="ring r3" cx="200" cy="195" r="72"/>
+      <text x="150" y="88">动机</text>
+      <text x="150" y="106" font-size="11" opacity=".6">MOTIVATION</text>
+      <text x="92" y="195">能力</text>
+      <text x="92" y="213" font-size="11" opacity=".6">ABILITY</text>
+      <text x="208" y="195">提示</text>
+      <text x="208" y="213" font-size="11" opacity=".6">PROMPT</text>
+    </svg>
+  </div>
+
+  <div class="formula">
+    <span class="f-letter b">B</span>
+    <span class="f-op">=</span>
+    <span class="f-letter m">M</span>
+    <span class="f-op">×</span>
+    <span class="f-letter a">A</span>
+    <span class="f-op">×</span>
+    <span class="f-letter p">P</span>
+  </div>
+  <p class="hero-sub">行为 = 动机 × 能力 × 提示</p>
+  <p class="hero-author">BJ Fogg · 斯坦福行为设计实验室创始人</p>
+  <div class="hero-line"></div>
+</header>
+
+<main>
+
+<!-- 壹 · 立旗失败 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·01">1</div>
+    <div><div class="ch-kicker">引子</div><h2 class="ch-title">你是不是也立过很多次 flag</h2></div>
+  </div>
+  <p>要求自己每天运动，可坚持没几天就不了了之；想养成睡前读书的习惯，却总被手机吸引；明明有改变的想法，却总是难以付诸行动，或者行动了也难以坚持下去。</p>
+  <p>到底是什么在阻碍我们做出改变？又该如何打破这种困境？</p>
+  <p>《福格行为模型》给我们一个清晰又有力的答案。作者 BJ Fogg（福格教授）不是普通的学者，他是斯坦福大学行为设计实验室的创始人，也是行为设计领域的权威专家，深耕行为科学多年。他认为，一个行为的发生需要三个要素同时具备——<strong>动机、能力和提示</strong>。这三者就像三角形的三个顶点，缺一不可。</p>
+  <p>这个模型打破了我们以往对行为改变的认知误区：不再强调依靠意志力去强迫自己行动，而是从科学角度出发，教我们通过调整这三个要素，让行动变得轻松易行。</p>
+</section>
+
+<!-- 贰 · 核心公式 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·02">2</div>
+    <div><div class="ch-kicker">核心公式</div><h2 class="ch-title">B = M × A × P</h2></div>
+  </div>
+
+  <div class="formula-card">
+    <div class="formula-big"><span class="fm">B</span> = <span class="fm">M</span> × <span class="fa">A</span> × <span class="fp">P</span></div>
+    <div class="formula-desc">
+      <span><span class="d-m">M 动机</span> · 想做</span>
+      <span><span class="d-a">A 能力</span> · 能做</span>
+      <span><span class="d-p">P 提示</span> · 该做了</span>
+    </div>
+  </div>
+
+  <p>只有当三者同时满足时，行为才会出现。这一模型看似简单，却蕴含着深刻的行为科学原理。它告诉我们：<strong>改变行为不需要靠强大的意志力，而是靠科学的设计。</strong></p>
+
+  <div class="vs-wrap">
+    <div class="vs-card vs-old">
+      <span class="vs-tag">过去的误区</span>
+      <h4>依赖意志力</h4>
+      <ul>
+        <li>靠毅力强迫自己早起跑步</li>
+        <li>身体疲惫也硬撑着学习</li>
+        <li>意志力耗尽就自我怀疑</li>
+        <li>频繁失败 → 放弃 → 自责</li>
+      </ul>
+    </div>
+    <div class="vs-card vs-new">
+      <span class="vs-tag">福格的答案</span>
+      <h4>靠行为设计</h4>
+      <ul>
+        <li>调整动机、能力、提示三要素</li>
+        <li>让行动简单到无需意志力</li>
+        <li>失败时去调整设计，不是责怪自己</li>
+        <li>小步积累 → 习惯养成 → 信心上升</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>接下来我们一步步拆解这三个要素：它们各自是什么，如何影响行为，又该如何设计。</p>
+</section>
+
+<!-- 叁 · 动机 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·03">3</div>
+    <div><div class="ch-kicker">要素一</div><h2 class="ch-title">动机：你为什么想做这件事</h2></div>
+  </div>
+
+  <div class="factor-card m">
+    <div class="factor-head">
+      <div class="factor-icon">🔥</div>
+      <div>
+        <div class="factor-letter">M</div>
+        <div class="factor-name">动机 Motivation</div>
+        <div class="factor-q">Why do you want to do this?</div>
+      </div>
+    </div>
+    <p>动机就是我们想要做某件事的意愿和驱动力。它回答的是「我为什么想做这件事」的问题。譬如你想减肥，可能是因为想拥有更健康的身体，也可能是想穿更漂亮的衣服——这些都是促使你减肥的动机。</p>
+    <p>福格教授告诉我们，<strong>动机的强弱会直接影响行为发生的可能性</strong>：动机越强，我们就越有可能采取行动；反之动机越弱，行动发生的概率就越低。</p>
+  </div>
+
+  <p>但动机有一个致命的特点：它非常不稳定，很容易受到外界因素的影响而波动。</p>
+
+  <div class="curve-wrap">
+    <h5>📉 动机曲线：像过山车一样起伏</h5>
+    <svg viewBox="0 0 500 180" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <linearGradient id="waveFill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ef4444" stop-opacity=".4"/>
+          <stop offset="100%" stop-color="#ef4444" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <!-- 网格 -->
+      <g stroke="currentColor" opacity=".08" stroke-width="1">
+        <line x1="40" y1="30" x2="480" y2="30"/>
+        <line x1="40" y1="75" x2="480" y2="75"/>
+        <line x1="40" y1="120" x2="480" y2="120"/>
+      </g>
+      <!-- 行为阈值线 -->
+      <line x1="40" y1="90" x2="480" y2="90" stroke="currentColor" opacity=".4" stroke-width="1.2" stroke-dasharray="5 4"/>
+      <text x="482" y="93" fill="currentColor" opacity=".55" font-size="10" font-family="'Noto Serif SC',serif">行动阈值</text>
+      <!-- 动机曲线 -->
+      <path d="M40,95 Q80,30 120,60 T200,45 T280,130 T360,40 T440,110 T480,85" stroke="#ef4444" stroke-width="2.5" fill="none"/>
+      <path d="M40,95 Q80,30 120,60 T200,45 T280,130 T360,40 T440,110 T480,85 L480,180 L40,180 Z" fill="url(#waveFill)"/>
+      <!-- 轴 -->
+      <line x1="40" y1="30" x2="40" y2="170" stroke="currentColor" opacity=".3"/>
+      <line x1="40" y1="170" x2="480" y2="170" stroke="currentColor" opacity=".3"/>
+      <text x="8" y="40" fill="currentColor" opacity=".5" font-size="10" font-family="'Noto Serif SC',serif">高</text>
+      <text x="8" y="170" fill="currentColor" opacity=".5" font-size="10" font-family="'Noto Serif SC',serif">低</text>
+      <text x="455" y="185" fill="currentColor" opacity=".5" font-size="10" font-family="'Noto Serif SC',serif">时间 →</text>
+      <!-- 峰值/谷值标注 -->
+      <circle cx="120" cy="60" r="3" fill="#ef4444"/>
+      <text x="128" y="54" fill="#ef4444" font-size="9.5" font-family="'Noto Serif SC',serif">看到好身材</text>
+      <circle cx="280" cy="130" r="3" fill="#ef4444"/>
+      <text x="288" y="142" fill="#ef4444" font-size="9.5" font-family="'Noto Serif SC',serif">工作一忙</text>
+    </svg>
+    <div class="curve-legend">
+      <span><i class="l-m"></i>动机强度</span>
+      <span><i class="l-t"></i>行动阈值（动机必须高于它才能行动）</span>
+    </div>
+  </div>
+
+  <p>你今天看到别人身材很好，减肥的动机一下子变得很强，可能立刻去运动。但到了明天工作一忙、或者遇到不开心的事，动机就可能大幅下降，甚至不想动了。</p>
+
+  <div class="quote-block">靠动机来维持行动，就像在不稳定的地基上盖房子——很容易倒塌。所以我们需要借助另外两个要素：能力和提示。<span class="small">福格教授 · 《福格行为模型》</span></div>
+</section>
+
+<!-- 肆 · 能力 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·04">4</div>
+    <div><div class="ch-kicker">要素二</div><h2 class="ch-title">能力：你能轻松做到这件事吗</h2></div>
+  </div>
+
+  <div class="factor-card a">
+    <div class="factor-head">
+      <div class="factor-icon">💪</div>
+      <div>
+        <div class="factor-letter">A</div>
+        <div class="factor-name">能力 Ability</div>
+        <div class="factor-q">Can you do this easily?</div>
+      </div>
+    </div>
+    <p>能力指的是我们完成某件事的难易程度，也就是「我能不能轻松做到这件事」。福格教授提出，<strong>能力的核心是简单</strong>——一件事越简单，我们就越容易做到，行为发生的可能性就越高；反之事情越复杂、需要付出的努力越多，我们就越难做到。</p>
+  </div>
+
+  <p>那么如何判断一件事的难易程度？福格教授给出了六个影响能力的因素——</p>
+
+  <div class="ability-bars">
+    <div class="ab-item"><div class="ab-top"><span class="ab-name">⏱ 时间</span><span class="ab-hint">耗时越长，门槛越高</span></div><div class="ab-track"><div class="ab-fill" style="--w:60%"></div></div></div>
+    <div class="ab-item"><div class="ab-top"><span class="ab-name">💰 金钱</span><span class="ab-hint">花费越多，门槛越高</span></div><div class="ab-track"><div class="ab-fill" style="--w:55%"></div></div></div>
+    <div class="ab-item"><div class="ab-top"><span class="ab-name">🏃 体力</span><span class="ab-hint">身体消耗越大，门槛越高</span></div><div class="ab-track"><div class="ab-fill" style="--w:70%"></div></div></div>
+    <div class="ab-item"><div class="ab-top"><span class="ab-name">🧠 脑力</span><span class="ab-hint">认知负担越重，门槛越高</span></div><div class="ab-track"><div class="ab-fill" style="--w:65%"></div></div></div>
+    <div class="ab-item"><div class="ab-top"><span class="ab-name">👥 社会偏差</span><span class="ab-hint">越违背常规，门槛越高</span></div><div class="ab-track"><div class="ab-fill" style="--w:45%"></div></div></div>
+    <div class="ab-item"><div class="ab-top"><span class="ab-name">🎲 非常规性</span><span class="ab-hint">越偏离日常，门槛越高</span></div><div class="ab-track"><div class="ab-fill" style="--w:50%"></div></div></div>
+  </div>
+
+  <p>举个例子：你想每天早上起来跑步。如果家附近就有公园，不需要花费太多时间、不需要额外花钱、体力也能承受——那这件事的能力门槛就很低。但如果跑步需要你开车半小时去很远的健身房、还要花高昂的会员费、而且你本身体力也不太好——那门槛就很高，做到的可能性自然就小了。</p>
+
+  <div class="quote-block">很多时候我们做不到某件事，并不是因为我们不想做，而是因为这件事对我们来说太难了，超出了我们当前的能力范围。</div>
+
+  <p>那该怎么办呢？很简单——<strong>降低难度，让它变得更容易做到</strong>。把「每天读 50 页书」改成「每天读 5 页」；想养成写日记的习惯，就从「每天写一句话」开始；想养成背单词的习惯，就从「每天背一个单词」开始。</p>
+
+  <p>当你把事情简化到几乎不需要意志力就能完成的时候，你会发现，行动其实并没有那么难。</p>
+</section>
+
+<!-- 伍 · 提示 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·05">5</div>
+    <div><div class="ch-kicker">要素三</div><h2 class="ch-title">提示：是什么提醒你去做</h2></div>
+  </div>
+
+  <div class="factor-card p">
+    <div class="factor-head">
+      <div class="factor-icon">🔔</div>
+      <div>
+        <div class="factor-letter">P</div>
+        <div class="factor-name">提示 Prompt</div>
+        <div class="factor-q">What reminds you to do it?</div>
+      </div>
+    </div>
+    <p>提示就是促使我们采取行动的信号——它告诉我们「该做这件事了」。如果说动机是想做、能力是能做，那么提示就是<strong>该做了</strong>。没有提示，即使我们有很强的动机和足够的能力，也可能会忘记去做某件事。</p>
+  </div>
+
+  <p>生活中提示无处不在：早上闹钟响了是起床的提示，手机弹出消息是查看消息的提示，看到别人在吃午饭是自己该吃饭的提示。福格教授把提示分为三种类型——</p>
+
+  <div class="prompt-trio">
+    <div class="prompt-cell">
+      <div class="ico">👀</div>
+      <h5>环境提示</h5>
+      <p>周围环境中的事物给我们的提醒。把运动服放在床头，看到就会想起运动；把水杯放在办公桌显眼位置，提醒自己多喝水。</p>
+    </div>
+    <div class="prompt-cell">
+      <div class="ico">⏰</div>
+      <h5>时间提示</h5>
+      <p>在特定时间点出现的提示。每天晚上八点准时打开台灯看书，「每天晚上八点」就是一个时间提示。</p>
+    </div>
+    <div class="prompt-cell">
+      <div class="ico">⛓️</div>
+      <h5>行为提示</h5>
+      <p>完成一个行为后，触发另一个行为。刷牙后习惯性地涂护肤品，「刷牙」就是「护肤」的行为提示。</p>
+    </div>
+  </div>
+
+  <p>很多时候我们忘记做某件事，并不是因为不想做或者做不到，而是因为没有一个明确的提示。想每天晚上睡前泡脚，可总因为忙其他事情而忘记——这时候就可以给自己设置一个提示：把泡脚桶放在浴室门口，或者在手机上订一个晚上九点的泡脚提醒。</p>
+</section>
+
+<!-- 陆 · 行为阈值 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·06">6</div>
+    <div><div class="ch-kicker">行为阈值</div><h2 class="ch-title">三个要素如何协同</h2></div>
+  </div>
+
+  <div class="threshold">
+    <h5>🎯 行为发生阈值：当 M×A×P 同时到位，行为才会发生</h5>
+    <svg viewBox="0 0 500 220" preserveAspectRatio="xMidYMid meet">
+      <!-- 坐标轴 -->
+      <line x1="50" y1="180" x2="470" y2="180" stroke="currentColor" opacity=".3" stroke-width="1"/>
+      <line x1="50" y1="30" x2="50" y2="180" stroke="currentColor" opacity=".3" stroke-width="1"/>
+      <text x="20" y="40" fill="currentColor" opacity=".5" font-size="10" font-family="'Noto Serif SC',serif">动机</text>
+      <text x="20" y="55" fill="currentColor" opacity=".35" font-size="9" font-family="'Noto Serif SC',serif">M</text>
+      <text x="472" y="195" fill="currentColor" opacity=".5" font-size="10" font-family="'Noto Serif SC',serif">能力 A →</text>
+      <!-- 阈值曲线（双曲线） -->
+      <path d="M70,40 Q120,100 200,135 T380,160 T460,170" stroke="#1e40af" stroke-width="2.5" fill="none"/>
+      <text x="440" y="158" fill="#1e40af" font-size="10" font-family="'ZCOOL XiaoWei',serif">行为阈值</text>
+      <!-- 行为区域标注 -->
+      <path d="M70,40 Q120,100 200,135 T380,160 T460,170 L460,180 L70,180 Z" fill="#1e40af" opacity=".06"/>
+      <text x="320" y="175" fill="#1e40af" opacity=".6" font-size="10" font-family="'Noto Serif SC',serif">✓ 行为会发生</text>
+      <text x="90" y="70" fill="currentColor" opacity=".5" font-size="10" font-family="'Noto Serif SC',serif">✗ 不发生</text>
+      <!-- 三个例子点 -->
+      <circle cx="110" cy="70" r="5" fill="#ef4444"/>
+      <text x="118" y="68" fill="#ef4444" font-size="10" font-family="'Noto Serif SC',serif">动机高·能力高·无提示</text>
+      <circle cx="380" cy="100" r="5" fill="#ef4444"/>
+      <text x="300" y="95" fill="#ef4444" font-size="10" font-family="'Noto Serif SC',serif">动机高·能力低·有提示</text>
+      <circle cx="400" cy="155" r="6" fill="#10b981" stroke="#fff" stroke-width="2"/>
+      <text x="300" y="150" fill="#10b981" font-size="10" font-family="'Noto Serif SC',serif">动机·能力·提示 齐备 ✓</text>
+    </svg>
+  </div>
+
+  <p>你可以回想一下自己以往那些失败的行动经历，是不是因为其中某个要素没有满足：</p>
+  <ul style="padding-left:22px;margin:14px 0 18px">
+    <li style="margin-bottom:6px">想学习一门新语言，动机很足、能力也具备（有时间和资源），但就是没有固定的提示，所以总是三天打鱼两天晒网。</li>
+    <li style="margin-bottom:6px">想每天早起做早餐，有提示（闹钟响了）、也有能力（会做简单早餐），但动机不足（觉得外面买更方便），所以很难坚持。</li>
+  </ul>
+
+  <p>接下来，我们就从<strong>「让行为发生」</strong>和<strong>「让习惯持续」</strong>两个方面，看看具体怎么用这个模型。</p>
+</section>
+
+<!-- 柒 · 让行为发生 + 让习惯持续 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·07">7</div>
+    <div><div class="ch-kicker">实战指南</div><h2 class="ch-title">让行动轻松启动，让习惯持续养成</h2></div>
+  </div>
+
+  <div class="duo-wrap">
+    <div class="duo-card">
+      <h4>🚀 让行为发生 · 启动第一步</h4>
+      <ol>
+        <li><strong>提升动机</strong>：把行动和核心价值观、人生目标联系起来；通过体验小成功积累成就感。</li>
+        <li><strong>降低能力门槛（微习惯）</strong>：把大行动拆成小到无需意志力就能完成——每天 1 个俯卧撑、走 100 步。</li>
+        <li><strong>设计提示</strong>：让信号无处不在——桌上放水杯、手机设提醒、把「刷牙」绑定成「读书」的提示。</li>
+      </ol>
+    </div>
+    <div class="duo-card">
+      <h4>🌱 让习惯持续 · 从行动到自然</h4>
+      <ol>
+        <li><strong>持续强化动机</strong>：及时奖励（完成运动后看一集剧、吃一块巧克力）；社交问责（和朋友互相打卡）。</li>
+        <li><strong>逐步提升能力</strong>：在舒适区边缘成长——从 10 个俯卧撑加到 11 个，而不是一下跳到 20 个。</li>
+        <li><strong>优化提示</strong>：让提示与生活节奏无缝衔接，成为自然而然的一部分，不再是额外负担。</li>
+      </ol>
+    </div>
+  </div>
+
+  <h3 style="font-family:'ZCOOL XiaoWei',serif;font-size:20px;letter-spacing:.08em;margin:34px 0 18px;text-align:center;color:var(--accent)">微习惯的力量：从 1 到 ∞</h3>
+  <div class="growth-row">
+    <div class="growth-dot"><div class="bubble">1</div><div class="lbl">第 1 周<br>1 个俯卧撑</div></div>
+    <div class="growth-dot"><div class="bubble">3</div><div class="lbl">第 2 周<br>3 个俯卧撑</div></div>
+    <div class="growth-dot"><div class="bubble">10</div><div class="lbl">第 4 周<br>10 个俯卧撑</div></div>
+    <div class="growth-dot"><div class="bubble">20</div><div class="lbl">第 8 周<br>20 个俯卧撑</div></div>
+    <div class="growth-dot"><div class="bubble">∞</div><div class="lbl">一年后<br>自然而然</div></div>
+  </div>
+  <p class="center" style="color:var(--text2);font-size:13.5px;margin-top:8px">就像水滴石穿——每天一个微小的行动，日积月累就能带来巨大的改变。</p>
+</section>
+
+<!-- 捌 · 四个误区 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·08">8</div>
+    <div><div class="ch-kicker">常见误区</div><h2 class="ch-title">你是否也踩过这些坑</h2></div>
+  </div>
+
+  <p class="ch-lead">在运用福格行为模型改变行为、养成习惯的过程中，很多人会因为理解不够深入、或受传统观念影响，陷入一些误区。这些误区不仅让努力白费，还会打击信心。</p>
+
+  <div class="pit-grid">
+    <div class="pit-card">
+      <span class="pit-num">壹</span>
+      <h4>过度依赖意志力</h4>
+      <p class="trap">「只要意志力够强，就没有做不到的事」——强迫自己早起跑步、熬夜学习，即使身体疲惫也不休息。</p>
+      <p class="truth">意志力就像<em>肌肉</em>，用多了会疲劳，而且是有限的。一旦耗尽就容易放弃。福格教授强调：<em>不要靠意志力改变行为，要靠设计。</em></p>
+    </div>
+    <div class="pit-card">
+      <span class="pit-num">贰</span>
+      <h4>同时改变多个习惯</h4>
+      <p class="trap">既想每天运动、又想每天读书、还想每天记账——多管齐下，结果哪个都没养成，身心俱疲。</p>
+      <p class="truth">每个习惯都要投入精力去设计 M/A/P。同时应对多个，就像<em>把注意力分散到多个战场</em>。习惯养成的关键是<em>聚焦一次，做深做透</em>，稳定后再开下一个。</p>
+    </div>
+    <div class="pit-card">
+      <span class="pit-num">叁</span>
+      <h4>忽视环境的影响</h4>
+      <p class="trap">想控制少刷手机，却把手机放在随手能拿到的地方；想少吃零食，却在卧室客厅都囤满零食。</p>
+      <p class="truth">环境是行为的<em>隐形推手</em>——好环境让好行为更容易发生，差环境让坏行为不断重复。试着<em>改造你的环境</em>，让它成为助力而不是阻力。</p>
+    </div>
+    <div class="pit-card">
+      <span class="pit-num">肆</span>
+      <h4>遇到失败就全盘否定</h4>
+      <p class="trap">因为感冒中断两天运动、因为加班忘了记账，就全盘否定自己：「我根本就养不成这个习惯」，然后彻底放弃。</p>
+      <p class="truth">失败不是能力不足，而是<em>设计还不够完善</em>。分析是哪个要素出了问题（M/A/P），调整设计，就能让习惯重新回到正轨。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 玖 · 三个场景实战 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·09">9</div>
+    <div><div class="ch-kicker">实战应用</div><h2 class="ch-title">三个常见场景的 MAP 设计</h2></div>
+  </div>
+  <p class="ch-lead">了解原理后，更重要的是把它运用到实际生活中。下面针对健康管理、职场提升、亲子教育三个场景，看看如何用模型设计具体行动方案。</p>
+
+  <div class="scene-tabs">
+    <div class="scene-card">
+      <div class="scene-head">
+        <div class="scene-ico">🥬</div>
+        <div><h4>健康管理 · 每天吃一份蔬菜</h4><div class="sub">HEALTH · 让小行动融入日常</div></div>
+      </div>
+      <div class="map-row"><span class="label m">M 动机</span><span class="val">吃蔬菜能补充维生素、让身体更健康、减少生病概率——这是核心动机。</span><span class="arrow">→</span></div>
+      <div class="map-row"><span class="label a">A 能力</span><span class="val">觉得准备蔬菜麻烦？简化步骤：出门前在包里放一根黄瓜或一个番茄；点外卖时直接选含蔬菜的套餐。</span><span class="arrow">→</span></div>
+      <div class="map-row"><span class="label p">P 提示</span><span class="val">手机壳贴一张吃蔬菜的小贴纸；早餐时把蔬菜放在显眼位置。</span><span class="arrow">→</span></div>
+    </div>
+
+    <div class="scene-card">
+      <div class="scene-head">
+        <div class="scene-ico">💼</div>
+        <div><h4>职场提升 · 每天学 10 分钟 Excel</h4><div class="sub">CAREER · 用小行动积累大成长</div></div>
+      </div>
+      <div class="map-row"><span class="label m">M 动机</span><span class="val">学会 Excel 能提高工作效率、减少加班、做出专业表格，让领导刮目相看。</span><span class="arrow">→</span></div>
+      <div class="map-row"><span class="label a">A 能力</span><span class="val">系统学太难？拆成每天一个技巧：今天学快速求和、明天学筛选数据。每个只需 10 分钟。</span><span class="arrow">→</span></div>
+      <div class="map-row"><span class="label p">P 提示</span><span class="val">电脑桌面建 Excel 学习文件夹；下班前 10 分钟设一个学习提醒。</span><span class="arrow">→</span></div>
+    </div>
+
+    <div class="scene-card">
+      <div class="scene-head">
+        <div class="scene-ico">🧸</div>
+        <div><h4>亲子教育 · 孩子睡前整理玩具</h4><div class="sub">PARENTING · 用设计代替催促</div></div>
+      </div>
+      <div class="map-row"><span class="label m">M 动机</span><span class="val">玩「玩具回家」游戏：「玩具宝宝也想回家睡觉啦，我们帮它们找妈妈吧」，游戏化提升兴趣。</span><span class="arrow">→</span></div>
+      <div class="map-row"><span class="label a">A 能力</span><span class="val">给玩具准备专门收纳盒、贴上玩具图片；一开始陪孩子一起整理，熟练后让他自己做。</span><span class="arrow">→</span></div>
+      <div class="map-row"><span class="label p">P 提示</span><span class="val">洗漱后说一句「我们现在去把玩具送回家吧」；玩具区贴整理玩具的卡通贴纸。</span><span class="arrow">→</span></div>
+    </div>
+  </div>
+
+  <p>你有没有发现，用模型引导孩子时，孩子会更愿意配合？因为这种方式不是强迫孩子去做，而是通过设计 M/A/P 让他觉得「这件事很有趣」「这件事我能做到」。比起批评和催促，科学的引导更能让孩子养成自主的好习惯。</p>
+</section>
+
+<!-- 拾 · 应对倒退 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·10">10</div>
+    <div><div class="ch-kicker">应对倒退</div><h2 class="ch-title">当习惯断档时该怎么办</h2></div>
+  </div>
+  <p class="ch-lead">即使我们精心设计了行为，实际执行中也难免会因为突发情况（生病、出差、情绪低落）导致习惯断档。这时候很多人会焦虑：「我的习惯是不是又要失败了？」其实不用慌。</p>
+
+  <div class="recovery">
+    <div class="rec-card" data-step="STEP 1">
+      <div class="ico">🫂</div>
+      <h4>接纳断档</h4>
+      <p>习惯养成是螺旋上升的过程，不是直线。坚持了 20 天运动，因为感冒停了 3 天，不意味前功尽弃。接纳断档，就是不把它当成失败，而是当成一次<em style="color:var(--accent);font-style:normal">正常的暂停</em>。</p>
+    </div>
+    <div class="rec-card" data-step="STEP 2">
+      <div class="ico">🔍</div>
+      <h4>分析原因</h4>
+      <p>这次断档是动机不足、能力不够，还是提示没起作用？加班后太累没读书 → 能力问题，可以把读书时间改到早上，或把 20 页降到 5 页。忘读 → 提示问题，在床头加一个闹钟。</p>
+    </div>
+    <div class="rec-card" data-step="STEP 3">
+      <div class="ico">🌱</div>
+      <h4>从小行动重启</h4>
+      <p>不要一开始就恢复到之前的强度。之前每天运动 30 分钟，断档后先从 5 分钟开始；之前每天读 20 页书，断档后先从 1 页开始。小行动门槛极低，能快速找回行为惯性。</p>
+    </div>
+  </div>
+
+  <div class="quote-block">福格教授说过：失败不是因为你能力不足，而是因为你的设计还不够完善。把每次失败当成一次优化设计的机会，你会发现，坚持下去并没有那么难。</div>
+</section>
+
+<!-- 拾壹 · 结语 -->
+<section class="chapter">
+  <div class="ch-head">
+    <div class="badge" data-no="CH·11">11</div>
+    <div><div class="ch-kicker">结语</div><h2 class="ch-title">设计行为，而不是依赖意志力</h2></div>
+  </div>
+
+  <div class="big-quote">福格行为模型没有复杂的理论，只有一个简单却强大的核心：<br><em>B = M × A × P</em>。<br>改变行为不需要靠强大的意志力，<br>而是要通过设计，让行动变得简单、容易、有提示，<br>让习惯在不知不觉中养成。</div>
+
+  <p>你有没有发现，原来那些你以为做不到的事——养成运动习惯、提升职场能力、引导孩子养成好习惯——用福格行为模型就能一步步实现。原来你不是没毅力，也不是没能力，只是之前没找到适合自己的方法。</p>
+
+  <div class="tonight">
+    <h3>今晚就开始 · 设计你的第一个微习惯</h3>
+    <p class="sub">DESIGN YOUR FIRST TINY HABIT</p>
+    <div class="tonight-step">
+      <span class="n">1</span>
+      <p>想一个你一直想养成、却总也坚持不下来的习惯。<span class="hint">比如每天运动、读书、背单词、吃蔬菜</span></p>
+    </div>
+    <div class="tonight-step">
+      <span class="n">2</span>
+      <p>写下你的核心动机（M）：这个习惯能带给你什么你真正想要的东西？<span class="hint">健康、陪伴家人、减少加班、自我成长</span></p>
+    </div>
+    <div class="tonight-step">
+      <span class="n">3</span>
+      <p>把它缩小到无需意志力就能完成的微习惯（A）：每天 1 个俯卧撑、读 1 页书、背 1 个单词。<span class="hint">小到你不可能失败</span></p>
+    </div>
+    <div class="tonight-step">
+      <span class="n">4</span>
+      <p>为它设计一个明确的提示（P）：绑定到某个你已经每天都做的行为之后。<span class="hint">「刷完牙后……」「起床后……」「下班前……」</span></p>
+    </div>
+    <div class="tonight-step">
+      <span class="n">5</span>
+      <p>完成一次后，给自己一个即时奖励——在心里给自己点个赞，或者对镜子里的自己微笑。<span class="hint">庆祝，是强化的关键</span></p>
+    </div>
+    <p class="end-line">在这个过程中，不管遇到什么困难，<br>都别忘了回头看看自己已经走了多远。</p>
+  </div>
+</section>
+
+<!-- 思维导图 -->
+<section class="chapter-static">
+  <div class="ch-head">
+    <div class="badge" data-no="MAP">全</div>
+    <div><div class="ch-kicker">一图回望</div><h2 class="ch-title">福格行为模型全景图</h2></div>
+  </div>
+  <div class="markmap-box">
+    <div class="markmap">
+      <script type="text/template">
+# 福格行为模型
+## 核心公式 B = M × A × P
+### 行为 = 动机 × 能力 × 提示
+### 三者同时到位，行为才会发生
+## 要素一 · 动机 M
+### 想做这件事的意愿与驱动力
+### 像过山车一样起伏、不稳定
+### 不能单靠动机维持行动
+## 要素二 · 能力 A
+### 完成这件事的难易程度
+### 六个因素：时间·金钱·体力·脑力·社会偏差·非常规性
+### 核心是「简单」
+### 微习惯：把大行动拆到无需意志力
+## 要素三 · 提示 P
+### 促使行动的信号
+### 环境提示 · 时间提示 · 行为提示
+### 没有提示，再强的动机和能力也会失效
+## 实战 · 让行为发生
+### 提升动机 · 链接核心价值
+### 降低能力门槛 · 微习惯起步
+### 设计清晰的提示 · 无处不在
+## 实战 · 让习惯持续
+### 即时奖励 · 社交问责
+### 舒适区边缘成长
+### 优化提示 · 融入生活节奏
+## 四个误区
+### 过度依赖意志力
+### 同时改变多个习惯
+### 忽视环境的影响
+### 遇到失败就全盘否定
+## 三个应用场景
+### 健康管理 · 吃蔬菜、运动
+### 职场提升 · Excel、工作复盘
+### 亲子教育 · 写作业、整理玩具
+## 应对倒退
+### 接纳断档
+### 分析 M/A/P 哪里出问题
+### 从小行动重启
+      </script>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="goodnight">晚安</div>
+  <p class="wish">愿你能用福格行为模型，<br>养成更多好习惯，<br>活成自己想要的样子。<br>也别忘了回头看看，自己已经走了多远。
+  <span class="moon"></span></p>
+  <p class="src-note">睡前听完一本书 · 福格行为模型</p>
+</footer>
+
+<script>
+// 滚动显现
+!function(){
+  var els=document.querySelectorAll('.chapter');
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});
+  },{threshold:.12});
+  els.forEach(function(el){io.observe(el);});
+}();
+// 同步主题选择器
+document.querySelector('.theme-select').value=document.body.className;
+// 强制 markmap 按最终容器宽度重绘
+window.addEventListener('load',function(){
+  window.dispatchEvent(new Event('resize'));
+  setTimeout(function(){window.dispatchEvent(new Event('resize'));},500);
+  setTimeout(function(){window.dispatchEvent(new Event('resize'));},1500);
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+</body>
+</html>

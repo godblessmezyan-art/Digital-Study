@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>自卑与超越</title>
+<link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+    --primary: #4A9FD4;
+    --primary-light: #4a9fd422;
+    --primary-mid: #4a9fd455;
+    --bg: #f7fafc;
+    --card-bg: #ffffff;
+    --text: #2c3e50;
+    --text-light: #5a6d7e;
+    --hero-bg: #1a2a3a;
+    --mm-filter: grayscale(1) sepia(.9) hue-rotate(169deg) saturate(2.2) brightness(.95);
+}
+body.theme-sky { --primary:#4A9FD4; --primary-light:#4a9fd422; --primary-mid:#4a9fd455; --bg:#f7fafc; --card-bg:#ffffff; --text:#2c3e50; --text-light:#5a6d7e; --hero-bg:#1a2a3a; --mm-filter:grayscale(1) sepia(.9) hue-rotate(169deg) saturate(2.2) brightness(.95); }
+body.theme-moon { --primary:#46759B; --primary-light:#46759b22; --primary-mid:#46759b55; --bg:#f5f8fa; --card-bg:#ffffff; --text:#2b3a48; --text-light:#57718a; --hero-bg:#16222e; --mm-filter:grayscale(1) sepia(.9) hue-rotate(172deg) saturate(2) brightness(.9); }
+body.theme-haze { --primary:#7D99AE; --primary-light:#7d99ae22; --primary-mid:#7d99ae55; --bg:#f7f9fb; --card-bg:#ffffff; --text:#33424f; --text-light:#64798b; --hero-bg:#24303a; --mm-filter:grayscale(1) sepia(.9) hue-rotate(170deg) saturate(1.6) brightness(1); }
+body.theme-indigo { --primary:#4A6FA5; --primary-light:#4a6fa522; --primary-mid:#4a6fa555; --bg:#f6f8fc; --card-bg:#ffffff; --text:#2a3550; --text-light:#5a6a8a; --hero-bg:#182238; --mm-filter:grayscale(1) sepia(.9) hue-rotate(182deg) saturate(2.2) brightness(.92); }
+body.theme-teal { --primary:#4E9B8F; --primary-light:#4e9b8f22; --primary-mid:#4e9b8f55; --bg:#f5fbfa; --card-bg:#ffffff; --text:#2a403c; --text-light:#577a74; --hero-bg:#14302b; --mm-filter:grayscale(1) sepia(.9) hue-rotate(136deg) saturate(2) brightness(.95); }
+body.theme-bamboo { --primary:#7A9B76; --primary-light:#7a9b7622; --primary-mid:#7a9b7655; --bg:#f7fbf6; --card-bg:#ffffff; --text:#33442f; --text-light:#63795e; --hero-bg:#22301f; --mm-filter:grayscale(1) sepia(.9) hue-rotate(80deg) saturate(1.8) brightness(.95); }
+body.theme-vermilion { --primary:#C0564F; --primary-light:#c0564f22; --primary-mid:#c0564f55; --bg:#fdf8f7; --card-bg:#ffffff; --text:#4a2f2c; --text-light:#8a5f5a; --hero-bg:#381a17; --mm-filter:grayscale(1) sepia(.9) hue-rotate(-31deg) saturate(2.4) brightness(.95); }
+body.theme-sakura { --primary:#D19090; --primary-light:#d1909022; --primary-mid:#d1909055; --bg:#fdf9f9; --card-bg:#ffffff; --text:#4f3636; --text-light:#96686a; --hero-bg:#3a2222; --mm-filter:grayscale(1) sepia(.9) hue-rotate(-35deg) saturate(1.8) brightness(1.05); }
+body.theme-lotus { --primary:#C48F9B; --primary-light:#c48f9b22; --primary-mid:#c48f9b55; --bg:#fdf8fa; --card-bg:#ffffff; --text:#4a333a; --text-light:#8d6572; --hero-bg:#35202a; --mm-filter:grayscale(1) sepia(.9) hue-rotate(310deg) saturate(1.8) brightness(1); }
+body.theme-rose { --primary:#A78B8B; --primary-light:#a78b8b22; --primary-mid:#a78b8b55; --bg:#fbf8f8; --card-bg:#ffffff; --text:#443535; --text-light:#7d6464; --hero-bg:#2e2222; --mm-filter:grayscale(1) sepia(.9) hue-rotate(-35deg) saturate(1.4) brightness(1); }
+body.theme-purple { --primary:#9B87B5; --primary-light:#9b87b522; --primary-mid:#9b87b555; --bg:#faf8fd; --card-bg:#ffffff; --text:#3a3350; --text-light:#6f6490; --hero-bg:#251f38; --mm-filter:grayscale(1) sepia(.9) hue-rotate(232deg) saturate(1.8) brightness(1); }
+body.theme-amber { --primary:#C08A3E; --primary-light:#c08a3e22; --primary-mid:#c08a3e55; --bg:#fdfaf4; --card-bg:#ffffff; --text:#4a3a22; --text-light:#8a7044; --hero-bg:#352810; --mm-filter:grayscale(1) sepia(.9) hue-rotate(0deg) saturate(2.2) brightness(1); }
+body.theme-caramel { --primary:#A06B3F; --primary-light:#a06b3f22; --primary-mid:#a06b3f55; --bg:#fcf8f4; --card-bg:#ffffff; --text:#44331f; --text-light:#7d6040; --hero-bg:#2e2010; --mm-filter:grayscale(1) sepia(.9) hue-rotate(-7deg) saturate(2) brightness(.95); }
+body.theme-wood { --primary:#B08D57; --primary-light:#b08d5722; --primary-mid:#b08d5755; --bg:#fcfaf5; --card-bg:#ffffff; --text:#463a26; --text-light:#806a45; --hero-bg:#302512; --mm-filter:grayscale(1) sepia(.9) hue-rotate(0deg) saturate(1.8) brightness(1); }
+body.theme-ink { --primary:#5A6670; --primary-light:#5a667022; --primary-mid:#5a667055; --bg:#f7f8f9; --card-bg:#ffffff; --text:#2e363d; --text-light:#5c6a75; --hero-bg:#1c2228; --mm-filter:grayscale(1) sepia(.9) hue-rotate(175deg) saturate(1.2) brightness(.9); }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Noto Serif SC', serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 2;
+    transition: background .5s, color .5s;
+}
+.hero {
+    min-height: 72vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: var(--hero-bg);
+    color: #fff;
+    padding: 4rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: background .5s;
+}
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 120%, var(--primary-mid), transparent 70%);
+}
+.hero > * { position: relative; }
+.hero h1 {
+    font-size: clamp(3rem, 9vw, 5.2rem);
+    font-weight: 900;
+    letter-spacing: .12em;
+    margin-bottom: 1.2rem;
+}
+.hero-sub {
+    font-size: clamp(1rem, 3vw, 1.35rem);
+    opacity: .85;
+    max-width: 34em;
+    letter-spacing: .08em;
+}
+.hero-author {
+    margin-top: 2.2rem;
+    font-size: .95rem;
+    opacity: .6;
+    letter-spacing: .2em;
+}
+.container { max-width: 760px; margin: 0 auto; padding: 3rem 1.5rem 2rem; }
+.chapter {
+    margin-bottom: 3.5rem;
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .8s ease, transform .8s ease;
+}
+.chapter.visible { opacity: 1; transform: none; }
+.chapter-label {
+    display: inline-block;
+    font-size: .8rem;
+    letter-spacing: .25em;
+    color: var(--primary);
+    border: 1px solid var(--primary-mid);
+    border-radius: 20px;
+    padding: .15rem 1rem;
+    margin-bottom: 1rem;
+}
+.chapter h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+    color: var(--text);
+}
+.lead { font-size: 1.05rem; color: var(--text-light); margin-bottom: 1.4rem; }
+p { margin-bottom: 1.1rem; text-align: justify; }
+.quote-block {
+    background: var(--card-bg);
+    border-left: 4px solid var(--primary);
+    border-radius: 0 12px 12px 0;
+    padding: 1.4rem 1.6rem;
+    margin: 1.6rem 0;
+    font-size: 1.05rem;
+    box-shadow: 0 2px 12px var(--primary-light);
+}
+.quote-src { display: block; margin-top: .6rem; font-size: .85rem; color: var(--text-light); }
+.scene-card {
+    background: var(--card-bg);
+    border-radius: 14px;
+    padding: 1.6rem;
+    margin: 1.6rem 0;
+    box-shadow: 0 3px 16px var(--primary-light);
+    border: 1px solid var(--primary-light);
+}
+.scene-card h4 { color: var(--primary); font-size: 1.05rem; margin-bottom: .8rem; }
+.key-list { margin: 1.4rem 0; display: flex; flex-direction: column; gap: 1rem; }
+.key-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.2rem 1.4rem;
+    box-shadow: 0 2px 10px var(--primary-light);
+}
+.key-num {
+    flex-shrink: 0;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .85rem;
+    font-weight: 700;
+    margin-top: .3rem;
+}
+.insight-card {
+    background: linear-gradient(135deg, var(--primary-light), var(--card-bg));
+    border: 1px solid var(--primary-mid);
+    border-radius: 14px;
+    padding: 1.6rem;
+    margin: 1.8rem 0;
+}
+.insight-card h4 { color: var(--primary); margin-bottom: .8rem; font-size: 1.05rem; }
+.divider-orn { text-align: center; color: var(--primary); letter-spacing: 1em; margin: 2.5rem 0; opacity: .6; }
+.mindmap-section h3 { text-align: center; }
+.markmap {
+    background: var(--card-bg);
+    border-radius: 14px;
+    box-shadow: 0 3px 16px var(--primary-light);
+    min-height: 420px;
+    overflow: hidden;
+}
+.markmap svg { filter: var(--mm-filter); transition: filter .5s; }
+.epilogue {
+    background: var(--hero-bg);
+    color: #fff;
+    padding: 4rem 1.5rem;
+    text-align: center;
+}
+.epilogue-inner { max-width: 640px; margin: 0 auto; }
+.final-quote {
+    font-size: 1.15rem;
+    line-height: 2.2;
+    opacity: .9;
+    margin-bottom: 2.5rem;
+}
+.goodnight {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: .5em;
+    color: var(--primary);
+    filter: brightness(1.5);
+}
+/* 换肤 */
+.theme-toggle {
+    position: fixed;
+    top: 1.2rem; right: 1.2rem;
+    z-index: 999;
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    border: none;
+    background: var(--primary);
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 3px 12px rgba(0,0,0,.25);
+    transition: transform .3s, background .5s;
+}
+.theme-toggle:hover { transform: scale(1.12); }
+.theme-panel {
+    position: fixed;
+    top: 4.2rem; right: 1.2rem;
+    z-index: 998;
+    background: var(--card-bg);
+    border-radius: 14px;
+    box-shadow: 0 6px 24px rgba(0,0,0,.18);
+    padding: 1rem;
+    display: none;
+    grid-template-columns: repeat(2, 1fr);
+    gap: .5rem;
+    width: 220px;
+}
+.theme-panel.open { display: grid; }
+.theme-option {
+    display: flex;
+    align-items: center;
+    gap: .45rem;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: .35rem .55rem;
+    cursor: pointer;
+    font-size: .78rem;
+    background: none;
+    font-family: inherit;
+    color: var(--text);
+    transition: border-color .2s;
+}
+.theme-option .dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+.theme-option.active { border-color: var(--primary); }
+@media (max-width: 600px) {
+    .container { padding: 2rem 1.1rem; }
+    .hero { min-height: 60vh; }
+}
+</style>
+</head>
+<body class="theme-sky">
+<script>
+    // 默认配色：每次打开随机一套
+    (function () {
+        var themes = ['sky','moon','haze','indigo','teal','bamboo','vermilion','sakura','lotus','rose','purple','amber','caramel','wood','ink'];
+        document.body.className = 'theme-' + themes[Math.floor(Math.random() * themes.length)];
+    })();
+</script>
+
+<button class="theme-toggle" id="themeToggle" aria-label="换肤">🎨</button>
+<div class="theme-panel" id="themePanel">
+    <button class="theme-option" data-theme="sky"><span class="dot" style="background:#4A9FD4"></span>天青蓝</button>
+    <button class="theme-option" data-theme="moon"><span class="dot" style="background:#46759B"></span>月海蓝</button>
+    <button class="theme-option" data-theme="haze"><span class="dot" style="background:#7D99AE"></span>雾霾蓝</button>
+    <button class="theme-option" data-theme="indigo"><span class="dot" style="background:#4A6FA5"></span>靛青蓝</button>
+    <button class="theme-option" data-theme="teal"><span class="dot" style="background:#4E9B8F"></span>松石绿</button>
+    <button class="theme-option" data-theme="bamboo"><span class="dot" style="background:#7A9B76"></span>竹青色</button>
+    <button class="theme-option" data-theme="vermilion"><span class="dot" style="background:#C0564F"></span>朱砂红</button>
+    <button class="theme-option" data-theme="sakura"><span class="dot" style="background:#D19090"></span>绯樱色</button>
+    <button class="theme-option" data-theme="lotus"><span class="dot" style="background:#C48F9B"></span>藕荷色</button>
+    <button class="theme-option" data-theme="rose"><span class="dot" style="background:#A78B8B"></span>玫瑰灰</button>
+    <button class="theme-option" data-theme="purple"><span class="dot" style="background:#9B87B5"></span>暮山紫</button>
+    <button class="theme-option" data-theme="amber"><span class="dot" style="background:#C08A3E"></span>琥珀色</button>
+    <button class="theme-option" data-theme="caramel"><span class="dot" style="background:#A06B3F"></span>焦糖色</button>
+    <button class="theme-option" data-theme="wood"><span class="dot" style="background:#B08D57"></span>木头色</button>
+    <button class="theme-option" data-theme="ink"><span class="dot" style="background:#5A6670"></span>墨玉色</button>
+</div>
+
+<header class="hero">
+    <h1>自卑与超越</h1>
+    <p class="hero-sub">真正强大的自信，不是没有自卑，而是敢于大大方方带着自卑前行</p>
+    <p class="hero-author">阿尔弗雷德·阿德勒 著</p>
+</header>
+
+<main class="container">
+
+<section class="chapter">
+    <span class="chapter-label">序</span>
+    <h3>在自卑中长大的心理学家</h3>
+    <p class="lead">那种隐隐约约觉得自己不够好、不够完美、不值得被爱的感觉——它可能在你看到朋友圈里的光鲜亮丽时悄悄出现，可能在你面对挑战想要退缩时轻声低语，也可能就在这样一个寂静的夜晚，当你独自面对自己时悄然浮现。这种感受，有个名字，叫做自卑感。</p>
+    <p>而写下这本书的人，正是一位曾深深体验过这种感受的人。阿尔弗雷德·阿德勒，与弗洛伊德、荣格齐名的心理学三大巨头之一——但你可能不知道，这位伟大的心理学家自己就是在自卑中长大的。他从小体弱多病，患有佝偻病，个子矮小，成绩平平，甚至曾被老师建议去做鞋匠，而非继续学业。</p>
+    <p>这些经历让他从小就体会到深深的自卑，却也让他开始思考：人要如何从自卑的泥沼中走出来？正是这份亲身经历，让他的理论没有一丝距离感——因为他懂得每个深陷自卑的人的挣扎，就像懂曾经的自己。</p>
+</section>
+
+<div class="divider-orn">· · ·</div>
+
+<section class="chapter">
+    <span class="chapter-label">第一章</span>
+    <h3>自卑感不是你的敌人</h3>
+    <p class="lead">请先放下"自卑是坏事"这个想法。阿德勒告诉我们：自卑感不是性格缺陷，它是我们每个人都有的正常心理——是因为我们意识到自己的不足而产生的、想要进步的渴望。</p>
+    <p>你看到别人口才好，自己却不善言辞，于是想要学习表达；你看到别人工作能力强，自己却还有差距，于是想要提升自己。这份自卑感是推动我们成长的动力，是积极的、有意义的。</p>
+    <p>但关键在于，自卑感有两种不同的走向：一种是<strong>健康的自卑感</strong>，它促使我们努力改进现状；另一种则是<strong>自卑情结</strong>——当我们无法正确处理自卑感，选择逃避而非克服时陷入的心理困境。阿德勒说，自卑情结的本质是一个人面对问题时，无法找到解决方法而表现出的无能为力。</p>
+    <div class="key-list">
+        <div class="key-item">
+            <span class="key-num">1</span>
+            <div><strong>傲慢与自负</strong>——看似目中无人，实则内心深处充满了"我不行"的恐惧。</div>
+        </div>
+        <div class="key-item">
+            <span class="key-num">2</span>
+            <div><strong>退缩与逃避</strong>——遇到一点困难就放弃，因为害怕失败，害怕证明自己的无能。</div>
+        </div>
+        <div class="key-item">
+            <span class="key-num">3</span>
+            <div><strong>攻击与指责</strong>——把自己的失败归咎于别人、归咎于环境，因为承认自己的不足比什么都难。</div>
+        </div>
+    </div>
+    <div class="scene-card">
+        <h4>动物园里的三个孩子</h4>
+        <p>有三个孩子第一次去动物园，当他们站在狮子笼前时——第一个孩子躲在母亲身后颤抖着说："我想回家。"第二个孩子脸色苍白、双腿发抖，却强作镇定："我一点也不怕。"第三个孩子则瞪着狮子问母亲："我能向它吐口水吗？"</p>
+        <p>这三个孩子其实都感受到了恐惧和自卑，但表现方式完全不同。我们大多数人在面对生活的"狮子"时，又何尝不是用不同的方式掩饰着自己的不安呢？</p>
+    </div>
+    <p>或许你会想，那些看起来特别自信、特别成功的人，应该没有自卑感吧？阿德勒的回答恰恰相反——他观察到许多用强势炫耀来包装自己的人，内心可能隐藏着更深的自卑。书中那个备受宠爱、入学后不再被关注的孩子，通过捣蛋来吸引注意，即使被惩罚也感到满足——因为即使是被惩罚，也比被忽视好。这不也映射着许多成年人"宁愿被讨厌，也要被看见"的心理模式吗？</p>
+    <div class="insight-card">
+        <h4>请先接纳这样一个观点</h4>
+        <p>你的自卑感本身不是问题，如何看待和应对它，才是决定生命走向的关键。当我们停止与自卑感本身对抗，转而审视自己与它的关系时，改变的可能就悄悄开始了。</p>
+    </div>
+</section>
+
+<div class="divider-orn">· · ·</div>
+
+<section class="chapter">
+    <span class="chapter-label">第二章</span>
+    <h3>早期记忆：决定我们的不是过去</h3>
+    <p class="lead">为什么面对同样的自卑，有些人能把它转化为成长的动力，而有些人却会陷入自卑情结？阿德勒告诉我们：答案藏在我们的早期记忆和生活风格里。</p>
+    <p>所谓早期记忆，并不是我们童年时所有的经历，而是那些在我们心中留下深刻印象、被我们反复回忆的瞬间。这些瞬间就像一颗种子，在我们的心里生根发芽，决定了我们对自己、对他人、对世界的基本认知。一个童年时经常被苛责的孩子，记忆里满是"我做什么都不对"的画面，于是形成"我不值得被爱"的生活风格；而一个被鼓励、被认可的孩子，记忆里是"我可以、我被爱着"的画面，于是形成自信乐观的生活风格。</p>
+    <p>书中有个案例：一个患有焦虑症的年轻女性，她的早期记忆是四岁时独自站在窗前，看着父母和弟弟一起快乐地出门，留下她一个人。这段记忆反映了她对被排除在外、对孤独的恐惧——而她成年后的焦虑发作，往往就发生在她感到被忽视或排斥的情境中。</p>
+    <div class="quote-block">
+        决定我们的不是过去，而是我们对过去的解读。真正影响我们的不是经历本身，而是我们赋予经历的意义。
+        <span class="quote-src">——阿德勒最珍贵的观点之一</span>
+    </div>
+    <p>书中有个故事：有两个从小在暴力家庭长大的孩子。成年后，一个成为了家暴者，他说："我从小就看惯了暴力，所以我知道暴力的力量。"另一个则成为了反对家庭暴力的社会工作者，他说："我从小就看惯了暴力，所以我深知暴力的伤害。"相同的经历，截然不同的解释，造就了完全不同的人生。</p>
+    <p>所以，即使你的童年有过遗憾、有过伤痛，也不要把它当做自卑的借口，不要让过去的经历成为你前行的枷锁。你有权利去重新解读自己的过去，有能力去改变自己的生活风格。那些曾经的伤痛或许会成为你生命里的一道疤——但这道疤，也可以成为你成长的勋章。</p>
+</section>
+
+<div class="divider-orn">· · ·</div>
+
+<section class="chapter">
+    <span class="chapter-label">第三章</span>
+    <h3>家庭与学校：心灵地图的绘制处</h3>
+    <p class="lead">早期记忆和生活风格的形成离不开成长的环境，而家庭和学校，就是我们人生中最重要的两个成长环境。家庭是孩子接触世界的第一个窗口，父母的行为和教育方式，直接决定了孩子对世界的认知，也决定了他"社会兴趣"的培养。</p>
+    <p>所谓社会兴趣，就是个体对他人、对社会的关心与共情能力——阿德勒认为，这是摆脱自卑的关键。母亲是孩子第一个建立合作关系的人，教会孩子信任他人、学会合作；父亲的角色则是教会孩子如何与社会建立连接、如何承担责任。此外，出生顺序也会影响性格：长子往往责任感更强但更在意他人评价，次子往往更有竞争意识，独生子女则可能像长子一样被过度关注——但真正起决定作用的，还是父母的教育方式和家庭中的合作氛围。</p>
+    <div class="quote-block">
+        父母最忌讳的就是对孩子的过度溺爱和过度苛责。溺爱让孩子丧失独立能力，走出家庭发现别人不会围着自己转，便产生强烈的自卑；苛责则让孩子觉得自己一无是处，无论怎么做都达不到要求，从而陷入自我否定。
+    </div>
+    <p>学校则是孩子从家庭走向社会的桥梁。阿德勒认为，教育的本质是帮助孩子学会合作——而很多教育却陷入了竞争的误区：过分强调成绩、过分攀比，让成绩不好的孩子产生强烈的自卑，让成绩好的孩子形成病态的优越感，一旦失败就陷入自我否定。</p>
+    <div class="insight-card">
+        <h4>理解地图，才能重绘地图</h4>
+        <p>了解这些的目的，不是给我们现在的困境找一个"原罪"，而是去理解我们独特的心灵地图最初是如何绘制的。理解了地图的绘制方法，我们才真正获得了重新绘制的自由。</p>
+    </div>
+</section>
+
+<div class="divider-orn">· · ·</div>
+
+<section class="chapter">
+    <span class="chapter-label">第四章</span>
+    <h3>生命的意义：三大羁绊与社会兴趣</h3>
+    <p class="lead">知道了自卑的根源，看懂了自己的人生剧本，那到底该如何超越？阿德勒抛出了一个终极问题：生命的意义是什么？</p>
+    <p>他说，生命的意义从来不是单一的答案，但那些能让我们感受到幸福、摆脱自卑的意义，都有一个共同的核心——对他人的关注、对社会的贡献、以及与他人的合作。人类有三大羁绊：我们只能生活在这个有限的星球上，必须依靠彼此的力量生存；我们身边有无数的同类，孤立的个体无法达成任何目标；人类分为两性，个体和族群的延续离不开合作与理解。</p>
+    <p>这三大羁绊对应着人生的三大课题——<strong>职业、社交、婚恋</strong>。生活中的所有问题，最终都可以归结为这三个课题。一个人如果在职业上不思进取、在社交中孤立自己、在婚恋里斤斤计较，他大概率会被自卑感牢牢困住；而一个人如果能在工作中创造价值、在社交中与人共情、在婚恋里平等合作，他一定懂得生命的意义在于向外连接——这样的人总能在合作与贡献中消解内心的自卑，找到属于自己的价值。</p>
+    <div class="quote-block">
+        当我们把目光只放在自己身上——只在意自己的得失、自己的感受、自己的不足时，我们的心灵就像聚光灯，只照亮了"自我"这个小小的舞台，舞台之外全是黑暗和未知的威胁。而当我们开始真诚地对他人、对事业、对社区产生兴趣，愿意参与和贡献时，心灵的聚光灯就散开了，照亮了更广阔的空间。
+    </div>
+    <p>所以阿德勒给出了唯一的答案：<strong>培养社会兴趣</strong>，将生活的重心从对"小我"的过度关注，转向对共同体的真正关怀。或许你会说，我只是一个普通人，做不出什么惊天动地的贡献。其实贡献从来不是遥不可及的大事——它可以是工作中认真完成的一个任务，是对同事伸出的一次援手，是朋友难过时的一句安慰，是对家人的一份包容，是对爱人的一份珍惜。</p>
+    <p>比如一个因为性格内向、不善言辞而自卑的人，如果一直封闭自己，就会越来越自卑；但如果他能去做一些需要耐心和细心的事——照顾老人、救助小动物——在这些不需要太多言辞、只需要真心付出的事情中，他会感受到与生命连接的快乐，会发现自己的内向并不是缺点，反而让自己更懂得倾听、更懂得共情。</p>
+</section>
+
+<div class="divider-orn">· · ·</div>
+
+<section class="chapter">
+    <span class="chapter-label">第五章</span>
+    <h3>与自己和解：一场温柔的迁徙</h3>
+    <p class="lead">这本书背后最温柔的一层含义是：超越自卑最终的终点，是与自己和解，是接纳自己的不完美。</p>
+    <p>我们这一生都在追求完美，都在想要成为更好的自己——这本身是一件美好的事。但很多时候，我们却因为追求完美而陷入了自我否定："等我变得足够优秀了，等我没有任何缺点了，我就不会自卑了。"可实际上，这个世界上从来没有完美的人。每个人都有自己的不足，每个人都有自己的遗憾，每个人都有自卑的时刻。</p>
+    <p>就像阿德勒一样，他从一个自卑的孩子，成长为一名伟大的心理学家。他用自己的一生证明：自卑并不可怕，可怕的是你不敢面对它、不敢超越它。</p>
+    <div class="quote-block">
+        超越自卑从来不是消除自卑，而是学会与自卑和平共处，学会接纳自己的不完美，学会在自卑中成长。
+    </div>
+    <div class="scene-card">
+        <h4>温柔的迁徙</h4>
+        <p>超越自卑从来不是一场斩杀恶龙的壮烈战争，它更像是一次温柔的迁徙——把心灵的家园从那个孤立戒备、不断自我审视的"小我荒原"，逐步搬迁到一个开放连接、共同创造的"我们的绿洲"。</p>
+        <p>这个过程很慢，需要耐心。路上你可能会迷路，会想退回熟悉的荒原——这都没关系。每当你多一次选择合作而非对抗，多一次选择倾听而非辩解，多一次选择给予而非仅索取，你就在绿洲里多种下了一棵树。</p>
+    </div>
+</section>
+
+<section class="chapter mindmap-section">
+    <h3>全书思维导图</h3>
+    <div class="markmap">
+<script type="text/template">
+---
+markmap:
+  colorFreezeLevel: 2
+---
+# 自卑与超越
+## 作者：阿德勒
+### 心理学三大巨头之一
+### 在自卑中长大
+### 用一生证明超越的可能
+## 自卑感的本质
+### 不是缺陷，是正常的进步渴望
+### 健康自卑→成长动力
+### 自卑情结→逃避困境
+### 三种掩饰：傲慢/退缩/攻击
+### 动物园三个孩子的故事
+## 早期记忆与生活风格
+### 被反复回忆的瞬间塑造认知
+### 决定我们的不是过去
+### 而是对过去的解读
+### 暴力家庭的两个孩子
+### 重新解读过去的权利
+## 家庭与学校
+### 母亲：第一个合作关系
+### 父亲：连接社会与责任
+### 出生顺序的影响
+### 忌溺爱与苛责
+### 教育本质是学会合作
+## 生命的意义
+### 三大羁绊：地球/同类/两性
+### 三大课题：职业/社交/婚恋
+### 核心：奉献与合作
+### 社会兴趣：聚光灯散开
+### 贡献在微小瞬间
+## 与自己和解
+### 超越≠消除自卑
+### 接纳不完美
+### 温柔的迁徙：荒原→绿洲
+### 每次合作都种下一棵树
+</script>
+    </div>
+</section>
+
+</main>
+
+<footer class="epilogue">
+    <div class="epilogue-inner">
+        <p class="final-quote">人生的真正意义在于奉献与合作，在于与他人建立温暖的连接，在于在自己的能力范围内让这个世界变得更好一点。自卑从来不是你的错，也不是你人生的终点——它只是你人生路上的一道坎，一道只要你愿意努力就一定能跨过去的坎。愿你在往后的日子里能正视自己的自卑，在合作与奉献中找到生命的意义，活成自己想要的样子。</p>
+        <p class="goodnight">晚安</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+<script>
+const toggle = document.getElementById('themeToggle');
+const panel = document.getElementById('themePanel');
+const options = document.querySelectorAll('.theme-option');
+const currentTheme = document.body.className.replace('theme-', '');
+options.forEach(o => o.classList.toggle('active', o.dataset.theme === currentTheme));
+toggle.addEventListener('click', (e) => { e.stopPropagation(); panel.classList.toggle('open'); });
+document.addEventListener('click', (e) => { if (!panel.contains(e.target)) panel.classList.remove('open'); });
+options.forEach(opt => {
+    opt.addEventListener('click', () => {
+        document.body.className = 'theme-' + opt.dataset.theme;
+        options.forEach(o => o.classList.toggle('active', o === opt));
+        panel.classList.remove('open');
+    });
+});
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+    });
+}, { threshold: 0.08 });
+document.querySelectorAll('.chapter').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

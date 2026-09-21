@@ -4,6 +4,7 @@ import {
 } from './data.js?v=cloud-realm-study-29';
 import { applyScene, initTheme } from './theme.js?v=cloud-realm-study-35';
 import { createCelestialGlobe } from './celestial-globe.js?v=1';
+import { renderSidebar } from './navigation.js?v=1';
 
 const theme = initTheme();
 const app = document.querySelector('#app');
@@ -19,19 +20,8 @@ let atlasViewId = document.documentElement.dataset.sceneView || 'default';
 let globeController = null;
 let worldMapReturnFocus = null;
 
-const navItems = [
-  ['首页', 'tower', '#top'], ['我的书架', 'tome', '#shelf'], ['书籍分类', 'astrolabe', '#categories'],
-  ['阅读笔记', 'quill', '#notes'], ['精选书摘', 'scroll', '#quotes'], ['时间线', 'hourglass', '#shelf'],
-  ['设置', 'alchemy', '#settings'],
-];
-
-const sigil = icons[theme.logo].replace('<svg ', '<svg class="brand__sigil" ');
-
-sidebar.innerHTML = `
-  <a class="brand" href="#top">${sigil}<span class="brand__name">${theme.name}</span><small class="brand__en">${theme.englishName}</small></a>
-  <span class="sidebar__rule" aria-hidden="true"></span>
-  <nav class="nav" aria-label="主导航">${navItems.map(([label, icon, target], i) => `<button class="nav__item ${i === 0 ? 'is-active' : ''}" data-target="${target}" aria-label="${label}">${icons[icon]}<span>${label}</span></button>`).join('')}</nav>
-  <button class="sidebar__explore" data-target="#categories"><span>${icons.astrolabe}</span><strong>探索更多</strong><small>未知的故事正在云海深处等待</small><i>→</i></button>`;
+const homeNavId = () => location.hash === '#shelf' ? 'shelf' : location.hash === '#settings' ? 'settings' : 'home';
+renderSidebar(sidebar, { variant: 'home', activeId: homeNavId(), brandName: theme.name, brandEnglish: theme.englishName, brandIcon: icons[theme.logo] });
 
 topbar.innerHTML = `<div class="topbar__inner">
   <button class="scene-status" id="scene-status" type="button" aria-label="打开天空城航行图"><span class="scene-status__astrolabe" aria-hidden="true">${icons.astrolabe}</span><span><small>当前窗景</small><strong id="scene-status-name"></strong></span></button>
@@ -45,7 +35,7 @@ topbar.innerHTML = `<div class="topbar__inner">
 const statHTML = stats.map((s) => `<a class="stat-card" href="${s.target}"><span class="stat-card__watermark" aria-hidden="true">${icons[s.icon]}</span><span class="stat-card__icon">${icons[s.icon]}</span><span class="stat-card__copy"><strong>${s.label}</strong><small>${s.detail}</small></span><span class="stat-card__arrow">›</span></a>`).join('');
 const noteHTML = notes.map((n) => `<article class="note-item"><span class="note-thumb"></span><span><strong>${n.title}</strong><small>${n.meta}</small></span></article>`).join('');
 const quoteHTML = quotes.map((q) => `<blockquote class="quote">${q.text}<cite>—— ${q.source}</cite></blockquote>`).join('');
-const categoryHTML = popularCategories.map((item) => `<button class="category-card" data-category="${item.category}" style="--category-art:url('${item.image}')"><span><strong>${item.title}</strong><small>${item.subtitle}</small></span><i>→</i></button>`).join('');
+const categoryHTML = popularCategories.map((item) => `<a class="category-card" href="index.html#categories?category=${encodeURIComponent(item.category)}" style="--category-art:url('${item.image}')"><span><strong>${item.title}</strong><small>${item.subtitle}</small></span><i>→</i></a>`).join('');
 const mapPinHTML = theme.scenes.filter((scene) => scene.map).map((scene) => `<button class="map-pin ${document.documentElement.dataset.scene === scene.id ? 'is-active is-selected' : ''}" type="button" data-scene="${scene.id}" style="--pin-x:${scene.map.x}%;--pin-y:${scene.map.y}%" aria-label="选择${scene.name}"><span class="map-pin__orbit" aria-hidden="true"></span><b>${scene.map.marker}</b><span class="map-pin__label">${scene.name}</span></button>`).join('');
 
 app.innerHTML = `
@@ -333,23 +323,21 @@ if (window.matchMedia('(pointer:fine) and (prefers-reduced-motion:no-preference)
   });
 }
 
-document.querySelectorAll('[data-target]').forEach((button) => button.addEventListener('click', () => {
-  if (button.classList.contains('nav__item')) {
-    document.querySelectorAll('.nav__item').forEach((item) => item.classList.remove('is-active'));
-    button.classList.add('is-active');
-    if (button.dataset.target === '#top' && document.documentElement.dataset.scene !== theme.defaultScene) selectScene(theme.defaultScene, false);
-  }
-  if (button.dataset.target === '#settings') openAtlas();
-  else document.querySelector(button.dataset.target)?.scrollIntoView({ behavior: 'smooth' });
-}));
+const syncHomeNavigation = () => {
+  const activeId = homeNavId();
+  document.querySelectorAll('[data-nav-id]').forEach(item => {
+    const active = item.dataset.navId === activeId;
+    item.classList.toggle('is-active', active);
+    item.toggleAttribute('aria-current', active);
+  });
+  if (activeId === 'settings') openAtlas();
+  if (activeId === 'home' && document.documentElement.dataset.scene !== theme.defaultScene) selectScene(theme.defaultScene, false);
+};
+window.addEventListener('hashchange', syncHomeNavigation);
 document.querySelector('.brand').addEventListener('click', () => {
   if (document.documentElement.dataset.scene !== theme.defaultScene) selectScene(theme.defaultScene, false);
 });
 document.querySelectorAll('.tab').forEach((tab) => tab.addEventListener('click', () => selectCategory(tab.dataset.category)));
-document.querySelectorAll('.category-card').forEach((card) => card.addEventListener('click', () => {
-  selectCategory(card.dataset.category);
-  document.querySelector('#shelf').scrollIntoView({ behavior: 'smooth' });
-}));
 document.querySelectorAll('.map-pin').forEach((pin) => pin.addEventListener('click', () => updateAtlasSelection(pin.dataset.scene)));
 document.querySelector('[data-atlas-home]').addEventListener('click', () => {
   if (document.documentElement.dataset.scene === theme.defaultScene) {
@@ -398,6 +386,8 @@ document.querySelector('#globe-map').addEventListener('click', () => {
   closeWorldMap({ restoreFocus: false });
   openAtlas(theme.defaultScene);
 });
+if (location.hash === '#settings') requestAnimationFrame(syncHomeNavigation);
+if (location.hash === '#shelf') requestAnimationFrame(() => document.querySelector('#shelf')?.scrollIntoView());
 document.querySelector('#scenic-return').addEventListener('click', () => setScenicMode(false));
 document.querySelector('#scenic-prev').addEventListener('click', () => changeScene(-1));
 document.querySelector('#scenic-next').addEventListener('click', () => changeScene(1));

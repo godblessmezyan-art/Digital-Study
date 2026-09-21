@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>青铜葵花 · 原来爱，真的能照亮黑暗</title>
+<link href="https://fonts.loli.net/css2?family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#faf5e9;--text:#3f3524;--text2:#8a7a5c;--card:#fffdf6;--border:#eaddc0;
+  --accent:#c9861f;--accent2:#7a8c3f;--soft:#f5ecd6;--gold:#c9861f;
+  --hero-top:#2b2a4a;--hero-via:#7a4a52;--hero-bot:#d99a3f;
+  --quote-bg:#f7efdb;--shadow:rgba(150,110,40,.15);
+}
+body.theme-default{--bg:#faf5e9;--text:#3f3524;--text2:#8a7a5c;--card:#fffdf6;--border:#eaddc0;--accent:#c9861f;--accent2:#7a8c3f;--soft:#f5ecd6;--gold:#c9861f;--hero-top:#2b2a4a;--hero-via:#7a4a52;--hero-bot:#d99a3f;--quote-bg:#f7efdb;--shadow:rgba(150,110,40,.15)}
+body.theme-mint{--bg:#f2faf6;--text:#2d3f37;--text2:#6b8579;--card:#ffffff;--border:#d9ece2;--accent:#3f9d7c;--accent2:#7fc0a8;--soft:#e6f4ed;--gold:#b99a5f;--hero-top:#16332a;--hero-via:#245443;--hero-bot:#3f8a6e;--quote-bg:#eaf6f0;--shadow:rgba(63,157,124,.13)}
+body.theme-cloud{--bg:#f4f6f8;--text:#37414d;--text2:#74808d;--card:#ffffff;--border:#dfe4ea;--accent:#5d7691;--accent2:#8ba3bb;--soft:#e9eef3;--gold:#b49b6c;--hero-top:#262f3a;--hero-via:#3c4c60;--hero-bot:#5f7893;--quote-bg:#ecf1f5;--shadow:rgba(93,118,145,.13)}
+body.theme-bamboo{--bg:#f4f8f1;--text:#33402e;--text2:#71816a;--card:#ffffff;--border:#dde7d6;--accent:#5f8c55;--accent2:#8fb383;--soft:#e9f2e4;--gold:#b39555;--hero-top:#22301e;--hero-via:#3a5232;--hero-bot:#5c8352;--quote-bg:#edf4e8;--shadow:rgba(95,140,85,.13)}
+body.theme-amber{--bg:#faf5eb;--text:#443722;--text2:#8a7a5e;--card:#ffffff;--border:#eee1c8;--accent:#bf8a2e;--accent2:#d7ae67;--soft:#f6edda;--gold:#bf8a2e;--hero-top:#3a2c14;--hero-via:#5c4620;--hero-bot:#93712f;--quote-bg:#f7f0e0;--shadow:rgba(191,138,46,.14)}
+body.theme-dawn{--bg:#fdf4ee;--text:#463428;--text2:#8d7360;--card:#ffffff;--border:#f2e0d2;--accent:#d0764f;--accent2:#e29d77;--soft:#fae9dd;--gold:#c08a3e;--hero-top:#42241a;--hero-via:#77402a;--hero-bot:#c06f44;--quote-bg:#faeee4;--shadow:rgba(208,118,79,.14)}
+body.theme-lavender{--bg:#f7f2fb;--text:#3d3449;--text2:#7e7292;--card:#ffffff;--border:#e6dcf1;--accent:#9668bd;--accent2:#b794d6;--soft:#f0e7f8;--gold:#b99a5f;--hero-top:#2d2140;--hero-via:#4c3768;--hero-bot:#7c58a6;--quote-bg:#f2ebf9;--shadow:rgba(150,104,189,.14)}
+body.theme-slate{--bg:#eef0f2;--text:#333d45;--text2:#6d7a85;--card:#ffffff;--border:#dae0e5;--accent:#4f6b80;--accent2:#7d97a9;--soft:#e4e9ed;--gold:#ab9464;--hero-top:#212a31;--hero-via:#374a58;--hero-bot:#54718a;--quote-bg:#e8edf1;--shadow:rgba(79,107,128,.13)}
+body.theme-rose{--bg:#fbf1f3;--text:#452f35;--text2:#8d6f78;--card:#ffffff;--border:#f1dbe0;--accent:#bd6079;--accent2:#d78da0;--soft:#f8e6ea;--gold:#b9915a;--hero-top:#3b1c26;--hero-via:#66303f;--hero-bot:#a3546b;--quote-bg:#f8eaee;--shadow:rgba(189,96,121,.14)}
+body.theme-sakura{--bg:#fdf5f7;--text:#473840;--text2:#8f7a83;--card:#ffffff;--border:#f3e1e7;--accent:#d0849c;--accent2:#e3a9bc;--soft:#fae9ee;--gold:#bd9a62;--hero-top:#422530;--hero-via:#6f3f50;--hero-bot:#b06d85;--quote-bg:#faeef2;--shadow:rgba(208,132,156,.15)}
+body.theme-forest{--bg:#eff4f0;--text:#2c3a31;--text2:#66796d;--card:#ffffff;--border:#d9e4db;--accent:#3c6b4f;--accent2:#6f9a82;--soft:#e3ede6;--gold:#a8925c;--hero-top:#16281e;--hero-via:#274634;--hero-bot:#3f6f52;--quote-bg:#e8f0ea;--shadow:rgba(60,107,79,.13)}
+body.theme-ocean{--bg:#f0f6fa;--text:#2e3c48;--text2:#697f90;--card:#ffffff;--border:#d8e5ee;--accent:#3a7cae;--accent2:#74a7cd;--soft:#e5eff7;--gold:#b1975f;--hero-top:#14283a;--hero-via:#24465f;--hero-bot:#3a729c;--quote-bg:#e9f2f8;--shadow:rgba(58,124,174,.13)}
+body.theme-sand{--bg:#f9f4e9;--text:#43392a;--text2:#877a63;--card:#ffffff;--border:#eadfc8;--accent:#a5854e;--accent2:#c4a877;--soft:#f3ebd8;--gold:#a5854e;--hero-top:#352a17;--hero-via:#574524;--hero-bot:#8a6f3d;--quote-bg:#f5efdf;--shadow:rgba(165,133,78,.14)}
+body.theme-night{--bg:#232230;--text:#e4e1f0;--text2:#a49fbd;--card:#2c2b3c;--border:#3d3b52;--accent:#9d8fd0;--accent2:#b9ade2;--soft:#333148;--gold:#c9ab6e;--hero-top:#14131f;--hero-via:#262342;--hero-bot:#453f6e;--quote-bg:#323049;--shadow:rgba(0,0,0,.35)}
+body.theme-charcoal{--bg:#262524;--text:#e8e4dc;--text2:#a8a196;--card:#302e2c;--border:#444039;--accent:#c9b489;--accent2:#dcc79e;--soft:#37342f;--gold:#c9b489;--hero-top:#161514;--hero-via:#2b2925;--hero-bot:#4a453b;--quote-bg:#35322d;--shadow:rgba(0,0,0,.35)}
+body.theme-deepsea{--bg:#1d2733;--text:#dfe8f0;--text2:#9db1c1;--card:#253241;--border:#35485c;--accent:#6fa8c9;--accent2:#93c1da;--soft:#2b3b4d;--gold:#c2a877;--hero-top:#0e1620;--hero-via:#1b2e42;--hero-bot:#2c516e;--quote-bg:#2a3a4c;--shadow:rgba(0,0,0,.35)}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Noto Serif SC',serif;line-height:1.95;transition:background .6s,color .6s;overflow-x:hidden}
+.wrap{max-width:860px;margin:0 auto;padding:0 22px}
+
+/* ============ theme select ============ */
+.theme-select{position:fixed;top:16px;right:16px;z-index:999;padding:8px 14px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text);font-family:'Noto Serif SC',serif;font-size:13px;cursor:pointer;box-shadow:0 4px 16px var(--shadow);outline:none;transition:background .6s,color .6s,border-color .6s}
+
+/* ============ hero ============ */
+.hero{position:relative;min-height:94vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px 22px 170px;background:linear-gradient(180deg,var(--hero-top) 0%,var(--hero-via) 52%,var(--hero-bot) 100%);overflow:hidden}
+.sun-disc{position:absolute;left:50%;bottom:70px;width:220px;height:220px;margin-left:-110px;border-radius:50%;background:radial-gradient(circle,#ffe9a8 0%,#f6b95c 55%,rgba(246,185,92,0) 74%);animation:sunbreathe 6s ease-in-out infinite;pointer-events:none;z-index:1}
+@keyframes sunbreathe{0%,100%{transform:scale(1);opacity:.95}50%{transform:scale(1.06);opacity:1}}
+.river-band{position:absolute;left:0;right:0;bottom:0;height:96px;background:linear-gradient(180deg,rgba(60,60,90,.0) 0%,rgba(40,44,72,.5) 45%,rgba(28,30,52,.72) 100%);overflow:hidden;pointer-events:none;z-index:2}
+.river-band .shimmer{position:absolute;top:22px;left:-60%;width:60%;height:2px;background:linear-gradient(90deg,transparent,rgba(255,225,150,.85),transparent);animation:flow 7s linear infinite}
+.river-band .shimmer.s2{top:46px;animation-duration:9s;animation-delay:2s;opacity:.7}
+.river-band .shimmer.s3{top:68px;animation-duration:11s;animation-delay:4s;opacity:.5}
+@keyframes flow{0%{left:-60%}100%{left:105%}}
+.reeds{position:absolute;bottom:0;width:100%;height:130px;pointer-events:none;z-index:3}
+.reed{position:absolute;bottom:-4px;width:3px;height:100%;background:linear-gradient(180deg,rgba(20,18,26,.92),rgba(20,18,26,.55));transform-origin:bottom center;border-radius:2px}
+.reed::before{content:'';position:absolute;top:-6px;left:-3px;width:9px;height:16px;background:rgba(24,20,28,.9);border-radius:50% 50% 40% 40%/60% 60% 40% 40%}
+.reed.sway{animation:sway ease-in-out infinite}
+@keyframes sway{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(2.5deg)}}
+.petal{position:absolute;top:-30px;border-radius:60% 40% 60% 40%/60% 60% 40% 40%;background:linear-gradient(135deg,#ffd870,#f0a83c);box-shadow:0 1px 6px rgba(0,0,0,.15);animation:petalfall linear infinite;pointer-events:none;z-index:2}
+@keyframes petalfall{0%{transform:translateY(0) rotate(0) translateX(0);opacity:0}8%{opacity:.95}80%{opacity:.9}100%{transform:translateY(96vh) rotate(320deg) translateX(46px);opacity:0}}
+.hero-inner{position:relative;z-index:5;max-width:780px}
+.hero-series{color:rgba(255,255,255,.66);letter-spacing:.6em;font-size:.9rem;text-indent:.6em;margin-bottom:26px}
+.book-title{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(2.2rem,7vw,3.8rem);color:#fff;font-weight:400;letter-spacing:.16em;text-shadow:0 4px 34px rgba(0,0,0,.42);margin-bottom:22px}
+.book-sub{color:rgba(255,255,255,.92);font-size:1.06rem;letter-spacing:.2em;margin-bottom:40px}
+.hero-quote{color:rgba(255,255,255,.94);font-size:1rem;line-height:2.25;border-top:1px solid rgba(255,255,255,.28);border-bottom:1px solid rgba(255,255,255,.28);padding:22px 8px;max-width:620px;margin:0 auto 30px}
+.hero-author{color:rgba(255,255,255,.68);font-size:.85rem;letter-spacing:.14em}
+
+/* ============ chapter ============ */
+.chapter{padding:76px 0 10px;opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform .9s ease}
+.chapter.visible{opacity:1;transform:translateY(0)}
+.chapter-head{text-align:center;margin-bottom:44px}
+.chapter-num{font-family:'ZCOOL XiaoWei',serif;color:var(--accent);font-size:1rem;letter-spacing:.5em;text-indent:.5em;display:block;margin-bottom:10px}
+.chapter-title{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(1.5rem,4.5vw,2.1rem);font-weight:400;letter-spacing:.12em;color:var(--text)}
+/* sunflower divider */
+.sunflower-divider{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:18px;color:var(--accent)}
+.sunflower-divider .line{width:52px;height:1px;background:linear-gradient(90deg,transparent,var(--accent2))}
+.sunflower-divider .line.r{background:linear-gradient(90deg,var(--accent2),transparent)}
+.sf{width:26px;height:26px;position:relative;flex-shrink:0}
+.sf .core{position:absolute;left:50%;top:50%;width:9px;height:9px;margin:-4.5px 0 0 -4.5px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold)}
+.sf i{position:absolute;left:50%;top:50%;width:4px;height:9px;margin:-11px 0 0 -2px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:var(--accent2);transform-origin:50% 11px}
+.sf i:nth-child(2){transform:rotate(45deg)}.sf i:nth-child(3){transform:rotate(90deg)}
+.sf i:nth-child(4){transform:rotate(135deg)}.sf i:nth-child(5){transform:rotate(180deg)}
+.sf i:nth-child(6){transform:rotate(225deg)}.sf i:nth-child(7){transform:rotate(270deg)}
+.sf i:nth-child(8){transform:rotate(315deg)}
+
+p.lead{font-size:1.02rem;color:var(--text);margin-bottom:18px;text-align:justify}
+p.note{color:var(--text2);font-size:.92rem;text-align:justify;margin-bottom:18px}
+.hl{color:var(--accent);font-weight:600}
+.hl2{color:var(--gold);font-weight:600}
+.hl3{color:var(--accent2);font-weight:600}
+
+/* quote card */
+.quote{background:var(--quote-bg);border-left:3px solid var(--accent);border-radius:0 14px 14px 0;padding:26px 28px;margin:30px 0;font-size:1rem;line-height:2.15;box-shadow:0 6px 22px var(--shadow);transition:background .6s}
+.quote .from{display:block;margin-top:12px;font-size:.82rem;color:var(--text2);letter-spacing:.1em}
+.gold-quote{font-family:'ZCOOL XiaoWei',serif;text-align:center;font-size:clamp(1.2rem,3.6vw,1.6rem);color:var(--accent);letter-spacing:.12em;padding:34px 10px;line-height:2}
+
+/* two children duo */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:30px 0}
+.child-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:30px 24px;box-shadow:0 8px 24px var(--shadow);text-align:center;position:relative;overflow:hidden;transition:transform .35s,background .6s}
+.child-card:hover{transform:translateY(-5px)}
+.child-card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px}
+.child-card.bronze::before{background:linear-gradient(90deg,#8a6a3a,#c9861f)}
+.child-card.sunflower::before{background:linear-gradient(90deg,#c9861f,#ffd870)}
+.child-card .cicon{width:64px;height:64px;margin:0 auto 16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'ZCOOL XiaoWei',serif;font-size:1.7rem;color:#fff}
+.child-card.bronze .cicon{background:radial-gradient(circle,#b08040,#7a5a2a)}
+.child-card.sunflower .cicon{background:radial-gradient(circle,#ffd870,#e0982e)}
+.child-card .cname{font-family:'ZCOOL XiaoWei',serif;font-size:1.4rem;letter-spacing:.2em;margin-bottom:4px}
+.child-card.bronze .cname{color:#9a6f2a}
+.child-card.sunflower .cname{color:var(--accent)}
+.child-card .ctag{font-size:.78rem;color:var(--text2);letter-spacing:.12em;display:block;margin-bottom:14px}
+.child-card .cdesc{font-size:.88rem;color:var(--text2);line-height:1.95;text-align:justify}
+
+/* river scene strip */
+.river-scene{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:26px 26px 30px;margin:28px 0;box-shadow:0 8px 24px var(--shadow);position:relative;overflow:hidden}
+.river-scene .rs-title{font-family:'ZCOOL XiaoWei',serif;color:var(--accent2);letter-spacing:.16em;font-size:1rem;margin-bottom:14px;display:block}
+.river-scene p{font-size:.93rem;color:var(--text2);line-height:2.05;text-align:justify}
+.river-scene .wave{margin-top:18px;height:8px;background:repeating-linear-gradient(90deg,var(--accent2) 0 14px,transparent 14px 28px);opacity:.25;border-radius:4px}
+
+/* choice two houses */
+.houses{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:26px 0}
+.house{border-radius:16px;padding:24px 20px;font-size:.88rem;line-height:1.9;text-align:center;border:1px solid var(--border)}
+.house.rich{background:var(--soft);color:var(--text2);border-style:dashed}
+.house.poor{background:var(--card);border:2px solid var(--accent);color:var(--text);box-shadow:0 8px 22px var(--shadow)}
+.house .ht{font-family:'ZCOOL XiaoWei',serif;letter-spacing:.14em;display:block;margin-bottom:10px;font-size:1.05rem}
+.house.rich .ht{color:var(--text2)}
+.house.poor .ht{color:var(--accent)}
+.choice-arrow{text-align:center;margin:6px 0 20px;color:var(--accent);font-family:'ZCOOL XiaoWei',serif;font-size:1rem;letter-spacing:.1em}
+.choice-quote{text-align:center;font-family:'ZCOOL XiaoWei',serif;font-size:clamp(1.1rem,3.4vw,1.5rem);color:var(--text);letter-spacing:.1em;padding:6px 0 24px;line-height:1.9}
+.choice-quote b{color:var(--accent)}
+
+/* lantern cards (Bronze silent love) */
+.lanterns{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0}
+.lantern-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:26px 22px;box-shadow:0 8px 24px var(--shadow);transition:transform .35s,background .6s;position:relative}
+.lantern-card:hover{transform:translateY(-4px)}
+.lantern-card .glow{width:46px;height:46px;border-radius:50%;background:radial-gradient(circle,#ffe6a0 0%,var(--accent) 60%,rgba(0,0,0,0) 78%);display:flex;align-items:center;justify-content:center;margin-bottom:14px;animation:lampglow 3.4s ease-in-out infinite}
+.lantern-card .glow span{font-size:1.15rem}
+@keyframes lampglow{0%,100%{box-shadow:0 0 14px 2px rgba(255,190,80,.35);transform:scale(1)}50%{box-shadow:0 0 26px 6px rgba(255,190,80,.55);transform:scale(1.05)}}
+.lantern-card .lt{font-family:'ZCOOL XiaoWei',serif;font-size:1.12rem;letter-spacing:.14em;color:var(--text);margin-bottom:8px}
+.lantern-card .ld{font-size:.87rem;color:var(--text2);line-height:1.95;text-align:justify}
+
+/* suffering timeline */
+.timeline{margin:30px 0;position:relative;padding-left:34px}
+.timeline::before{content:'';position:absolute;left:9px;top:6px;bottom:6px;width:2px;background:linear-gradient(180deg,var(--accent),var(--accent2))}
+.tl-item{position:relative;padding:0 0 26px}
+.tl-item:last-child{padding-bottom:0}
+.tl-item::before{content:'';position:absolute;left:-31px;top:5px;width:14px;height:14px;border-radius:50%;background:var(--card);border:3px solid var(--accent);box-shadow:0 0 0 3px var(--soft)}
+.tl-item .tl-t{font-family:'ZCOOL XiaoWei',serif;font-size:1.08rem;letter-spacing:.1em;color:var(--text);margin-bottom:4px}
+.tl-item .tl-d{font-size:.9rem;color:var(--text2);line-height:1.95}
+
+/* shout centerpiece */
+.shout{position:relative;text-align:center;padding:70px 10px;margin:30px 0}
+.shout .ring{position:absolute;left:50%;top:50%;width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;border:2px solid var(--accent);opacity:0;animation:ripple 3.2s ease-out infinite;pointer-events:none}
+.shout .ring.r2{animation-delay:1.05s}
+.shout .ring.r3{animation-delay:2.1s}
+@keyframes ripple{0%{transform:scale(.5);opacity:.8}100%{transform:scale(3.4);opacity:0}}
+.shout .word{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(2.4rem,8vw,4rem);color:var(--accent);letter-spacing:.3em;text-indent:.3em;line-height:1.6;position:relative;z-index:2;text-shadow:0 3px 20px var(--shadow)}
+.shout .cap{margin-top:18px;font-size:.9rem;color:var(--text2);letter-spacing:.14em;position:relative;z-index:2}
+
+/* steps */
+.steps{margin:28px 0;display:flex;flex-direction:column;gap:16px}
+.step{display:flex;gap:18px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;box-shadow:0 6px 20px var(--shadow);transition:background .6s}
+.step .sn{width:42px;height:42px;border-radius:50%;background:var(--soft);color:var(--accent);font-family:'ZCOOL XiaoWei',serif;font-size:1.2rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--accent2)}
+.step .st{font-family:'ZCOOL XiaoWei',serif;font-size:1.08rem;letter-spacing:.1em;color:var(--text);margin-bottom:6px}
+.step .sd{font-size:.9rem;color:var(--text2);line-height:1.95}
+
+/* markmap */
+.mindmap-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:26px 18px;margin:20px 0;box-shadow:0 8px 26px var(--shadow)}
+.markmap{height:480px}
+.markmap-foreign{color:var(--text)!important}
+
+/* footer */
+.footer{margin-top:90px;padding:80px 22px 66px;text-align:center;background:linear-gradient(180deg,var(--bg),var(--soft))}
+.goodnight{font-family:'ZCOOL XiaoWei',serif;font-size:2rem;color:var(--text);letter-spacing:.5em;text-indent:.5em;margin-bottom:16px}
+.wish{color:var(--text2);font-size:.92rem;letter-spacing:.14em;line-height:2.2}
+
+@media(max-width:640px){
+  .duo,.lanterns,.houses{grid-template-columns:1fr}
+  .hero{min-height:86vh}
+}
+</style>
+</head>
+<body class="theme-default">
+<script>!function(){var t=["theme-default","theme-mint","theme-cloud","theme-bamboo","theme-amber","theme-dawn","theme-lavender","theme-slate","theme-rose","theme-sakura","theme-forest","theme-ocean","theme-sand","theme-night","theme-charcoal","theme-deepsea"];document.body.className=t[Math.floor(Math.random()*t.length)]}()</script>
+
+<select class="theme-select" onchange="document.body.className=this.value">
+<option value="theme-default">🌻 葵田</option>
+<option value="theme-mint">🍃 薄荷</option>
+<option value="theme-cloud">☁️ 云灰</option>
+<option value="theme-bamboo">🎋 竹青</option>
+<option value="theme-amber">🍯 琥珀</option>
+<option value="theme-dawn">🌄 晨曦</option>
+<option value="theme-lavender">💜 薰衣草</option>
+<option value="theme-slate">🪨 石板</option>
+<option value="theme-rose">🌹 玫瑰</option>
+<option value="theme-sakura">🌸 樱花</option>
+<option value="theme-forest">🌲 深林</option>
+<option value="theme-ocean">🌊 海洋</option>
+<option value="theme-sand">🏜️ 沙丘</option>
+<option value="theme-night">🌙 夜幕</option>
+<option value="theme-charcoal">🖤 炭灰</option>
+<option value="theme-deepsea">🐋 深海</option>
+</select>
+
+<header class="hero">
+  <div id="petals"></div>
+  <div class="sun-disc"></div>
+  <div class="reeds" id="reeds"></div>
+  <div class="river-band">
+    <div class="shimmer"></div><div class="shimmer s2"></div><div class="shimmer s3"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-series">睡 前 听 完 一 本 书</div>
+    <h1 class="book-title">青铜葵花</h1>
+    <div class="book-sub">原来爱，真的能照亮黑暗</div>
+    <div class="hero-quote">你会听到，最珍贵的爱，<br>是如何在苦难的土壤里，<br>生长出照亮彼此生命的光。</div>
+    <div class="hero-author">曹文轩 著 · 北京大学教授 · 2016 年国际安徒生奖</div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- 序 -->
+<section class="chapter">
+  <div class="chapter-head">
+    <span class="chapter-num">序 章</span>
+    <h2 class="chapter-title">成长最初的模样</h2>
+    <div class="sunflower-divider"><span class="line"></span><span class="sf"><span class="core"></span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="line r"></span></div>
+  </div>
+  <p class="lead">你有没有偶尔想起童年里的某个夏天？那种记忆往往不是完整的画面，而是一种感觉——也许是午后知了声里的困倦，也许是傍晚妈妈喊你回家吃饭的呼唤，又或者是某个玩伴离开后，心里空落落的那种怅然。</p>
+  <p class="lead">我们大多数人的童年，都有过类似失去的瞬间。那种心里微微发酸、却又说不清道不明的感觉，<span class="hl">就是成长最初的模样</span>。</p>
+  <p class="lead">今晚想和你分享一个更加深刻的故事。它是关于两个孩子——一个叫<span class="hl2">青铜</span>，一个叫<span class="hl3">葵花</span>。它发生在一个叫大麦地的村庄，那里有宽阔的河流、有金色的葵花田，也有我们想象不到的贫穷与苦难。</p>
+  <div class="quote">但这绝不是一本写苦难的书。你会听到，最珍贵的爱是如何在苦难的土壤里，生长出照亮彼此生命的光。<span class="from">—— 本书没有惊心动魄的冒险，只是静静讲述两个孩子的日常，用最朴素的文字，写尽苦难岁月里最干净、最坚韧的相守</span></div>
+</section>
+
+<!-- 一 葵花田与大河 -->
+<section class="chapter">
+  <div class="chapter-head">
+    <span class="chapter-num">第 一 章</span>
+    <h2 class="chapter-title">葵花田与大河</h2>
+    <div class="sunflower-divider"><span class="line"></span><span class="sf"><span class="core"></span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="line r"></span></div>
+  </div>
+  <p class="lead">故事的起点，是一片金黄的葵花田和一条宽阔的大河。让我们把时光的指针，拨回到那个潮湿的夏天。</p>
+  <div class="duo">
+    <div class="child-card sunflower">
+      <div class="cicon">葵</div>
+      <div class="cname">葵 花</div>
+      <span class="ctag">七岁的女孩 · 跟着父亲来到水乡</span>
+      <div class="cdesc">她的爸爸是一位艺术家，痴迷于画向日葵，因此给她取名葵花。葵花的母亲早已不在，父亲就是她的全部世界。因为特殊的时代背景，爸爸被派到乡下的干校劳动，只好将葵花带在身边。</div>
+    </div>
+    <div class="child-card bronze">
+      <div class="cicon">铜</div>
+      <div class="cname">青 铜</div>
+      <span class="ctag">大麦地的男孩 · 骑在老牛背上</span>
+      <div class="cdesc">青铜是个哑巴，不是天生的——是几年前一场可怕的大火，夺走了他的声音，也让他成了村里最孤独的孩子。他不会说话，但他的眼睛异常清澈明亮。</div>
+    </div>
+  </div>
+  <div class="river-scene">
+    <span class="rs-title">隔 河 相 望</span>
+    <p>葵花第一眼就看到了对岸的大麦地——看到了那片在阳光下闪耀的茅草屋顶，和屋顶上缓缓升起的炊烟。但她不知道，有一条无形的线，已经将她与对岸牢牢系住。线的那一头，是一个正骑在温顺老牛背上、从芦苇荡里钻出来的男孩。葵花常常一个人坐在河边，和野菊花说话、和乌鸦说话——她的世界很小。两个孤独的孩子，就这样隔着一条河，慢慢靠近了彼此。</p>
+    <div class="wave"></div>
+  </div>
+  <p class="lead">那天，葵花坐的小船被一个叫嘎鱼的调皮男孩解开缆绳，飘向河心。她不会游泳，吓得哭了。这时对岸芦苇丛里钻出一头牛，牛背上坐着青铜——他拍拍牛脖子，牛驮他下水，他抓住缆绳，把船拉回岸边。</p>
+  <p class="note">葵花泪眼朦胧中，看见一张有点黑、有点瘦的脸，和一双清澈温柔的眼睛。从那以后，青铜几乎每天牵着老黄牛来放牛：葵花托着下巴静静看，青铜就做鬼脸、翻跟头逗她开心。太阳落山时，晚霞把河水染成金红色。</p>
+  <p class="lead">可命运的暴风雨，总是来得猝不及防。葵花的爸爸爱画葵花，那天他在葵花田写生，旋风卷走了画稿，他扑进河里去捞，<span class="hl">再也没能上来</span>。七岁的葵花，一夜之间成了孤儿。</p>
+</section>
+
+<!-- 二 老槐树下的选择 -->
+<section class="chapter">
+  <div class="chapter-head">
+    <span class="chapter-num">第 二 章</span>
+    <h2 class="chapter-title">老槐树下的选择</h2>
+    <div class="sunflower-divider"><span class="line"></span><span class="sf"><span class="core"></span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="line r"></span></div>
+  </div>
+  <p class="lead">干校的叔叔阿姨心疼这个小姑娘，轮流给她送饭洗衣，可大家都有繁重的劳动任务，实在分身乏术，最后商量着把葵花寄养到大麦地村，让愿意的人家收养她，给她一个安稳的家。</p>
+  <p class="lead">那天她穿着干净的衣服，坐在村口老槐树下的石碾盘上，心里对自己说：<span class="hl2">「葵花不枯。」</span>大家围着葵花，眼神里满是同情，却没人主动开口——那个年代，家家户户日子都过得紧巴巴，多一个孩子，就多一张嘴吃饭。</p>
+  <p class="note">直到中午，人群散去，只剩两户人家：最富的嘎鱼家，和最穷的青铜家。</p>
+  <div class="houses">
+    <div class="house rich"><span class="ht">嘎鱼家 · 最富</span>家里有鱼塘、有瓦房，是村里条件最好的人家。</div>
+    <div class="house poor"><span class="ht">青铜家 · 最穷</span>只有茅草屋，饭桌上永远是咸菜和野菜粥。</div>
+  </div>
+  <div class="choice-arrow">—— 所有人都以为葵花会选嘎鱼家，可当村长问她时 ——</div>
+  <div class="choice-quote">她抬起头，目光扫过人群，最后落在青铜一家身上，<br>滑下石碾盘，走到青铜面前，拉住他粗糙的手：<br>「<b>我想跟青铜哥哥一起住。</b>」</div>
+  <p class="lead">她想起那天在河中央，是青铜骑着牛把她拉回岸边；想起隔河相望时，他那些笨拙却用心的表演。这个七岁女孩，做出了让所有大人都惊愕的决定。人群静了一瞬，青铜的眼睛亮得像要燃烧——他跑到老槐树下跳起来，摘下代表自家的纸灯笼，高高举起，挂在了茅草屋门口。</p>
+  <div class="quote">葵花用她孩童的直觉，选择了比富裕更珍贵的东西——那种即使贫穷，也能让你感到安全、<span class="hl">被珍视的温暖</span>。</div>
+  <p class="lead">就这样，葵花成了青铜家的女儿，也成了青铜的小尾巴。青铜的爸爸妈妈把葵花当亲生女儿：有吃的先紧着她，有新衣服先给她穿；奶奶更是把她宠在怀里，总念叨着：<span class="hl3">「我们葵花是城里来的宝贝，细皮嫩肉的，可不能受委屈。」</span></p>
+</section>
+
+<!-- 三 沉默的青铜 -->
+<section class="chapter">
+  <div class="chapter-head">
+    <span class="chapter-num">第 三 章</span>
+    <h2 class="chapter-title">不会说话的哥哥，用全部行动撑起一片天</h2>
+    <div class="sunflower-divider"><span class="line"></span><span class="sf"><span class="core"></span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="line r"></span></div>
+  </div>
+  <p class="lead">那年夏天雨水格外多，接连下了半个月，大河水位暴涨、冲破河堤，浑浊的洪水像猛兽冲进大麦地村。青铜家本就简陋的茅草房不堪一击，屋顶塌了半边，被褥和农具都泡在水里。看着眼前的废墟，全家人没有一句抱怨。青铜爸爸抹了把脸上的泥水，声音沙哑却坚定：</p>
+  <div class="quote">「没事，只要人在，房子就能再盖起来。」</div>
+  <p class="note">从那天起，青铜和爸爸每天天不亮，就背着镰刀去十几里外的海滩割茅草——这种茅草韧性好、防水性强，是盖房的好材料。父子俩踩着露水出门、顶着星星回家，沉重的茅草压得肩膀通红，手上磨出厚厚的茧子，却从没说过一句累。一个多月后，新的茅草屋盖起来了。晚上煤油灯昏黄的光映着小屋：妈妈缝补衣服，爸爸编芦苇席，青铜给葵花做小玩具，奶奶讲过去的故事——清苦的日子里，满是温馨的烟火气。</p>
+  <p class="lead">转眼到了开学季。村里的孩子背着崭新的书包去学堂，葵花趴在自家门槛上，眼巴巴望着学堂的方向。可青铜家实在太穷，供不起两个孩子读书。青铜心里也渴望去读书、想认识那些神奇的文字，可当他看到葵花羡慕地望着学堂时，<span class="hl">偷偷藏起了自己的愿望</span>。</p>
+  <div class="lanterns">
+    <div class="lantern-card">
+      <div class="glow"><span>👣</span></div>
+      <div class="lt">让出读书的机会</div>
+      <div class="ld">开学前一晚，青铜偷偷把自己的新布鞋藏进床底。第二天一早，他光着脚站在冰冷的泥地上，指着葵花脚上的新鞋，又指指学堂方向，执意让妹妹去上学。看着儿子冻得通红的双脚，爸妈含着泪让葵花穿上新鞋、背着书包走进了学堂。而青铜，每天都趴在教室窗外偷听，一站就是一整天。</div>
+    </div>
+    <div class="lantern-card">
+      <div class="glow"><span>🎃</span></div>
+      <div class="lt">南瓜萤火虫灯</div>
+      <div class="ld">葵花晚上点煤油灯做作业，烟呛得她直咳嗽、眼睛酸涩流泪，字都写歪了。青铜看在眼里：他摘来最圆的南瓜，掏空瓜瓤、刻上小窗，再钻进芦苇荡捉了整整一下午萤火虫。柔和的绿光透过小窗照在作业本上，不刺眼却足够明亮——葵花再也不用眯着眼睛写字了。</div>
+    </div>
+    <div class="lantern-card">
+      <div class="glow"><span>🥿</span></div>
+      <div class="lt">雪地里卖芦花鞋</div>
+      <div class="ld">青铜家全靠冬天卖芦花鞋补贴家用。每天天不亮，青铜就背着一筐芦花鞋，踩着厚厚的积雪去镇上卖。学校要拍学籍照，每人交五毛钱，葵花知道家里难，低着头不说话。青铜那天背了比平时多一倍的鞋，从早站到晚，最后连自己脚上那双也脱下来卖了——他光着脚、踩着冰冷的石板跑回家，脚冻得又红又肿，却把带着体温的零碎毛票塞进葵花手里，指着学校方向咧嘴笑。</div>
+    </div>
+    <div class="lantern-card">
+      <div class="glow"><span>❄️</span></div>
+      <div class="lt">一串冰项链</div>
+      <div class="ld">学校文艺演出，葵花被选为主角，老师说有条项链搭配演出服会更好。葵花知道家里买不起，回家没提，但青铜还是知道了。寒冬腊月，他跪在结了厚冰的河面上敲下冰块，用手一点点磨成圆润的珠子——手冻得麻木、被冰碴划破流血，他在衣服上擦擦，继续磨。磨了整整一夜，十二颗冰珠串成项链，像一串透明的珍珠。</div>
+    </div>
+  </div>
+  <p class="note">演出当天，当灯光照在冰项链上时，瞬间折射出七彩光芒，晶莹剔透，全场人都看呆了。演出结束，葵花紧紧抱住青铜，眼泪打湿了他的衣角。冰项链在脖子上慢慢融化，冰凉的水珠顺着脖颈流下——<span class="hl">可她的心里，却暖得发烫</span>。</p>
+  <p class="lead">葵花放学教青铜认字，他用树枝在地上写，很快就能写出两个人的名字。日子一天天过去，他们一起长大：在田埂上放牛，青铜把牛赶到草最茂盛的地方，让葵花坐着看书；在芦苇荡捉迷藏，青铜总能凭着脚步声找到葵花；在河边看日落，夕阳染红河水，两人坐着不说话，却格外安心。</p>
+  <div class="gold-quote">青铜的世界，因为有了葵花，不再寂静；<br>葵花的生活，因为有了青铜，不再孤单。</div>
+</section>
+
+<!-- 四 苦难与相守 -->
+<section class="chapter">
+  <div class="chapter-head">
+    <span class="chapter-num">第 四 章</span>
+    <h2 class="chapter-title">他们就像河边的芦苇，相互依偎</h2>
+    <div class="sunflower-divider"><span class="line"></span><span class="sf"><span class="core"></span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="line r"></span></div>
+  </div>
+  <p class="lead">生活依旧清苦，经常吃不饱、穿不暖，可只要他们在一起，什么困难都能克服。可命运，总爱开玩笑。</p>
+  <div class="timeline">
+    <div class="tl-item"><div class="tl-t">特大蝗灾</div><div class="tl-d">那年夏天，大麦地遭遇特大蝗灾。它们像黑色的潮水涌过来，落在庄稼上啃食——仅仅一个下午，绿油油的庄稼就被吃得只剩光秃秃的杆子。家里粮食很快见底，全家人只能挖野菜充饥，葵花的脸一天天瘦下去。青铜心疼极了，每天去河里摸鱼、芦苇荡捉野鸭，有一点吃的都先给妹妹，自己只吃难以下咽的野菜。</div></div>
+    <div class="tl-item"><div class="tl-t">奶奶的棉袄</div><div class="tl-d">奶奶年纪大了，身体本就不好，看着孩子们挨饿，心里实在难受，说要去远方妹妹家暂住，给家里省口粮。临走前，她拆了自己最后一件棉袄，给葵花和青铜各缝了一件小棉袄。</div></div>
+    <div class="tl-item"><div class="tl-t">葵花下江南</div><div class="tl-d">奶奶走后，葵花的心像被挖空了一块。她听说江南的银杏果能卖钱，便悄悄在一个凌晨爬上了前往江南的货船——她要去捡银杏果换钱，给奶奶做棉衣、给家里换粮食。在陌生的江南，她每天天不亮就钻进银杏林，手被冻裂、脚磨出血泡，却把捡到的每一颗银杏果都当成宝贝。</div></div>
+    <div class="tl-item"><div class="tl-t">一盏等待的灯</div><div class="tl-d">当青铜发现葵花不见时，感觉天都塌了。得知葵花去了江南，从那天起，他每晚都提着一盏自己糊的纸灯笼，站在村口最高的土坡上等待。无论刮风下雨，那盏昏黄的灯，就像一颗固执的星星。</div></div>
+    <div class="tl-item"><div class="tl-t">奶奶的离去</div><div class="tl-d">奶奶从妹妹家回来后，想着给葵花做新棉衣，不顾身体虚弱去地里摘棉花，竟倒在了棉花地里。葵花带着一小袋银杏果换来的、皱巴巴的毛票赶回家，扑到奶奶床前哭着说：「奶奶，我有钱了，我能给你买新棉袄、给你买药了。」奶奶艰难地睁开眼，摸了摸葵花的头：「傻孩子，只要你好好活、好好读书……」一个安静的夜晚，奶奶紧紧拉着葵花和青铜的手，永远闭上了眼睛。</div></div>
+  </div>
+  <div class="quote">奶奶留下的那两件小棉袄，那密密的针脚，却像种子一样，埋在了青铜和葵花的心里。<span class="from">—— 青铜和葵花紧紧靠在一起：青铜用手语一遍遍比划着「奶奶」，眼泪像断了线的珠子；葵花埋在他的肩膀上，哭得浑身发抖</span></div>
+  <p class="note">日子还要继续。青铜和葵花帮着爸妈种庄稼、编芦苇席，葵花打理家务、放学帮邻居带孩子换粮食。时光流淌，五年过去了，葵花从瘦弱的小姑娘，长成了亭亭玉立的少女，梳着长辫子，眼睛明亮温柔。</p>
+</section>
+
+<!-- 五 离别与奇迹 -->
+<section class="chapter">
+  <div class="chapter-head">
+    <span class="chapter-num">第 五 章</span>
+    <h2 class="chapter-title">离别，与一声石破天惊的呼唤</h2>
+    <div class="sunflower-divider"><span class="line"></span><span class="sf"><span class="core"></span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="line r"></span></div>
+  </div>
+  <p class="lead">就在生活似乎要步入平稳时，命运最后一次拨动了转轮。城里来了人说：葵花父亲的问题已经澄清，组织上决定将葵花接回城里，为她提供最好的生活和教育条件。</p>
+  <p class="lead">这个消息对青铜一家，不亚于一场心灵的地震。但大人们心里清楚：城里有明亮的教室、有丰富的书籍、有广阔的未来。<span class="hl2">大麦地的这片芦苇荡，哺育了她脆弱的童年，却无法承载她璀璨的未来。</span>真爱，有时是忍痛放手、成全离别。</p>
+  <p class="note">那天清晨，天空阴沉。青铜起得极早，跑到河边的葵花田里，采了沉甸甸的一大束花。他抱着花递给葵花，花朵上的露水混合着她的泪水滚落。青铜看着她嘴唇剧烈地颤抖，却发不出声音。他抬起手，轻轻摸了摸葵花的辫子，擦去她脸颊上的一滴泪——葵花读懂了，扑进青铜怀里放声痛哭：「哥，我会回来的，我一定一定会回来找你，你等我。」青铜重重地点头，眼泪大颗滚落。</p>
+  <p class="lead">船缓缓离岸，葵花站在船头拼命回头，目光死死锁住岸上那三个越来越小的身影。青铜在船动的一刹那，沿着河岸奔跑起来——他追着船拼命挥舞手臂，张大嘴巴，<span class="hl">却发不出任何声音</span>。船越来越远，消失在水道尽头。</p>
+  <p class="lead">从那天起，大麦地出现了一道凝固的风景：哑巴青铜每天雷打不动地爬上村边最高的草垛，坐在垛顶，目光执拗地投向葵花离开的方向。日升月落，草垛上的身影日渐消瘦。所有人都知道——<span class="hl2">青铜在等，用他全部的生命在等</span>。</p>
+  <p class="note">直到一个下午。那天，太阳的光芒像融化的金子，泼洒在一望无际的葵花田上。青铜依旧坐在草垛上，眼睛因为长久的凝视有些空洞。突然，在那片金黄的尽头，他看见了一个绿色的身影，正向他奔跑而来——是葵花，她回来了。</p>
+  <div class="shout">
+    <div class="ring"></div><div class="ring r2"></div><div class="ring r3"></div>
+    <div class="word">「葵——花——！」</div>
+    <div class="cap">积压了数百个日夜的思念、痛苦、委屈和爱，像火山一样奔涌撞击</div>
+  </div>
+  <p class="lead">那股力量如此凶猛，冲垮了高烧，冲破了寂静的封印。青铜张开嘴，用尽生命全部的力气，对着那片辉煌的、流动的金色原野，发出了一声嘶哑却石破天惊的呐喊。这声音惊起了芦苇荡里的水鸟，震落了葵花叶上的露珠。在田里干活的嘎鱼愣住了，猛地扔下工具，像疯子一样朝村里狂奔，一边跑一边喊：<span class="hl">「青铜会说话了！青铜会说话了！」</span></p>
+  <div class="quote">是的，青铜会说话了。爱，最终创造了这个医学无法解释的奇迹。那一声呐喊，是寂静深处迸发的惊雷，是生命对命运最倔强的反抗，也是这个故事留给我们永恒的回响。<span class="from">—— 故事结尾：青铜从高高的草垛上跃下，向着无边的葵花田深处狂奔而去。阳光如金瀑，万千葵花如同夹道欢迎的仪仗</span></div>
+</section>
+
+<!-- 六 书的回响 -->
+<section class="chapter">
+  <div class="chapter-head">
+    <span class="chapter-num">回 响</span>
+    <h2 class="chapter-title">这本书留给我们的力量</h2>
+    <div class="sunflower-divider"><span class="line"></span><span class="sf"><span class="core"></span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="line r"></span></div>
+  </div>
+  <p class="lead">合上书，心里满是温暖和感动。青铜和葵花的童年，被贫穷、失去、离别填满，沉重的苦难压在小小的肩膀上。可他们没有抱怨、退缩，用善良、勇敢和爱，对抗着生活的磨难。</p>
+  <p class="lead">我们生活在一个追求快乐、逃避痛苦的时代，但这本书平静地告诉我们：<span class="hl">苦难是生命的一部分，甚至是生命最深的土壤</span>。</p>
+  <div class="quote">它把你拉进一片泥泞的苦难之地，然后告诉你：看，那里开出了一朵花。它的根茎沾满污泥，但它的花瓣纯净金黄，仰望着太阳。</div>
+  <div class="gold-quote">《青铜葵花》最终赋予我们的，<br>不是对苦难的赞美，而是对生命的敬畏。</div>
+  <p class="lead">这才是这本书想要赋予我们的力量——<span class="hl2">不是教我们如何躲避风暴，而是教我们如何在风暴中站稳</span>。</p>
+</section>
+
+<!-- 思维导图 -->
+<section class="chapter">
+  <div class="chapter-head">
+    <span class="chapter-num">全 书 脉 络</span>
+    <h2 class="chapter-title">一张图回顾这本书</h2>
+    <div class="sunflower-divider"><span class="line"></span><span class="sf"><span class="core"></span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="line r"></span></div>
+  </div>
+  <div class="mindmap-card">
+    <div class="markmap">
+      <script type="text/template">
+# 青铜葵花
+## 两个孩子
+### 葵花：艺术家之女 · 父亲溺亡成孤儿
+### 青铜：大麦地哑巴男孩 · 大火夺走声音
+## 老槐树下的选择
+### 最富嘎鱼家 vs 最穷青铜家
+### 葵花选择爱与安全感
+## 沉默的守护
+### 让出读书机会 · 窗外旁听
+### 南瓜萤火虫灯
+### 雪地卖芦花鞋 · 赤脚换五毛钱
+### 一夜磨成冰项链
+## 苦难中的相守
+### 洪水重建家园
+### 蝗灾与饥荒
+### 奶奶的棉袄与离去
+### 葵花下江南捡银杏 · 青铜提灯等待
+## 离别与奇迹
+### 葵花回城 · 青铜草垛守望
+### 一声「葵花」打破寂静
+## 生命的敬畏
+### 苦难是生命最深的土壤
+### 泥泞中开出纯净金黄的花
+      </script>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+<div class="goodnight">晚 安</div>
+<div class="wish">愿青铜那声穿越时空的呐喊，能驱散你心底偶尔泛起的孤寂；<br>愿葵花那永远向阳的姿态，能照亮你前行的方向。</div>
+</footer>
+
+<script>
+// Theme select sync
+document.querySelector('.theme-select').value=document.body.className;
+
+// Drifting sunflower petals
+(function(){
+  var c=document.getElementById('petals');
+  for(var i=0;i<14;i++){
+    var p=document.createElement('div');
+    p.className='petal';
+    var s=7+Math.random()*9;
+    p.style.cssText='width:'+s+'px;height:'+(s*0.72)+'px;left:'+(Math.random()*100)+'%;animation-duration:'+(9+Math.random()*9)+'s;animation-delay:'+(Math.random()*12)+'s;opacity:0';
+    c.appendChild(p);
+  }
+})();
+
+// Swaying reeds
+(function(){
+  var c=document.getElementById('reeds');
+  var n=26;
+  for(var i=0;i<n;i++){
+    var r=document.createElement('div');
+    r.className='reed'+(i%3===0?' sway':'');
+    var h=46+Math.random()*78;
+    var left=(i/n)*100+Math.random()*2;
+    r.style.cssText='height:'+h+'px;left:'+left+'%;animation-duration:'+(3+Math.random()*3)+'s;animation-delay:'+(Math.random()*2)+'s;opacity:'+(0.55+Math.random()*0.4);
+    c.appendChild(r);
+  }
+})();
+
+// Scroll reveal
+var obs=new IntersectionObserver(function(es){
+  es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:0.12});
+document.querySelectorAll('.chapter').forEach(function(el){obs.observe(el)});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+</body>
+</html>

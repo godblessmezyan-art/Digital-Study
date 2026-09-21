@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "slug": "legacy-study-4",
+  "title": "克林索尔的最后夏天",
+  "author": "赫尔曼·黑塞",
+  "summary": "从旧 Study 项目迁移的书籍内容。",
+  "tags": [],
+  "cover": "cover.svg",
+  "status": "published",
+  "publishedAt": "2026-07-22T21:40:03.000Z",
+  "category": {
+    "slug": "legacy-category-59",
+    "name": "文学经典"
+  }
+}

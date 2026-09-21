@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>秘密 — 万物皆为能量，同类相吸，同频共振</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2E6BC8;
+            --primary-light: #7AAEE8;
+            --primary-dark: #1A3A6B;
+            --bg: #F0F4FA;
+            --bg-cool: #E3EDF9;
+            --text: #0F1C2E;
+            --text-light: #3A4A5C;
+            --accent: #1E4D8B;
+            --divider: #B8CEE4;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 2;
+            font-size: 17px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #060d1a 0%, #0F1C2E 40%, #162d4d 70%, #0a1525 100%);
+            color: #D0E0F5;
+            padding: 100px 20px 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(46,107,200,0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-ornament {
+            font-size: 32px;
+            color: var(--primary-light);
+            letter-spacing: 20px;
+            margin-bottom: 30px;
+            opacity: 0.7;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            color: var(--primary-light);
+            letter-spacing: 6px;
+            margin-bottom: 16px;
+            text-shadow: 0 2px 20px rgba(46,107,200,0.3);
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            color: #8AB4E0;
+            font-weight: 400;
+            letter-spacing: 3px;
+            margin-bottom: 40px;
+        }
+
+        .hero .tagline {
+            font-size: 15px;
+            color: #7A96B8;
+            max-width: 620px;
+            margin: 0 auto;
+            line-height: 1.9;
+            font-style: italic;
+        }
+
+        .hero-divider {
+            width: 60px;
+            height: 2px;
+            background: var(--primary);
+            margin: 30px auto;
+            opacity: 0.5;
+        }
+
+        .container {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .chapter {
+            padding: 60px 0 40px;
+            border-bottom: 1px solid var(--divider);
+        }
+
+        .chapter:last-child {
+            border-bottom: none;
+        }
+
+        .chapter-number {
+            font-size: 12px;
+            color: var(--primary);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .chapter h2 {
+            font-size: clamp(1.4rem, 3vw, 1.8rem);
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 28px;
+            letter-spacing: 2px;
+            position: relative;
+            padding-bottom: 16px;
+        }
+
+        .chapter h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .chapter p {
+            margin-bottom: 20px;
+            text-align: justify;
+            color: var(--text);
+        }
+
+        .quote-block {
+            background: linear-gradient(135deg, var(--bg-cool), #D8E8F8);
+            border-left: 4px solid var(--primary);
+            padding: 24px 28px;
+            margin: 28px 0;
+            border-radius: 0 8px 8px 0;
+            position: relative;
+        }
+
+        .quote-block::before {
+            content: '\201C';
+            font-size: 48px;
+            color: var(--primary);
+            opacity: 0.3;
+            position: absolute;
+            top: 8px;
+            left: 12px;
+            font-family: Georgia, serif;
+        }
+
+        .quote-block p {
+            color: var(--accent);
+            font-style: italic;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .quote-block p:last-child {
+            margin-bottom: 0;
+        }
+
+        .insight-card {
+            background: #fff;
+            border: 1px solid var(--divider);
+            border-radius: 12px;
+            padding: 28px 32px;
+            margin: 28px 0;
+            box-shadow: 0 4px 20px rgba(30,77,139,0.06);
+        }
+
+        .insight-card .label {
+            font-size: 12px;
+            color: var(--primary);
+            letter-spacing: 3px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .insight-card p {
+            color: var(--text-light);
+            margin-bottom: 12px;
+        }
+
+        .insight-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .epilogue {
+            background: linear-gradient(135deg, #060d1a 0%, #0F1C2E 40%, #162d4d 70%, #0a1525 100%);
+            color: #A8C4E0;
+            padding: 80px 20px;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .epilogue .container {
+            max-width: 650px;
+        }
+
+        .epilogue h2 {
+            color: var(--primary-light);
+            font-size: 1.6rem;
+            margin-bottom: 30px;
+            letter-spacing: 3px;
+        }
+
+        .epilogue p {
+            color: #8AA8C8;
+            margin-bottom: 18px;
+            line-height: 2;
+        }
+
+        .epilogue .final-quote {
+            color: var(--primary-light);
+            font-style: italic;
+            font-size: 18px;
+            margin: 40px 0 20px;
+            padding: 20px 0;
+            border-top: 1px solid rgba(46,107,200,0.2);
+            border-bottom: 1px solid rgba(46,107,200,0.2);
+        }
+
+        .epilogue .ornament {
+            color: var(--primary);
+            font-size: 24px;
+            letter-spacing: 16px;
+            opacity: 0.4;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 600px) {
+            body { font-size: 16px; }
+            .hero { padding: 70px 16px 60px; }
+            .container { padding: 0 18px; }
+            .chapter { padding: 40px 0 30px; }
+            .quote-block { padding: 20px 22px; }
+            .insight-card { padding: 22px 24px; }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+<header class="hero">
+    <div class="hero-ornament">&#10045; &#10045; &#10045;</div>
+    <h1>秘 密</h1>
+    <p class="subtitle">万物皆为能量，同类相吸，同频共振</p>
+    <div class="hero-divider"></div>
+    <p class="tagline">
+        朗达·拜恩 — 2004年人生跌入谷底时，发现了一个沉睡千年的秘密<br>
+        这个秘密曾被柏拉图、莎士比亚、牛顿、爱因斯坦知晓并运用<br>
+        你生命中所发生的一切，都是你吸引来的
+    </p>
+</header>
+
+<main class="container">
+
+<!-- 序 -->
+<section class="chapter fade-in">
+    <div class="chapter-number">序</div>
+    <h2>一个沉睡千年的秘密</h2>
+
+    <p>这本书的诞生本身就是一个神奇的故事。2004年，朗达·拜恩的人生跌入谷底——父亲离世、工作瓶颈、家庭关系破碎。就在那段至暗时刻，女儿给她看了一本尘封的百年古书。在那泛黄的书页里，她发现了一个隐藏在宗教、哲学和科学背后，沉默了数千年的秘密。</p>
+
+    <p>她翻阅古籍，走访智者，发现这个秘密曾被柏拉图、莎士比亚、牛顿、爱因斯坦等知晓并运用。到底是什么样的秘密，能让这些伟人走向巅峰？又是什么样的秘密，能让拜恩从一个失意的普通人，重新站起来？</p>
+
+    <div class="quote-block">
+        <p>你生命中所发生的一切，都是你吸引来的。</p>
+    </div>
+
+    <p>这不是巧合，这是宇宙中最强大的法则——吸引力法则在运作。从能量层面来说，万物皆为能量，同类相吸，同频共振。你可以把大脑想象成这个宇宙里信号最强的发射塔，你的思想、情绪、感受就是你发射的频率。而吸引力法则就是那个宇宙的物流系统——它不管你的信号是好是坏，只听指令，然后把你发射出去的频率，匹配成同样频率的现实，带回你的生命里。</p>
+
+    <div class="insight-card">
+        <div class="label">&#9670; 收音机的比喻</div>
+        <p>书里有一个很生动的比喻：你就像一台收音机。想听到喜欢的电台，必须调对频率。如果频率错了，只会满是杂音；频率对了，声音才会清晰悦耳。</p>
+        <p>你的人生也是如此。想要美好、富足、喜悦、健康，就要先把自己的频率调到美好、富足、喜悦、健康上。</p>
+    </div>
+
+    <p>但这个法则其实很"笨"，因为它分不清"要"和"不要"。打个比方：如果我对你说"你不要去想一只粉红色的大象"，此刻你脑海里是什么？一定是那只粉红色的大象。吸引力法则听不懂"不"字，它只听到了"粉红色的大象"。</p>
+
+    <p>同样的道理，当你整天念叨"我不要迟到""我不要欠债""我不要生病"，宇宙接收到的关键词其实是"迟到""欠债""生病"。它只会忠实地把这些画面带给你。你的抗拒和恐惧，恰恰成了你邀请坏事情入住的请柬。</p>
+
+    <p>大多数人一生都在关注不想要的——不想贫穷、不想生病、不想孤独、不想失败——却把所有的精力都耗在负面的念头上。就像书里说的：人们之所以无法拥有想要的，理由只有一个，就是他们对不想要的想得比想要的多。你盯着匮乏，就吸引更多匮乏；你盯着困境，就吸引更多困境；你盯着焦虑，就吸引更多让你焦虑的事。</p>
+
+    <div class="quote-block">
+        <p>所以秘密的第一步，也是最颠覆认知的一步，就是要我们学会正向地要求。不是去对抗黑暗，而是去点亮灯火。</p>
+    </div>
+</section>
+
+<!-- 第一章 -->
+<section class="chapter fade-in">
+    <div class="chapter-number">第一章</div>
+    <h2>创造的三步曲：要求、相信、接收</h2>
+
+    <p>很多人会误解，吸引力法则是心想事成的魔法，只要躺着想，财富、爱情、成功就会自动上门。不是的。秘密从没有教你空想，它教你的是用思想定频、用情绪共振、用行动接收。它是一套完整的创造法则，而非不劳而获的捷径。</p>
+
+    <p>那么这个法则该怎么用呢？书里把它浓缩成三步：要求、相信、接收。</p>
+
+    <div class="insight-card">
+        <div class="label">&#9670; 第一步：要求</div>
+        <p>清晰地告诉宇宙你想要什么。很多人无法吸引想要的生活，第一步就错了——他们的愿望太模糊。"我想过得好一点""我想有钱""我想幸福"——模糊的信号，宇宙无法精准回应。就像你去餐厅点餐，只说"我想吃点东西"，厨师无法为你做菜。你必须清晰说出："我要一碗面，加鸡蛋，少盐。"</p>
+        <p>书里建议我们像一个孩子一样坐下来，认真地向宇宙下订单。拿出纸笔也好，在心里默念也好，用现在时态把你的愿望写得清清楚楚。不要说"我想要一辆车"，而是写："我现在是多么快乐和感激，因为我拥有了一辆某某牌子的银色轿车。真皮座椅散发着舒服的味道，我握着方向盘，感觉特别踏实。我喜欢周末开着它，带着家人去郊外，风吹在脸上的感觉，特别自由。"</p>
+        <p>把模糊的欲望变成清晰的画面，这就像在导航里输入精确地址，宇宙才能送达。要求的本质是和宇宙签订一份清晰的订单。你要勇敢坦诚地面对自己的渴望，不用觉得贪心，不用觉得不配得。宇宙的供给是无限的，它不会评判你的愿望，只会等待你的指令。</p>
+    </div>
+
+    <div class="insight-card">
+        <div class="label">&#9670; 第二步：相信</div>
+        <p>如同已经拥有，毫不怀疑。相信是吸引力法则的核心，也是最难的一步。朗达·拜恩说："相信是指你的所行、所言、所思，如同你已经接收到你所要求的事物。"</p>
+        <p>什么是真正的相信？不是嘴上说"我相信"，心里却满是怀疑、恐惧、匮乏。不是一边渴望财富，一边觉得"我不可能赚到钱"；不是一边渴望健康，一边盯着身体的不适；不是一边渴望爱情，一边觉得"我不值得被爱"。这些怀疑就是负面的频率，会抵消你的渴望，把你想要的推得更远。</p>
+        <p>书里讲了一个石油勘探的故事：贝里斯的石油团队在所有人都不看好的区域，坚信自己能找到高品质石油。他们每天观想石油喷涌的画面，感受成功的喜悦，没有一丝怀疑。仅仅一年，他们就发现了大量石油，而其他五十个团队一无所获。</p>
+        <p>相信就是"假装已经拥有"。这不是自欺欺人，而是调频。当你相信自己已经富足，你就会摆脱焦虑的频率，变得从容笃定；当你相信自己已经健康，你就会摆脱恐惧的频率，变得放松平和；当你相信自己值得被爱，你就会摆脱自卑的频率，变得温柔自信。宇宙就像一面镜子，你展现什么状态，它就回馈什么现实。</p>
+    </div>
+
+    <div class="quote-block">
+        <p>如果你可以在心中见到它，你最终也将会拥有它。</p>
+    </div>
+
+    <div class="insight-card">
+        <div class="label">&#9670; 第三步：接收</div>
+        <p>这一步是关于感觉的。朗达·拜恩说："接收是指去感觉你的渴望一旦实现时，你所会有的感受。"闭上眼睛，想象你想要的东西已经到来，那会是什么样的感觉？是兴奋、满足，还是平静？就在此刻去找到那种感觉。</p>
+        <p>书里打了个比方：你想要的东西就像快递包裹，已经在路上了。但如果你总是焦虑、怀疑、感觉不配得，就等于一直不在家，快递员来了也敲不开门。而当你感觉美好、感恩的时候，你就等于在家等着，开开心心签收这份礼物。</p>
+        <p>很多人把接收当成等待，等着愿望从天而降，等着宇宙主动敲门。不是的。接收是一种状态，是活在"已经拥有"的频率里——不追逐、不焦虑、不内耗，顺着生命的河流顺流而下。宇宙喜欢快速行动，它不会拖延，它一直在为你匹配同频的一切。而你要做的，就是保持美好的感觉，接住它送来的礼物。</p>
+    </div>
+
+    <p>什么是美好的感觉？是感恩，是喜悦，是平静，是爱。感恩是接收的加速器。书里反复强调：感恩是魔力。当你感恩已经拥有的一切——哪怕是一杯温水、一张柔软的床、一次安稳的呼吸——你就在向宇宙发射丰盛的频率，宇宙会回馈你更多值得感恩的事。</p>
+
+    <p>接收还要跟着灵感行动。秘密说："受到启发的行动毫不费力，感觉非常美好。"这不是苦哈哈的努力，不是逆流而上的挣扎，而是当你调频到美好频率时，宇宙会给你灵感、冲动、机会。你只需要顺着心意轻轻迈出一步。比如你渴望一份好工作，突然想学习一个技能，那就去学；突然想联系一个朋友，那就去联系。这不是巧合，是宇宙在为你铺路。</p>
+
+    <div class="quote-block">
+        <p>要求是定方向，相信是定频率，接收是定状态。做到这三步，你就掌握了创造人生的秘密。</p>
+    </div>
+</section>
+
+<!-- 第二章 -->
+<section class="chapter fade-in">
+    <div class="chapter-number">第二章</div>
+    <h2>健康、财富与关系</h2>
+
+    <p>这本书没有只讲空洞的法则，而是把它落地到人生最重要的三个领域：健康、财富、关系。每个部分都藏着温柔的指引。</p>
+
+    <div class="insight-card">
+        <div class="label">&#9670; 健康的秘密：思想是身体最好的疗愈室</div>
+        <p>你有没有发现，当你长期焦虑、生气、压抑，身体就会出现各种不适；当你心情愉悦、放松、平和，身体就会轻松舒展。书里说，思想是身体的疗愈师。负面的思想会制造疾病，正向的思想会带来健康。身体会精准回应你的每一个念头。</p>
+        <p>你担心生病，就会吸引疾病的信号；你感恩身体的每一个器官，相信它的自愈力，就会吸引健康。书里有一个故事：一位身患重病的人，放弃了负面的念头，不再关注病情，而是每天观想自己健康生活的样子，感恩身体的每一次好转。他想象健康的细胞吞噬不好的细胞，想象自己走路、奔跑、拥抱家人，感受那份轻松与快乐。一段时间后，他的身体奇迹般康复。这不是奇迹，是法则。</p>
+        <p>当然，这不意味着无视医学，而是提醒我们：内心的平静和喜悦是最好的良药。</p>
+    </div>
+
+    <div class="insight-card">
+        <div class="label">&#9670; 财富的秘密：富足是一种内在状态</div>
+        <p>很多人觉得财富是靠努力、靠机遇、靠运气赚来的。书里说，财富是先有内在的富足感，才有外在的丰盛。贫穷的本质不是口袋里没钱，而是心里的匮乏感。</p>
+        <p>有些人拼命省钱，对每一分钱斤斤计较，结果钱越来越难赚，因为他的频率是匮乏。还有些人觉得"有钱人都不是好人"——如果金钱是坏的，宇宙怎么会把坏的东西送到你身边？正确的做法是把金钱当朋友，享受它，而不是占有它。花钱时不要觉得"我又少了"，而是想"这笔钱会给别人带去快乐，而我换来了需要的商品"——这是多美好的流动。当你带着喜悦花钱，金钱会感觉到善意，愿意再回来找你。</p>
+        <p>书里有一个练习：每次拿到收入，哪怕很少，也发自内心说一句"谢谢，我很开心，感谢宇宙的馈赠"。然后拿出一小部分做件开心的事或帮助别人。这就在告诉宇宙：我拥有的比需要的多，我很富足。富足的秘密是把焦点放在拥有，而非匮乏。你要记住，宇宙的供给是无限的。财富不是竞争来的，是吸引来的。你内在富足了，外在的财富一定会如约而至。</p>
+    </div>
+
+    <div class="insight-card">
+        <div class="label">&#9670; 关系的秘密：改变自己，而非改变别人</div>
+        <p>亲情、爱情、友情，所有的关系都遵循吸引力法则。你身边的人都是被你的频率吸引来的，你和别人的相处模式都是你内心的投射。</p>
+        <p>书里说，你对他人的每一份善意、理解、包容，都会以某种形式回流；每一份抱怨、指责、偏见，也会吸引同类的对待。你抱怨别人不理解你，就会吸引更多不理解你；挑剔别人的缺点，就会吸引更多让你挑剔的事；指责别人的错误，就会吸引更多指责。反过来，你欣赏别人，就会吸引更多欣赏你；包容别人，就会吸引更多包容你；爱别人，就会吸引更多爱。</p>
+        <p>关系的秘密不是改变别人，而是改变自己。当你把频率调到爱、宽容、感恩，你身边的人会自然而然变得温柔，你想要的温暖关系会自然而然出现。就像书里说的：我们都是一体的，伤害别人就是伤害自己，爱别人就是爱自己。</p>
+    </div>
+</section>
+
+<!-- 第三章 -->
+<section class="chapter fade-in">
+    <div class="chapter-number">第三章</div>
+    <h2>避开四个误区</h2>
+
+    <p>读懂秘密，还要避开几个常见的误区，避免白白消耗自己的能量。</p>
+
+    <div class="insight-card">
+        <div class="label">&#9670; 误区一：抗拒负面就是强化负面</div>
+        <p>书里有一句经典的话："你所抵抗的，会持续存在。"很多人有了负面念头就拼命压制、对抗，觉得"我不能想不好的"。但对抗就是把注意力放在负面上，反而让它更强大。</p>
+        <p>负面念头、负面情绪都是正常的。它们来了，不用对抗，不用自责，轻轻看见它，然后把注意力转回到你想要的美好上。就像乌云来了，不用赶走它，只要把目光投向阳光，乌云自然会散去。你不需要跟负面思想打架，你只需要转过身，看向另一个方向。</p>
+    </div>
+
+    <div class="insight-card">
+        <div class="label">&#9670; 误区二：空想不行动，等待天上掉馅饼</div>
+        <p>吸引力法则不是躺平法则。思想定频，行动落地。没有行动的相信是妄想，没有行动的接收是等待。宇宙会给你灵感，你要跟着灵感走，哪怕只是一小步，都是在靠近愿望。</p>
+    </div>
+
+    <div class="insight-card">
+        <div class="label">&#9670; 误区三：急于求成，怀疑法则</div>
+        <p>宇宙有自己的节奏，愿望的显化需要时间。不要今天许愿，明天就想要结果；不要遇到一点挫折，就觉得法则没用。耐心一点，信任一点，你播下的种子会在合适的时候悄悄发芽、开花、结果。</p>
+    </div>
+
+    <div class="insight-card">
+        <div class="label">&#9670; 误区四：觉得自己不配的自我否定</div>
+        <p>这是最可怕的误区。这本书反复告诉我们：你值得一切美好。你不用完美，不用优秀到极致，你本身就值得被爱、值得富足、值得健康、值得幸福。自我否定是最强的负面频率，会毁掉所有的渴望。</p>
+        <p>从今天起，把"我不配"换成"我值得"，把"我不行"换成"我可以"。你本自具足——这是秘密里最温柔的真相。</p>
+    </div>
+</section>
+
+<!-- 第四章 -->
+<section class="chapter fade-in">
+    <div class="chapter-number">第四章</div>
+    <h2>爱自己：终极的核心</h2>
+
+    <p>读到这里，你会发现，吸引力法则的终极核心只有三个字：爱自己。</p>
+
+    <div class="quote-block">
+        <p>你不得不爱你自己的理由是：如果不爱你自己，你是不可能感觉美好的。</p>
+    </div>
+
+    <p>不爱自己的人，永远在匮乏、恐惧、怀疑里打转，无法调到美好的频率。只有爱自己、接纳自己、欣赏自己，你才能散发出最高频的能量，吸引一切美好。</p>
+
+    <p>书里有一段话：你往往都把创造爱的机会给了别人，而他们常常也无法做到你想要的样子。为什么？因为唯一能为你的喜悦、幸福负责的人，就是你自己。你的喜悦来自你的内心。</p>
+
+    <p>我们总觉得，如果遇到对的人就会幸福，如果伴侣能对我好一点就会开心。但别人也是血肉之躯，他们也有局限，给不出他们没有的东西。怎么办？想要获得爱，就让自己填满爱，直到成为爱的磁铁。先从爱自己开始。当我们欣赏自己、接纳自己的不完美，发出的频率就是愉悦的、高能量的。那时我们不需要苦苦追寻爱，爱自然会被吸引而来。</p>
+
+    <div class="insight-card">
+        <div class="label">&#9670; 你是自己生命的创造者</div>
+        <p>书里说：你是自己生命的创造者，你是你自己宇宙的主宰。当你真正爱自己，你就会明白，所有的力量都在你心里。不用向外求，不用靠别人，你自己就是最强大的磁场。</p>
+        <p>为什么同样的世界，有些人活得阳光灿烂，有些人活得阴雨绵绵？因为每个人都活在自己的频率世界里。你不是这个世界的受害者，你是它的创造者。你看到的、听到的、感受到的，都是被你吸引来的。</p>
+    </div>
+
+    <p>这听起来可能有点残酷，但这恰恰是最有力量的真相：如果一切都是我自己创造的，我就有能力改变一切。当坏事发生时，我们习惯问"为什么是我"。或许可以换个问法："这件事想教会我什么？我该如何转变频率，让这样的事不再发生？"</p>
+
+    <div class="quote-block">
+        <p>你不是在体验世界，你是在创造世界。你的每一个念头，都在为未来添砖加瓦。</p>
+    </div>
+</section>
+
+</main>
+
+<!-- 尾声 -->
+<footer class="epilogue fade-in">
+    <div class="container">
+        <h2>秘密一直都在</h2>
+
+        <p>朗达·拜恩用这本书告诉我们，这个秘密不是遥不可及的智慧，不是少数人的特权，而是每一个普通人都能运用的力量。它藏在你的每一个念头里，每一种情绪里，每一次感恩里。</p>
+
+        <p>朗达·拜恩在书的最后说：有些人看着世界会问"为什么"，我却梦想着那些尚未存在的世界，并问"为什么不呢"。</p>
+
+        <p>也许你会觉得吸引力法则太玄妙，没关系，你只需要拿走对你有用的部分。今晚当你闭上眼睛，只需记住三句话：</p>
+
+        <div class="final-quote">
+            第一，你是一块活磁铁。<br>
+            第二，感恩让你富足。<br>
+            第三，感觉好，就一切都好。
+        </div>
+
+        <p>秘密一直都在。它不在遥远的古书里，而在你的心里，在你每一次的起心动念里。</p>
+
+        <p>晚安。愿你带着这份温柔的力量入睡，愿你明天醒来，有勇气去创造你想要的一切。</p>
+
+        <div class="ornament">&#10045; &#10045; &#10045;</div>
+    </div>
+</footer>
+
+<script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
