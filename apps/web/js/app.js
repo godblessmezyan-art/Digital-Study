@@ -1,4 +1,5 @@
 import { createAiWorkshopPage } from './studio-page.js?v=5';
+import { createLibraryPage } from './library-page.js?v=1';
 import { loadCatalogBooks } from './book-catalog.js?v=1';
 import { icons as archiveIcons } from './icons.js?v=cloud-realm-study-29';
 import { clearAuth, getStoredUser, login, validateAuth } from './auth-client.js';
@@ -17,7 +18,7 @@ const books=[
  {title:'乌合之众',author:'古斯塔夫·勒庞',desc:'群体心理如何影响个体判断，揭示社会行为的深层逻辑。',main:'社会科学',tags:['群体心理','社会','大众行为'],status:'待完善',date:'2025/08/15',time:'13:25',cover:'linear-gradient(145deg,#51483d,#11100f)'}
 ];
 const navTop=[['首页','home','home'],['我的书架','book'],['书籍分类','grid','categories'],['阅读笔记','pen'],['精选书摘','star'],['时间线','clock'],['设置','settings']];
-const navManage=[['藏书管理','book','library'],['AI 工坊','spark','studio'],['分类与标签','tag'],['导入记录','upload']];
+const navManage=[['藏书管理','book','library'],['AI 工坊','spark','studio'],['导入记录','upload']];
 const sidebar=document.querySelector('#sidebar'),app=document.querySelector('#app'),toast=document.querySelector('#toast');
 sidebar.innerHTML=`<button class="brand" data-page="home"><div class="brand-mark">${archiveIcons.astrolabe}</div><h2>云天幻境</h2><small>CLOUD REALM ARCHIVE</small></button><span class="sidebar-rule"></span><nav class="nav">${navTop.map(x=>`<button data-page="${x[2]||''}">${icon(x[1])}<span>${x[0]}</span></button>`).join('')}<div class="nav-section">管理</div>${navManage.map(x=>`<button data-page="${x[2]||''}">${icon(x[1])}<span>${x[0]}</span></button>`).join('')}</nav><div class="nav-card"><div class="mini-scene"></div><strong>独处 · 阅读 · 思考</strong><small>让思想在云海之上生长</small></div>`;
 
@@ -79,7 +80,7 @@ function metrics(items){return `<div class="metric-strip">${items.map(x=>`<div c
 function topActions(search=true){return search?'<div class="top-actions"><label class="searchbox">⌕<input id="globalSearch" placeholder="搜索书名、作者或标签..."></label></div>':''}
 function setActive(page){document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page))}
 
-function renderLibrary(){
+function renderLibraryLegacy(){
  document.body.classList.remove('category-mode','studio-v2-mode','studio-workshop-mode');
  setActive('library'); document.title='藏书管理 · 云天幻境';
  app.innerHTML=`<section class="hero"><h1>藏书管理</h1><p>管理已收录的书籍、导入新的 HTML，并维护分类与元信息。</p>${topActions()}${metrics([['▣','全部书籍','238'],['◈','已发布','214'],['◉','待完善','18'],['✕','解析失败','6']])}<div class="hero-tools"><button class="tool-button warm" data-toast="已打开 HTML 文件选择器">${icon('upload')}<span><strong>导入 HTML</strong><small>从本地文件导入</small></span></button><button class="tool-button primary" data-page="studio">${icon('spark')}<span><strong>AI 生成书籍</strong><small>基于提示词生成</small></span></button><button class="tool-button" data-toast="已进入批量处理模式">${icon('grid')}<span><strong>批量处理</strong><small>多本书管理</small></span></button></div></section><section class="content-shell library-shell"><div class="library-toolbar"><div class="tabs">${['全部 (238)','已发布 (214)','待完善 (18)','草稿 (4)','解析失败 (6)'].map((x,i)=>`<button class="tab ${i===0?'active':''}" data-status="${x.split(' ')[0]}">${x}</button>`).join('')}</div><div class="filters"><select class="filter"><option>全部分类</option></select><select class="filter"><option>全部状态</option></select><select class="filter"><option>最近更新</option></select><button class="filter view-button">▦</button><button class="filter view-button">☷</button></div></div><div class="table-wrap"><table class="books-table"><thead><tr><th class="check"><input class="checkbox" id="selectAll" type="checkbox"></th><th>书籍信息</th><th>分类 / 标签</th><th>状态</th><th>导入时间</th><th>操作</th></tr></thead><tbody id="bookRows"></tbody></table></div><footer class="table-footer"><span id="selectedCount">已选择 0 项</span><div class="pagination"><button class="page">‹</button>${[1,2,3,4,5,'…',24].map((x,i)=>`<button class="page ${i===0?'active':''}">${x}</button>`).join('')}<button class="page">›</button><select class="filter"><option>每页 10 项</option></select></div></footer></section>`;
@@ -92,6 +93,20 @@ function renderLibrary(){
  function updateCount(){const n=document.querySelectorAll('.row-check:checked').length;document.querySelector('#selectedCount').textContent=`已选择 ${n} 项`}
  function bindDynamic(){document.querySelectorAll('.row-check').forEach(c=>c.addEventListener('change',updateCount));document.querySelectorAll('[data-toast]').forEach(b=>b.addEventListener('click',()=>showToast(b.dataset.toast)))}
  bindGlobal();
+}
+
+async function renderLibrary(){
+ document.body.classList.remove('category-mode','studio-v2-mode','studio-workshop-mode');
+ document.body.classList.add('library-management-mode');
+ setActive('library');
+ document.title='藏书管理 · 云天幻境';
+ await createLibraryPage(app,{
+  showToast,
+  navigateToStudio:book=>{
+   if(book) sessionStorage.setItem('digital-study-edit-book',JSON.stringify(book));
+   location.hash='#studio';
+  }
+ });
 }
 
 const categoryBooks=[
@@ -110,7 +125,7 @@ const categoryBooks=[
 ];
 
 async function renderCategories(){
- setActive('categories');document.title='书籍分类 · 云天幻境';document.body.classList.remove('studio-v2-mode','studio-workshop-mode');document.body.classList.add('category-mode');
+ setActive('categories');document.title='书籍分类 · 云天幻境';document.body.classList.remove('studio-v2-mode','studio-workshop-mode','library-management-mode');document.body.classList.add('category-mode');
  app.innerHTML='<div class="category-loading">正在读取 Git 内容索引…</div>';
  const catalogBooks=await loadCatalogBooks();
  const categoryCounts=new Map();catalogBooks.forEach(book=>{const name=book.category?.name||'其他';categoryCounts.set(name,(categoryCounts.get(name)||0)+1)});
@@ -141,7 +156,7 @@ function renderStudio(){
 function renderStudioV2(){
   setActive('studio');
   document.title='AI 工坊 · 云天幻境';
-  document.body.classList.remove('category-mode');
+  document.body.classList.remove('category-mode','library-management-mode');
   document.body.classList.add('studio-v2-mode');
   const htmlCode=`<!DOCTYPE html>\n<html lang="zh-CN">\n<head>\n  <meta charset="UTF-8">\n  <title>云与群星之间</title>\n  <meta name="author" content="星海旅人">\n  <meta name="description" content="当云海散去，群星将指引我们前往更远的远方。">\n</head>\n<body>\n  <h1>云与群星之间</h1>\n  <div class="chapter">\n    <h2>第一章 云海之上</h2>\n    <p>在很久以前，天空并不只是天空，而是一片流动的海洋……</p>\n  </div>\n</body>`;
   app.innerHTML=`<section class="v2-hero"><div class="v2-title"><span class="v2-feather">❧</span><div><h1>AI 工坊</h1><p>创建、生成并导入你的书籍内容</p><small>让思想化为文字，让灵感汇入你的知识星海。</small></div></div>${topActions(false)}<div class="v2-stats"><div class="v2-stat"><i>◇</i><span><small>模板数量</small><b>12</b><em>精品模板（开发中）</em></span></div><div class="v2-stat blue"><i>▤</i><span><small>待导入</small><b>3</b><em>个文件等待处理</em></span></div><div class="v2-stat"><i>▥</i><span><small>本周创建</small><b>5</b><em>本周新增书籍</em></span></div><button class="v2-quick" data-toast="模板管理功能开发中"><i>▧</i><span><b>模板管理　<em>开发中</em></b><small>敬请期待更多模板</small></span></button><button class="v2-quick" data-toast="生成记录功能开发中"><i>▤</i><span><b>生成记录　<em>开发中</em></b><small>AI 生成历史记录</small></span></button></div></section><section class="v2-workspace"><div class="v2-editor"><div class="v2-modes"><button data-mode="ai"><i>⌘</i><span><b>AI 直接生成</b><small>用 AI 根据主题快速生成书籍内容</small></span></button><button class="active" data-mode="manual"><i>▤</i><span><b>手动创建书籍</b><small>自行编辑内容，灵活掌控每一个细节</small></span></button><button data-mode="import"><i>&lt;/&gt;</i><span><b>导入 HTML</b><small>从本地 HTML 文件导入书籍</small></span></button></div><section class="v2-card info-card"><header><span class="round-icon">▣</span><div><h2>书籍基本信息</h2><p>填写书籍的基本信息，方便整理与管理</p></div></header><div class="v2-form"><div class="v2-fields"><label><span>书名 <em>*</em></span><div class="v2-input"><input id="v2Title" value="云与群星之间" maxlength="100"><small><b id="titleCount">6</b> /100</small></div></label><label><span>作者</span><div class="v2-input"><input id="v2Author" value="星海旅人" maxlength="50"><small><b id="authorCount">4</b> /50</small></div></label><label><span>分类</span><select id="v2Category"><option>幻想文学</option><option>科幻宇宙</option><option>文学经典</option></select></label><label><span>标签</span><div class="v2-tags"><button>奇幻　×</button><button>世界观　×</button><button>冒险　×</button><button class="add">＋ 添加标签</button></div></label><label><span>状态</span><div class="v2-radios"><label><input type="radio" name="bookStatus" checked> 草稿</label><label><input type="radio" name="bookStatus"> 已发布</label></div><small class="v2-help">可在编辑完成后发布到你的书架</small></label></div><div class="v2-cover-field"><b>封面（可选）</b><div class="v2-cover-row"><div class="v2-book-cover"><span>云与群星之间</span><small>BETWEEN CLOUDS<br>AND STARS</small></div><button class="v2-upload" data-toast="请选择 JPG 或 PNG 封面"><i>▧</i><b>点击上传封面</b><small>支持 JPG、PNG<br>建议比例 2:3</small></button></div></div></div></section><section class="v2-html"><header><span class="round-icon code">&lt;/&gt;</span><div><h2>HTML 内容</h2><p>在下方编辑或粘贴 HTML 内容，系统可自动识别其中的书籍信息</p></div><span class="html-hint">✧ 支持标准 HTML，建议包含 title、author 等元信息</span><button class="recognize" data-toast="已从 HTML 识别书籍信息">◉ 从 HTML 识别信息</button></header><div class="code-editor"><div class="line-numbers">${Array.from({length:15},(_,i)=>i+1).join('<br>')}</div><textarea id="htmlEditor" spellcheck="false">${htmlCode.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')}</textarea><span class="editor-status">HTML　行 16，列 8　　UTF-8　　⌗</span></div></section></div><aside class="v2-preview"><header><span class="round-icon">◉</span><div><h2>结果预览</h2><p>实时预览书籍效果，并验证识别结果</p></div></header><div class="preview-switch"><button class="active">页面预览</button><button>校验信息</button></div><div class="paper-preview"><h2 id="previewTitle">云与群星之间</h2><p id="previewAuthor">星海旅人</p><span class="paper-star">✦</span><div class="paper-image"></div><h3>第一章 云海之上</h3><p class="paper-text">在很久以前，天空并不只是天空，而是一片流动的海洋。<br><br>无数的岛屿悬浮在云海之上，彼此之间通过光的桥梁相连。<br>……</p></div><div class="validation"><header><b>▣　内容校验结果</b><button data-toast="已重新校验">⟳ 重新校验</button></header><div class="validation-grid"><span><i>✓</i><b>书名识别成功</b><small id="validationTitle">云与群星之间</small></span><span><i>✓</i><b>作者识别成功</b><small id="validationAuthor">星海旅人</small></span><span><i>✓</i><b>分类识别成功</b><small>幻想文学</small></span><span><i>✓</i><b>HTML 结构正常</b><small>未发现明显错误</small></span><span class="warning"><i>!</i><b>未发现重复书籍</b><small>建议发布前再次确认</small></span></div></div><footer class="v2-actions"><button data-toast="预览已刷新">◉　预览</button><button data-toast="草稿已保存">▤　保存草稿</button><button class="publish" data-toast="书籍已发布">➤　发布</button></footer></aside></section>`;
@@ -155,7 +170,7 @@ function renderStudioV2(){
 function renderStudioV3(){
   setActive('studio');
   document.title='AI 工坊 · 云天幻境';
-  document.body.classList.remove('category-mode','studio-v2-mode');
+  document.body.classList.remove('category-mode','studio-v2-mode','library-management-mode');
   document.body.classList.add('studio-workshop-mode');
   createAiWorkshopPage(app,{showToast,bindNavigation:bindGlobal});
 }
