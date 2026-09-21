@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>如何度过每天的二十四小时</title>
+<link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+    --primary: #4A9FD4;
+    --primary-light: #4a9fd422;
+    --primary-mid: #4a9fd455;
+    --bg: #f7fafc;
+    --card-bg: #ffffff;
+    --text: #2c3e50;
+    --text-light: #5a6d7e;
+    --hero-bg: #1a2a3a;
+    --mm-filter: grayscale(1) sepia(.9) hue-rotate(169deg) saturate(2.2) brightness(.95);
+}
+body.theme-sky { --primary:#4A9FD4; --primary-light:#4a9fd422; --primary-mid:#4a9fd455; --bg:#f7fafc; --card-bg:#ffffff; --text:#2c3e50; --text-light:#5a6d7e; --hero-bg:#1a2a3a; --mm-filter:grayscale(1) sepia(.9) hue-rotate(169deg) saturate(2.2) brightness(.95); }
+body.theme-moon { --primary:#46759B; --primary-light:#46759b22; --primary-mid:#46759b55; --bg:#f5f8fa; --card-bg:#ffffff; --text:#2b3a48; --text-light:#57718a; --hero-bg:#16222e; --mm-filter:grayscale(1) sepia(.9) hue-rotate(172deg) saturate(2) brightness(.9); }
+body.theme-haze { --primary:#7D99AE; --primary-light:#7d99ae22; --primary-mid:#7d99ae55; --bg:#f7f9fb; --card-bg:#ffffff; --text:#33424f; --text-light:#64798b; --hero-bg:#24303a; --mm-filter:grayscale(1) sepia(.9) hue-rotate(170deg) saturate(1.6) brightness(1); }
+body.theme-indigo { --primary:#4A6FA5; --primary-light:#4a6fa522; --primary-mid:#4a6fa555; --bg:#f6f8fc; --card-bg:#ffffff; --text:#2a3550; --text-light:#5a6a8a; --hero-bg:#182238; --mm-filter:grayscale(1) sepia(.9) hue-rotate(182deg) saturate(2.2) brightness(.92); }
+body.theme-teal { --primary:#4E9B8F; --primary-light:#4e9b8f22; --primary-mid:#4e9b8f55; --bg:#f5fbfa; --card-bg:#ffffff; --text:#2a403c; --text-light:#577a74; --hero-bg:#14302b; --mm-filter:grayscale(1) sepia(.9) hue-rotate(136deg) saturate(2) brightness(.95); }
+body.theme-bamboo { --primary:#7A9B76; --primary-light:#7a9b7622; --primary-mid:#7a9b7655; --bg:#f7fbf6; --card-bg:#ffffff; --text:#33442f; --text-light:#63795e; --hero-bg:#22301f; --mm-filter:grayscale(1) sepia(.9) hue-rotate(80deg) saturate(1.8) brightness(.95); }
+body.theme-vermilion { --primary:#C0564F; --primary-light:#c0564f22; --primary-mid:#c0564f55; --bg:#fdf8f7; --card-bg:#ffffff; --text:#4a2f2c; --text-light:#8a5f5a; --hero-bg:#381a17; --mm-filter:grayscale(1) sepia(.9) hue-rotate(-31deg) saturate(2.4) brightness(.95); }
+body.theme-sakura { --primary:#D19090; --primary-light:#d1909022; --primary-mid:#d1909055; --bg:#fdf9f9; --card-bg:#ffffff; --text:#4f3636; --text-light:#96686a; --hero-bg:#3a2222; --mm-filter:grayscale(1) sepia(.9) hue-rotate(-35deg) saturate(1.8) brightness(1.05); }
+body.theme-lotus { --primary:#C48F9B; --primary-light:#c48f9b22; --primary-mid:#c48f9b55; --bg:#fdf8fa; --card-bg:#ffffff; --text:#4a333a; --text-light:#8d6572; --hero-bg:#35202a; --mm-filter:grayscale(1) sepia(.9) hue-rotate(310deg) saturate(1.8) brightness(1); }
+body.theme-rose { --primary:#A78B8B; --primary-light:#a78b8b22; --primary-mid:#a78b8b55; --bg:#fbf8f8; --card-bg:#ffffff; --text:#443535; --text-light:#7d6464; --hero-bg:#2e2222; --mm-filter:grayscale(1) sepia(.9) hue-rotate(-35deg) saturate(1.4) brightness(1); }
+body.theme-purple { --primary:#9B87B5; --primary-light:#9b87b522; --primary-mid:#9b87b555; --bg:#faf8fd; --card-bg:#ffffff; --text:#3a3350; --text-light:#6f6490; --hero-bg:#251f38; --mm-filter:grayscale(1) sepia(.9) hue-rotate(232deg) saturate(1.8) brightness(1); }
+body.theme-amber { --primary:#C08A3E; --primary-light:#c08a3e22; --primary-mid:#c08a3e55; --bg:#fdfaf4; --card-bg:#ffffff; --text:#4a3a22; --text-light:#8a7044; --hero-bg:#352810; --mm-filter:grayscale(1) sepia(.9) hue-rotate(0deg) saturate(2.2) brightness(1); }
+body.theme-caramel { --primary:#A06B3F; --primary-light:#a06b3f22; --primary-mid:#a06b3f55; --bg:#fcf8f4; --card-bg:#ffffff; --text:#44331f; --text-light:#7d6040; --hero-bg:#2e2010; --mm-filter:grayscale(1) sepia(.9) hue-rotate(-7deg) saturate(2) brightness(.95); }
+body.theme-wood { --primary:#B08D57; --primary-light:#b08d5722; --primary-mid:#b08d5755; --bg:#fcfaf5; --card-bg:#ffffff; --text:#463a26; --text-light:#806a45; --hero-bg:#302512; --mm-filter:grayscale(1) sepia(.9) hue-rotate(0deg) saturate(1.8) brightness(1); }
+body.theme-ink { --primary:#5A6670; --primary-light:#5a667022; --primary-mid:#5a667055; --bg:#f7f8f9; --card-bg:#ffffff; --text:#2e363d; --text-light:#5c6a75; --hero-bg:#1c2228; --mm-filter:grayscale(1) sepia(.9) hue-rotate(175deg) saturate(1.2) brightness(.9); }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Noto Serif SC', serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 2;
+    transition: background .5s, color .5s;
+}
+.hero {
+    min-height: 72vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: var(--hero-bg);
+    color: #fff;
+    padding: 4rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: background .5s;
+}
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 120%, var(--primary-mid), transparent 70%);
+}
+.hero > * { position: relative; }
+.hero h1 {
+    font-size: clamp(2.2rem, 7vw, 3.8rem);
+    font-weight: 900;
+    letter-spacing: .1em;
+    margin-bottom: 1.2rem;
+}
+.hero-sub {
+    font-size: clamp(1rem, 3vw, 1.35rem);
+    opacity: .85;
+    max-width: 34em;
+    letter-spacing: .08em;
+}
+.hero-author {
+    margin-top: 2.2rem;
+    font-size: .95rem;
+    opacity: .6;
+    letter-spacing: .2em;
+}
+.container { max-width: 760px; margin: 0 auto; padding: 3rem 1.5rem 2rem; }
+.chapter {
+    margin-bottom: 3.5rem;
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .8s ease, transform .8s ease;
+}
+.chapter.visible { opacity: 1; transform: none; }
+.chapter-label {
+    display: inline-block;
+    font-size: .8rem;
+    letter-spacing: .25em;
+    color: var(--primary);
+    border: 1px solid var(--primary-mid);
+    border-radius: 20px;
+    padding: .15rem 1rem;
+    margin-bottom: 1rem;
+}
+.chapter h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+    color: var(--text);
+}
+.lead { font-size: 1.05rem; color: var(--text-light); margin-bottom: 1.4rem; }
+p { margin-bottom: 1.1rem; text-align: justify; }
+.quote-block {
+    background: var(--card-bg);
+    border-left: 4px solid var(--primary);
+    border-radius: 0 12px 12px 0;
+    padding: 1.4rem 1.6rem;
+    margin: 1.6rem 0;
+    font-size: 1.05rem;
+    box-shadow: 0 2px 12px var(--primary-light);
+}
+.quote-src { display: block; margin-top: .6rem; font-size: .85rem; color: var(--text-light); }
+.scene-card {
+    background: var(--card-bg);
+    border-radius: 14px;
+    padding: 1.6rem;
+    margin: 1.6rem 0;
+    box-shadow: 0 3px 16px var(--primary-light);
+    border: 1px solid var(--primary-light);
+}
+.scene-card h4 { color: var(--primary); font-size: 1.05rem; margin-bottom: .8rem; }
+.key-list { margin: 1.4rem 0; display: flex; flex-direction: column; gap: 1rem; }
+.key-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.2rem 1.4rem;
+    box-shadow: 0 2px 10px var(--primary-light);
+}
+.key-num {
+    flex-shrink: 0;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .85rem;
+    font-weight: 700;
+    margin-top: .3rem;
+}
+.insight-card {
+    background: linear-gradient(135deg, var(--primary-light), var(--card-bg));
+    border: 1px solid var(--primary-mid);
+    border-radius: 14px;
+    padding: 1.6rem;
+    margin: 1.8rem 0;
+}
+.insight-card h4 { color: var(--primary); margin-bottom: .8rem; font-size: 1.05rem; }
+.divider-orn { text-align: center; color: var(--primary); letter-spacing: 1em; margin: 2.5rem 0; opacity: .6; }
+.mindmap-section h3 { text-align: center; }
+.markmap {
+    background: var(--card-bg);
+    border-radius: 14px;
+    box-shadow: 0 3px 16px var(--primary-light);
+    min-height: 420px;
+    overflow: hidden;
+}
+.markmap svg { filter: var(--mm-filter); transition: filter .5s; }
+.epilogue {
+    background: var(--hero-bg);
+    color: #fff;
+    padding: 4rem 1.5rem;
+    text-align: center;
+}
+.epilogue-inner { max-width: 640px; margin: 0 auto; }
+.final-quote {
+    font-size: 1.15rem;
+    line-height: 2.2;
+    opacity: .9;
+    margin-bottom: 2.5rem;
+}
+.goodnight {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: .5em;
+    color: var(--primary);
+    filter: brightness(1.5);
+}
+/* 换肤 */
+.theme-toggle {
+    position: fixed;
+    top: 1.2rem; right: 1.2rem;
+    z-index: 999;
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    border: none;
+    background: var(--primary);
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 3px 12px rgba(0,0,0,.25);
+    transition: transform .3s, background .5s;
+}
+.theme-toggle:hover { transform: scale(1.12); }
+.theme-panel {
+    position: fixed;
+    top: 4.2rem; right: 1.2rem;
+    z-index: 998;
+    background: var(--card-bg);
+    border-radius: 14px;
+    box-shadow: 0 6px 24px rgba(0,0,0,.18);
+    padding: 1rem;
+    display: none;
+    grid-template-columns: repeat(2, 1fr);
+    gap: .5rem;
+    width: 220px;
+}
+.theme-panel.open { display: grid; }
+.theme-option {
+    display: flex;
+    align-items: center;
+    gap: .45rem;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: .35rem .55rem;
+    cursor: pointer;
+    font-size: .78rem;
+    background: none;
+    font-family: inherit;
+    color: var(--text);
+    transition: border-color .2s;
+}
+.theme-option .dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+.theme-option.active { border-color: var(--primary); }
+@media (max-width: 600px) {
+    .container { padding: 2rem 1.1rem; }
+    .hero { min-height: 60vh; }
+}
+</style>
+</head>
+<body class="theme-sky">
+<script>
+    // 默认配色：每次打开随机一套
+    (function () {
+        var themes = ['sky','moon','haze','indigo','teal','bamboo','vermilion','sakura','lotus','rose','purple','amber','caramel','wood','ink'];
+        document.body.className = 'theme-' + themes[Math.floor(Math.random() * themes.length)];
+    })();
+</script>
+
+<button class="theme-toggle" id="themeToggle" aria-label="换肤">🎨</button>
+<div class="theme-panel" id="themePanel">
+    <button class="theme-option" data-theme="sky"><span class="dot" style="background:#4A9FD4"></span>天青蓝</button>
+    <button class="theme-option" data-theme="moon"><span class="dot" style="background:#46759B"></span>月海蓝</button>
+    <button class="theme-option" data-theme="haze"><span class="dot" style="background:#7D99AE"></span>雾霾蓝</button>
+    <button class="theme-option" data-theme="indigo"><span class="dot" style="background:#4A6FA5"></span>靛青蓝</button>
+    <button class="theme-option" data-theme="teal"><span class="dot" style="background:#4E9B8F"></span>松石绿</button>
+    <button class="theme-option" data-theme="bamboo"><span class="dot" style="background:#7A9B76"></span>竹青色</button>
+    <button class="theme-option" data-theme="vermilion"><span class="dot" style="background:#C0564F"></span>朱砂红</button>
+    <button class="theme-option" data-theme="sakura"><span class="dot" style="background:#D19090"></span>绯樱色</button>
+    <button class="theme-option" data-theme="lotus"><span class="dot" style="background:#C48F9B"></span>藕荷色</button>
+    <button class="theme-option" data-theme="rose"><span class="dot" style="background:#A78B8B"></span>玫瑰灰</button>
+    <button class="theme-option" data-theme="purple"><span class="dot" style="background:#9B87B5"></span>暮山紫</button>
+    <button class="theme-option" data-theme="amber"><span class="dot" style="background:#C08A3E"></span>琥珀色</button>
+    <button class="theme-option" data-theme="caramel"><span class="dot" style="background:#A06B3F"></span>焦糖色</button>
+    <button class="theme-option" data-theme="wood"><span class="dot" style="background:#B08D57"></span>木头色</button>
+    <button class="theme-option" data-theme="ink"><span class="dot" style="background:#5A6670"></span>墨玉色</button>
+</div>
+
+<header class="hero">
+    <h1>如何度过每天的二十四小时</h1>
+    <p class="hero-sub">你如何度过一天，就如何度过一生</p>
+    <p class="hero-author">阿诺德·本涅特 著</p>
+</header>
+
+<main class="container">
+
+<section class="chapter">
+    <span class="chapter-label">序</span>
+    <h3>一本撕开虚度真相的百年小书</h3>
+    <p class="lead">我们总说一天24小时太短了、不够用。可你有没有想过——不是时间太少，而是我们从来没有真正学会如何掌控这属于自己的人人平等的24小时。</p>
+    <p>此刻的你或许正疲惫地靠在床头，心里还在盘算着今天没做完的工作，或是遗憾着又有很多想做的事没来得及开始。清晨被闹钟惊醒，手忙脚乱地洗漱出门；上班时被各种琐事裹挟，忙到下班却发现核心的事一件都没做完；晚上回到家往沙发上一摊，刷手机、追剧，不知不觉就到了深夜——合眼的那一刻，心里满是空虚和焦虑，觉得这一天又浑浑噩噩地过去了。</p>
+    <p>100多年前，英国作家阿诺德·本涅特写下了这本薄薄的小书，用直白又戳心的文字，撕开了我们虚度时间的真相，也告诉我们：如何把看似平凡的每一天，过成自己想要的样子。</p>
+</section>
+
+<div class="divider-orn">· · ·</div>
+
+<section class="chapter">
+    <span class="chapter-label">第一章</span>
+    <h3>时间的真相：你只拥有今天</h3>
+    <p class="lead">作者在书的开头就给了我们当头一棒：你以为你拥有的是时间，但你真正拥有的只是此刻、只有今天、只有这24小时。</p>
+    <p>很多人活在一个幻觉里——觉得自己有很多时间，明天还有时间，下周还有时间，明年还有时间，所以今天可以浪费一点、放松一下，反正来日方长。但作者说，这是最危险的想法。昨天已经过去了，永远不会回来；明天还没有到来，你也不知道它是否会到来。你真正能够支配的，只有此刻，只有眼前的这一天。</p>
+    <div class="quote-block">
+        时间就像你银行账户里的钱，但这个账户有个特殊的规定：每天早上银行会给你存入86400秒，到了晚上12点，所有没有用掉的时间都会被清零——不能存起来，不能转到明天。
+    </div>
+    <p>你想想看，如果银行真的每天给你86400元，但规定当天必须用完否则清零，你会怎么做？你一定会想尽办法把每一分钱都花得有价值。可现实中，我们手握着86400秒的巨款，却总在被动应付中任其溜走，甚至连它到底去了哪里都一无所知。</p>
+    <div class="insight-card">
+        <h4>第一个道理</h4>
+        <p>时间是这世上唯一无法储存、无法借贷、无法找回的财产。金钱没了可以再赚，知识没了可以再学，可时间一旦流逝，就永远消失了。</p>
+    </div>
+    <p>所以改变的第一步，并非急匆匆地去做什么，而是完成一次认知上的"神圣仪式"——在每天清晨醒来时，在心底默默确认：看，奇迹又发生了，全新的86400秒已经到账，我是它唯一的主宰和管家。</p>
+</section>
+
+<div class="divider-orn">· · ·</div>
+
+<section class="chapter">
+    <span class="chapter-label">第二章</span>
+    <h3>隐形财富：坐在金矿上的乞丐</h3>
+    <p class="lead">"我每天要工作八小时、睡觉八小时，剩下的时间还要吃饭、通勤、处理杂事，根本没有自己的时间。"——作者告诉我们，这只是我们为自己找的借口。我们的可支配时间，远比自己以为的要多。</p>
+    <p>假设每天工作八小时、睡眠八小时，剩余的八小时里就算扣除三小时用于吃饭、通勤、洗漱这些必要的事，我们依然有五小时的纯粹自由时间。一周就是35小时，一年累计下来超过1800小时。</p>
+    <p>你知道1800小时意味着什么吗？它足够你掌握一门新的语言，足够你读完100本好书，足够你学习一项新的技能，甚至足够你为自己的梦想迈出坚实的一步。可大多数人却把这笔宝贵的隐形财富浪费在了无意义的刷手机、无目的的闲聊发呆——就像坐在金矿上的乞丐，守着无尽的宝藏，却依然过着贫穷的生活。</p>
+    <div class="quote-block">
+        我们最大的幻觉是鄙视碎片、崇拜整块。"等我有空了""等周末了""等我休假了"——本涅特一针见血地指出：这种等待是致命的。因为那个完美的、长长的空闲时间，在成年人的世界里几乎不存在；即便存在，被你长期训练来消磨时间的惯性，也会瞬间将它填满。
+    </div>
+    <p>等车的10分钟，你可以用来思考一个问题；排队的15分钟，你可以用来读几页书；睡前的30分钟，你可以用来反思一天的生活。这些碎片化的时间看似微不足道，可当它们汇聚起来，就会成为改变你人生的力量。</p>
+    <div class="scene-card">
+        <h4>玛丽的六分钟</h4>
+        <p>书里有一个让人印象深刻的例子——一位普通的家庭主妇玛丽，生活被琐碎的家务填满，她觉得自己永远没有时间。本涅特只是请她观察水烧开的6分钟。第一天她盯着水壶发呆；第二天她顺手整理了一下调料架；第三天她想起一直想学的编织，便拿出钩针比划了一下。</p>
+        <p>就是这无数个被"发现"的6分钟，一年后，玛丽不仅为全家人都织了温暖的毛衣，甚至还设计出了独特的花样，开始接受邻居的小订单。她写信给本涅特说：</p>
+        <p>"我从未觉得我在挤时间，我只是在那些原本空白的缝隙里，种下了小小的快乐的种子。现在，我的生活开满了花。"</p>
+    </div>
+</section>
+
+<div class="divider-orn">· · ·</div>
+
+<section class="chapter">
+    <span class="chapter-label">第三章</span>
+    <h3>专注的力量：放大镜下的阳光</h3>
+    <p class="lead">找到时间只是第一步，更重要的是如何高效地利用这些时间。我们总以为时间管理就是做更多的事、把日程表排得满满当当——可本涅特说，这是对时间管理最大的误解。</p>
+    <div class="quote-block">
+        阳光散射时只能带来温暖，可通过放大镜聚焦后却能点燃火焰。注意力亦是如此。
+    </div>
+    <p>真正的时间管理从来不是做更多的事，而是把重要的事做到极致。你有没有这样的经历：坐在书桌前想写一篇文章，可刚写了几句就忍不住拿起手机刷一刷，结果一个下午过去了，文章只写了寥寥数语。这就是缺乏专注的结果——看似忙忙碌碌，实则一事无成。</p>
+    <p>作者在书里讲了一个作家的故事：这位作家每天只写作两小时，可在这两小时里他全神贯注，不受任何干扰——手机调至静音，桌面收拾干净，拒绝一切无关的打扰。就是这专注的两小时，他写出的内容远比那些断断续续写作八小时的人要多，质量也要高。专注的两小时，胜过分心的八小时。</p>
+    <p>而我们总在追求的"多任务处理"，其实不过是效率的杀手。大脑在不同任务之间切换需要消耗额外的能量，每一次切换都会让注意力分散。本涅特说：当你试图同时追逐两只兔子，最终一只也抓不到。</p>
+    <div class="key-list">
+        <div class="key-item">
+            <span class="key-num">1</span>
+            <div><strong>创造无干扰的环境</strong>——把手机调至静音，放在离自己远一点的地方，清理掉桌面上无关的物品，告诉身边的人这段时间不要随意打扰。</div>
+        </div>
+        <div class="key-item">
+            <span class="key-num">2</span>
+            <div><strong>单任务原则</strong>——一次只做一件事，把所有的注意力都集中在当下的事上，把它做到最好，再去做下一件。</div>
+        </div>
+        <div class="key-item">
+            <span class="key-num">3</span>
+            <div><strong>番茄工作法</strong>——25分钟专注工作，然后休息5分钟。这样的循环既能训练专注力，也能避免大脑过度疲劳。</div>
+        </div>
+    </div>
+    <p>专注力就像我们身上的肌肉，只要你愿意刻意训练，它就会变得越来越强。在这个充满干扰的时代，保持专注已经成为一种稀缺的能力——而掌握了这种能力，你就已经在时间的赛道上领先了大多数人。</p>
+</section>
+
+<div class="divider-orn">· · ·</div>
+
+<section class="chapter">
+    <span class="chapter-label">第四章</span>
+    <h3>可持续的系统：不靠毅力，靠习惯</h3>
+    <p class="lead">我们身边总有这样的人：一时兴起制定了密密麻麻的时间规划，坚持了两三天就放弃了，然后感叹自己没有毅力。其实这不是毅力的问题，而是因为他们没有构建起一套可持续的成长系统。</p>
+    <div class="quote-block">
+        偶尔的努力只能带来偶尔的成功，而系统的努力才能实现持续的成长。
+    </div>
+    <p>一个优秀的时间管理系统需要包含四个核心要素：目标设定、时间分配、有效执行、反馈调整。本涅特分享了自己的实践方法：每天早上花10分钟规划当天的重要任务并排序——先做最重要最紧急的事；每天晚上再花10分钟回顾完成情况，分析做得好的地方，也反思做得不好的地方；周末进行一次深度反思，总结一周的生活，调整下周的计划。就是这样简单的"日规划＋日反思＋周调整"的循环，让他始终保持着稳步的进步。</p>
+    <div class="quote-block">
+        播种一个行动，收获一个习惯；播种一个习惯，收获一个性格；播种一个性格，收获一个命运。
+        <span class="quote-src">——习惯一旦养成，就会像自动驾驶一样在生活中运行，无需消耗额外的意志力</span>
+    </div>
+    <p>养成习惯的关键是<strong>小步快跑</strong>。不要一开始就要求自己每天阅读两小时、每天运动一小时——从每天读10分钟开始就好，从每天走10分钟、做几个拉伸开始就好。小小的行动看似微不足道，却容易坚持，而坚持就是养成习惯的核心。你还可以运用"触发—反应"原则，把新习惯和已有习惯绑定在一起：刷牙后立即冥想10分钟，吃完早餐后立即读10分钟书，下班到家后立即做5分钟拉伸。</p>
+    <div class="scene-card">
+        <h4>时间审计与"不要假装疲惫"</h4>
+        <p>就像记账一样，记录下自己一周每一小时甚至每半小时的去向。当你把这些都记录下来，你会震惊地发现：自己的大量时间都消耗在了无意义的事情上。那些你以为的"没时间"，不过是被你自己悄悄浪费了。做时间审计的目的不是苛责自己，而是看清时间的流向，找到浪费的根源，然后一点点调整。</p>
+        <p>同时，不要假装疲惫。下班回家后觉得"累得不行"，很多时候并不是身体上的累，而是心理暗示。那份累更多来自工作中的敷衍、拖延和分心，而不是真正的全力以赴。当你在工作中全神贯注、高效完成，你会发现自己其实并没有那么累，晚上也会有更多精力去做自己想做的事。</p>
+    </div>
+    <p>当然，也要学会接受不完美。计划需要有弹性，允许意外的发生——偶尔走偏了一步，没关系，调整方向继续往前走就好。重要的不是一直走在笔直的路上，而是始终保持前进的方向。</p>
+</section>
+
+<div class="divider-orn">· · ·</div>
+
+<section class="chapter">
+    <span class="chapter-label">第五章</span>
+    <h3>理想的一天：从清晨的神圣时间开始</h3>
+    <p class="lead">在书里，本涅特为我们描绘了一个"理想的一天"——这不是一个必须严格遵守的模板，而是一个参考，让我们知道如何把一天的24小时过得充实而有意义。</p>
+    <div class="key-list">
+        <div class="key-item">
+            <span class="key-num">晨</span>
+            <div><strong>6:30–7:30</strong> 从容起床洗漱，然后是属于自己的"神圣时间"——读几页书、思考一些问题、规划当天行程，为心灵充电。</div>
+        </div>
+        <div class="key-item">
+            <span class="key-num">午</span>
+            <div><strong>8:00–18:00</strong> 通勤时间不发呆不刷手机，梳理工作思路或听有声书；工作时间专注做事，不摸鱼不分心，为晚上的自由生活打好基础。</div>
+        </div>
+        <div class="key-item">
+            <span class="key-num">夜</span>
+            <div><strong>19:00–21:30</strong> 晚间的黄金时段——每周选三个晚上，投入90分钟学习新知识、培养兴趣、进行深度成长。</div>
+        </div>
+        <div class="key-item">
+            <span class="key-num">息</span>
+            <div><strong>21:30–23:00</strong> 自由支配——和家人朋友相处，做喜欢的事，放松身心；然后进入睡眠，让身体和大脑充分休息。</div>
+        </div>
+    </div>
+    <p>这一天看似平淡，却每一分每一秒都有它的价值：工作时全力以赴，休息时尽情放松，成长时专注投入，陪伴时用心珍惜。</p>
+    <p>或许你会觉得这样的一天太难做到了。可本涅特想告诉我们的，从来都不是让我们成为被时间绑架的机器，而是让我们学会掌控时间，成为时间的主人。</p>
+</section>
+
+<div class="divider-orn">· · ·</div>
+
+<section class="chapter">
+    <span class="chapter-label">第六章</span>
+    <h3>复利与意义：你如何度过一天，就如何度过一生</h3>
+    <p class="lead">时间管理的终极意义，从来都不是短期的效率提升，而是长期的人生积累。</p>
+    <div class="quote-block">
+        大多数人高估了一年能实现的改变，却低估了十年能带来的转变。
+    </div>
+    <p>这句话道破了时间的复利效应。每天进步一点点，看似微不足道，可经过十年的积累，终将带来惊人的蜕变。今天的你比昨天多学了一个知识点、多读了一页书、多掌握了一个小技能——这些看似不起眼的改变，都会在时间的沉淀中慢慢成为你人生的底气。我们总以为人生的改变需要惊天动地的大事、需要千载难逢的机会，可实际上，人生的改变从来都藏在每一天的24小时里。</p>
+    <p>作者在书的最后谈到了一个更深层的话题——生命的意义。他说，时间管理的最终目的不是让你变得更忙、完成更多的任务，而是让你活得更有质量、更有意义：是你清楚地知道自己在做什么、为什么而做；是你在每一天结束的时候能够对自己说——今天我过得很充实，我离我想成为的那个人又近了一步。而不是日复一日重复着同样的生活，到了晚年回顾一生，发现自己从来没有真正活过。</p>
+    <div class="quote-block">
+        如果你不能掌控你的时间，你就无法掌控你的人生。而如果你不能掌控你的人生，那么谁来掌控呢？是你的老板、你的客户、社会的期待、各种外在的压力和诱惑——他们会把你塑造成他们需要的样子，而不是你想成为的样子。
+    </div>
+    <p>但你只有一次生命。作者说，他写这本书不是为了教人如何更高效地工作、赚更多的钱，而是为了唤醒人们对时间的意识、对生命的珍惜。他希望每个读到这本书的人都能停下来想一想：我到底想要什么样的人生？我应该如何度过我的每一天？我应该成为什么样的人？</p>
+</section>
+
+<section class="chapter mindmap-section">
+    <h3>全书思维导图</h3>
+    <div class="markmap">
+<script type="text/template">
+---
+markmap:
+  colorFreezeLevel: 2
+---
+# 如何度过每天的24小时
+## 时间的真相
+### 你只拥有今天
+### 86400秒银行账户：当日清零
+### 无法储存、借贷、找回
+### 清晨仪式：我是时间的主宰
+## 隐形财富
+### 每天5小时自由时间
+### 一年1800小时
+### 鄙视碎片、崇拜整块是幻觉
+### 玛丽的6分钟：缝隙里种花
+## 专注的力量
+### 放大镜比喻：聚焦才能点燃
+### 专注2小时＞分心8小时
+### 多任务是效率杀手
+### 方法：无干扰环境/单任务/番茄钟
+## 可持续的系统
+### 四要素：目标/分配/执行/反馈
+### 日规划＋日反思＋周调整
+### 小步快跑：从10分钟开始
+### 触发—反应：绑定旧习惯
+### 时间审计：记录去向
+### 不要假装疲惫
+### 接受不完美：保持方向
+## 理想的一天
+### 清晨神圣时间
+### 通勤创造价值
+### 晚间黄金90分钟
+### 工作全力/休息尽情
+## 复利与意义
+### 高估一年，低估十年
+### 你如何度过一天＝如何度过一生
+### 掌控时间＝掌控人生
+### 唤醒时间意识，为自己而活
+</script>
+    </div>
+</section>
+
+</main>
+
+<footer class="epilogue">
+    <div class="epilogue-inner">
+        <p class="final-quote">真正拉开人与人之间差距的，从来都不是时间的多少，而是支配时间的智慧、对待生活的态度。24小时不足以改变整个世界，却足以改变你的一天——而无数个被你用心对待的24小时，终将拼凑出你想要的人生。愿你在平凡的日子里活出属于自己的精彩，在时间的长河里活成自己喜欢的样子。</p>
+        <p class="goodnight">晚安</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+<script>
+const toggle = document.getElementById('themeToggle');
+const panel = document.getElementById('themePanel');
+const options = document.querySelectorAll('.theme-option');
+const currentTheme = document.body.className.replace('theme-', '');
+options.forEach(o => o.classList.toggle('active', o.dataset.theme === currentTheme));
+toggle.addEventListener('click', (e) => { e.stopPropagation(); panel.classList.toggle('open'); });
+document.addEventListener('click', (e) => { if (!panel.contains(e.target)) panel.classList.remove('open'); });
+options.forEach(opt => {
+    opt.addEventListener('click', () => {
+        document.body.className = 'theme-' + opt.dataset.theme;
+        options.forEach(o => o.classList.toggle('active', o === opt));
+        panel.classList.remove('open');
+    });
+});
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+    });
+}, { threshold: 0.08 });
+document.querySelectorAll('.chapter').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

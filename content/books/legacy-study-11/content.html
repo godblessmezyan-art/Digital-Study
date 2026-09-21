@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>运动改变大脑 - 沉浸式对话解读</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2E6BC8;
+            --primary-light: #7AAEE8;
+            --primary-dark: #1A3A6B;
+            --bg: #F0F4FA;
+            --bg-cool: #E3EDF9;
+            --text: #0F1C2E;
+            --text-light: #3A4A5C;
+            --accent: #1E4D8B;
+            --divider: #B8CEE4;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.85;
+            font-size: 16.5px;
+        }
+        .hero {
+            background: linear-gradient(160deg, #060d1a 0%, #0F1C2E 30%, #162d4d 70%, #0a1525 100%);
+            color: #fff;
+            padding: 90px 20px 70px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(ellipse at center, rgba(46,107,200,0.08) 0%, transparent 60%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+        .hero .series-tag {
+            display: inline-block;
+            border: 1px solid rgba(122,174,232,0.5);
+            color: var(--primary-light);
+            padding: 4px 18px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .hero h1 {
+            font-size: 2.5em;
+            font-weight: 900;
+            margin-bottom: 14px;
+            position: relative;
+            letter-spacing: 2px;
+        }
+        .hero .subtitle {
+            font-size: 1.1em;
+            color: var(--primary-light);
+            position: relative;
+            opacity: 0.9;
+        }
+        .hero .book-info {
+            margin-top: 22px;
+            font-size: 0.88em;
+            color: rgba(255,255,255,0.45);
+            position: relative;
+        }
+        .chat-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 50px 20px 30px;
+        }
+        /* Section divider */
+        .scene-divider {
+            text-align: center;
+            margin: 48px 0 32px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.7s ease;
+        }
+        .scene-divider.visible { opacity: 1; transform: translateY(0); }
+        .scene-divider .scene-line {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            justify-content: center;
+        }
+        .scene-divider .scene-line::before,
+        .scene-divider .scene-line::after {
+            content: '';
+            width: 60px;
+            height: 1px;
+            background: var(--divider);
+        }
+        .scene-divider h2 {
+            font-size: 1.15em;
+            color: var(--accent);
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .scene-divider .scene-num {
+            font-size: 0.75em;
+            color: var(--primary-light);
+            letter-spacing: 3px;
+            margin-bottom: 4px;
+        }
+        /* Chat bubbles */
+        .msg-group {
+            margin-bottom: 6px;
+            opacity: 0;
+            transform: translateY(16px);
+            transition: all 0.6s ease;
+        }
+        .msg-group.visible { opacity: 1; transform: translateY(0); }
+        .msg-row {
+            display: flex;
+            margin-bottom: 14px;
+            align-items: flex-start;
+        }
+        .msg-row.book { flex-direction: row-reverse; }
+        .avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7em;
+            font-weight: 700;
+            flex-shrink: 0;
+            color: #fff;
+        }
+        .msg-row.worker .avatar {
+            background: linear-gradient(135deg, #8fa8c8, #5f7fa8);
+            margin-right: 12px;
+        }
+        .msg-row.book .avatar {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            margin-left: 12px;
+        }
+        .bubble {
+            max-width: 78%;
+            padding: 14px 20px;
+            border-radius: 18px;
+            position: relative;
+        }
+        .msg-row.worker .bubble {
+            background: #fff;
+            border: 1px solid var(--divider);
+            border-top-left-radius: 4px;
+            color: var(--text);
+        }
+        .msg-row.book .bubble {
+            background: linear-gradient(135deg, var(--primary), #3d7ad4);
+            border-top-right-radius: 4px;
+            color: #fff;
+        }
+        .bubble p { margin-bottom: 10px; }
+        .bubble p:last-child { margin-bottom: 0; }
+        .bubble .speaker-name {
+            font-size: 0.72em;
+            font-weight: 600;
+            margin-bottom: 6px;
+            opacity: 0.65;
+            letter-spacing: 1px;
+        }
+        .msg-row.book .bubble .speaker-name { color: rgba(255,255,255,0.7); }
+        .msg-row.worker .bubble .speaker-name { color: var(--primary); }
+        /* Highlight quote inside book bubble */
+        .bubble .key-line {
+            display: block;
+            margin: 12px 0;
+            padding: 10px 16px;
+            background: rgba(255,255,255,0.13);
+            border-left: 3px solid rgba(255,255,255,0.6);
+            border-radius: 0 10px 10px 0;
+            font-weight: 600;
+        }
+        .msg-row.worker .bubble .key-line {
+            background: var(--bg-cool);
+            border-left-color: var(--primary);
+            color: var(--accent);
+        }
+        /* Insight card between scenes */
+        .insight-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 22px 26px;
+            margin: 28px 0;
+            border: 1px solid var(--divider);
+            box-shadow: 0 3px 16px rgba(46,107,200,0.07);
+            opacity: 0;
+            transform: translateY(16px);
+            transition: all 0.6s ease;
+        }
+        .insight-card.visible { opacity: 1; transform: translateY(0); }
+        .insight-card h4 {
+            color: var(--primary);
+            font-size: 0.95em;
+            margin-bottom: 10px;
+        }
+        .insight-card p {
+            font-size: 0.92em;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+        .insight-card p:last-child { margin-bottom: 0; }
+        /* Epilogue */
+        .epilogue {
+            background: linear-gradient(160deg, #060d1a 0%, #0F1C2E 40%, #162d4d 80%, #0a1525 100%);
+            color: #fff;
+            padding: 70px 24px;
+            text-align: center;
+        }
+        .epilogue h2 {
+            font-size: 1.7em;
+            margin-bottom: 20px;
+            color: var(--primary-light);
+        }
+        .epilogue p {
+            color: rgba(255,255,255,0.85);
+            text-align: center;
+            max-width: 560px;
+            margin: 0 auto 16px;
+        }
+        .epilogue .final-quote {
+            margin: 28px auto 0;
+            padding: 20px 28px;
+            border: 1px solid rgba(122,174,232,0.35);
+            border-radius: 14px;
+            max-width: 480px;
+            font-size: 1.05em;
+            color: var(--primary-light);
+            font-weight: 600;
+        }
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.7em; }
+            .bubble { max-width: 85%; }
+            .chat-container { padding: 36px 14px 20px; }
+            body { font-size: 15.5px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <span class="series-tag">假如书籍会说话 · 今日对话</span>
+    <h1>运动改变大脑</h1>
+    <p class="subtitle">大脑不是为思考而生，是为运动而生</p>
+    <p class="book-info">沉浸式解读《运动改变大脑》 | 终于懂了为什么越努力越焦虑</p>
+</div>
+
+<div class="chat-container">
+
+    <!-- 第一幕 -->
+    <div class="scene-divider">
+        <p class="scene-num">第一幕</p>
+        <div class="scene-line"><h2>脆皮打工人的自白</h2></div>
+    </div>
+
+    <div class="msg-group">
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>最近有个词很火，叫"脆皮打工人"，我觉得就是在说我——记忆力衰退、反应迟钝，有时候看着电脑屏幕，感觉脑子里像灌了水泥。我是不是老了？</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <p>你不是老了，你是正在"植物化"。</p>
+            </div>
+        </div>
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>植物化？这什么词儿？</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <p>想弄明白这个词，先回答我一个问题：同为地球生物，为什么有的进化出了大脑，有的却没有？就像植物，它们就压根儿没有大脑。</p>
+            </div>
+        </div>
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>因为植物不需要思考？</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <span class="key-line">错。是因为植物不需要移动。神经科学的第一定律是：大脑是为了运动而进化的。</span>
+                <p>大脑不是为了做数学题、写PPT、搞哲学的——那都是副产品。在进化的洪荒时代，你只有在需要追捕猎物或者逃避天敌的时候，才需要一个复杂的神经系统来处理视觉、听觉和空间方位。</p>
+                <span class="key-line">思考，本质上是运动的预演。</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 第二幕 -->
+    <div class="scene-divider">
+        <p class="scene-num">第二幕</p>
+        <div class="scene-line"><h2>海鞘的鬼故事：久坐是慢性脑叶切除术</h2></div>
+    </div>
+
+    <div class="msg-group">
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>这跟我脑子灌水泥有啥关系？</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <p>关系大了。给你讲个生物学界的经典鬼故事——海鞘，海里的那个东西。</p>
+                <p>海鞘在幼年时期，为了寻找栖息地，像蝌蚪一样游动，拥有一个初级大脑和脊索。它需要判断水流、躲避捕食者。</p>
+            </div>
+        </div>
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>挺聪明嘛。</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <p>但注意听——一旦它找到了一块合适的岩石，决定定居下来、不再移动了，它做的第一件事是什么？</p>
+                <span class="key-line">它会把自己吃掉。准确地说，它会消化掉自己的大脑和神经系统。</span>
+            </div>
+        </div>
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>我去，这么狠？</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <p>因为大脑是高耗能器官。既然你不再移动，大脑就没有存在的价值。为了生存，海鞘选择把大脑变成养分吸收掉。</p>
+            </div>
+        </div>
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>这听起来怎么那么像现在的我……</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <p>你看看你现在的状态：早上坐地铁，白天坐工位，晚上坐沙发。你的身体就像那只定居的海鞘。</p>
+                <span class="key-line">当你停止复杂运动时，你的大脑会收到一个明确的信号：主人已经不需要高级智能了，启动降频模式。</span>
+            </div>
+        </div>
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>你是说我的身体在告诉我的大脑：我是个废物，赶紧自杀吧？</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <p>虽然残忍，但符合进化论。你以为的脑雾，其实是大脑在为你"省电"——你的神经突触在断开，你的海马体在萎缩。</p>
+                <span class="key-line">久坐，就是一种慢性脑叶切除术。</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 第三幕 -->
+    <div class="scene-divider">
+        <p class="scene-num">第三幕</p>
+        <div class="scene-line"><h2>你的焦虑，可能是"静止"出来的</h2></div>
+    </div>
+
+    <div class="msg-group">
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>这也太绝望了。但我还有一个问题——我不光是脑子慢，我心态也崩。我动不动就焦虑、抑郁、心慌，这也是因为没动？</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <p>当然。现代人最大的误解，就是以为情绪是脑子里的事。其实，情绪是全身的事。</p>
+            </div>
+        </div>
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>怎么讲？</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <p>书里有个核心概念叫"内感"——简单说就是大脑对身体内部状态的感知，心跳、呼吸之类的。</p>
+                <p>但大脑很鸡贼，它会过度解读。举个例子：当你坐在电脑前，含胸驼背，胸腔被挤压，呼吸变浅，这时候你体内的二氧化碳浓度升高，心跳变得微弱但急促。这些信号传回大脑，大脑会怎么想？</p>
+            </div>
+        </div>
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>大脑会觉得我不舒服？</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <p>大脑会想：呼吸急促、肌肉僵硬，这通常意味着我们在被老虎追，或者陷入了绝境。于是大脑立刻释放皮质醇和肾上腺素。</p>
+            </div>
+        </div>
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>所以我坐在那儿啥也没干，大脑却以为我在逃命？</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <span class="key-line">没错，这就是"静止的焦虑"。你明明处在安全的办公室，但你的身体姿态在向大脑发送危险的信号。</span>
+                <p>你的理智告诉你没事，但你的身体在尖叫。这种长期的身心信号不匹配，就是现代焦虑症和抑郁症的温床。</p>
+            </div>
+        </div>
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>那我该怎么办？吃药？冥想？</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <p>去举铁。去给骨头一点压力。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 第四幕 -->
+    <div class="scene-divider">
+        <p class="scene-num">第四幕</p>
+        <div class="scene-line"><h2>骨头能治脑子：骨钙素的秘密</h2></div>
+    </div>
+
+    <div class="msg-group">
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>我是心情不好，你让我去撸铁？这不更累吗？</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <p>这才是关键——你知道骨头不只是支架吗？骨头也是个内分泌器官。</p>
+                <span class="key-line">当你进行力量训练，骨骼受压会分泌一种叫"骨钙素"的激素。它能穿过血脑屏障，直接作用于海马体和杏仁核——强力抗焦虑、增强记忆力。</span>
+            </div>
+        </div>
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>我去，骨头还能治脑子？</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <p>不仅如此，力量训练还能修正你的自我认知。当你举起一个重物，你的肌肉会向大脑反馈一个极其强烈的信号：我很强壮，我有力量，我能掌控局面。</p>
+                <span class="key-line">这种底层的生物学自信，能直接覆盖掉那些虚无缥缈的焦虑。你甚至不需要真的解决生活中的困难，你只需要让身体觉得自己能解决，你的大脑就不慌了。</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="insight-card">
+        <h4>本节要点</h4>
+        <p>骨骼是内分泌器官：力量训练 → 骨骼受压 → 分泌骨钙素 → 穿过血脑屏障 → 作用于海马体和杏仁核 → 抗焦虑、增强记忆。</p>
+        <p>肌肉反馈"我很强壮"的信号，建立底层生物学自信，覆盖焦虑。</p>
+    </div>
+
+    <!-- 第五幕 -->
+    <div class="scene-divider">
+        <p class="scene-num">第五幕</p>
+        <div class="scene-line"><h2>灵感不是想出来的，是走出来的</h2></div>
+    </div>
+
+    <div class="msg-group">
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>这逻辑太硬核了。但我还有一个痛点——我想不出东西。做策划、写方案经常卡壳，对着屏幕发呆两小时，一个字写不出来。</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <p>那是因为你把自己当成了笼中鸟。你去看看乔布斯、达尔文、贝多芬——他们卡壳的时候在干嘛？</p>
+            </div>
+        </div>
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>好像……都在散步？</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <p>对，这不仅仅是习惯，这是利用了"光流效应"。</p>
+                <p>当你向前行走时，周围的景物会从你视野的两侧向后流动。这种特定的视觉刺激，能直接抑制大脑中负责恐惧和警戒的区域。</p>
+            </div>
+        </div>
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>意思是走起来脑子就放松了？</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <span class="key-line">不止放松，是解锁。</span>
+                <p>当你死盯着30厘米远的屏幕时，你的视野是聚焦的、狭窄的。视觉的狭窄会导致思维的狭窄——大脑会进入分析模式，死扣细节、钻牛角尖。</p>
+                <p>但当你走出去，看着地平线、看着开阔的景象，宽广的视野会触发大脑的联想模式。斯坦福大学做过实验：人在行走时的发散性思维，比坐着时高出了整整60%。</p>
+            </div>
+        </div>
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>60%？那我坐着加班岂不是在亏本？</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <span class="key-line">就是在亏本。灵感不是想出来的，是走出来的。你的大脑需要在移动中去构建新的神经回路。</span>
+                <p>你把自己钉在椅子上求灵感，就像在沙漠里求雨。</p>
+            </div>
+        </div>
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>所以我以后卡壳了，不该逼自己，该直接下楼？</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <p>哪怕只是在走廊里快走2分钟，或者去公园晃一圈。只要你的身体开始从A点移动到B点，你的思维也会跟着打破僵局。</p>
+                <span class="key-line">身体的停滞，必然导致思维的便秘。</span>
+            </div>
+        </div>
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>这真是我听过最科学的摸鱼理由了。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 第六幕 -->
+    <div class="scene-divider">
+        <p class="scene-num">第六幕</p>
+        <div class="scene-line"><h2>社恐的解药不是口才课，是节奏</h2></div>
+    </div>
+
+    <div class="msg-group">
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>不过说实话，我现在还有点社恐。不仅不想动，也不想见人，我觉得跟人打交道特别耗能。</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <p>你知道为什么吗？因为你失去了节奏。</p>
+            </div>
+        </div>
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>节奏？这跟社恐有啥关系？我又不是搞音乐的。</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <p>人类是群居动物。在几十万年的进化里，我们是怎么建立信任和连接的？是一起围着篝火跳舞，一起喊着号子打猎，一起踏着步子行军。</p>
+            </div>
+        </div>
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>你是说……同步？</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <span class="key-line">对，同步运动。当很多人做同样的动作、踩同样的节奏时，大脑会疯狂分泌内啡肽和催产素。这是一种古老的"生物Wi-Fi"，它会让你瞬间觉得：哦，这个人是同类，是安全的。</span>
+            </div>
+        </div>
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>难怪广场舞大妈看起来都那么快乐。</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <p>你别笑。现在的年轻人为什么孤独？因为你们的社交只剩下了语言和文字。文字是冰冷的，但节奏是热的。</p>
+                <span class="key-line">你一个人戴着耳机听歌，那叫隔离；你和一群人随着鼓点晃动，那叫共振。</span>
+                <p>所以社恐的解药不是去上口才课，是去跳舞、去打鼓、甚至去参加个团操课。当你不需要说话，只需要和别人在同一个节奏里流汗时，你的防备心就卸下了。</p>
+                <span class="key-line">身体先连接了，心才能连接。</span>
+            </div>
+        </div>
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>我需要把那个封闭的自我，重新扔回到人类的洪流里去。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 第七幕 -->
+    <div class="scene-divider">
+        <p class="scene-num">第七幕</p>
+        <div class="scene-line"><h2>运动不是惩罚，是越狱</h2></div>
+    </div>
+
+    <div class="msg-group">
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>听你说了这么多，我感觉我以前对运动的理解全是错的。我觉得运动就是苦修，是为了减肥、为了好看、为了完成KPI。</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <p>这就是现代商业社会给你洗的脑。它把运动变成了一种商品、一种惩罚。</p>
+                <span class="key-line">但运动的本质，是特权。</span>
+                <p>在这个时代，谁希望你不动？算法希望你不动，这样你才能一直刷视频；老板希望你不动，这样你才能一直产出；外卖软件希望你不动，这样你才会消费。</p>
+            </div>
+        </div>
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>我去，细思极恐。</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <p>他们把你圈养在椅子上，给你投喂多巴胺，让你发胖、变笨、焦虑。然后他们再把减肥药、知识付费、抗抑郁药卖给你。这是一个完美的闭环。</p>
+            </div>
+        </div>
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>我成了被收割的韭菜，还是躺在盆里的那种。</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <span class="key-line">所以当你决定站起来、穿上鞋、推开门的那一刻，你不仅是在锻炼身体——你是在越狱。</span>
+                <p>你在切断那些控制你的数字信号，你在夺回对自己身体的控制权，进而夺回对大脑的控制权。</p>
+            </div>
+        </div>
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>这高度一下子就上去了。运动不是为了瘦，是为了自由。</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <span class="key-line">对。不要做那个吃掉自己大脑的海鞘。不要等到你的海马体萎缩了、骨骼疏松了，才想起来你原本是属于荒野的。</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 第八幕 -->
+    <div class="scene-divider">
+        <p class="scene-num">第八幕</p>
+        <div class="scene-line"><h2>把"锻炼"删掉，换成"移动"</h2></div>
+    </div>
+
+    <div class="msg-group">
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>那我该怎么开始？一定要去办张健身卡吗？</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <p>千万别。一想到健身卡，你会压力更大。</p>
+                <span class="key-line">把"锻炼"这个词从脑子里删掉，换成"移动"。</span>
+            </div>
+        </div>
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>有什么区别？</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <span class="key-line">锻炼是任务，移动是本能。</span>
+                <p>接电话的时候站起来走两步；想方案的时候去楼下看一棵树；心情不好的时候用力叹一口气；甚至只是抖抖腿、伸个懒腰。</p>
+                <p>哪怕只是微小的动作，只要是非静止的，你的大脑就在苏醒。只要你还在动，你就没有退化。</p>
+            </div>
+        </div>
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>说实话，我现在就想把这期录音停了，出去跑两圈。</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <p>去吧。别戴耳机，听听风的声音，感受脚掌踩在地面的反作用力。</p>
+            </div>
+        </div>
+        <div class="msg-row worker">
+            <div class="avatar">打工<br>人</div>
+            <div class="bubble">
+                <p class="speaker-name">打工人</p>
+                <p>那种感觉叫什么？</p>
+            </div>
+        </div>
+        <div class="msg-row book">
+            <div class="avatar">运动<br>改变<br>大脑</div>
+            <div class="bubble">
+                <p class="speaker-name">《运动改变大脑》</p>
+                <span class="key-line">那种感觉，叫活着。</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- 尾声 -->
+<div class="epilogue">
+    <h2>尾声</h2>
+    <p>如果你也感觉自己快发霉了，别犹豫。现在的你离天才和快乐，可能只差一次散步的距离。</p>
+    <div class="final-quote">记住：为了你的大脑，请别让身体停下来。</div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.msg-group, .scene-divider, .insight-card').forEach(function(el) {
+        observer.observe(el);
+    });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>万水千山走遍 · 三毛</title>
+<link href="https://fonts.loli.net/css2?family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* === 16 Themes === */
+body.theme-dusk{--bg:#f7f2ec;--text:#3a2e28;--card:#fffcf8;--accent:#b8623a;--accent2:#d4956a;--border:#e8ddd2;--shadow:0 6px 28px rgba(184,98,58,.07);--hero-bg:linear-gradient(180deg,#2a1a2e 0%,#5a2a3a 30%,#c86a3a 65%,#e8a860 100%);--muted:#8a7a6a}
+body.theme-ink{--bg:#faf8f5;--text:#2c2c2c;--card:#fff;--accent:#444;--accent2:#777;--border:#e0dcd6;--shadow:0 4px 20px rgba(0,0,0,.05);--hero-bg:linear-gradient(180deg,#1a1a1a,#3a3a3a,#5a5a5a);--muted:#888}
+body.theme-forest{--bg:#f4f8f4;--text:#1a3320;--card:#fff;--accent:#2d7a4e;--accent2:#5aaa7a;--border:#d4e8d8;--shadow:0 4px 20px rgba(45,122,78,.07);--hero-bg:linear-gradient(180deg,#0a2a1a,#1a4a2a,#3a7a4a);--muted:#5a7a62}
+body.theme-wine{--bg:#faf5f6;--text:#3d1a24;--card:#fff;--accent:#a03050;--accent2:#d4607a;--border:#f0d8de;--shadow:0 4px 20px rgba(160,48,80,.07);--hero-bg:linear-gradient(180deg,#2a0a1a,#5a1a2a,#8a3a4a);--muted:#9a6a76}
+body.theme-ocean{--bg:#f2f8fc;--text:#1a2e3d;--card:#fff;--accent:#1a7ab5;--accent2:#4aa8d8;--border:#d0e8f4;--shadow:0 4px 20px rgba(26,122,181,.07);--hero-bg:linear-gradient(180deg,#0a1a2e,#1a3a5a,#2a6a9a);--muted:#5a8a9e}
+body.theme-sand{--bg:#faf7f0;--text:#3d3020;--card:#fff;--accent:#b8862a;--accent2:#d4a84a;--border:#ede0cc;--shadow:0 4px 20px rgba(184,134,42,.07);--hero-bg:linear-gradient(180deg,#2a2010,#5a4020,#9a7a3a);--muted:#9a8a6a}
+body.theme-plum{--bg:#f8f4fa;--text:#2e1a3d;--card:#fff;--accent:#7a3aa0;--accent2:#a86ad0;--border:#e8d8f2;--shadow:0 4px 20px rgba(122,58,160,.07);--hero-bg:linear-gradient(180deg,#1a0a2a,#3a1a5a,#6a3a8a);--muted:#8a6a9e}
+body.theme-slate{--bg:#f5f6f8;--text:#2a2e35;--card:#fff;--accent:#4a6a8a;--accent2:#6a9aba;--border:#dde2e8;--shadow:0 4px 20px rgba(74,106,138,.07);--hero-bg:linear-gradient(180deg,#1a2028,#2a3a4a,#4a6a7a);--muted:#7a8a9a}
+body.theme-coral{--bg:#fef6f4;--text:#3d2420;--card:#fff;--accent:#d05a3a;--accent2:#f08a5a;--border:#f8ddd6;--shadow:0 4px 20px rgba(208,90,58,.07);--hero-bg:linear-gradient(180deg,#2a1210,#5a2a1a,#9a5a3a);--muted:#9a7a6a}
+body.theme-teal{--bg:#f2faf8;--text:#1a3330;--card:#fff;--accent:#0a8a7a;--accent2:#3abaa8;--border:#d0ece8;--shadow:0 4px 20px rgba(10,138,122,.07);--hero-bg:linear-gradient(180deg,#0a2a28,#1a4a40,#2a7a6a);--muted:#5a8a80}
+body.theme-midnight{--bg:#0d1117;--text:#c9d1d9;--card:#161b22;--accent:#58a6ff;--accent2:#a371f7;--border:#21262d;--shadow:0 8px 32px rgba(88,166,255,.05);--hero-bg:linear-gradient(180deg,#0d1117,#161b22,#1a2a3a);--muted:#8b949e}
+body.theme-charcoal{--bg:#1a1a1e;--text:#e0ddd8;--card:#242428;--accent:#e8b840;--accent2:#d08030;--border:#333338;--shadow:0 8px 32px rgba(232,184,64,.05);--hero-bg:linear-gradient(180deg,#1a1a1e,#2a2420,#3a3028);--muted:#8a8a8e}
+body.theme-abyss{--bg:#080c14;--text:#b8c8e0;--card:#0f1520;--accent:#00b4d8;--accent2:#0077b6;--border:#1a2535;--shadow:0 8px 32px rgba(0,180,216,.05);--hero-bg:linear-gradient(180deg,#080c14,#0a1a2a,#0a2a3a);--muted:#5a7a9a}
+body.theme-moss{--bg:#f6f8f2;--text:#2a3320;--card:#fff;--accent:#5a8a2a;--accent2:#8ab84a;--border:#dde8cc;--shadow:0 4px 20px rgba(90,138,42,.07);--hero-bg:linear-gradient(180deg,#1a2a10,#3a4a20,#5a7a3a);--muted:#7a8a5a}
+body.theme-ember{--bg:#14100e;--text:#e8ddd4;--card:#1e1814;--accent:#ff6b35;--accent2:#ffa040;--border:#2e2420;--shadow:0 8px 32px rgba(255,107,53,.05);--hero-bg:linear-gradient(180deg,#14100e,#2a1a10,#4a2a18);--muted:#9a8070}
+body.theme-orchid{--bg:#faf4fc;--text:#301a3d;--card:#fff;--accent:#b040d0;--accent2:#d870f0;--border:#eedaf6;--shadow:0 4px 20px rgba(176,64,208,.07);--hero-bg:linear-gradient(180deg,#1a0a2a,#3a1a4a,#6a3a7a);--muted:#8a5a9e}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Serif SC',serif;background:var(--bg);color:var(--text);line-height:2.1;overflow-x:hidden;transition:background .5s,color .5s}
+
+/* Theme select */
+.theme-select{position:fixed;top:20px;right:20px;z-index:999;padding:8px 14px;border-radius:10px;border:2px solid var(--border);background:var(--card);color:var(--text);font-size:.85rem;font-family:'Noto Serif SC',serif;cursor:pointer;box-shadow:var(--shadow);transition:all .3s;appearance:auto}
+.theme-select:hover{border-color:var(--accent)}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:var(--hero-bg);position:relative;overflow:hidden;padding:80px 24px}
+.hero-mountains{position:absolute;bottom:0;left:0;right:0;height:35vh;pointer-events:none}
+.hero-mountains svg{width:100%;height:100%;position:absolute;bottom:0}
+.hero-path{position:absolute;bottom:0;left:50%;width:2px;height:0;background:linear-gradient(to top,rgba(255,255,255,.5),transparent);animation:growPath 3s ease forwards 1s}
+@keyframes growPath{to{height:40vh}}
+.hero-quote{font-size:.88rem;color:rgba(255,255,255,.7);letter-spacing:.15em;margin-bottom:24px;max-width:480px;line-height:2}
+.hero h1{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(2.2rem,7vw,3.8rem);color:#fff;line-height:1.4;margin-bottom:16px;text-shadow:0 2px 30px rgba(0,0,0,.3)}
+.hero-author{font-size:.9rem;color:rgba(255,255,255,.6);margin-bottom:28px}
+.hero-tagline{max-width:520px;font-size:.95rem;color:rgba(255,255,255,.75);line-height:2}
+
+/* Journey route */
+.route{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 16px;margin-top:40px;max-width:600px}
+.route span{font-size:.78rem;color:rgba(255,255,255,.55);padding:3px 12px;border:1px solid rgba(255,255,255,.2);border-radius:20px}
+
+/* Chapter */
+.chapter{max-width:700px;margin:0 auto;padding:100px 24px;opacity:0;transform:translateY(40px);transition:opacity .9s ease,transform .9s ease}
+.chapter.visible{opacity:1;transform:translateY(0)}
+.chapter-place{display:inline-block;font-size:.72rem;letter-spacing:.3em;color:var(--accent);border-bottom:1px solid var(--accent);padding-bottom:4px;margin-bottom:20px}
+.chapter h2{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(1.5rem,4vw,2rem);margin-bottom:30px;color:var(--text);line-height:1.6}
+.chapter p{margin-bottom:1.7em;font-size:1.02rem;color:var(--text)}
+
+/* Quote */
+.quote{border-left:3px solid var(--accent);padding:22px 26px;margin:40px 0;background:var(--card);border-radius:0 14px 14px 0;box-shadow:var(--shadow)}
+.quote p{margin:0;font-style:italic;color:var(--muted);font-size:.97rem;line-height:2}
+
+/* Mountain divider */
+.mountain-divider{max-width:700px;margin:0 auto;padding:0 24px}
+.mountain-divider svg{width:100%;height:50px;opacity:.25}
+.mountain-divider path{fill:var(--accent)}
+
+/* Insight */
+.insight{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:30px;margin:36px 0;box-shadow:var(--shadow)}
+.insight-title{font-family:'ZCOOL XiaoWei',serif;font-size:1rem;color:var(--accent);margin-bottom:14px}
+.insight p{font-size:.95rem;color:var(--text);margin-bottom:.8em}
+.insight p:last-child{margin-bottom:0}
+
+/* Markmap */
+.markmap-section{max-width:900px;margin:90px auto;padding:0 24px}
+.markmap-section h2{font-family:'ZCOOL XiaoWei',serif;text-align:center;font-size:1.4rem;margin-bottom:30px;color:var(--text)}
+.markmap{width:100%;height:520px;border-radius:16px;border:1px solid var(--border);background:var(--card);box-shadow:var(--shadow)}
+.markmap svg{background:transparent!important}
+.markmap-foreign{color:var(--text)!important;font-size:14px!important}
+
+/* Goodnight */
+.goodnight{text-align:center;padding:110px 24px 130px}
+.goodnight p{font-family:'ZCOOL XiaoWei',serif;font-size:1.6rem;letter-spacing:.5em;color:var(--muted)}
+
+@media(max-width:600px){
+  .chapter{padding:70px 20px}
+  .route span{font-size:.7rem}
+}
+</style>
+</head>
+<body class="theme-dusk">
+<script>!function(){var t=['theme-dusk','theme-ink','theme-forest','theme-wine','theme-ocean','theme-sand','theme-plum','theme-slate','theme-coral','theme-teal','theme-midnight','theme-charcoal','theme-abyss','theme-moss','theme-ember','theme-orchid'];document.body.className=t[Math.floor(Math.random()*t.length)]}()</script>
+
+<select class="theme-select" onchange="document.body.className=this.value">
+  <option value="theme-dusk">🌄 暮色远山</option>
+  <option value="theme-ink">🖋 水墨</option>
+  <option value="theme-forest">🌲 松林</option>
+  <option value="theme-wine">🍷 酒红</option>
+  <option value="theme-ocean">🌊 海洋</option>
+  <option value="theme-sand">🏜 沙丘</option>
+  <option value="theme-plum">🌸 梅紫</option>
+  <option value="theme-slate">🪨 石灰</option>
+  <option value="theme-coral">🪸 珊瑚</option>
+  <option value="theme-teal">🍃 青瓷</option>
+  <option value="theme-midnight">🌌 午夜</option>
+  <option value="theme-charcoal">🔥 炭金</option>
+  <option value="theme-abyss">🐋 深渊</option>
+  <option value="theme-moss">🌿 苔藓</option>
+  <option value="theme-ember">🕯 余烬</option>
+  <option value="theme-orchid">🦋 兰紫</option>
+</select>
+
+<!-- Hero -->
+<header class="hero">
+  <p class="hero-quote">大地呀，我来到你岸上时，原是一个陌生人；住在你房子里时，原是一个旅客；而今我离开你的门时，却是一个朋友了。</p>
+  <h1>万水千山走遍</h1>
+  <p class="hero-author">三毛</p>
+  <p class="hero-tagline">真正的慈悲，是明知人间疾苦，仍愿赤足行走。一个失去挚爱的灵魂，用一场远行把自己重新拼起来。</p>
+  <div class="route">
+    <span>墨西哥</span><span>洪都拉斯</span><span>哥斯达黎加</span><span>巴拿马</span><span>哥伦比亚</span><span>厄瓜多尔</span><span>秘鲁</span><span>玻利维亚</span><span>阿根廷</span><span>归途</span>
+  </div>
+  <div class="hero-path"></div>
+  <div class="hero-mountains">
+    <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
+      <path fill="rgba(255,255,255,.06)" d="M0,320 L0,220 Q180,120 360,200 Q540,100 720,180 Q900,80 1080,160 Q1260,100 1440,180 L1440,320 Z"/>
+      <path fill="rgba(255,255,255,.04)" d="M0,320 L0,260 Q240,180 480,240 Q720,160 960,220 Q1200,170 1440,230 L1440,320 Z"/>
+    </svg>
+  </div>
+</header>
+
+<!-- 序 -->
+<section class="chapter">
+  <span class="chapter-place">序 · 出发之前</span>
+  <h2>荷西走了，她决定远行</h2>
+  <p>那个在撒哈拉沙漠里陪她捡骆驼骨头、在加纳利群岛的海边和她一起看日落的人，在一次潜水工作中意外离世。三毛去看他最后一面，握着他冰凉的手，觉得整个世界都停止了转动。</p>
+  <p>她把自己关起来，不出门，不说话，不吃饭。这本书写于1981年，距离荷西离开已经过去两年。两年，听起来似乎足够让伤口愈合。但真正失去过的人会明白，有些疼痛是不讲道理的，它不会因为你走过多少路、看过多少风景，就轻易放过你。</p>
+  <p>终于有一天，她厌烦了这样的自己，决定亲手撕破这片黑暗。于是她接受了一家报社的邀请，和摄影师米夏一起踏上了中南美洲的旅程。她需要一场远行——不是逃离，而是把自己重新拼起来。</p>
+  <div class="quote">
+    <p>这一走，就是万水千山。</p>
+  </div>
+</section>
+
+<div class="mountain-divider"><svg viewBox="0 0 800 50"><path d="M0,50 L100,20 L200,38 L320,8 L440,32 L560,12 L680,35 L800,18 L800,50 Z"/></svg></div>
+
+<!-- 壹 -->
+<section class="chapter">
+  <span class="chapter-place">墨西哥</span>
+  <h2>夜色里的万家灯火</h2>
+  <p>飞机降落的时候，三毛已经筋疲力尽。长期失眠加上旅途劳顿，她几乎站不稳。但她没有急着去酒店躺下，而是裹紧外套，走进了墨西哥的夜色里。</p>
+  <p>她说她喜欢在夜晚抵达一个陌生的城市，因为黑暗会掩盖很多东西，也会暴露很多东西。她看见街角的流浪汉蜷缩在报纸里，看见年轻的情侣在路灯下亲吻，看见卖玉米饼的老妇人推着车子慢慢走过。这些画面，让她觉得自己还活着。</p>
+  <p>第二天她去了人类学博物馆，面对那些巨大的奥尔梅克石雕、玛雅人的精美壁画，她站在那里很久没有说话。她后来写道：面对着他们，我突然觉得自己渺小得可笑。人在历史面前不过是一粒尘埃，而我的那点悲伤又算得了什么呢。</p>
+  <p>在墨西哥，三毛还见到了老朋友约根——一个事业有成的德国商人。他带她去参加上流社会的宴会，那些衣着光鲜的男男女女在巨大的水晶灯下交谈、举杯大笑。三毛穿着一件普通的白衬衫，站在角落里，心里涌起一阵难以言说的空虚。</p>
+  <div class="quote">
+    <p>那些人像一群被关在精美笼子里的鸟，羽毛漂亮，但不会飞了。我们之间有一种沉默的默契——他知道我要什么，但他给不了。而我要的东西，从来不在那些闪闪发光的物件里。</p>
+  </div>
+  <p>那晚回到旅馆，三毛独自坐在窗边，看着楼下墨西哥的万家灯火。她在心里问自己：如果荷西还在，我们会怎样一起走过这座城市？她没有答案，只是把脸埋在掌心里，坐了很久。</p>
+</section>
+
+<div class="mountain-divider"><svg viewBox="0 0 800 50"><path d="M0,50 L80,25 L180,40 L300,10 L420,35 L540,15 L660,38 L780,20 L800,50 Z"/></svg></div>
+
+<!-- 贰 -->
+<section class="chapter">
+  <span class="chapter-place">洪都拉斯</span>
+  <h2>青鸟不到的地方</h2>
+  <p>青鸟在西方传说里是幸福的象征。青鸟不到，意味着贫穷、闭塞、被遗忘。</p>
+  <p>三毛避开了普通游客走的大道，深入到小城村落去。她看到一片片的泥房子，墙上没有任何装饰，窗户就是墙上挖出的一个方洞，没有玻璃，风直接灌进去。屋子里头只有一张吊床，一个女人和四五个孩子挤在一起。男人都出去打工了，有的去了邻国，有的去了北方的农场，几个月甚至几年才回来一次。</p>
+  <p>三毛走进一户人家，女主人正在用一口破锅煮豆子。孩子们光着脚站在泥地上，睁着大大的眼睛看她。三毛蹲下来，从包里掏出几颗糖果分给他们。孩子接过糖，不敢吃，先递给妈妈看。妈妈点了点头，他们才小心翼翼地剥开糖纸。</p>
+  <p>三毛转过身，眼泪就掉下来了。</p>
+  <div class="quote">
+    <p>世上的欢乐幸福，总结起来只有几种；而千行的眼泪，却有千种不同的疼痛。那打不开的泪结，只有交给时间去解。</p>
+  </div>
+  <p>夜里她出去散步，那些孩子追着她跑。她不回头，只是越走越快。她不是不想给，是给不完。给了一个，后面还有十个；给了十个，后面还有一百个。</p>
+  <div class="insight">
+    <p class="insight-title">没有梦了</p>
+    <p>她写道："这儿是青鸟不到的地方，人们从没有听过它的名字，便也没有梦了。"你可以穷，但你不能没有梦。而当穷到连梦都消失的时候，那才是真正的深渊。</p>
+  </div>
+</section>
+
+<div class="mountain-divider"><svg viewBox="0 0 800 50"><path d="M0,50 L120,22 L240,38 L360,12 L480,30 L600,8 L720,32 L800,20 L800,50 Z"/></svg></div>
+
+<!-- 叁 -->
+<section class="chapter">
+  <span class="chapter-place">巴拿马 · 哥斯达黎加</span>
+  <h2>浮木与虚假的完美</h2>
+  <p>在巴拿马，三毛见到了表妹美尼。美尼嫁给了当地的一个华人，生活安稳。表妹很热情，给她做了满满一桌中国菜。三毛坐在桌前握着筷子，突然有些恍惚——她已经很久没有吃过这样家常的中国饭了。</p>
+  <p>美尼在旁边不停地给她夹菜，三毛低头吃饭，什么话也没说。她在心里想：这就是亲情吧，无论走多远，总有人会给你做一顿饭。那一晚她睡得很好，没有做梦。</p>
+  <div class="quote">
+    <p>在美尼家里，我像一个溺水的人，终于摸到了一块浮木。</p>
+  </div>
+  <p>然后是哥斯达黎加。这里的画风完全不同——街道干净整洁，有红绿灯，有漂亮的花园洋房。三毛反而有些不习惯了，她在书里自嘲："我大概是个贱骨头，过不惯好日子。"</p>
+  <p>哥斯达黎加太完美了，完美到有些虚假。她住在一个干净的旅馆里，躺在雪白的床单上，却翻来覆去睡不着。她在想：洪都拉斯那些泥房子里的孩子，此刻在做什么呢？大概已经睡了，在漏风的墙下裹着一层薄薄的毯子。</p>
+</section>
+
+<div class="mountain-divider"><svg viewBox="0 0 800 50"><path d="M0,50 L100,28 L220,42 L340,14 L460,36 L580,10 L700,30 L800,22 L800,50 Z"/></svg></div>
+
+<!-- 肆 -->
+<section class="chapter">
+  <span class="chapter-place">哥伦比亚</span>
+  <h2>不按牌理出牌的地方</h2>
+  <p>出租车司机兜圈子，旅馆多收钱，餐厅的服务员把客人晾在一边。三毛在旅馆大堂等了快两个小时，前台的人一直在聊天、打电话、整理文件，就是不理她。米夏有些火大，想上去理论。三毛拉住他说：算了。</p>
+  <p>她后来写道：我忍住脾气，慢慢嚼一块吐司面包，不说一句伤人的话。</p>
+  <p>在哥伦比亚，三毛去了一个集市。她看见那些印第安妇人坐在地上，卖手工编织的毯子和披肩，色彩极其鲜艳。她蹲下来用手抚摸那些织物，问价格。妇人报了一个数，三毛没有还价，直接付了钱。</p>
+  <div class="quote">
+    <p>那些妇人粗糙的手指织出的东西，比博物馆里的任何展品都更动人。因为每一根线里，都藏着她们的时光。</p>
+  </div>
+</section>
+
+<div class="mountain-divider"><svg viewBox="0 0 800 50"><path d="M0,50 L90,18 L200,36 L330,10 L450,34 L570,14 L690,38 L800,16 L800,50 Z"/></svg></div>
+
+<!-- 伍 -->
+<section class="chapter">
+  <span class="chapter-place">厄瓜多尔 · 哈瓦戈恰</span>
+  <h2>星湖，与前世的我</h2>
+  <p>哈瓦戈恰，在当地语言里是"星湖"的意思。村子坐落在安第斯山脉的高原上，面对着一片银色的湖泊，背后是终年积雪的火山。</p>
+  <p>三毛第一眼看到那片湖水，整个人愣住了。她后来写道：我无法解释那种感觉，就像你某天做了一个梦，梦里的场景无比清晰，然后有一天你突然发现它就在眼前。她觉得自己来过这里——不是这一世，是很久很久以前。</p>
+  <p>她在村子里住了下来。白天在湖边走来走去，看水鸟飞过，看远处的牛羊吃草。晚上坐在火堆旁，听村里的老人讲古老的传说。然后有一天，她突然坐下，拿出纸笔，开始写一个故事。</p>
+  <p>那是一个印第安女孩的故事。女孩是个孤女，跟着外祖父在山坡上采药，学会辨认每一种植物。外祖父告诉她：这颗是治头痛的，那片是退烧的，而那株开着紫色小花的，是给临走的灵魂送行的。后来外祖父死了，女孩一个人住在山上，接替了外祖父的工作。再后来她嫁了一个年轻的猎人，日子平静得像湖水一样。</p>
+  <p>直到那年冬天，女孩怀孕了。高原的冬天来得早，第一场雪落下的时候，她的肚子已经很大了。那个夜里，她突然腹痛难忍。她自己煎了一碗草药喝了，然后才推醒丈夫。她靠着门框坐下来，抬头看着月光下的雪山，轻轻叹了口气。</p>
+  <p>那是她最后一次看见雪山。她难产而死，死的时候，手还捂在肚子上。</p>
+  <div class="quote">
+    <p>三毛写到这里停了笔。窗外的银湖在阳光下泛着细碎的光。她把脸埋进手臂里，哭了很久。她相信那个女孩就是前世的自己。</p>
+  </div>
+  <p>在哈瓦戈恰的最后几天，三毛常常一个人去湖边。高原的夜空极其清澈，星星低得仿佛一伸手就能摘下来。她坐在湖边的草地上，裹着厚厚的毯子，看着那座六千多公尺的雪山。</p>
+  <div class="insight">
+    <p class="insight-title">但愿永不回到世界上去</p>
+    <p>她写道："但愿永不回到世界上去，旅程便在银湖之滨做个了断，那个叫做三毛的人从此消失吧。"那不是求死，那是渴望安息。就像一个在暴风雨里走了很久的人，突然走进一间温暖明亮的屋子，她只想坐下来，再也不要出去了。</p>
+  </div>
+  <p>但三毛明白，这片星湖是灵魂短暂栖息的驿站。有些净土一生只能抵达一次。短暂的治愈之后，她依旧要背起行囊，继续走完万水千山。</p>
+</section>
+
+<div class="mountain-divider"><svg viewBox="0 0 800 50"><path d="M0,50 L110,20 L230,40 L350,8 L470,32 L590,12 L710,36 L800,18 L800,50 Z"/></svg></div>
+
+<!-- 陆 -->
+<section class="chapter">
+  <span class="chapter-place">秘鲁 · 玻利维亚</span>
+  <h2>高山、古城与云</h2>
+  <p>在秘鲁的高原上，三毛得了严重的高山症。头痛、恶心、呼吸困难。但她没有停下来。她裹着毯子坐在旅馆的窗前看窗外的雨。</p>
+  <div class="quote">
+    <p>窗外的雨已过正午，又赴约似地倾倒了下来。远处的那片青山，烟雨蒙蒙中一样亘古不移，冷冷看尽这个老城中如释如流的哀乐人间。</p>
+  </div>
+  <p>她去了马丘比丘。那座印加古城藏在云雾缭绕的山顶上，无数巨大的石块垒成城墙和神庙，没有使用任何灰浆，却严丝合缝。三毛坐在一块石头上，闭上眼睛。她后来说，她和鬼魂说话了。她觉得那些印加人的灵魂还留在石块之间，他们沉默地看着她，她也沉默地看着他们。她没有害怕，反而觉得很安宁。</p>
+  <p>下山的时候铁路中断了，山洪冲毁了路基。三毛和其他旅客一起被困在山脚下的一个小站里。人们挤在一起，有的抱怨，有的打电话求助。三毛却很安静，她找了个角落坐下，从包里拿出一本书来读。</p>
+  <div class="quote">
+    <p>没有一样东西是永远能掌握在自己手中的，那么便让它们随风而去吧。</p>
+  </div>
+  <p>到了玻利维亚的拉巴斯，海拔超过四千米。三毛坐在车上，看见云彩就在车窗外面飘，低低地擦过地面。她像个孩子一样兴奋：云彩就在草地上，频频地跟着我们的车子跑，如果下车就能抓到一团！</p>
+  <p>那一刻，你忘记了她是一个经历过巨大创伤的人。她就是一个看见云就开心的普通人。她说拉巴斯是一朵永远的百合，开在高原青草地上，它的芳香她永不能忘怀。</p>
+</section>
+
+<div class="mountain-divider"><svg viewBox="0 0 800 50"><path d="M0,50 L100,24 L210,40 L340,12 L460,34 L580,16 L700,38 L800,20 L800,50 Z"/></svg></div>
+
+<!-- 柒 -->
+<section class="chapter">
+  <span class="chapter-place">阿根廷</span>
+  <h2>草原上的告别</h2>
+  <p>踏上辽阔无边的潘帕斯大草原，一望无际的草地，自在奔跑的牛马，蜿蜒穿过草地的溪流。天地辽阔，万物舒缓。</p>
+  <p>在这里，她遇见了牧场主人贾莫拉。两个孤独的人在南美旷野相逢。贾莫拉邀请三毛长久定居草原，劝她留在这片自由的土地。一路行来，厄瓜多尔银湖之时她曾许愿"从此世间再无三毛"，站在阿根廷的大草原上，她再次动了留下的念头。</p>
+  <p>但经历过曾经沧海的三毛，内心也很难再接纳其他人。她最终淡淡地拒绝了牧场主，继续了自己的旅程。</p>
+  <div class="quote">
+    <p>车子驶离牧场，贾莫拉的身影消融在落日与草原之间。</p>
+  </div>
+</section>
+
+<div class="mountain-divider"><svg viewBox="0 0 800 50"><path d="M0,50 L130,22 L250,38 L370,10 L490,30 L610,14 L730,36 L800,24 L800,50 Z"/></svg></div>
+
+<!-- 捌 -->
+<section class="chapter">
+  <span class="chapter-place">归途</span>
+  <h2>万水千山的尽头，是故土</h2>
+  <p>中南美洲的旅程结束了，但万水千山还没有结束。书的最后几篇，三毛回到了祖国。在外面走了那么远的路，最后她还是回来了。</p>
+  <p>她先去了浙江舟山，那是她祖辈生活的地方。她走在老家的青石板路上，摸一摸那些斑驳的墙壁，看一看门前那条安静的小河。她在书里写：中国有根，是不容易放弃的。</p>
+  <p>然后她去了敦煌莫高窟。她站在那些壁画前，仰着头看了很久很久。那些飞天、佛陀、莲花的图案，在幽暗的光线里若隐若现。她没有说话，只是静静地看着。</p>
+  <p>后来她走到鸣沙山脚下，爬上沙丘。那是一个夜晚，沙丘上一个人都没有。她仰面躺在沙子上，头顶是漫天繁星，银河像一条发光的河流横贯天际。</p>
+  <div class="quote">
+    <p>那一刻，她觉得人世间所有的痛苦挣扎，在这片星空下，都变得微不足道了。</p>
+  </div>
+  <p>合上这本书，你会发现它不是一本普通的游记。它写的是一个人如何在一场又一场的行走中，慢慢把破碎的自己重新粘起来。三毛在出发时是一个失去挚爱的伤心人，在途中是一个观察者、一个记录者、一个前世今生的寻找者。到了最后，当她走过万水千山回到故土，她成了一个朋友——和土地做了朋友，和痛苦做了朋友，也和自己的命运做了朋友。</p>
+  <div class="insight">
+    <p class="insight-title">行走本身就是答案</p>
+    <p>三毛找到答案了吗？或许没有。但她的行走本身就是一种答案。有些问题不是用来解决的，是用来陪伴的。就像悲伤，它不会消失，但你可以学着和它一起走路。</p>
+  </div>
+</section>
+
+<!-- Markmap -->
+<section class="markmap-section">
+  <h2>旅途脉络</h2>
+  <div class="markmap">
+    <script type="text/template">
+---
+markmap:
+  colorFreezeLevel: 3
+---
+# 万水千山走遍
+## 背景
+### 荷西离世（1979）
+### 两年后踏上旅途
+### 不是逃离，是重新拼起自己
+## 墨西哥
+### 夜色中的生命力
+### 博物馆前的渺小感
+### 约根·精美笼中的鸟
+## 洪都拉斯
+### 青鸟不到的地方
+### 泥房子·光脚的孩子
+### 没有梦才是真正的深渊
+## 巴拿马·哥斯达黎加
+### 表妹的一桌中国菜
+### 溺水者摸到浮木
+### 完美到虚假的不安
+## 哥伦比亚
+### 不按牌理出牌
+### 忍住脾气嚼吐司
+### 印第安妇人的织物
+## 厄瓜多尔·星湖
+### 哈瓦戈恰·前世
+### 印第安女孩的故事
+### 但愿永不回到世界上去
+### 灵魂短暂的驿站
+## 秘鲁·玻利维亚
+### 高山症与窗外的雨
+### 马丘比丘·与鬼魂对话
+### 铁路中断·随风而去
+### 拉巴斯·云在草地上跑
+## 阿根廷
+### 潘帕斯大草原
+### 贾莫拉的邀请
+### 淡淡拒绝·继续前行
+## 归途
+### 舟山·中国有根
+### 敦煌莫高窟
+### 鸣沙山·漫天繁星
+## 主题
+### 行走即答案
+### 与悲伤同行
+### 从陌生人到朋友
+    </script>
+  </div>
+</section>
+
+<!-- 晚安 -->
+<footer class="goodnight">
+  <p>晚安</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+<script>
+document.querySelector('.theme-select').value=document.body.className;
+var obs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})
+},{threshold:0.1});
+document.querySelectorAll('.chapter').forEach(function(el){obs.observe(el)});
+</script>
+</body>
+</html>

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>早起的奇迹 —— 改变人生可能只需要一个小时</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2E6BC8;
+            --primary-light: #7AAEE8;
+            --primary-dark: #1A3A6B;
+            --bg: #F0F4FA;
+            --bg-cool: #E3EDF9;
+            --text: #0F1C2E;
+            --text-light: #3A4A5C;
+            --accent: #1E4D8B;
+            --divider: #B8CEE4;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 2;
+            font-size: 17px;
+        }
+        .hero {
+            background: linear-gradient(160deg, #060d1a 0%, #0F1C2E 35%, #162d4d 70%, #0a1525 100%);
+            color: #fff;
+            text-align: center;
+            padding: 100px 24px 90px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 60% 40%, rgba(46,107,200,0.15) 0%, transparent 55%);
+            animation: glow 8s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { transform: translate(0, 0); }
+            to { transform: translate(-5%, 5%); }
+        }
+        .hero h1 {
+            font-size: 2.6em;
+            font-weight: 900;
+            letter-spacing: 0.06em;
+            margin-bottom: 16px;
+            position: relative;
+        }
+        .hero .subtitle {
+            font-size: 1.15em;
+            color: var(--primary-light);
+            font-weight: 400;
+            position: relative;
+        }
+        .hero .book-info {
+            margin-top: 28px;
+            font-size: 0.92em;
+            color: rgba(255,255,255,0.55);
+            position: relative;
+        }
+        .container {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 60px 24px 40px;
+        }
+        .chapter {
+            margin-bottom: 64px;
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .chapter.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .chapter-label {
+            display: inline-block;
+            font-size: 0.82em;
+            font-weight: 600;
+            color: var(--primary);
+            background: var(--bg-cool);
+            border: 1px solid var(--divider);
+            border-radius: 20px;
+            padding: 4px 18px;
+            margin-bottom: 14px;
+            letter-spacing: 0.15em;
+        }
+        .chapter h2 {
+            font-size: 1.65em;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+        .chapter p {
+            margin-bottom: 18px;
+            text-align: justify;
+            color: var(--text);
+        }
+        .quote {
+            border-left: 4px solid var(--primary);
+            background: var(--bg-cool);
+            padding: 20px 26px;
+            margin: 28px 0;
+            border-radius: 0 12px 12px 0;
+            font-style: italic;
+            color: var(--accent);
+            font-size: 1.02em;
+        }
+        .insight {
+            background: #fff;
+            border-radius: 14px;
+            padding: 26px 30px;
+            margin: 28px 0;
+            box-shadow: 0 2px 16px rgba(46,107,200,0.08);
+            border: 1px solid rgba(46,107,200,0.12);
+        }
+        .insight .insight-title {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.05em;
+        }
+        .divider {
+            text-align: center;
+            margin: 56px 0;
+            color: var(--divider);
+            font-size: 1.3em;
+            letter-spacing: 0.6em;
+        }
+        .epilogue {
+            background: linear-gradient(160deg, #060d1a 0%, #0F1C2E 40%, #162d4d 75%, #0a1525 100%);
+            color: #fff;
+            padding: 80px 24px;
+            text-align: center;
+        }
+        .epilogue .inner {
+            max-width: 680px;
+            margin: 0 auto;
+        }
+        .epilogue h2 {
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--primary-light);
+        }
+        .epilogue p {
+            margin-bottom: 18px;
+            color: rgba(255,255,255,0.85);
+            text-align: justify;
+            line-height: 2;
+        }
+        .epilogue .final-quote {
+            margin-top: 36px;
+            padding: 24px;
+            border: 1px solid rgba(122,174,232,0.3);
+            border-radius: 12px;
+            color: var(--primary-light);
+            font-style: italic;
+            font-size: 1.08em;
+        }
+        .savers-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 28px 0;
+        }
+        .savers-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px 22px;
+            border: 1px solid rgba(46,107,200,0.12);
+            box-shadow: 0 2px 12px rgba(46,107,200,0.06);
+        }
+        .savers-card .letter {
+            font-size: 1.6em;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+        .savers-card .en {
+            font-size: 0.82em;
+            color: var(--primary-light);
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+        .savers-card .desc {
+            font-size: 0.9em;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+        .steps-list {
+            counter-reset: step;
+            margin: 28px 0;
+        }
+        .step-item {
+            background: #fff;
+            border-radius: 12px;
+            padding: 22px 26px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(46,107,200,0.12);
+            box-shadow: 0 2px 12px rgba(46,107,200,0.06);
+            position: relative;
+            padding-left: 70px;
+        }
+        .step-item::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 22px;
+            top: 20px;
+            width: 34px;
+            height: 34px;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.95em;
+        }
+        .step-item .step-title {
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+        }
+        .step-item .step-desc {
+            font-size: 0.93em;
+            color: var(--text-light);
+            line-height: 1.9;
+        }
+        .challenge-box {
+            background: #fff;
+            border-radius: 14px;
+            padding: 28px 30px;
+            margin: 28px 0;
+            border: 1px solid rgba(46,107,200,0.15);
+            box-shadow: 0 2px 16px rgba(46,107,200,0.08);
+        }
+        .challenge-box .week {
+            display: flex;
+            align-items: baseline;
+            gap: 14px;
+            margin-bottom: 14px;
+            padding-bottom: 14px;
+            border-bottom: 1px dashed var(--divider);
+        }
+        .challenge-box .week:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        .challenge-box .week-tag {
+            flex-shrink: 0;
+            background: var(--primary);
+            color: #fff;
+            font-size: 0.78em;
+            font-weight: 700;
+            padding: 3px 12px;
+            border-radius: 14px;
+            white-space: nowrap;
+        }
+        .challenge-box .week-desc {
+            font-size: 0.93em;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-light);
+            font-size: 0.82em;
+            background: var(--bg-cool);
+        }
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.8em; }
+            .savers-grid { grid-template-columns: 1fr; }
+            .step-item { padding-left: 60px; }
+            body { font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <h1>早起的奇迹</h1>
+    <div class="subtitle">改变人生可能只需要一个小时<br>运用早晨的时间来创造人生奇迹</div>
+    <div class="book-info">《早起的奇迹》 [美] 哈尔·埃尔罗德 著</div>
+</div>
+
+<div class="container">
+
+    <!-- 序 -->
+    <div class="chapter">
+        <span class="chapter-label">序</span>
+        <h2>改变你的人生可能只需要一个小时</h2>
+        <p>你敢相信吗？改变你的人生可能只需要一个小时。</p>
+        <p>在开始之前，我想请大家思考一个问题：如果让你在幸福、健康、财富、成功以及爱情这五个人生要素中，用1到10分的标准给自己打分，你会给自己多少分呢？</p>
+        <p>毫无疑问，在理想状况下，每个人都希望能在这些方面得到满分。但现实中要做到这点却难如登天。据统计，世界上有95%的人从未过上自己真正想要的生活。</p>
+        <p>但是如果告诉你，从早起开始，通过一些简单的步骤，就能够让你在这些方面都获得高分，你会相信吗？很多在我们眼里看起来困难的事情，都能够在早起的帮助下一一化作现实。这就是早起能够为我们带来的奇迹。</p>
+        <p>今天我们将深入探讨《早起的奇迹》这本书，了解作者哈尔·埃尔罗德是如何利用早起的习惯，把自己从人生的低谷拉回巅峰的。让我们从作者的故事开始，看看是什么样的经历让他发现了早起的力量。</p>
+    </div>
+
+    <div class="divider">· · ·</div>
+
+    <!-- 第一章 -->
+    <div class="chapter">
+        <span class="chapter-label">第一章</span>
+        <h2>从巅峰到谷底，再从谷底崛起</h2>
+        <p>1999年，年轻的哈尔·埃尔罗德正处于人生的巅峰。作为一名出色的销售代表，他的业绩亮眼，收入远远超过了自己的期望。</p>
+        <p>然而命运却在一个夜晚给了他沉重的一击。那晚哈尔驾驶着新买的野马轿车，心中还沉浸在刚刚完成的一场精彩演讲中。一辆大型汽车突然迎面而来，两车以130公里的时速正面相撞，紧接着又有一辆汽车从侧面撞了上来。</p>
+        <p>这场可怕的车祸给哈尔造成了严重的伤害：永久性的脑损伤、颅骨开裂、多处骨折，甚至一度心脏停止跳动。在医护人员的全力抢救下，哈尔奇迹般地活了下来。</p>
+        <p>然而哈尔并没有被这场灾难击垮。在康复后，他重返工作岗位，并在2000年取得了职业生涯中最出色的销售业绩，成功晋升为管理层。他还开始在各大高校进行激励演讲，并逐渐转型为人生教练。</p>
+        <p>正当一切似乎都在向好的方向发展时，2008年的全球金融危机再次将哈尔推向了人生的低谷。他的收入急剧下降，客户流失，同时还背负了43万美元的债务。无论是在精神、身体还是财务方面，他都跌到了谷底。</p>
+        <p>为了重新振作，哈尔尝试了各种方法：阅读大量书籍、参加培训班，但这些努力似乎都无济于事。就在他感到最无助的时候，一位挚友给了他一个简单而奇妙的建议："试着开始晨跑吧，它能让你的思维变得更清晰。"</p>
+        <p>尽管哈尔一直不喜欢跑步，但在走投无路的情况下，他决定姑且一试。令人惊讶的是，这个简单的建议成为了他人生的转折点。</p>
+        <p>通过晨跑，哈尔发现了一个他活了将近30年都未曾注意过的宝贵时间段——早晨。他开始制定个人发展的日程表，每天早上严格执行，努力提升自我，扭转人生。令人难以置信的是，这个方法真的奏效了，哈尔重新获得了失去的一切。</p>
+        <p>他将这个日程表称为"神奇的早起"。当他把这个计划分享给客户后，效果立竿见影。很快，"神奇的早起"在社交媒体上迅速传播，每天都有越来越多的人因为早起而改变人生。哈尔开始收到来自世界各地的邮件，人们纷纷与他分享早起带来的喜悦。为了将这份知识传播给更多人，《早起的奇迹》这本书应运而生。</p>
+    </div>
+
+    <div class="divider">· · ·</div>
+
+    <!-- 第二章 -->
+    <div class="chapter">
+        <span class="chapter-label">第二章</span>
+        <h2>生命SAVERS：晨间仪式的六大法宝</h2>
+        <p>那么早起究竟如何能为我们的生活带来如此翻天覆地的变化呢？关键就在于这句话：</p>
+        <div class="quote">早晨的行动将影响你的思维以及心态，决定你一整天的表现。</div>
+        <p>让我们来看看哈尔的一个典型早晨。凌晨五点，当大多数人还在熟睡时，哈尔已经起床了。这给了他大量的私人时间来进行自己想做的事。在完成基本的洗漱后，他开始了一系列早已规划好的活动。</p>
+        <p>哈尔·埃尔罗德提出了一个叫做"生命SAVERS"的概念，这是一套完整的晨间仪式，每个字母代表一项活动：</p>
+
+        <div class="savers-grid">
+            <div class="savers-card">
+                <div class="letter">S</div>
+                <div class="en">Silence · 静默</div>
+                <div class="desc">通过冥想或深呼吸来平静心灵</div>
+            </div>
+            <div class="savers-card">
+                <div class="letter">A</div>
+                <div class="en">Affirmations · 肯定</div>
+                <div class="desc">对自己说积极的话，重申自己的目标和价值观</div>
+            </div>
+            <div class="savers-card">
+                <div class="letter">V</div>
+                <div class="en">Visualization · 可视化</div>
+                <div class="desc">想象自己实现目标的画面，增强动力</div>
+            </div>
+            <div class="savers-card">
+                <div class="letter">E</div>
+                <div class="en">Exercise · 运动</div>
+                <div class="desc">进行适度的体育锻炼，唤醒身体</div>
+            </div>
+            <div class="savers-card">
+                <div class="letter">R</div>
+                <div class="en">Reading · 阅读</div>
+                <div class="desc">阅读能激发灵感的书籍，学习新知识</div>
+            </div>
+            <div class="savers-card">
+                <div class="letter">S</div>
+                <div class="en">Scribing · 写作</div>
+                <div class="desc">记录感恩的事物，或者写下今天的目标</div>
+            </div>
+        </div>
+
+        <p>这一系列活动不仅能充分唤醒精神和身体，还能让人充满动力地迎接新的一天。当哈尔完成这些活动，感觉度过了一天中最平静、最积极、最富有活力的时光。</p>
+        <p>接下来哈尔能够全神贯注地投入到工作中。这种状态不仅大大提高了他的工作效率，还成功地帮助他把收入提升至金融危机之前的水平。</p>
+        <p>通过实行"神奇的早晨"计划，哈尔收到了大量读者的积极反馈。这些反馈再次证明了那句关键的话：早晨的行动将影响你的思维以及心态，决定你一整天的表现。只要有了正确的心态和思维，接下来的任何事情都将变得容易应对。</p>
+    </div>
+
+    <div class="divider">· · ·</div>
+
+    <!-- 第三章 -->
+    <div class="chapter">
+        <span class="chapter-label">第三章</span>
+        <h2>睡眠的真相：心态决定一切</h2>
+        <p>说到这里，你可能会想：我的工作太忙了，每天将近凌晨才能上床睡觉，算上一天需要7到8个小时的睡眠时间，我根本不可能太早起床。</p>
+        <p>这里我想问大家一个问题：你认为一个人需要的睡眠时间是多久？答案可能会出乎你的意料——没有一个确切的数字。每个人的身体情况和需求都不同。</p>
+        <p>通过对自身的观察实验，以及对各种历史名人睡眠习惯的研究，哈尔总结出了一个有趣的结论：</p>
+        <div class="quote">一个人所需要的睡眠时间，很大程度上取决于我们相信自己应该睡多久。</div>
+        <p>实际上一个人只需要睡到不会觉得过度昏昏欲睡就可以了。哈尔曾经做过一项实验：他在三个不同的日子里，分别只睡了四小时、五小时和六小时。每晚睡前他都会告诉自己："这样的睡眠时间怎么可能足够？明天一定会感到十分疲劳。"结果不管睡了多久，第二天起来他都感到疲惫不堪。</p>
+        <p>但是当他换个想法，在睡觉之前积极地暗示自己"明天一定会精神饱满地醒来，迎接新的一天"时，无论是只睡了4、5个小时，还是睡了8、9个小时，第二天醒来时他都感到精神焕发。</p>
+        <div class="insight">
+            <div class="insight-title">核心启示</div>
+            <p>这个实验结果看起来很神奇，但它揭示了一个重要的真理：我们的心态和思维方式，对我们的身体状态有着巨大的影响。所以不要再为自己迟迟不肯起床找借口了。很多事情的关键都在于心态和思维，只要思维正确，那么看似不可能的事情也将变得可能。</p>
+        </div>
+    </div>
+
+    <div class="divider">· · ·</div>
+
+    <!-- 第四章 -->
+    <div class="chapter">
+        <span class="chapter-label">第四章</span>
+        <h2>五个步骤，告别赖床</h2>
+        <p>接下来让我们来看看哈尔是如何做到早起以及防止赖床的五个步骤。你会发现这些都是生活中再正常不过的事，执行起来也不怎么困难，但却能有效地唤醒我们，让身体准备迎接新的一天。</p>
+
+        <div class="steps-list">
+            <div class="step-item">
+                <div class="step-title">睡前进行积极的自我暗示</div>
+                <div class="step-desc">早晨醒来时，脑海里的第一个想法，往往会是昨晚睡觉前的最后一个想法。你一定也有过期待明天快点到来的经历吧——比如生日的前一天、旅行的前一天，又或是放假的前一天。这些积极的想法会促使我们在闹钟一响的时候，便自动地从床上跳下来，准备拥抱新的一天。反之，如果睡觉前的最后一个想法是"明天需要早起，但我只有六个小时的睡眠，真的好累"之类的话，那么在潜意识中你肯定会对明天产生厌恶感。由此可见，心态就是防止赖床的第一步。找到你自己的早起动力——可能是期待晨跑时的清新空气，可能是享受独处时光的宁静，或者是为了有更多时间陪伴家人。无论是什么，让它成为你睡前的最后一个想法。</div>
+            </div>
+            <div class="step-item">
+                <div class="step-title">将闹钟放到够不着的地方</div>
+                <div class="step-desc">这个方法看似简单却非常有效。当闹钟响起时，如果它就在你手边，你很可能会在半梦半醒的状态下把它关掉，然后继续睡。很多时候我们甚至意识不到自己曾经关掉过闹钟，醒来时还会纳闷为什么闹钟没有响。但如果将闹钟放在够不着的地方，当它响起时，你就会被迫爬起身来关掉它。这个动作会让你的身体进入运动状态，疲劳感就会随之而去。即使你还想继续睡，至少你已经坐起来了——这就是一个很好的开始。</div>
+            </div>
+            <div class="step-item">
+                <div class="step-title">起床后直接到浴室刷牙</div>
+                <div class="step-desc">这个步骤的关键在于，让你的身体进行一些无需太多思考、但却能让身体逐渐苏醒的活动。刷牙这个动作看似简单，但它能激活你的感官：薄荷味的牙膏能刺激你的味蕾和嗅觉，刷牙的动作能唤醒你的触觉，看着镜子中的自己则能激活视觉。这些感官的刺激都在告诉你的大脑：新的一天开始了。除了刷牙，你还可以用温水或冷水洗脸，水温的刺激能进一步唤醒你的身体。</div>
+            </div>
+            <div class="step-item">
+                <div class="step-title">起床后喝下满满一大杯水</div>
+                <div class="step-desc">在睡眠期间，我们的身体长时间没有摄入水分，很可能处于轻微脱水的状态，而身体对于脱水的一个最直接的表现就是疲劳。所以在起床后立即喝下一大杯水，能迅速补充身体所需的水分，帮助我们更快地摆脱睡意。建议准备一杯温水，因为温水更容易被身体吸收，也不会对胃造成刺激。你甚至可以在水中加入一片柠檬，不仅能增加口感，还能补充维生素C，为新的一天注入活力。</div>
+            </div>
+            <div class="step-item">
+                <div class="step-title">穿上晨练服出门锻炼</div>
+                <div class="step-desc">哈尔认为，如果要挖掘自己的最大潜能，晨练是最为关键的一步。通过运动，我们能够让身体和精神都达到巅峰状态，为接下来的一天充满活力。晨练不一定要是剧烈的运动，可以从轻松的活动开始：快步走，在家附近散步15到20分钟，呼吸新鲜空气，欣赏早晨的景色；瑜伽，进行一些简单的瑜伽动作，帮助伸展身体、平静心灵；跳绳，如果时间有限，跳绳是一种高效的有氧运动，只需5到10分钟就能让全身充满活力；简单的力量训练，做一些俯卧撑、仰卧起坐或深蹲，唤醒肌肉。重点在于唤醒身体，让自己感到精神焕发。随着时间推移，你可以逐渐增加运动强度和时间。</div>
+            </div>
+        </div>
+
+        <p>以上就是五个防止赖床的步骤。如果你有经常起不来的困扰，不妨试试看。记住，养成习惯需要时间，不要因为一两次失败就放弃。坚持21天，你就会发现这些步骤已经成为你早晨例行公事的一部分了。</p>
+        <div class="quote">没有人喜欢早起，但人人都喜欢早起的感觉。</div>
+    </div>
+
+    <div class="divider">· · ·</div>
+
+    <!-- 第五章 -->
+    <div class="chapter">
+        <span class="chapter-label">第五章</span>
+        <h2>21天早起挑战计划</h2>
+        <p>每个人在尝试新事物时都会面临困难，从初期的痛苦到中期的适应，再到后期的掌握，这都是一个需要坚持的过程。以下是一个21天的早起挑战计划，你可以用它来开始你的早起之旅。</p>
+        <p>你可以根据自己的情况调整每项活动的时间，但建议至少花10分钟在每项活动上。随着时间的推移，你会发现这套仪式能极大地提升你的生活质量。</p>
+
+        <div class="challenge-box">
+            <div class="week">
+                <span class="week-tag">第1~7天</span>
+                <span class="week-desc">将起床时间提前15分钟，专注于建立起床后立即离开床的习惯。</span>
+            </div>
+            <div class="week">
+                <span class="week-tag">第8~14天</span>
+                <span class="week-desc">再次将起床时间提前15分钟，开始实践生命SAVERS中的一到两项活动。</span>
+            </div>
+            <div class="week">
+                <span class="week-tag">第15~21天</span>
+                <span class="week-desc">如果感觉良好，再次提前起床时间，尝试完整实践生命SAVERS。</span>
+            </div>
+        </div>
+
+        <p>记住，改变需要时间，不要因为一两次失败就放弃。坚持下去，你会发现早起带来的奇迹。</p>
+    </div>
+
+</div>
+
+<!-- 尾声 -->
+<div class="epilogue">
+    <div class="inner chapter">
+        <h2>尾声 · 早起只是一个开始</h2>
+        <p>这本书带给我们的不仅仅是早起的好处，更多的是一种积极向上的人生态度。通过哈尔·埃尔罗德的故事，我们看到了一个人如何从人生的低谷重新攀上巅峰。他的经历告诉我们：即使面临最艰难的处境，只要我们愿意改变，愿意尝试新的方法，就总有希望。</p>
+        <p>早起只是一个开始，它能为我们打开一扇通向更好生活的大门。通过早起，我们可以获得更多的时间来投资自己——无论是学习新技能、锻炼身体，还是静心冥想。这些看似微小的改变，长期坚持下去，就会带来巨大的人生转变。</p>
+        <p>书中提到的观念，如踏出舒适圈、不屈服于平庸等，其实适用于人生的方方面面。它教导我们要勇于尝试，不断挑战自我，才能实现真正的成长。</p>
+        <p>最后我想说的是，每个人的情况都不同，没有一种方法适合所有人。重要的是找到适合自己的方式，并且坚持下去。也许一开始会感到困难，但只要坚持21天，你就会发现早起已经成为了一种习惯，而这个习惯将会为你的人生带来无限可能。</p>
+        <div class="final-quote">改变人生可能只需要一个小时——<br>那个清晨，属于你自己的一个小时。</div>
+    </div>
+</div>
+
+<footer>《早起的奇迹》读书笔记 · 哈尔·埃尔罗德</footer>
+
+<script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.chapter').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

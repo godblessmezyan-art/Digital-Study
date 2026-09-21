@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "slug": "legacy-study-10",
+  "title": "控糖革命",
+  "author": "杰西・安佐斯佩",
+  "summary": "从旧 Study 项目迁移的书籍内容。",
+  "tags": [],
+  "cover": "cover.svg",
+  "status": "published",
+  "publishedAt": "2026-07-25T01:07:32.000Z",
+  "category": {
+    "slug": "legacy-category-65",
+    "name": "健康生活"
+  }
+}

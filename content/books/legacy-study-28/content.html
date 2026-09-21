@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>杀死一只知更鸟 — 哈珀·李</title>
+<link href="https://fonts.loli.net/css2?family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#faf6ee;--text:#3c3226;--card:#fffdf6;--border:#e8ddc8;--accent:#a4682c;--accent2:#c89058;--gold:#c89a48;--hero-from:#2b1f24;--hero-via:#6a4230;--hero-to:#b06a30;--quote-bg:#f5eee0;--shadow:0 2px 20px rgba(120,80,40,0.10)}
+body.theme-mint{--bg:#f6faf7;--text:#2d3a33;--card:#ffffff;--border:#d9ecdf;--accent:#3a9a7a;--accent2:#7ac4a8;--gold:#c8a855;--hero-from:#12261e;--hero-via:#1e4a38;--hero-to:#2a9a8a;--quote-bg:#f0f8f4;--shadow:0 2px 20px rgba(58,154,122,0.1)}
+body.theme-cloud{--bg:#f8f9fc;--text:#35384a;--card:#ffffff;--border:#e0e3ee;--accent:#6878b0;--accent2:#9aa4d0;--gold:#c8a855;--hero-from:#161a28;--hero-via:#2c3454;--hero-to:#6878b0;--quote-bg:#f2f3fa;--shadow:0 2px 20px rgba(104,120,176,0.1)}
+body.theme-bamboo{--bg:#f8faf5;--text:#363d2e;--card:#ffffff;--border:#dde8d4;--accent:#6a9a48;--accent2:#98c474;--gold:#c8a855;--hero-from:#18220e;--hero-via:#34501e;--hero-to:#6a9a48;--quote-bg:#f2f6ee;--shadow:0 2px 20px rgba(106,154,72,0.1)}
+body.theme-amber{--bg:#fdfaf5;--text:#3d3528;--card:#ffffff;--border:#ece4d4;--accent:#b08a40;--accent2:#d4b468;--gold:#b08a40;--hero-from:#241c0e;--hero-via:#6a5220;--hero-to:#b08a40;--quote-bg:#faf5ea;--shadow:0 2px 20px rgba(176,138,64,0.1)}
+body.theme-dawn{--bg:#fdf8f5;--text:#3d322a;--card:#ffffff;--border:#ece0d6;--accent:#c07850;--accent2:#e0a080;--gold:#c8a855;--hero-from:#2a1418;--hero-via:#7a4430;--hero-to:#e0a070;--quote-bg:#faf2ec;--shadow:0 2px 20px rgba(192,120,80,0.1)}
+body.theme-lavender{--bg:#f8f5fc;--text:#352d42;--card:#ffffff;--border:#e4daf0;--accent:#8a68b0;--accent2:#b498d4;--gold:#c8a855;--hero-from:#1a1426;--hero-via:#443062;--hero-to:#8a68b0;--quote-bg:#f5f0fa;--shadow:0 2px 20px rgba(138,104,176,0.1)}
+body.theme-slate{--bg:#f5f7f8;--text:#353a3d;--card:#ffffff;--border:#dce2e6;--accent:#5a7a8a;--accent2:#88a8b8;--gold:#c8a855;--hero-from:#12181c;--hero-via:#2e4450;--hero-to:#5a7a8a;--quote-bg:#f0f4f6;--shadow:0 2px 20px rgba(90,122,138,0.1)}
+body.theme-rose{--bg:#fdf5f5;--text:#3d2d2d;--card:#ffffff;--border:#ecdada;--accent:#c06868;--accent2:#e09898;--gold:#c8a855;--hero-from:#261212;--hero-via:#6a3434;--hero-to:#c06868;--quote-bg:#faf0f0;--shadow:0 2px 20px rgba(192,104,104,0.1)}
+body.theme-sakura{--bg:#fdf5f8;--text:#3d2d35;--card:#ffffff;--border:#ecdce2;--accent:#c06888;--accent2:#e098b0;--gold:#c8a855;--hero-from:#26121a;--hero-via:#6a3450;--hero-to:#c06888;--quote-bg:#faf0f4;--shadow:0 2px 20px rgba(192,104,136,0.1)}
+body.theme-forest{--bg:#f5f8f4;--text:#2d382a;--card:#ffffff;--border:#d8e6d4;--accent:#4a7a42;--accent2:#78a870;--gold:#c8a855;--hero-from:#0e180c;--hero-via:#244220;--hero-to:#4a7a42;--quote-bg:#eef5ec;--shadow:0 2px 20px rgba(74,122,66,0.1)}
+body.theme-ocean{--bg:#f4f8fa;--text:#2a353d;--card:#ffffff;--border:#d4e2ea;--accent:#3a7a9a;--accent2:#68a8c4;--gold:#c8a855;--hero-from:#0c1820;--hero-via:#1e4254;--hero-to:#3a7a9a;--quote-bg:#eaf4f8;--shadow:0 2px 20px rgba(58,122,154,0.1)}
+body.theme-sand{--bg:#faf8f2;--text:#3d3a2d;--card:#ffffff;--border:#e8e4d8;--accent:#a09060;--accent2:#c8b888;--gold:#a09060;--hero-from:#201c10;--hero-via:#5a5030;--hero-to:#a09060;--quote-bg:#f6f4ea;--shadow:0 2px 20px rgba(160,144,96,0.1)}
+body.theme-night{--bg:#1a1e28;--text:#d0d4dc;--card:#222838;--border:#333a4a;--accent:#c89a58;--accent2:#e0b878;--gold:#d4b468;--hero-from:#0c1018;--hero-via:#1e2430;--hero-to:#3a4258;--quote-bg:#1e2430;--shadow:0 2px 20px rgba(0,0,0,0.3)}
+body.theme-charcoal{--bg:#28282a;--text:#c8c8cc;--card:#323236;--border:#44444a;--accent:#70b890;--accent2:#98d8b0;--gold:#d4b468;--hero-from:#141416;--hero-via:#26262a;--hero-to:#3c3c42;--quote-bg:#2e2e34;--shadow:0 2px 20px rgba(0,0,0,0.3)}
+body.theme-deepsea{--bg:#141822;--text:#c0c8d8;--card:#1c2230;--border:#2a3244;--accent:#5888b8;--accent2:#80b0d8;--gold:#d4b468;--hero-from:#0c1018;--hero-via:#182438;--hero-to:#2a4258;--quote-bg:#181e2a;--shadow:0 2px 20px rgba(0,0,0,0.35)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Serif SC',serif;background:var(--bg);color:var(--text);line-height:1.9;transition:background .5s,color .5s}
+/* ---------- Hero ---------- */
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:70px 24px;background:linear-gradient(180deg,var(--hero-from) 0%,var(--hero-via) 55%,var(--hero-to) 100%);overflow:hidden}
+.hero-birds{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.hero-birds svg{position:absolute;color:#fff;opacity:0;animation:birdfly linear infinite}
+@keyframes birdfly{0%{transform:translateX(-8vw) translateY(0) scale(var(--s));opacity:0}8%{opacity:var(--o)}50%{transform:translateX(50vw) translateY(var(--dy)) scale(var(--s));opacity:var(--o)}92%{opacity:var(--o)}100%{transform:translateX(108vw) translateY(0) scale(var(--s));opacity:0}}
+.hero::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:120px;background:linear-gradient(180deg,transparent,var(--bg))}
+.hero-inner{position:relative;z-index:2;color:#fdf3e0}
+.hero-sub{font-family:'ZCOOL XiaoWei',serif;font-size:.95rem;letter-spacing:.45em;color:var(--gold);margin-bottom:22px;opacity:.9;text-shadow:0 1px 8px rgba(0,0,0,.4)}
+.hero-birdmark{width:54px;height:28px;margin:0 auto 20px;color:var(--gold);filter:drop-shadow(0 0 10px rgba(255,220,150,.5))}
+.hero-title{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(2.2rem,7vw,3.8rem);font-weight:400;line-height:1.35;margin-bottom:14px;text-shadow:0 2px 18px rgba(0,0,0,.45)}
+.hero-author{font-size:.92rem;color:var(--gold);letter-spacing:.25em;margin-bottom:42px}
+.hero-line{width:1px;height:64px;background:linear-gradient(to bottom,transparent,var(--gold),transparent);margin:0 auto 30px}
+.hero-quote{max-width:620px;font-size:1.02rem;line-height:2.1;color:#fdf3e0;opacity:.92;font-style:italic;text-shadow:0 1px 8px rgba(0,0,0,.4)}
+/* ---------- Bird divider ---------- */
+.bird-divider{display:flex;align-items:center;justify-content:center;gap:16px;padding:44px 0}
+.bird-divider .line{width:64px;height:1px;background:var(--border)}
+.bird-divider svg{width:30px;height:15px;color:var(--accent);opacity:.75}
+/* ---------- Content ---------- */
+.content{max-width:720px;margin:0 auto;padding:0 24px}
+.chapter{padding:46px 0;opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
+.chapter.visible{opacity:1;transform:translateY(0)}
+.chapter-num{font-family:'ZCOOL XiaoWei',serif;font-size:.8rem;letter-spacing:.32em;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:12px}
+.chapter-num::after{content:'';flex:1;height:1px;background:var(--border)}
+.chapter-title{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(1.4rem,4vw,1.8rem);font-weight:400;line-height:1.5;margin-bottom:26px}
+.chapter p{margin-bottom:1.5em;font-size:1rem;text-align:justify}
+.chapter p strong{color:var(--accent)}
+/* ---------- Atticus quote ---------- */
+.atticus{position:relative;background:var(--quote-bg);border-left:3px solid var(--gold);border-radius:0 14px 14px 0;padding:28px 30px;margin:34px 0;line-height:2.1;font-size:1.04rem}
+.atticus .tag{font-family:'ZCOOL XiaoWei',serif;font-size:.82rem;letter-spacing:.28em;color:var(--accent);display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.atticus .tag svg{width:22px;height:11px;color:var(--accent)}
+.atticus::before{content:'\201C';position:absolute;top:2px;left:14px;font-size:3.2rem;color:var(--gold);opacity:.28;font-style:normal;font-family:Georgia,serif}
+.atticus .words{padding-left:22px}
+/* ---------- Two mockingbirds ---------- */
+.birds-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:34px 0}
+@media(max-width:560px){.birds-grid{grid-template-columns:1fr}}
+.bird-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px 24px;box-shadow:var(--shadow);position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s}
+.bird-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(120,80,40,.16)}
+.bird-card .bmark{width:38px;height:19px;color:var(--accent);margin-bottom:14px;opacity:.85}
+.bird-card .bname{font-family:'ZCOOL XiaoWei',serif;font-size:1.2rem;margin-bottom:4px}
+.bird-card .brole{font-size:.82rem;color:var(--accent);letter-spacing:.12em;margin-bottom:14px}
+.bird-card .bdesc{font-size:.9rem;line-height:1.9;opacity:.85}
+.bird-card .bfate{margin-top:16px;padding-top:14px;border-top:1px dashed var(--border);font-size:.85rem;line-height:1.8;color:var(--accent)}
+/* ---------- Tree hole gifts ---------- */
+.gifts{display:flex;flex-wrap:wrap;gap:12px;margin:26px 0}
+.gift{display:flex;align-items:center;gap:9px;background:var(--card);border:1px solid var(--border);border-radius:999px;padding:10px 20px;font-size:.9rem;box-shadow:var(--shadow);transition:transform .3s}
+.gift:hover{transform:translateY(-3px)}
+.gift .gicon{font-size:1.15rem}
+/* ---------- Courtroom ---------- */
+.court{position:relative;background:var(--quote-bg);border:1px solid var(--border);border-radius:18px;padding:34px 30px;margin:36px 0;box-shadow:var(--shadow)}
+.court .chead{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.court .chead .scales{font-size:1.7rem}
+.court .chead .ctitle{font-family:'ZCOOL XiaoWei',serif;font-size:1.15rem;color:var(--accent);letter-spacing:.08em}
+.court .crow{display:flex;gap:14px;padding:13px 0;border-bottom:1px dashed var(--border)}
+.court .crow:last-child{border-bottom:none}
+.court .crow .who{flex-shrink:0;width:64px;font-family:'ZCOOL XiaoWei',serif;font-size:.9rem;color:var(--accent);padding-top:2px}
+.court .crow .what{font-size:.92rem;line-height:1.9}
+/* ---------- Verdict ---------- */
+.verdict{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:34px 28px;margin:34px 0;box-shadow:var(--shadow);text-align:center}
+.verdict .vlabel{font-family:'ZCOOL XiaoWei',serif;font-size:.85rem;letter-spacing:.3em;color:var(--accent);margin-bottom:12px}
+.verdict .vtext{font-family:'ZCOOL XiaoWei',serif;font-size:1.35rem;line-height:1.8}
+.verdict .vnote{margin-top:14px;font-size:.88rem;line-height:1.9;opacity:.72}
+/* ---------- Insight ---------- */
+.insight{background:var(--quote-bg);border-radius:14px;padding:26px 28px;margin:32px 0;line-height:2;font-style:italic;position:relative;text-align:center}
+.insight::before,.insight::after{content:'';position:absolute;width:22px;height:22px;border-color:var(--gold);border-style:solid;opacity:.55}
+.insight::before{top:10px;left:10px;border-width:2px 0 0 2px;border-radius:4px 0 0 0}
+.insight::after{bottom:10px;right:10px;border-width:0 2px 2px 0;border-radius:0 0 4px 0}
+/* ---------- Final beacon ---------- */
+.beacon{max-width:720px;margin:20px auto 0;padding:50px 24px 10px;text-align:center;opacity:0;transform:translateY(30px);transition:opacity .9s,transform .9s}
+.beacon.visible{opacity:1;transform:translateY(0)}
+.beacon .lighthouse{font-size:2.4rem;margin-bottom:16px;filter:drop-shadow(0 0 12px rgba(255,210,120,.55))}
+.beacon .btext{font-size:1.02rem;line-height:2.2}
+.beacon .btext strong{color:var(--accent)}
+/* ---------- Mindmap ---------- */
+.mindmap-section{max-width:900px;margin:60px auto;padding:0 24px}
+.mindmap-section .mtitle{text-align:center;font-family:'ZCOOL XiaoWei',serif;font-size:1.5rem;margin-bottom:30px}
+.markmap{width:100%;min-height:420px;background:var(--card);border-radius:16px;border:1px solid var(--border);box-shadow:var(--shadow)}
+.markmap-foreign{color:var(--text)!important}
+/* ---------- Footer ---------- */
+.footer{text-align:center;padding:70px 24px 100px}
+.footer .goodnight{font-family:'ZCOOL XiaoWei',serif;font-size:1.5rem;letter-spacing:.5em;color:var(--accent);margin-bottom:16px;padding-left:.5em}
+.footer .wish{font-size:.92rem;opacity:.6;line-height:2}
+/* ---------- Theme select ---------- */
+.theme-select{position:fixed;top:16px;right:16px;z-index:999;padding:8px 14px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:.85rem;font-family:'Noto Serif SC',serif;cursor:pointer;box-shadow:var(--shadow);outline:none;transition:all .3s}
+.theme-select:hover{border-color:var(--accent)}
+</style>
+</head>
+<body class="theme-default">
+<script>!function(){var t=["theme-default","theme-mint","theme-cloud","theme-bamboo","theme-amber","theme-dawn","theme-lavender","theme-slate","theme-rose","theme-sakura","theme-forest","theme-ocean","theme-sand","theme-night","theme-charcoal","theme-deepsea"];document.body.className=t[Math.floor(Math.random()*t.length)]}()</script>
+
+<section class="hero">
+<div class="hero-birds" id="heroBirds"></div>
+<div class="hero-inner">
+<div class="hero-sub">睡前听完一本书</div>
+<svg class="hero-birdmark" viewBox="0 0 32 16" fill="none"><path d="M1 11 Q8 2 16 9.5 Q24 2 31 11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+<h1 class="hero-title">杀死一只知更鸟</h1>
+<div class="hero-author">哈珀·李</div>
+<div class="hero-line"></div>
+<p class="hero-quote">勇敢是，当你还未开始就已知道自己会输，<br>可你依然要去做，而且无论如何都要把它坚持到底。<br>你很少赢，但有时也会。</p>
+</div>
+</section>
+
+<div class="bird-divider"><span class="line"></span><svg viewBox="0 0 32 16" fill="none"><path d="M1 11 Q8 2 16 9.5 Q24 2 31 11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="line"></span></div>
+
+<div class="content">
+
+<div class="chapter" id="c1">
+<div class="chapter-num">壹</div>
+<h2 class="chapter-title">什么是知更鸟</h2>
+<p>知更鸟是一种特别温柔的小鸟。它不破坏庄稼，也不在谷仓筑巢，只是哼唱美妙的音乐供人们欣赏。书里说，<strong>杀死一只知更鸟是一种罪过</strong>——因为它从未伤害过谁，一直用善良对待世界。</p>
+<p>这本书里，知更鸟隐喻了那些无辜善良的受害者，尤其是那些因偏见或不公而受伤害的人。今晚的故事里就有两只这样的知更鸟，他们善良真挚，却在偏见的围墙里挣扎得遍体鳞伤。</p>
+<p>作者用一个六岁小女孩的眼睛，带我们看到了人性里的光明与黑暗，也教会我们如何在复杂的世界里，守住内心的善良与正义。</p>
+</div>
+
+<div class="chapter" id="c2">
+<div class="chapter-num">贰</div>
+<h2 class="chapter-title">梅科姆镇的夏天</h2>
+<p>故事发生在20世纪30年代的美国南方小镇梅科姆。这个小镇不大，街上的人互相都认识，谁家的鸡毛蒜皮很快就能传遍全镇。那里的夏天很长，蝉鸣一声接着一声，空气里飘着栀子花的味道，大人们摇着扇子在门廊聊天，孩子们在街角疯跑。</p>
+<p>我们的眼睛，是通过一个名叫<strong>斯库特</strong>的六岁小女孩看到的。她不爱穿裙子，成天套着背带裤，说话直来直去，遇到不公平的事，会攥着小拳头跟人打架。她的哥哥<strong>杰姆</strong>十岁。兄妹俩的妈妈早逝，是爸爸<strong>阿迪克斯</strong>一手把他们拉扯大。</p>
+<p>阿迪克斯是镇上的律师，戴一副圆眼镜，说话轻声细语，从不发脾气。他不像别的爸爸那样带孩子打猎钓鱼，却会在晚上陪孩子们读书，耐心解答他们所有奇奇怪怪的问题。</p>
+<p>这年夏天，邻居家来了个叫迪尔的小男孩，脑袋里装满新奇想法。三个小伙伴整天凑在一起，琢磨着各种冒险计划。没过多久，他们就盯上了小镇最神秘的地方——<strong>拉德利家的老房子</strong>。里面住着"怪人"阿瑟，关于他的恐怖传说在小镇漫天飞。三个孩子又怕又好奇，总想看看这个怪人到底长什么样。</p>
+</div>
+
+<div class="chapter" id="c3">
+<div class="chapter-num">叁</div>
+<h2 class="chapter-title">树洞里的礼物</h2>
+<p>阿迪克斯把试图"引出怪人"的孩子们叫到身边，蹲下来认真地说：每个人都有自己喜欢的生活方式，尊重别人的选择，才是最基本的礼貌。可孩子们的好奇心实在太强。一天晚上他们溜进拉德利家的院子，被发现了，杰姆跑得太急，裤子被篱笆挂住，只好脱下裤子拼命往家跑。</p>
+<p>等到半夜，杰姆鼓起勇气溜回去取裤子，可摸到裤子时，他愣住了——原本被挂破的地方，被人小心翼翼地补好了，裤子也叠得平平整整，就放在篱笆上，等他来拿。</p>
+<p>从那以后，奇怪的事接二连三。拉德利家院子外的树洞里，经常会出现一些小玩意儿：</p>
+<div class="gifts">
+<div class="gift"><span class="gicon">🪙</span>亮晶晶的硬币</div>
+<div class="gift"><span class="gicon">🍬</span>甜甜的口香糖</div>
+<div class="gift"><span class="gicon">🪆</span>两个小木头人</div>
+</div>
+<p>那两个小木头人，刻得和斯库特、杰姆一模一样，连斯库特扎辫子的样子都刻得清清楚楚。兄妹俩知道，这是阿瑟特意留的礼物。他们第一次意识到：躲在房子里的阿瑟，一直在偷偷关注着他们，用沉默的方式对他们好。</p>
+<p>这年冬天，邻居莫迪小姐家着火了。房子烧得只剩烟囱，可她一点都不难过，反而笑着说："没关系啊，烧了正好盖一栋更大的房子，以后我要种更多的花。"她摸着斯库特的头说：</p>
+<div class="insight">孩子你要记住，真正可怕的不是躲在房子里的人，而是那些随便造谣、用偏见评判别人的人。</div>
+<p>斯库特似懂非懂地点点头，心里对阿瑟的害怕少了一点，多了一点好奇和温柔。</p>
+</div>
+
+<div class="chapter" id="c4">
+<div class="chapter-num">肆</div>
+<h2 class="chapter-title">偏见的重量</h2>
+<p>春天来临，阿迪克斯接到了一个特别的案子——为黑人青年<strong>汤姆·鲁滨逊</strong>辩护。汤姆被白人女孩梅耶拉的父亲鲍勃·尤厄尔告上法庭，指控他殴打并强奸了自己的女儿。在那个年代，种族歧视严重到刻进骨子里。所以当阿迪克斯要帮黑人辩护的消息传开，整个小镇都炸开了锅。有人骂他是黑人的帮凶，有人威胁他的家人。</p>
+<p>斯库特在学校也受到了牵连，有同学当着全班的面嘲笑她。她气得当场打了一架，回家后委屈地扑到爸爸怀里哭。阿迪克斯抱着她，声音温柔却坚定：</p>
+<div class="atticus">
+<div class="tag"><svg viewBox="0 0 32 16" fill="none"><path d="M1 11 Q8 2 16 9.5 Q24 2 31 11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>阿迪克斯说</div>
+<div class="words">宝贝，有些事情就算所有人都反对，但只要它是对的，我们就必须去做。正义就像太阳，就算有时候会被乌云遮住，但它永远都会发光。不要因为别人的偏见，就怀疑自己做的正确的事。</div>
+</div>
+<p>他又摸了摸她的头，说出了全书最动人的一句话：</p>
+<div class="atticus">
+<div class="tag"><svg viewBox="0 0 32 16" fill="none"><path d="M1 11 Q8 2 16 9.5 Q24 2 31 11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>阿迪克斯说</div>
+<div class="words">你永远不可能真正了解一个人，除非你站在他的角度考虑问题，除非你钻进他的皮肤里，像他一样走来走去。</div>
+</div>
+<p>斯库特虽然不太明白正义到底是什么，也不懂为什么人们会因为肤色讨厌一个人，但她知道——爸爸做的，一定是对的事。</p>
+</div>
+
+<div class="chapter" id="c5">
+<div class="chapter-num">伍</div>
+<h2 class="chapter-title">法庭上的真相</h2>
+<p>开庭那天，整个小镇的人都涌向法院，法庭里挤得水泄不通。白人坐在楼下旁听席，黑人只能坐在楼上的角落。审判开始了：</p>
+<div class="court">
+<div class="chead"><span class="scales">⚖️</span><span class="ctitle">庭审记录</span></div>
+<div class="crow"><span class="who">鲍勃</span><span class="what">说得声情并茂、拍着桌子大喊，可当阿迪克斯追问"为什么不立刻报警，反而先打了女儿"时，他脸色一变，支支吾吾说不出话。</span></div>
+<div class="crow"><span class="who">梅耶拉</span><span class="what">哭哭啼啼地讲述被侵犯的经过。可阿迪克斯指出：你说汤姆打了你右边的脸，可他的左手是残疾的，根本没办法打到你右边的脸——她瞬间愣住，半天说不出一个字。</span></div>
+<div class="crow"><span class="who">汤姆</span><span class="what">声音平静却有力量。他常免费帮可怜的梅耶拉干活；案发那天梅耶拉突然抱住他，他吓坏了赶紧推开——这一幕恰好被鲍勃看到，为了掩盖丑事，梅耶拉在父亲逼迫下反过来诬告汤姆。</span></div>
+</div>
+<p>汤姆的话条理清晰，还有很多证据能证明他说的是真的。庭审的最后，阿迪克斯站在陪审团面前，做了一段让人终身难忘的发言：</p>
+<div class="atticus">
+<div class="tag"><svg viewBox="0 0 32 16" fill="none"><path d="M1 11 Q8 2 16 9.5 Q24 2 31 11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>阿迪克斯的结辩</div>
+<div class="words">先生们，在我们的法庭里，人人生而平等。汤姆·鲁滨逊是个善良的人，他只是因为肤色就被诬告。请大家放下偏见，用良知做出判断。</div>
+</div>
+<p>法庭里安静了很久。按照小镇的惯例，涉及黑人的案子，陪审团几分钟就会作出判决。可这一次，他们讨论了整整一个晚上。</p>
+<div class="verdict">
+<div class="vlabel">最终裁定</div>
+<div class="vtext">"我们一致裁定，被告汤姆·鲁滨逊——有罪。"</div>
+<div class="vnote">这句话像一道惊雷，炸蒙了斯库特和杰姆。杰姆的脸瞬间惨白，拉着妹妹的手声音颤抖，一边说一边哭。</div>
+</div>
+<p>走出法院时，斯库特看到楼上的黑人都站在路边，默默看着阿迪克斯。当他走过来时，他们全都摘下帽子，深深鞠了一躬。斯库特这才明白：<strong>虽然阿迪克斯输了官司，但他赢了所有人的尊重，赢了正义的尊严。</strong></p>
+</div>
+
+<div class="chapter" id="c6">
+<div class="chapter-num">陆</div>
+<h2 class="chapter-title">知更鸟之死</h2>
+<p>汤姆被判有罪后关进了县监狱。阿迪克斯没有放弃，一直努力上诉，多次去看望汤姆，告诉他不要放弃。可汤姆已经对这个充满偏见的世界彻底失望了。一个闷热的下午，汤姆趁着狱警不注意爬上监狱的围墙想逃跑，刚爬上去就被发现——狱警开了枪，汤姆倒在血泊中，再也没有醒来。</p>
+<p>杰姆把自己关在房间里，哭着说：</p>
+<div class="insight">爸爸说杀死知更鸟是罪过，可汤姆就是一只知更鸟啊。他从来没做过坏事，总是帮别人干活，为什么要杀死他？</div>
+<p>斯库特也哭了。她终于明白爸爸那句话的意思：那些善良无辜、从未伤害过别人的人，就像知更鸟一样，用自己的方式温暖世界，可有些人却因为偏见和自私，轻易地伤害他们，甚至夺走他们的生命。</p>
+<p>汤姆的死，让斯库特和杰姆一下子长大了很多。他们开始明白，这个世界并不是非黑即白的，也不是所有善良的人都能得到公平对待。偏见就像一层厚厚的乌云，遮住了正义的阳光。</p>
+</div>
+
+<div class="chapter" id="c7">
+<div class="chapter-num">柒</div>
+<h2 class="chapter-title">黑暗中的守护者</h2>
+<p>鲍勃·尤厄尔虽然赢了官司，却成了全镇人的笑柄。他把一切都归咎于阿迪克斯，有一天在路上拦住他，对着他吐口水、威胁他的家人。阿迪克斯只是平静地擦了擦脸："我不会跟你打架，因为我不想像你一样幼稚。"</p>
+<p>转眼到了万圣节。斯库特参加学校话剧表演，扮演一只火腿，道具服沉甸甸的，行动很不方便。表演结束后，天已经黑了，杰姆带着斯库特回家。走到一片树林时，突然有个黑影从树后冲出来，一把抓住了斯库特——是鲍勃·尤厄尔，果然来报复了。杰姆立刻扑上去，却被黑影踹倒在地。</p>
+<p>就在这时，又有一个人冲了过来，和黑影扭打在一起。过了一会儿，有人轻轻拉开斯库特的道具服。她睁开眼，看到杰姆躺在地上，胳膊被打断了；而那个黑影躺在地上，已经没有了呼吸。</p>
+<p>救了他们兄妹俩的，是一个穿着破旧衣服、头发很长的人。斯库特仔细一看，瞬间认出了他——<strong>是被全镇人叫做"怪人"的阿瑟·拉德利</strong>。原来阿瑟一直关注着孩子们的安全，看到鲍勃跟踪他们就悄悄跟在后面，在孩子们遇到危险时，毫不犹豫地冲了出来。</p>
+<p>警长看着地上的尸体，又看了看瑟瑟发抖的阿瑟，对阿迪克斯说："这是一场意外，鲍勃·尤厄尔是自己摔倒在刀上死的。"阿迪克斯明白了——如果把阿瑟送进法院，镇上的人又会把他当成怪物议论，再次伤害这个善良的人。<strong>保护他，才是对他最大的公平。</strong></p>
+</div>
+
+<div class="chapter" id="c8">
+<div class="chapter-num">捌</div>
+<h2 class="chapter-title">送他回家</h2>
+<p>那天晚上，阿瑟一直站在角落，不敢靠近人群。斯库特走到他身边，轻轻拉起他的手："阿瑟先生，谢谢你救了我们。我送你回家吧。"阿瑟愣了一下，慢慢点了点头。</p>
+<p>斯库特挽着他的手，慢慢往阿瑟家走去。走到门口时，阿瑟转过身，对斯库特点了点头，然后慢慢走进房子，关上了门。这一次，斯库特没有觉得害怕。她想起了树洞里的礼物，想起了补好的裤子，想起了刚才奋不顾身的营救。</p>
+<p>她终于明白：<strong>阿瑟也是一只知更鸟</strong>。他被误解、被孤立，却依然用最纯粹的善良对待这个世界。</p>
+<p>一天傍晚，斯库特坐在院子的秋千上，轻声问："爸爸，阿瑟先生就像我们书里的知更鸟，对不对？汤姆先生也是。"阿迪克斯摸了摸她的头，笑着说：</p>
+<div class="atticus">
+<div class="tag"><svg viewBox="0 0 32 16" fill="none"><path d="M1 11 Q8 2 16 9.5 Q24 2 31 11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>阿迪克斯说</div>
+<div class="words">是的，宝贝。所有坚持善良、坚守正义、却被偏见伤害的人，都是知更鸟。杀死他们是罪过，但保护他们，是我们每个人的责任。</div>
+</div>
+<div class="birds-grid">
+<div class="bird-card">
+<svg class="bmark" viewBox="0 0 32 16" fill="none"><path d="M1 11 Q8 2 16 9.5 Q24 2 31 11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+<div class="bname">汤姆·鲁滨逊</div>
+<div class="brole">第一只知更鸟</div>
+<div class="bdesc">善良的黑人青年，常常免费帮助可怜的梅耶拉干活，从未伤害过任何人。</div>
+<div class="bfate">却因肤色被诬告，被偏见判处死刑，最终倒在逃亡的枪声中。</div>
+</div>
+<div class="bird-card">
+<svg class="bmark" viewBox="0 0 32 16" fill="none"><path d="M1 11 Q8 2 16 9.5 Q24 2 31 11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+<div class="bname">阿瑟·拉德利</div>
+<div class="brole">第二只知更鸟</div>
+<div class="bdesc">被谣言囚禁半生的隐士，偷偷在树洞里给孩子们留下礼物，默默守护他们。</div>
+<div class="bfate">被全镇误解为"怪人"，却在孩子遇险时挺身而出，用沉默的善良对抗世界的恶意。</div>
+</div>
+</div>
+</div>
+
+<div class="chapter" id="c9">
+<div class="chapter-num">玖</div>
+<h2 class="chapter-title">勇敢是什么</h2>
+<p>斯库特又问："为什么陪审团明明知道汤姆是无辜的，还要判他有罪？"阿迪克斯叹了口气，望向远方的田野：偏见就像一层厚厚的灰尘，落在人们的心上，时间长了就很难擦掉。但你看，陪审团讨论了整整一个晚上——以前这种案子，几分钟就会做出判决。这意味着已经有人开始醒悟了，总有一天，偏见的灰尘会被风吹散。</p>
+<p>"那勇敢是什么呢？是不是像哥哥那样敢和坏人打架？"阿迪克斯笑了：</p>
+<div class="atticus">
+<div class="tag"><svg viewBox="0 0 32 16" fill="none"><path d="M1 11 Q8 2 16 9.5 Q24 2 31 11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>阿迪克斯说</div>
+<div class="words">勇敢不是能打赢多少架。勇敢是你明明知道这件事很难、可能会失败、会被很多人反对，但因为它是<strong>对的</strong>，你就坚持去做。就像我们为汤姆辩护，明明知道可能会输，却依然要争取；就像阿瑟先生，明明害怕被别人发现，却依然勇敢地站出来救你们。这才是真正的勇敢。</div>
+</div>
+<p>那天晚上，斯库特躺在床上，看着窗外的月亮，心里特别平静。她想起莫迪小姐说的话：世界上大多数人都是善良的，只要你愿意花时间去了解他们。她知道这个世界有偏见、有不公、有黑暗，但也有善良、有勇气、有光明。就像爸爸说的——<strong>正义也许会迟到，但永远不会缺席。</strong></p>
+</div>
+
+</div>
+
+<div class="beacon chapter" id="beacon">
+<div class="lighthouse">🕯️</div>
+<div class="btext">也许改变世界需要很久，但我们可以先让自己活成一座微小的灯塔。<br><strong>不用多耀眼，只要稳稳亮着，让迷路的人知道光在哪里。</strong><br><br>这本书之所以经典，正是因为它没有给我们一个"从此幸福快乐"的童话结局。它诚实地说：偏见很难根除，伤害时有发生。但它更坚定地告诉我们：<strong>善良从来不是软弱，而是最强大的力量。</strong>它能穿越偏见，穿越黑暗，穿越时间，永远留在人们的心里。</div>
+</div>
+
+<div class="mindmap-section">
+<h2 class="mtitle">全书脉络</h2>
+<div class="markmap">
+<script type="text/template">
+# 杀死一只知更鸟
+
+## 隐喻
+### 知更鸟：温柔无害，只唱歌给人听
+### 杀死知更鸟 = 伤害无辜善良者的罪过
+
+## 梅科姆镇
+### 斯库特：六岁女孩，视角人物
+### 杰姆：哥哥
+### 迪尔：夏日玩伴
+### 阿迪克斯：律师父亲
+
+## 两只知更鸟
+### 汤姆·鲁滨逊
+- 善良助人，免费帮梅耶拉干活
+- 因肤色被诬告强奸
+- 左手残疾，证据指向清白
+- 被判有罪，越狱时被枪杀
+### 阿瑟·拉德利
+- 被谣言囚禁的隐士"怪人"
+- 树洞里悄悄送礼物
+- 补好杰姆的裤子
+- 危急时刻救下兄妹俩
+
+## 阿迪克斯的教诲
+### 同理心：钻进他的皮肤里走来走去
+### 正义：像太阳，被乌云遮住也会发光
+### 勇敢：明知会输依然坚持到底
+### 责任：保护知更鸟是每个人的责任
+
+## 主题
+### 偏见如灰尘，终会被风吹散
+### 善良不是软弱，是最强大的力量
+### 正义也许会迟到，但永不缺席
+</script>
+</div>
+</div>
+
+<footer class="footer">
+<div class="goodnight">晚 安</div>
+<div class="wish">愿你心中有光，愿你永远坚守善良，<br>永远相信正义。</div>
+</footer>
+
+<select class="theme-select" onchange="document.body.className=this.value">
+<option value="theme-default">🕊️ 暮色</option>
+<option value="theme-mint">🍃 薄荷</option>
+<option value="theme-cloud">☁️ 云灰</option>
+<option value="theme-bamboo">🎋 竹青</option>
+<option value="theme-amber">🍯 琥珀</option>
+<option value="theme-dawn">🌅 晨光</option>
+<option value="theme-lavender">💜 薰衣草</option>
+<option value="theme-slate">🪨 石板</option>
+<option value="theme-rose">🌹 玫瑰</option>
+<option value="theme-sakura">🌸 樱花</option>
+<option value="theme-forest">🌲 深林</option>
+<option value="theme-ocean">🌊 海洋</option>
+<option value="theme-sand">🏜️ 沙丘</option>
+<option value="theme-night">🌙 夜幕</option>
+<option value="theme-charcoal">🖤 炭灰</option>
+<option value="theme-deepsea">🐋 深海</option>
+</select>
+
+<script>
+// Sync theme select to current body class
+document.querySelector('.theme-select').value=document.body.className;
+
+// Drifting bird silhouettes in hero
+(function(){
+  var c=document.getElementById('heroBirds');
+  for(var i=0;i<9;i++){
+    var w=document.createElement('div');
+    var scale=(0.6+Math.random()*1.2).toFixed(2);
+    var dur=(18+Math.random()*22).toFixed(1);
+    var delay=(Math.random()*20).toFixed(1);
+    var top=(6+Math.random()*56).toFixed(1);
+    var opacity=(0.22+Math.random()*0.4).toFixed(2);
+    var dy=Math.round(Math.random()*40-20);
+    w.style.cssText='position:absolute;left:0;top:'+top+'%;--s:'+scale+';--o:'+opacity+';--dy:'+dy+'px';
+    w.innerHTML='<svg viewBox="0 0 32 16" fill="none" width="'+(28*scale)+'" height="'+(14*scale)+'"><path d="M1 11 Q8 2 16 9.5 Q24 2 31 11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+    var svg=w.querySelector('svg');
+    svg.style.animationDuration=dur+'s';
+    svg.style.animationDelay='-'+delay+'s';
+    c.appendChild(w);
+  }
+})();
+
+// Scroll reveal
+var obs=new IntersectionObserver(function(es){
+  es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:0.12});
+document.querySelectorAll('.chapter,.beacon').forEach(function(el){obs.observe(el)});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+</body>
+</html>

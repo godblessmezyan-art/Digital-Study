@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "slug": "legacy-study-6",
+  "title": "人生永远没有太晚的开始",
+  "author": "摩西奶奶",
+  "summary": "从旧 Study 项目迁移的书籍内容。",
+  "tags": [],
+  "cover": "cover.svg",
+  "status": "published",
+  "publishedAt": "2026-07-22T21:43:13.000Z",
+  "category": {
+    "slug": "legacy-category-61",
+    "name": "成功励志"
+  }
+}

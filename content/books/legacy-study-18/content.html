@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>《正念的奇迹》——活在当下</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+    /* ========== 配色方案（:root 兜底天青蓝，默认由脚本随机选择） ========== */
+    :root, body.theme-sky {
+        --primary: #4A9FD4; --primary-light: #A6D3EE; --primary-dark: #2C7AB0; --primary-deep: #1E5A85;
+        --bg: #F0F7FB; --bg-cool: #E1EFF8; --text: #1F3447; --text-light: #54718A; --accent: #3589BE; --divider: #BFDCEC;
+        --hero-grad: linear-gradient(160deg, #12283A 0%, #1D4258 35%, #2A6285 72%, #143049 100%);
+        --mm-filter: grayscale(1) sepia(.9) hue-rotate(169deg) saturate(1.15) brightness(.98);
+    }
+    body.theme-haze {
+        --primary: #7D99AE; --primary-light: #AEC3D2; --primary-dark: #52708A; --primary-deep: #3E5A72;
+        --bg: #F3F6F8; --bg-cool: #E8EEF2; --text: #2C3A45; --text-light: #5A6B78; --accent: #5F7D93; --divider: #C5D2DC;
+        --hero-grad: linear-gradient(160deg, #16212B 0%, #243441 35%, #33495C 72%, #1A2833 100%);
+        --mm-filter: grayscale(1) sepia(.9) hue-rotate(170deg) saturate(.5) brightness(1);
+    }
+    body.theme-moon {
+        --primary: #46759B; --primary-light: #8FB3CE; --primary-dark: #2B5876; --primary-deep: #1D4258;
+        --bg: #EEF3F6; --bg-cool: #DFE9EF; --text: #1C2E3D; --text-light: #4E6B80; --accent: #35678C; --divider: #B9CFDD;
+        --hero-grad: linear-gradient(160deg, #0E1D2A 0%, #1B3A4F 35%, #27587A 72%, #0F2434 100%);
+        --mm-filter: grayscale(1) sepia(.9) hue-rotate(172deg) saturate(1) brightness(.82);
+    }
+    body.theme-indigo {
+        --primary: #4A6FA5; --primary-light: #9DB4D6; --primary-dark: #33517F; --primary-deep: #243C61;
+        --bg: #F1F4F9; --bg-cool: #E3E9F2; --text: #222E40; --text-light: #55647C; --accent: #3D5F92; --divider: #C3CFE0;
+        --hero-grad: linear-gradient(160deg, #131B2E 0%, #223350 35%, #31497A 72%, #16213A 100%);
+        --mm-filter: grayscale(1) sepia(.9) hue-rotate(182deg) saturate(.9) brightness(.85);
+    }
+    body.theme-teal {
+        --primary: #4E9B8F; --primary-light: #A3CFC7; --primary-dark: #357A6F; --primary-deep: #265D55;
+        --bg: #F0F7F5; --bg-cool: #E0EFEB; --text: #1E3531; --text-light: #4F6E68; --accent: #3C877B; --divider: #BFDAD4;
+        --hero-grad: linear-gradient(160deg, #0F2420 0%, #1B4038 35%, #276156 72%, #122B26 100%);
+        --mm-filter: grayscale(1) sepia(.9) hue-rotate(136deg) saturate(.9) brightness(.92);
+    }
+    body.theme-bamboo {
+        --primary: #7A9B76; --primary-light: #B8CDB4; --primary-dark: #5C7D58; --primary-deep: #456142;
+        --bg: #F3F7F1; --bg-cool: #E6EFE2; --text: #2A3527; --text-light: #5C6E56; --accent: #68895F; --divider: #CBDAC5;
+        --hero-grad: linear-gradient(160deg, #1A2418 0%, #2E4029 35%, #43603C 72%, #1E2B1B 100%);
+        --mm-filter: grayscale(1) sepia(.9) hue-rotate(80deg) saturate(.6) brightness(.95);
+    }
+    body.theme-vermilion {
+        --primary: #C0564F; --primary-light: #E3A9A4; --primary-dark: #9C3F39; --primary-deep: #7A2E29;
+        --bg: #FAF3F2; --bg-cool: #F4E5E3; --text: #3A2422; --text-light: #7A5A56; --accent: #AC4840; --divider: #E7C9C5;
+        --hero-grad: linear-gradient(160deg, #2A1514 0%, #4A2320 35%, #6E3530 72%, #301816 100%);
+        --mm-filter: grayscale(1) sepia(.9) hue-rotate(-31deg) saturate(1) brightness(.95);
+    }
+    body.theme-sakura {
+        --primary: #D19090; --primary-light: #EFC7C7; --primary-dark: #B06E6E; --primary-deep: #8F5252;
+        --bg: #FBF5F5; --bg-cool: #F6EAEA; --text: #3A2A2A; --text-light: #7C6262; --accent: #C07E7E; --divider: #EAD3D3;
+        --hero-grad: linear-gradient(160deg, #2B1B1D 0%, #4C2F33 35%, #70474D 72%, #301F22 100%);
+        --mm-filter: grayscale(1) sepia(.9) hue-rotate(-35deg) saturate(.7) brightness(1.05);
+    }
+    body.theme-lotus {
+        --primary: #C48F9B; --primary-light: #E6C3CB; --primary-dark: #A26D7A; --primary-deep: #82525F;
+        --bg: #FAF4F6; --bg-cool: #F5E8EC; --text: #38282D; --text-light: #7A6068; --accent: #B07C89; --divider: #E9CFD6;
+        --hero-grad: linear-gradient(160deg, #2A1A20 0%, #4A2E38 35%, #6D4553 72%, #2E1D23 100%);
+        --mm-filter: grayscale(1) sepia(.9) hue-rotate(310deg) saturate(.55) brightness(1.02);
+    }
+    body.theme-rose {
+        --primary: #A78B8B; --primary-light: #D0BCBC; --primary-dark: #856A6A; --primary-deep: #675050;
+        --bg: #F8F5F5; --bg-cool: #F0EAEA; --text: #352C2C; --text-light: #6E6060; --accent: #957979; --divider: #DFD2D2;
+        --hero-grad: linear-gradient(160deg, #251D1D 0%, #403232 35%, #5E4A4A 72%, #292020 100%);
+        --mm-filter: grayscale(1) sepia(.9) hue-rotate(-35deg) saturate(.4) brightness(.95);
+    }
+    body.theme-purple {
+        --primary: #9B87B5; --primary-light: #C9BBDD; --primary-dark: #75609A; --primary-deep: #5A4A85;
+        --bg: #F6F4F9; --bg-cool: #ECE7F3; --text: #332C42; --text-light: #685E7D; --accent: #8471A6; --divider: #D3C9E2;
+        --hero-grad: linear-gradient(160deg, #1E1830 0%, #322A4E 35%, #4A3F70 72%, #221C38 100%);
+        --mm-filter: grayscale(1) sepia(.9) hue-rotate(232deg) saturate(.95) brightness(1);
+    }
+    body.theme-amber {
+        --primary: #C08A3E; --primary-light: #E4C08A; --primary-dark: #9A6B2B; --primary-deep: #785220;
+        --bg: #FAF6EF; --bg-cool: #F4ECDC; --text: #3A2F1E; --text-light: #7A6A4E; --accent: #AC7A32; --divider: #E7D6B8;
+        --hero-grad: linear-gradient(160deg, #2A2010 0%, #4A3A1C 35%, #6E5628 72%, #2E2312 100%);
+        --mm-filter: grayscale(1) sepia(.9) hue-rotate(0deg) saturate(1.1) brightness(1);
+    }
+    body.theme-caramel {
+        --primary: #A06B3F; --primary-light: #CDA983; --primary-dark: #7E502C; --primary-deep: #613D21;
+        --bg: #F9F4EE; --bg-cool: #F2E8DC; --text: #362A1E; --text-light: #74604A; --accent: #8F5D34; --divider: #E2D0BC;
+        --hero-grad: linear-gradient(160deg, #261A10 0%, #42301C 35%, #604628 72%, #2A1D11 100%);
+        --mm-filter: grayscale(1) sepia(.9) hue-rotate(-7deg) saturate(.95) brightness(.9);
+    }
+    body.theme-wood {
+        --primary: #B08D57; --primary-light: #D9C39A; --primary-dark: #8A6B3F; --primary-deep: #6B5230;
+        --bg: #FAF6EF; --bg-cool: #F1E9DB; --text: #3D3226; --text-light: #75654F; --accent: #9A7B45; --divider: #E0D2B8;
+        --hero-grad: linear-gradient(160deg, #241C12 0%, #3D3020 35%, #5C4830 72%, #2A2116 100%);
+        --mm-filter: grayscale(1) sepia(.95) hue-rotate(0deg) saturate(1) brightness(1);
+    }
+    body.theme-ink {
+        --primary: #5A6670; --primary-light: #A2ADB5; --primary-dark: #414C55; --primary-deep: #2E373E;
+        --bg: #F4F5F6; --bg-cool: #E9EBED; --text: #23292E; --text-light: #57626B; --accent: #4C5861; --divider: #CDD3D8;
+        --hero-grad: linear-gradient(160deg, #14181C 0%, #232A30 35%, #343E46 72%, #171C21 100%);
+        --mm-filter: grayscale(1) sepia(.9) hue-rotate(175deg) saturate(.25) brightness(.75);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: 'Noto Serif SC', 'Songti SC', serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 2;
+        transition: background-color .4s ease, color .4s ease;
+    }
+
+    /* ========== 右上角换肤按钮 ========== */
+    .theme-switcher { position: fixed; top: 22px; right: 22px; z-index: 1000; }
+    .theme-toggle {
+        width: 46px; height: 46px; border-radius: 50%;
+        background: rgba(255,255,255,0.94);
+        border: 1px solid rgba(0,0,0,0.06);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer; color: #5A6B78;
+        transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .theme-toggle:hover { transform: scale(1.08); box-shadow: 0 6px 20px rgba(0,0,0,0.24); }
+    .theme-panel {
+        position: absolute; top: 56px; right: 0;
+        background: #fff; border-radius: 16px;
+        box-shadow: 0 10px 34px rgba(0,0,0,0.18);
+        padding: 12px;
+        width: 248px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4px;
+        opacity: 0; visibility: hidden; transform: translateY(-8px);
+        transition: opacity .22s ease, transform .22s ease, visibility .22s;
+    }
+    .theme-panel.open { opacity: 1; visibility: visible; transform: translateY(0); }
+    .theme-option {
+        display: flex; align-items: center; gap: 9px;
+        padding: 8px 11px; border-radius: 9px; cursor: pointer;
+        font-size: 0.82rem; color: #4A5560; font-family: inherit;
+        letter-spacing: 0.05em;
+        transition: background .15s ease;
+    }
+    .theme-option:hover { background: #F2F4F6; }
+    .theme-option.active { background: #EDF1F4; font-weight: 600; color: #2C3A45; }
+    .swatch {
+        width: 17px; height: 17px; border-radius: 50%; flex-shrink: 0;
+        box-shadow: inset 0 0 0 1px rgba(0,0,0,0.10);
+    }
+
+    /* ========== 头部 ========== */
+    .hero {
+        min-height: 92vh;
+        background: var(--hero-grad);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 60px 24px;
+        position: relative;
+        overflow: hidden;
+    }
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: -30%; left: -20%;
+        width: 140%; height: 160%;
+        background: radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.07) 0%, transparent 55%),
+                    radial-gradient(ellipse at 75% 80%, rgba(255,255,255,0.04) 0%, transparent 50%);
+        pointer-events: none;
+    }
+    .hero h1 {
+        font-size: clamp(3rem, 9vw, 5.2rem);
+        font-weight: 900;
+        color: #F5F7F9;
+        letter-spacing: 0.28em;
+        margin-bottom: 26px;
+        position: relative;
+    }
+    .hero-sub {
+        font-size: 1.05rem;
+        color: var(--primary-light);
+        letter-spacing: 0.18em;
+        margin-bottom: 14px;
+        position: relative;
+    }
+    .hero-author {
+        font-size: 0.9rem;
+        color: rgba(255,255,255,0.6);
+        letter-spacing: 0.14em;
+        position: relative;
+    }
+    .hero-line {
+        width: 1px; height: 70px;
+        background: linear-gradient(to bottom, transparent, var(--primary-light));
+        margin-top: 52px;
+        position: relative;
+    }
+
+    /* ========== 正文 ========== */
+    .container { max-width: 780px; margin: 0 auto; padding: 70px 26px 40px; }
+    .chapter {
+        margin-bottom: 78px;
+        opacity: 0; transform: translateY(26px);
+        transition: opacity .8s ease, transform .8s ease;
+    }
+    .chapter.visible { opacity: 1; transform: translateY(0); }
+    .chapter-label {
+        display: inline-block;
+        font-size: 0.78rem;
+        letter-spacing: 0.4em;
+        color: var(--primary-dark);
+        border: 1px solid var(--divider);
+        padding: 5px 16px 5px 20px;
+        border-radius: 20px;
+        background: #fff;
+        margin-bottom: 20px;
+        transition: color .4s ease, border-color .4s ease;
+    }
+    .chapter h2 {
+        font-size: 1.65rem;
+        font-weight: 700;
+        color: var(--primary-dark);
+        letter-spacing: 0.08em;
+        margin-bottom: 30px;
+        line-height: 1.6;
+        transition: color .4s ease;
+    }
+    .chapter p {
+        font-size: 1.02rem;
+        color: var(--text);
+        margin-bottom: 22px;
+        text-align: justify;
+        transition: color .4s ease;
+    }
+    .lead {
+        font-size: 1.05rem;
+        color: var(--accent);
+        border-left: 3px solid var(--primary-light);
+        padding-left: 18px;
+        margin-bottom: 26px;
+        transition: color .4s ease, border-color .4s ease;
+    }
+    .quote-block {
+        background: #fff;
+        border-left: 4px solid var(--primary);
+        border-radius: 0 14px 14px 0;
+        padding: 26px 30px;
+        margin: 30px 0;
+        box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+        transition: border-color .4s ease;
+    }
+    .quote-block p { color: var(--primary-dark); font-size: 1rem; margin-bottom: 0; line-height: 2.1; transition: color .4s ease; }
+    .quote-block .quote-src { display: block; margin-top: 12px; font-size: 0.82rem; color: var(--text-light); letter-spacing: 0.1em; }
+    .scene-card {
+        background: linear-gradient(150deg, #ffffff 0%, var(--bg-cool) 100%);
+        border-radius: 16px;
+        padding: 28px 30px;
+        margin: 26px 0;
+        border: 1px solid var(--divider);
+        transition: border-color .4s ease;
+    }
+    .scene-card h4 { font-size: 1.02rem; color: var(--primary-dark); margin-bottom: 12px; letter-spacing: 0.08em; transition: color .4s ease; }
+    .scene-card p { margin-bottom: 0; font-size: 0.98rem; }
+    .insight-card {
+        background: linear-gradient(150deg, var(--primary-dark), var(--primary-deep));
+        border-radius: 18px;
+        padding: 34px 32px;
+        margin: 34px 0;
+        color: #fff;
+        box-shadow: 0 8px 26px rgba(0,0,0,0.18);
+    }
+    .insight-card h4 { font-size: 0.82rem; letter-spacing: 0.4em; color: var(--primary-light); margin-bottom: 16px; }
+    .insight-card p { color: rgba(255,255,255,0.94); font-size: 1.02rem; margin-bottom: 0; line-height: 2.1; }
+    .divider-orn { text-align: center; margin: 60px 0; color: var(--divider); letter-spacing: 1.2em; font-size: 0.8rem; }
+
+    /* ========== 思维导图 ========== */
+    .mindmap-section {
+        background: #fff;
+        border-radius: 20px;
+        border: 1px solid var(--divider);
+        padding: 36px 26px;
+        margin: 40px 0 70px;
+        box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+        transition: border-color .4s ease;
+    }
+    .mindmap-section h3 { text-align: center; color: var(--primary-dark); font-size: 1.3rem; letter-spacing: 0.2em; margin-bottom: 26px; transition: color .4s ease; }
+    .markmap { width: 100%; height: 560px; }
+    .markmap svg { width: 100%; height: 100%; filter: var(--mm-filter); transition: filter .4s ease; }
+
+    /* ========== 尾声 ========== */
+    .epilogue { background: var(--hero-grad); padding: 90px 26px 100px; text-align: center; }
+    .epilogue-inner { max-width: 680px; margin: 0 auto; }
+    .epilogue h3 { color: var(--primary-light); font-size: 0.85rem; letter-spacing: 0.5em; margin-bottom: 40px; }
+    .epilogue p { color: rgba(255,255,255,0.88); font-size: 1.02rem; line-height: 2.2; margin-bottom: 24px; text-align: center; }
+    .epilogue .final-quote {
+        color: var(--primary-light);
+        font-size: 1.08rem;
+        border-top: 1px solid rgba(255,255,255,0.22);
+        border-bottom: 1px solid rgba(255,255,255,0.22);
+        padding: 26px 10px;
+        margin: 38px 0;
+        line-height: 2.3;
+    }
+    .goodnight { margin-top: 66px; font-size: 1.5rem; letter-spacing: 0.6em; color: var(--primary-light); font-weight: 600; }
+
+    @media (max-width: 600px) {
+        .container { padding: 52px 20px 30px; }
+        .chapter h2 { font-size: 1.4rem; }
+        .quote-block { padding: 22px 20px; }
+        .markmap { height: 480px; }
+        .theme-switcher { top: 16px; right: 16px; }
+        .theme-panel { width: 216px; }
+    }
+</style>
+</head>
+<body class="theme-sky">
+<script>
+    // 默认配色：每次打开随机一套
+    (function () {
+        var themes = ['sky','moon','haze','indigo','teal','bamboo','vermilion','sakura','lotus','rose','purple','amber','caramel','wood','ink'];
+        document.body.className = 'theme-' + themes[Math.floor(Math.random() * themes.length)];
+    })();
+</script>
+
+<!-- 右上角换肤按钮 -->
+<div class="theme-switcher">
+    <button class="theme-toggle" id="themeToggle" aria-label="切换配色">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c1.1 0 2-.9 2-2 0-.5-.2-1-.5-1.3-.3-.4-.5-.8-.5-1.3 0-1.1.9-2 2-2h2.4c3 0 5.6-2.5 5.6-5.5C23 6 18 2 12 2z"/>
+            <circle cx="7" cy="10" r="1.3" fill="currentColor" stroke="none"/>
+            <circle cx="12" cy="7" r="1.3" fill="currentColor" stroke="none"/>
+            <circle cx="17" cy="10" r="1.3" fill="currentColor" stroke="none"/>
+        </svg>
+    </button>
+    <div class="theme-panel" id="themePanel">
+        <div class="theme-option" data-theme="sky"><span class="swatch" style="background:#4A9FD4"></span>天青蓝</div>
+        <div class="theme-option" data-theme="moon"><span class="swatch" style="background:#46759B"></span>月海蓝</div>
+        <div class="theme-option" data-theme="haze"><span class="swatch" style="background:#7D99AE"></span>雾霾蓝</div>
+        <div class="theme-option" data-theme="indigo"><span class="swatch" style="background:#4A6FA5"></span>靛青蓝</div>
+        <div class="theme-option" data-theme="teal"><span class="swatch" style="background:#4E9B8F"></span>松石绿</div>
+        <div class="theme-option" data-theme="bamboo"><span class="swatch" style="background:#7A9B76"></span>竹青色</div>
+        <div class="theme-option" data-theme="vermilion"><span class="swatch" style="background:#C0564F"></span>朱砂红</div>
+        <div class="theme-option" data-theme="sakura"><span class="swatch" style="background:#D19090"></span>绯樱色</div>
+        <div class="theme-option" data-theme="lotus"><span class="swatch" style="background:#C48F9B"></span>藕荷色</div>
+        <div class="theme-option" data-theme="rose"><span class="swatch" style="background:#A78B8B"></span>玫瑰灰</div>
+        <div class="theme-option" data-theme="purple"><span class="swatch" style="background:#9B87B5"></span>暮山紫</div>
+        <div class="theme-option" data-theme="amber"><span class="swatch" style="background:#C08A3E"></span>琥珀色</div>
+        <div class="theme-option" data-theme="caramel"><span class="swatch" style="background:#A06B3F"></span>焦糖色</div>
+        <div class="theme-option" data-theme="wood"><span class="swatch" style="background:#B08D57"></span>木头色</div>
+        <div class="theme-option" data-theme="ink"><span class="swatch" style="background:#5A6670"></span>墨玉色</div>
+    </div>
+</div>
+
+<div class="hero">
+    <h1>正念的奇迹</h1>
+    <div class="hero-sub">活在当下</div>
+    <div class="hero-author">一行禅师 著</div>
+    <div class="hero-line"></div>
+</div>
+
+<div class="container">
+
+    <!-- 序 -->
+    <div class="chapter">
+        <span class="chapter-label">序</span>
+        <h2>此刻，即是全部</h2>
+        <p class="lead">"活在当下，就是洗碗时专注洗碗，喝茶时专注喝茶。"第一次读到一行禅师这句话时，我的心被轻轻触动。在这个快节奏的时代，我们总在追逐下一件事，却忘了——此刻即是全部。</p>
+        <p>你是否也有这样的体验：明明身体在这里，心却飘到了别处。晚上躺在床上，明明很累，却辗转反侧，思绪如潮水般涌来；感觉自己像一台永不停歇的机器，很久没有真切地感受过活着的滋味。</p>
+        <p>如果你正在被这种身心分离的疲惫感困扰，那么今晚，请允许我陪你一起，在这本薄薄的小书中，寻找那份属于当下的宁静。</p>
+        <p>这本书的作者一行禅师，是享誉世界的心灵导师。他生于越南，16岁出家，曾被马丁·路德·金提名为诺贝尔和平奖候选人。年轻时经历战争苦难，因此坚定了用正念化解痛苦的信念。他一生践行并传播正念，将深奥的佛法融入日常生活——不用晦涩术语和复杂仪式，只教人们好好吃饭、好好走路、好好呼吸。</p>
+        <p>他说：正念不是出家人的专利，而是每个人都能拥有的生活能力。他提供的方法完全不依赖任何外在条件，你随时随地都可以开始练习。</p>
+    </div>
+
+    <div class="divider-orn">· · ·</div>
+
+    <!-- 第一章 -->
+    <div class="chapter">
+        <span class="chapter-label">第一章</span>
+        <h2>什么是正念：平静湖面上的明月</h2>
+        <p class="lead">说到正念，很多人会觉得它神秘又遥远，像是得道高僧的专属。但一行禅师却告诉我们：正念，就是洗碗时知道自己在洗碗。</p>
+        <p>它的本质，是一种自我觉察的能力——对当下正在发生的事保持清明的觉知。简单说，就是知道自己正在做什么。听起来很简单，不是吗？但回想一下：你今天早上刷牙的时候，知道自己正在刷牙吗？还是脑子里已经在规划一天的工作了？</p>
+        <p>一行禅师用了一个极其精妙的比喻：</p>
+        <div class="quote-block">
+            <p>你的心就像一面平静湖面上的明月。当湖面波澜不惊时，明月才能清晰完整地映照出来；而我们的杂念、焦虑、悔恨，就像是往湖里扔石头，让倒影支离破碎——让我们看不清真实的世界，也看不清自己。</p>
+        </div>
+        <p>而通往这份平静的钥匙，其实一直都在我们身边。禅师说：<strong>呼吸，是连接生命与意识的桥梁。</strong>那个你从不刻意注意的呼吸，正是带你回到当下的最简单、最直接的道路。</p>
+        <div class="scene-card">
+            <h4>一次有意识的呼吸</h4>
+            <p>当你感到心乱如麻、焦虑不堪时，试着停下来，感受你的呼吸。吸气时，在心里默念"我正在吸气"；呼气时，默念"我正在呼气"。不用去控制它的长短深浅，只是像一个温柔的朋友，在一旁静静地观察它。仅仅一次有意识的呼吸，就足以将你拉回当下，让你从情绪的漩涡中暂时探出头来。</p>
+        </div>
+    </div>
+
+    <div class="divider-orn">· · ·</div>
+
+    <!-- 第二章 -->
+    <div class="chapter">
+        <span class="chapter-label">第二章</span>
+        <h2>正念藏在每一件小事里</h2>
+        <p class="lead">你可能会说：我太忙了，哪有时间专门练习？但一行禅师告诉我们——正念藏在每一件小事里，生活中的每一个瞬间，都是正念的机会。</p>
+        <div class="scene-card">
+            <h4>吃饭的正念</h4>
+            <p>你吃饭时，是不是总盯着手机、想着工作，或者催孩子快吃，吃完却没尝出味道？一行禅师说，这是心不在焉的吃饭——我们吃的不是食物，而是焦虑和匆忙。正念吃饭很简单：拿起筷子感受重量与温度，夹菜时观察颜色纹理，放进嘴里先闻气味，慢慢咀嚼，感受食物的变化和吞咽的触感，不评判好吃或不好吃，只单纯地体验。哪怕吃白米饭也津津有味——你能专注感受米饭的香甜，体会阳光、雨水和农民的辛劳，每一口都是对生命的感恩。吃饭不仅是填饱肚子，更是与生活连接的方式。</p>
+        </div>
+        <div class="scene-card">
+            <h4>洗碗的正念</h4>
+            <p>洗碗对很多人来说是枯燥麻烦的事，总想着快点洗完去做别的。但禅师说：洗碗就是洗碗，它本身就是神圣的事，不是为了做别的事做准备。正念洗碗时，别想接下来的事，专注感受碗的光滑、水流的温度、泡沫的细腻，把每一个碗洗干净，像照顾珍贵的宝贝。禅师的弟子们都很享受洗碗的正念时刻——有人说以前讨厌洗碗，现在发现它很治愈，水流过双手时，浮躁会慢慢消散。不止洗碗，叠衣服、扫地、做饭，这些家务都能成为正念修行。关键是：把要做的事当成当下唯一的事，而不是不得不做的麻烦事。</p>
+        </div>
+        <div class="scene-card">
+            <h4>走路的正念</h4>
+            <p>现代人走路总行色匆匆，盯着手机或想着心事，脚步越快，心越浮躁。而禅师说，走路是最好的正念修行，能让身体和心自然连接。正念走路不用刻意控制，只需放慢脚步，感受双脚与地面的触感、小腿肌肉的发力、重心的转移，甚至自己的脚步声；不用想目的地，只专注每一步的感受。禅师流亡期间常带弟子正念走路，走过山川田野，哪怕处境艰难，也能保持内心平静。他说：正念走路时，你不是追赶未来或逃离过去，只是在当下的每一步里感受生命的存在——每一步都是奇迹，都能带来平静和喜悦。</p>
+        </div>
+        <p>禅师在书中提到一位需要照顾幼儿的朋友。他总觉得照顾孩子占用了所有时间，让自己没有机会修行，因而非常苦恼。禅师给他的建议很简单：陪孩子时，就全心全意地陪孩子。于是，他把换尿布、喂饭、哄睡都变成了正念练习。当他全心陪伴时，不仅找到了内心的平静，还发现了与孩子相处的全新乐趣——孩子感受到了他全然的在场，也变得更容易安抚。</p>
+        <div class="insight-card">
+            <h4>核心启示</h4>
+            <p>生活本身就是我们修行的道场，别无他处。不是非要找个安静的地方打坐才是修行——在每一个日常的瞬间，我们都可以练习正念。</p>
+        </div>
+    </div>
+
+    <div class="divider-orn">· · ·</div>
+
+    <!-- 第三章 -->
+    <div class="chapter">
+        <span class="chapter-label">第三章</span>
+        <h2>与情绪和平相处：最宝贵的奇迹</h2>
+        <p class="lead">当你通过呼吸、吃饭、走路这些基础练习，慢慢能把心拉回当下后，你会发现一个更大的惊喜——你处理情绪的能力变强了。这才是正念在现代生活中最宝贵的奇迹。</p>
+        <p>我们都有愤怒、焦虑、委屈这些负面情绪。很多人要么压抑，要么被情绪牵着走，事后又后悔。而禅师告诉我们：<strong>正念不是消灭情绪，而是与情绪和平相处。</strong>情绪像天气，有晴有雨，不用对抗，只需适应。</p>
+        <p>一行禅师把负面情绪比作哭闹的小孩：你对着他吼"别哭了"，他只会哭得更凶；但如果你蹲下来，轻轻拍着他说"我知道你很难过，我陪着你"，他反而会慢慢平静下来。正念，就是那个蹲下来陪伴的动作。</p>
+        <p>正念不是让你不生气，而是让你在生气时，能觉察到"我正在生气"。当你被同事的一句话点燃，在爆发前，先做一个深呼吸，在心里对自己说："我知道怒火上来了。"这个简单的命名动作，就像一束光照进了情绪的本来面目——你从"我就是愤怒"，变成了"我觉察到了愤怒"。一旦被看见，情绪的能量就开始减弱，你不再是它的奴隶，而是成为了它的观察者。</p>
+        <div class="quote-block">
+            <p>焦虑，大多是因为活在了未来——担心还没发生的事。用正念应对，就是回到当下的呼吸，回到手头正在做的事情上：复习时就专注在书本笔记，别去想考不好怎么办；吃饭时就专注在饭菜的味道，别去想明天的工作。未来是由无数个当下组成的，过好每一个当下，就是为未来铺下最坚实的路。</p>
+        </div>
+    </div>
+
+    <div class="divider-orn">· · ·</div>
+
+    <!-- 第四章 -->
+    <div class="chapter">
+        <span class="chapter-label">第四章</span>
+        <h2>工作与关系中的正念</h2>
+        <p class="lead">稳住情绪之后，正念更是我们工作和学习中的秘密武器。</p>
+        <p>你是否经常这样：写报告时不断被手机信息打断，放下手机就忘了思路；看书时思绪飘到琐事上，翻完一页却不知所云。这不是你毅力不足，而是心习惯了飘着。正念，就是一次次温柔地把这颗心拉回来的训练。</p>
+        <div class="scene-card">
+            <h4>一次只做一件事</h4>
+            <p>工作时，在开始一项任务前，花一分钟告诉自己："接下来半小时，我只做这一件事。"然后把手机放远，感受敲击键盘的节奏，沉浸在线索的梳理中。当其他念头冒出来，不用抗拒，把它记在便签上，告诉自己稍后处理，再把注意力带回来。一次只做一件事——这就是工作中的正念。学习时也一样：阅读前先深呼吸几次让自己平静，然后逐字阅读，感受文字传递的意义；记笔记时不是机械地抄书，而是边思考边用自己的话整理，感受知识内化的过程。</p>
+        </div>
+        <p>当我们内在更稳定，我们与他人的关系也会随之柔和。很多矛盾并非源于大事，而是沟通时心不在焉。朋友向你诉苦时，放下手机，看着他的眼睛，不急着打断或给建议，只是认真地听，偶尔点头回应，让对方感受到被全然接纳。我们太容易把自己的精力投射出去——对方说累，我们马上说"我更累"，却忽略了对方可能只需要一句"辛苦了"。</p>
+        <p>当你下班回家，看到家里乱糟糟、怒火升腾时，先停下来深呼吸三次，觉察到自己的情绪后，可以这样表达："我看到家里有点乱，感觉不太舒服，我们可以一起收拾一下吗？"这远比吼出的指责更能解决问题，且不伤感情。</p>
+        <div class="insight-card">
+            <h4>正念沟通</h4>
+            <p>正念沟通不是委屈自己，而是用一种更平和、更有智慧的方式——既表达了自己，也看见了对方。</p>
+        </div>
+    </div>
+
+    <div class="divider-orn">· · ·</div>
+
+    <!-- 第五章 -->
+    <div class="chapter">
+        <span class="chapter-label">第五章</span>
+        <h2>正念的本质：坐在路边的观察者</h2>
+        <p class="lead">在练习正念的路上，很多人会走入误区——认为正念就是停止思考，或什么都不想。</p>
+        <p>这几乎是不可能的。强行压制念头，反而会带来更多焦虑。正念不是要清空念头，而是像一个坐在路边的观察者：看着你的思绪像车辆一样来来去去，但你不上任何一辆车。你只是看着它们，知道"我有一个焦虑的念头过去了"，然后温柔地把注意力再次带回到呼吸，或身体感受。</p>
+        <div class="quote-block">
+            <p>正念的本质，是有意识地觉察当下，对每一刻的体验不加评判——仅此而已。</p>
+            <span class="quote-src">——一行禅师</span>
+        </div>
+        <p>就像在院子里晒太阳时，蝴蝶飞过来——不用驱赶，也不用追逐，知道它来了就好，继续感受阳光。正念也是这样：不是强迫自己无杂念，而是杂念冒出来时能觉察到，再轻轻把注意力拉回当下。</p>
+        <p>我们之所以被焦虑内耗困扰，不是想法太多，而是被想法牵着走。而正念，就是让我们从"被控制"变成"观察者"——不否定感受，不强迫改变，只看见当下的一切。好的想法、坏的情绪，都只是当下的存在，无需评判、对抗。</p>
+    </div>
+
+    <div class="divider-orn">· · ·</div>
+
+    <!-- 第六章 -->
+    <div class="chapter">
+        <span class="chapter-label">第六章</span>
+        <h2>接纳：正念的核心</h2>
+        <p class="lead">很多人练正念，是想变得更完美。但禅师告诉我们：正念的最终目的，是学会接纳不完美的自己和世界。</p>
+        <p>我们总对自己有很多评判——"我不够好""我太浮躁"。这些评判像枷锁困住我们。而正念让我们放下评判，接纳自己的一切：好与坏、优点与缺点，都是自己的一部分。</p>
+        <div class="quote-block">
+            <p>你不需要成为更好的自己，你只需要成为你自己。接纳自己的不完美，就像接纳天空下雨、花儿凋谢、人生起伏。</p>
+        </div>
+        <p>当你接纳自己时，才会发现：内心的平静和喜悦，从来都不是来自完美，而是来自接纳。禅师也坦诚，自己也会生气、焦虑，但他不会自责，而是用正念觉察、陪伴情绪。他说：<strong>修行不是消灭痛苦，而是在痛苦中找平静；不是逃离生活，而是在生活中找自由。</strong></p>
+        <p>这种接纳，也包括对他人和世界。我们总期待家人理解、朋友关心、同事配合，期待没满足就失望、愤怒。而正念告诉我们：每个人都有自己的人生轨迹和局限，不用要求别人变成你希望的样子，只需接纳他们本来的样子——就像接纳天气变化、四季更替。很多烦恼都源于不接纳，放下"应该"的执念，接纳一切发生，内心会变得无比自由。</p>
+    </div>
+
+    <div class="divider-orn">· · ·</div>
+
+    <!-- 思维导图 -->
+    <div class="chapter">
+        <div class="mindmap-section">
+            <h3>全书思维导图</h3>
+            <div class="markmap">
+# 《正念的奇迹》活在当下
+## 作者：一行禅师
+### 越南高僧 · 心灵导师
+### 马丁·路德·金提名诺贝尔和平奖
+### 将佛法融入日常生活
+## 什么是正念
+### 洗碗时知道自己在洗碗
+### 自我觉察 · 对当下清明觉知
+### 心似湖面映月 · 杂念如投石
+### 呼吸：连接生命与意识的桥梁
+## 正念在小事里
+### 吃饭：感受滋味 · 感恩生命
+### 洗碗：神圣的事 · 治愈浮躁
+### 走路：心与脚步同步 · 每步皆奇迹
+### 陪孩子：全然在场
+### 生活本身就是修行道场
+## 与情绪和平相处
+### 情绪如天气 · 不对抗只适应
+### 如安抚哭闹的小孩 · 蹲下陪伴
+### 命名情绪：我觉察到了愤怒
+### 从情绪的奴隶到观察者
+## 工作与关系
+### 一次只做一件事
+### 杂念记便签 · 稍后处理
+### 倾听：全然接纳对方
+### 平和表达 · 既表达自己又看见对方
+## 本质：观察者
+### 不是清空念头
+### 坐路边看思绪如车来去 · 不上车
+### 不评判 · 只觉察当下
+## 核心：接纳
+### 不必成为更好的自己 · 成为你自己
+### 平静来自接纳而非完美
+### 痛苦中找平静 · 生活中找自由
+## 结语
+### 生命质量 = 你拥有的时间
+### 从时间的奴隶到主人
+### 安顿每个当下 = 最深的慈悲
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- 尾声 -->
+<div class="epilogue">
+    <div class="epilogue-inner">
+        <h3>尾声 · 你拥有的时间，才是你的生命</h3>
+        <p>读完《正念的奇迹》，我最大的感受是：当我们活在当下、全然体验每一刻时，短短一分钟也可以是丰盛而深刻的；而当我们身心分离，即便是漫长的一天，回想起来也只是一片模糊。正念，让我们从时间的奴隶转变为时间的主人，真正地拥有我们的生命。</p>
+        <p>也许现在的你，正被各种压力和责任包围，感觉透不过气；也许你正沉浸在过去的某段悲伤里无法自拔；又或许你对未来充满迷茫，不知道方向在哪里。</p>
+        <p>我想借一行禅师的智慧告诉你：亲爱的，没关系的。你不需要立刻解决所有问题，你只需要在此时此刻，温柔地呼吸。昨天已经过去，明天尚未到来，你所拥有的，唯有这个当下。安顿好每一个当下，就是对自己最深的慈悲，也就是在构建你想要的未来。</p>
+        <p class="final-quote">生命的质量，不在于你度过了多少时间，而在于你拥有了多少时间。</p>
+        <p>今晚，在你准备入睡的那一刻，就是一个绝佳的起点。请不要立刻拿起手机，只需做一个简单的动作：轻轻地做三次有意识的深呼吸，感受床铺支撑你身体的温暖与踏实，感受空气在你的身体里温柔地流淌。就这样，带着对此刻的觉知，安然入梦。愿你在每一个当下，都能体验到正念的奇迹。</p>
+        <div class="goodnight">晚安</div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+<script>
+    // 滚动渐入
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.chapter').forEach(ch => observer.observe(ch));
+
+    // 换肤
+    const toggle = document.getElementById('themeToggle');
+    const panel = document.getElementById('themePanel');
+    const options = document.querySelectorAll('.theme-option');
+
+    // 同步当前（随机）主题的选中状态
+    const currentTheme = document.body.className.replace('theme-', '');
+    options.forEach(o => o.classList.toggle('active', o.dataset.theme === currentTheme));
+
+    toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        panel.classList.toggle('open');
+    });
+    document.addEventListener('click', (e) => {
+        if (!panel.contains(e.target)) panel.classList.remove('open');
+    });
+    options.forEach(opt => {
+        opt.addEventListener('click', () => {
+            document.body.className = 'theme-' + opt.dataset.theme;
+            options.forEach(o => o.classList.toggle('active', o === opt));
+            panel.classList.remove('open');
+        });
+    });
+</script>
+</body>
+</html>

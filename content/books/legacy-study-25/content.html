@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>断舍离 · 睡前听完一本书</title>
+<link rel="preconnect" href="https://fonts.loli.net" crossorigin>
+<link href="https://fonts.loli.net/css2?family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+/* ============ 主题变量 ============ */
+body.theme-default{--bg:#f7f4ed;--text:#2f2b26;--text2:#7d7466;--card:#fdfbf7;--border:#e6ded0;--accent:#b6503c;--accent2:#8a9184;--soft:#efe9dc;--gold:#c39a5b;--hero-top:#443f39;--hero-via:#5d554b;--hero-bot:#8c7b66;--quote-bg:#f0ead9;--shadow:rgba(90,80,60,.12)}
+body.theme-mint{--bg:#f2f7f3;--text:#27352c;--text2:#6c7f72;--card:#fbfdfb;--border:#d8e5da;--accent:#3e8e63;--accent2:#7aa88c;--soft:#e6f0e8;--gold:#c9a86a;--hero-top:#223a30;--hero-via:#37584a;--hero-bot:#5d8873;--quote-bg:#e9f2ea;--shadow:rgba(60,100,80,.12)}
+body.theme-cloud{--bg:#f5f7fa;--text:#333a45;--text2:#7b8494;--card:#ffffff;--border:#e3e8ef;--accent:#5b7fa6;--accent2:#94a9bf;--soft:#eaeff5;--gold:#c5a979;--hero-top:#3a4757;--hero-via:#55677c;--hero-bot:#8298ac;--quote-bg:#edf1f6;--shadow:rgba(80,100,130,.12)}
+body.theme-bamboo{--bg:#f4f6ef;--text:#31382a;--text2:#75806b;--card:#fcfdf8;--border:#dde3cf;--accent:#6f8f3f;--accent2:#9cb27a;--soft:#e9edda;--gold:#c2a55e;--hero-top:#33422a;--hero-via:#4e6238;--hero-bot:#7e9455;--quote-bg:#ecf0dd;--shadow:rgba(90,110,60,.12)}
+body.theme-amber{--bg:#faf4e8;--text:#3d3121;--text2:#8a7a5f;--card:#fffaf1;--border:#ecdfc5;--accent:#c07a2e;--accent2:#d8a75c;--soft:#f3e8d0;--gold:#d19d45;--hero-top:#40311c;--hero-via:#6b4e28;--hero-bot:#a97e3f;--quote-bg:#f5ebd3;--shadow:rgba(140,100,40,.14)}
+body.theme-dawn{--bg:#f7f0ea;--text:#3a2f33;--text2:#8a7078;--card:#fdf8f4;--border:#ead9d3;--accent:#c96f4a;--accent2:#d9a08a;--soft:#f5e3da;--gold:#d6a25a;--hero-top:#2c2a4a;--hero-via:#6d4a63;--hero-bot:#d98a5f;--quote-bg:#f6e6da;--shadow:rgba(150,90,80,.12)}
+body.theme-lavender{--bg:#f5f3f9;--text:#363044;--text2:#837897;--card:#fcfbfe;--border:#e4def0;--accent:#8a6fb0;--accent2:#b3a0cf;--soft:#ece7f5;--gold:#c8a86e;--hero-top:#322c4d;--hero-via:#534a75;--hero-bot:#8d7fae;--quote-bg:#efeaf7;--shadow:rgba(110,90,150,.12)}
+body.theme-slate{--bg:#f2f4f5;--text:#333a3d;--text2:#79848a;--card:#fbfcfc;--border:#dfe4e6;--accent:#5f7d8c;--accent2:#8fa8b3;--soft:#e7ebed;--gold:#bfa878;--hero-top:#334045;--hero-via:#4d5f66;--hero-bot:#7b939c;--quote-bg:#e9edef;--shadow:rgba(70,90,100,.12)}
+body.theme-rose{--bg:#faf1f2;--text:#432d31;--text2:#96747b;--card:#fffafa;--border:#efd8dc;--accent:#c05a6e;--accent2:#d995a2;--soft:#f6e4e7;--gold:#cba06a;--hero-top:#40262f;--hero-via:#6d3c4c;--hero-bot:#b06a7d;--quote-bg:#f7e7ea;--shadow:rgba(150,80,100,.12)}
+body.theme-sakura{--bg:#fdf4f6;--text:#47333a;--text2:#9c7f89;--card:#fffafb;--border:#f3dee4;--accent:#d6798f;--accent2:#e8aabc;--soft:#f9e9ee;--gold:#d0a878;--hero-top:#4d3040;--hero-via:#7d4f66;--hero-bot:#c98da5;--quote-bg:#f9ebef;--shadow:rgba(180,110,135,.12)}
+body.theme-forest{--bg:#f1f5f0;--text:#293629;--text2:#6b7d68;--card:#fafcf9;--border:#dbe5d6;--accent:#4c7c4c;--accent2:#82a67e;--soft:#e5eee1;--gold:#bda662;--hero-top:#22331f;--hero-via:#3a5636;--hero-bot:#657f57;--quote-bg:#e8f0e4;--shadow:rgba(60,100,60,.12)}
+body.theme-ocean{--bg:#eff5f8;--text:#243842;--text2:#647e8b;--card:#f9fcfe;--border:#d7e4eb;--accent:#3d7ca0;--accent2:#7aa8c2;--soft:#e2edf3;--gold:#c2a86e;--hero-top:#1d3a4d;--hero-via:#2f5d78;--hero-bot:#5f93ad;--quote-bg:#e6f0f5;--shadow:rgba(50,100,130,.12)}
+body.theme-sand{--bg:#f8f3ea;--text:#413628;--text2:#8f8067;--card:#fdfaf3;--border:#eadfca;--accent:#b08d55;--accent2:#cdb183;--soft:#f1e8d4;--gold:#c9a052;--hero-top:#4a3c26;--hero-via:#70593a;--hero-bot:#a8905f;--quote-bg:#f3ebd8;--shadow:rgba(130,105,60,.14)}
+body.theme-night{--bg:#1d2130;--text:#e8e6e1;--text2:#9aa0b0;--card:#262b3d;--border:#3a4157;--accent:#d6a866;--accent2:#8b93b8;--soft:#2c3247;--gold:#e0b878;--hero-top:#10131f;--hero-via:#1d2338;--hero-bot:#33405e;--quote-bg:#272d42;--shadow:rgba(0,0,0,.4)}
+body.theme-charcoal{--bg:#212121;--text:#ebe7e0;--text2:#a09a90;--card:#2b2b2b;--border:#404040;--accent:#cf8f5a;--accent2:#9a928a;--soft:#303030;--gold:#d8ab6a;--hero-top:#151515;--hero-via:#242424;--hero-bot:#3a3a38;--quote-bg:#2e2d2b;--shadow:rgba(0,0,0,.45)}
+body.theme-deepsea{--bg:#12222b;--text:#e2ece9;--text2:#8ba8a4;--card:#1a2f3a;--border:#2c4652;--accent:#5fb0a0;--accent2:#7a98b8;--soft:#1e3540;--gold:#cdb27a;--hero-top:#0a1720;--hero-via:#14303c;--hero-bot:#265450;--quote-bg:#1b3340;--shadow:rgba(0,0,0,.45)}
+
+/* ============ 基础 ============ */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Noto Serif SC',serif;line-height:1.9;transition:background .6s,color .6s}
+
+.theme-select{position:fixed;top:16px;right:16px;z-index:999;padding:8px 14px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text);font-family:'Noto Serif SC',serif;font-size:13px;cursor:pointer;box-shadow:0 4px 14px var(--shadow);outline:none;transition:all .4s}
+.theme-select:hover{border-color:var(--accent)}
+
+/* ============ 首屏 ============ */
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;overflow:hidden;background:linear-gradient(180deg,var(--hero-top) 0%,var(--hero-via) 52%,var(--hero-bot) 100%);padding:80px 24px}
+.hero *{position:relative;z-index:3}
+.hero-series{font-size:13px;letter-spacing:.6em;text-indent:.6em;color:rgba(247,243,234,.72);margin-bottom:30px}
+.book-title{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(2.2rem,7vw,3.8rem);letter-spacing:.32em;text-indent:.32em;color:#f7f3ea;font-weight:400;text-shadow:0 4px 30px rgba(0,0,0,.28);margin-bottom:22px}
+.hero-sub{font-size:clamp(15px,2.4vw,19px);letter-spacing:.22em;color:rgba(247,243,234,.92);margin-bottom:16px}
+.hero-author{font-size:14px;letter-spacing:.14em;color:rgba(247,243,234,.62);margin-top:6px}
+.hero-line{width:1px;height:56px;background:linear-gradient(180deg,rgba(247,243,234,0),rgba(247,243,234,.55));margin:34px auto 0}
+
+/* 圆相 */
+.enso-wrap{position:absolute;left:50%;top:50%;transform:translate(-50%,-52%);width:min(62vmin,460px);height:min(62vmin,460px);z-index:1;animation:enso-breathe 8s ease-in-out 3.2s infinite}
+.enso-wrap svg{width:100%;height:100%;transform:rotate(-105deg)}
+.enso-wrap circle{fill:none;stroke:rgba(247,243,234,.4);stroke-width:5;stroke-linecap:round;stroke-dasharray:540;stroke-dashoffset:540;animation:enso-draw 3s cubic-bezier(.4,0,.2,1) .3s forwards}
+@keyframes enso-draw{to{stroke-dashoffset:58}}
+@keyframes enso-breathe{0%,100%{transform:translate(-50%,-52%) scale(1)}50%{transform:translate(-50%,-52%) scale(1.03)}}
+
+/* 上升放手的微尘 */
+#drift{position:absolute;inset:0;z-index:2;pointer-events:none}
+#drift span{position:absolute;bottom:-5vh;border-radius:50%;background:rgba(247,243,234,.65);animation:drift-up linear infinite}
+@keyframes drift-up{0%{transform:translateY(0);opacity:0}18%{opacity:.7}75%{opacity:.35}100%{transform:translateY(-92vh);opacity:0}}
+
+/* ============ 章节 ============ */
+main{position:relative}
+.chapter{max-width:880px;margin:0 auto;padding:76px 26px 26px;opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform .9s ease}
+.chapter.visible{opacity:1;transform:none}
+.chapter-static{max-width:880px;margin:0 auto;padding:76px 26px 26px}
+.ch-head{display:flex;align-items:center;gap:16px;margin-bottom:34px}
+.seal{width:46px;height:46px;flex:none;display:flex;align-items:center;justify-content:center;background:var(--accent);color:#fff;font-family:'ZCOOL XiaoWei',serif;font-size:24px;border-radius:6px;box-shadow:0 4px 12px var(--shadow);transform:rotate(-3deg)}
+.ch-title{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(22px,4vw,30px);letter-spacing:.1em}
+.ch-lead{color:var(--text2);font-size:15px;margin-bottom:26px}
+.chapter p{margin-bottom:16px}
+.center{text-align:center}
+
+.quote-block{background:var(--quote-bg);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:22px 26px;margin:28px 0;font-weight:600;font-size:16.5px;letter-spacing:.03em}
+.quote-block .small{font-weight:400;font-size:13.5px;color:var(--text2);margin-top:8px}
+
+/* 杂物碎片 */
+.clutter-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:26px 0}
+.chip{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:9px 18px;font-size:14.5px;color:var(--text2);box-shadow:0 3px 10px var(--shadow)}
+.clutter-grid .chip:nth-child(odd){transform:rotate(-1.4deg)}
+.clutter-grid .chip:nth-child(even){transform:rotate(1.2deg)}
+.clutter-grid .chip:nth-child(3n){transform:rotate(-.6deg)}
+
+/* 新旧逻辑对照 */
+.vs-wrap{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:26px 0}
+@media(max-width:640px){.vs-wrap{grid-template-columns:1fr}}
+.vs-card{border-radius:14px;padding:26px 24px;position:relative}
+.vs-card h4{font-family:'ZCOOL XiaoWei',serif;font-size:18px;letter-spacing:.12em;margin-bottom:16px}
+.vs-card ul{list-style:none}
+.vs-card li{padding:9px 0;border-bottom:1px dashed var(--border);font-size:14.5px}
+.vs-card li:last-child{border-bottom:none}
+.vs-old{background:var(--card);border:1px dashed var(--border);color:var(--text2)}
+.vs-old h4{color:var(--text2)}
+.vs-new{background:var(--card);border:1px solid var(--accent);box-shadow:0 6px 22px var(--shadow)}
+.vs-new h4{color:var(--accent)}
+.vs-new li{color:var(--text);font-weight:600}
+.vs-tag{position:absolute;top:-11px;left:18px;background:var(--bg);padding:0 10px;font-size:12px;letter-spacing:.2em;color:var(--text2)}
+
+/* 时间轴 */
+.axis{display:flex;align-items:stretch;justify-content:center;gap:0;margin:30px 0 10px;position:relative}
+.axis::before{content:'';position:absolute;top:26px;left:12%;right:12%;height:1px;background:var(--border)}
+.axis-node{flex:1;text-align:center;padding:0 10px;position:relative}
+.axis-dot{width:14px;height:14px;border-radius:50%;background:var(--border);margin:19px auto 14px}
+.axis-node.now .axis-dot{width:20px;height:20px;background:var(--accent);box-shadow:0 0 0 7px var(--quote-bg);animation:axis-pulse 3s ease-in-out infinite}
+@keyframes axis-pulse{0%,100%{box-shadow:0 0 0 7px var(--quote-bg)}50%{box-shadow:0 0 0 12px var(--quote-bg)}}
+.axis-node h5{font-family:'ZCOOL XiaoWei',serif;font-size:18px;letter-spacing:.14em;margin-bottom:6px}
+.axis-node.now h5{color:var(--accent)}
+.axis-node p{font-size:13px;color:var(--text2);margin:0}
+
+/* 杯子的比喻 */
+.cups{display:flex;justify-content:center;gap:56px;margin:34px 0 12px;flex-wrap:wrap}
+.cup-scene{text-align:center}
+.cup{width:92px;height:118px;border:2.5px solid var(--text);border-top:none;border-radius:6px 6px 42px 42px;margin:0 auto;position:relative;overflow:hidden;background:var(--card)}
+.cup.full .fill{position:absolute;left:0;right:0;bottom:0;height:82%;background:repeating-linear-gradient(45deg,var(--text2),var(--text2) 5px,var(--soft) 5px,var(--soft) 10px);opacity:.65}
+.cup.empty .drop{position:absolute;left:50%;top:26%;width:10px;height:14px;margin-left:-5px;background:var(--accent);border-radius:50% 50% 50% 50%/36% 36% 64% 64%;opacity:.85;animation:drop-breathe 4s ease-in-out infinite}
+@keyframes drop-breathe{0%,100%{transform:translateY(0);opacity:.85}50%{transform:translateY(9px);opacity:.5}}
+.cup-scene figcaption{margin-top:14px;font-size:14px;color:var(--text2)}
+.cup-scene strong{color:var(--text)}
+
+/* 三步修行 */
+.step-card{position:relative;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:36px 32px 30px;margin-bottom:24px;overflow:hidden;box-shadow:0 6px 24px var(--shadow)}
+.step-card::after{content:attr(data-kanji);position:absolute;right:-18px;bottom:-52px;font-family:'ZCOOL XiaoWei',serif;font-size:200px;line-height:1;color:var(--accent);opacity:.07;pointer-events:none}
+.step-no{font-size:12.5px;letter-spacing:.34em;color:var(--text2);margin-bottom:10px}
+.step-head{display:flex;align-items:baseline;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+.step-kanji{font-family:'ZCOOL XiaoWei',serif;font-size:52px;line-height:1;color:var(--accent)}
+.step-name{font-family:'ZCOOL XiaoWei',serif;font-size:21px;letter-spacing:.08em}
+.step-card p{font-size:15px}
+.step-card p:last-child{margin-bottom:0}
+
+.q-list{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0 6px}
+.q-pill{background:var(--soft);border:1px solid var(--border);border-radius:10px;padding:10px 18px;font-size:14.5px;font-weight:600}
+.q-pill::before{content:'问';font-family:'ZCOOL XiaoWei',serif;color:var(--accent);margin-right:9px;font-size:13px}
+
+.excuses{margin:16px 0;border-left:2px dashed var(--border);padding-left:18px}
+.excuses li{list-style:none;font-size:14px;color:var(--text2);padding:3px 0;position:relative}
+.excuses li::before{content:'「';color:var(--gold)}
+.excuses li::after{content:'」';color:var(--gold)}
+.truth-box{background:var(--quote-bg);border-radius:12px;padding:18px 22px;margin-top:16px;font-weight:600}
+.truth-box em{font-style:normal;color:var(--accent)}
+
+.small-start{display:inline-block;background:var(--soft);border-radius:999px;padding:6px 18px;font-size:13.5px;color:var(--text2);margin-top:14px}
+
+/* 执念根源 */
+.roots{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:26px 0}
+@media(max-width:640px){.roots{grid-template-columns:1fr}}
+.root-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 20px;text-align:center;box-shadow:0 4px 16px var(--shadow)}
+.root-card .thing{font-family:'ZCOOL XiaoWei',serif;font-size:19px;letter-spacing:.06em;margin-bottom:10px}
+.root-card .arrow{color:var(--gold);font-size:18px;margin:4px 0}
+.root-card .heart{font-size:14px;color:var(--accent);font-weight:600}
+.joy-chips{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:24px 0 6px}
+.joy-chips .chip{border-color:var(--accent2);color:var(--text);background:var(--card)}
+
+/* 误区 */
+.mis-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:26px 0}
+@media(max-width:640px){.mis-grid{grid-template-columns:1fr}}
+.mis-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:26px 24px;box-shadow:0 4px 16px var(--shadow);position:relative}
+.mis-num{position:absolute;top:14px;right:20px;font-family:'ZCOOL XiaoWei',serif;font-size:30px;color:var(--gold);opacity:.55}
+.mis-card h4{font-size:16.5px;letter-spacing:.05em;margin-bottom:12px;color:var(--accent)}
+.mis-card p{font-size:14px;color:var(--text2);margin-bottom:10px}
+.mis-card p:last-child{margin-bottom:0}
+.mis-card .answer{color:var(--text);font-weight:600}
+.mis-card .answer em{font-style:normal;color:var(--accent)}
+
+/* 三重回报 */
+.gain-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:26px 0}
+@media(max-width:640px){.gain-grid{grid-template-columns:1fr}}
+.gain-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px 22px;text-align:center;box-shadow:0 4px 16px var(--shadow)}
+.gain-icon{width:58px;height:58px;margin:0 auto 16px;border-radius:50%;background:var(--soft);display:flex;align-items:center;justify-content:center;font-size:26px}
+.gain-card h4{font-family:'ZCOOL XiaoWei',serif;font-size:18.5px;letter-spacing:.1em;margin-bottom:12px}
+.gain-card p{font-size:13.5px;color:var(--text2);margin:0}
+
+/* 延伸 */
+.ext-list{margin:26px 0}
+.ext-row{display:flex;gap:18px;align-items:flex-start;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:14px;box-shadow:0 3px 12px var(--shadow)}
+.ext-row .ico{font-size:24px;flex:none;margin-top:2px}
+.ext-row h4{font-size:16px;letter-spacing:.06em;margin-bottom:4px}
+.ext-row p{font-size:14px;color:var(--text2);margin:0}
+
+/* 减法·流 */
+.big-quote{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(19px,3.4vw,26px);letter-spacing:.08em;line-height:2;text-align:center;padding:34px 18px;margin:30px 0;color:var(--text)}
+.big-quote em{font-style:normal;color:var(--accent)}
+.three-brave{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:26px 0}
+@media(max-width:640px){.three-brave{grid-template-columns:1fr}}
+.brave-cell{background:var(--soft);border-radius:12px;padding:22px 18px;text-align:center}
+.brave-cell .k{font-family:'ZCOOL XiaoWei',serif;font-size:26px;color:var(--accent);margin-bottom:8px}
+.brave-cell p{font-size:13.5px;color:var(--text2);margin:0}
+.cm-box{text-align:center;margin:34px 0 10px}
+.cm-box .cm{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(22px,4vw,30px);color:var(--gold);letter-spacing:.1em}
+.cm-box p{font-size:14px;color:var(--text2);margin-top:8px}
+
+/* 今晚五分钟 */
+.tonight{background:linear-gradient(150deg,var(--hero-top),var(--hero-via));border-radius:18px;padding:42px 34px;margin-top:26px;color:#f5f1e8;box-shadow:0 10px 30px var(--shadow)}
+.tonight h3{font-family:'ZCOOL XiaoWei',serif;font-size:22px;letter-spacing:.2em;text-align:center;margin-bottom:8px}
+.tonight .sub{text-align:center;font-size:13px;opacity:.7;letter-spacing:.14em;margin-bottom:26px}
+.tonight-item{display:flex;gap:16px;align-items:flex-start;padding:14px 4px;border-bottom:1px dashed rgba(245,241,232,.2)}
+.tonight-item:last-of-type{border-bottom:none}
+.tonight-item .n{flex:none;width:30px;height:30px;border:1px solid rgba(245,241,232,.5);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px}
+.tonight-item p{margin:0;font-size:15px}
+.tonight-item .hint{display:block;font-size:12.5px;opacity:.65;margin-top:2px}
+.tonight .end-line{text-align:center;margin-top:24px;font-size:14.5px;letter-spacing:.06em}
+
+/* 思维导图 */
+.markmap-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;box-shadow:0 6px 24px var(--shadow);margin-top:20px;width:100%;overflow:visible}
+.markmap{min-height:520px;width:100%;max-width:100%;overflow:hidden}
+.markmap svg{display:block;max-width:100%;height:auto}
+.markmap-foreign{color:var(--text)!important}
+.markmap-foreign *{color:inherit}
+
+/* 页脚 */
+footer{padding:90px 26px 70px;text-align:center}
+.goodnight{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(30px,6vw,44px);letter-spacing:.5em;text-indent:.5em;margin-bottom:34px;color:var(--text)}
+.wish{max-width:620px;margin:0 auto;color:var(--text2);font-size:15px;line-height:2.2}
+.wish .moon{display:block;margin:30px auto 0;width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 34% 30%,var(--gold),transparent 72%),var(--soft);border:1px solid var(--border);box-shadow:0 0 26px var(--shadow)}
+.src-note{margin-top:44px;font-size:12px;letter-spacing:.3em;color:var(--text2);opacity:.6}
+</style>
+</head>
+<body class="theme-default">
+<script>!function(){var t=["theme-default","theme-mint","theme-cloud","theme-bamboo","theme-amber","theme-dawn","theme-lavender","theme-slate","theme-rose","theme-sakura","theme-forest","theme-ocean","theme-sand","theme-night","theme-charcoal","theme-deepsea"];document.body.className=t[Math.floor(Math.random()*t.length)]}()</script>
+
+<select class="theme-select" onchange="document.body.className=this.value">
+  <option value="theme-default">🤍 留白</option>
+  <option value="theme-mint">🌿 薄荷</option>
+  <option value="theme-cloud">☁️ 云朵</option>
+  <option value="theme-bamboo">🎋 竹青</option>
+  <option value="theme-amber">🍯 琥珀</option>
+  <option value="theme-dawn">🌅 破晓</option>
+  <option value="theme-lavender">🪻 雾紫</option>
+  <option value="theme-slate">🌫 石板</option>
+  <option value="theme-rose">🌹 玫瑰</option>
+  <option value="theme-sakura">🌸 樱粉</option>
+  <option value="theme-forest">🌲 森林</option>
+  <option value="theme-ocean">🌊 海洋</option>
+  <option value="theme-sand">🏜 沙丘</option>
+  <option value="theme-night">🌙 夜幕</option>
+  <option value="theme-charcoal">🖤 炭墨</option>
+  <option value="theme-deepsea">🌌 深海</option>
+</select>
+
+<header class="hero">
+  <div id="drift"></div>
+  <div class="enso-wrap">
+    <svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="86"/></svg>
+  </div>
+  <p class="hero-series">睡前听完一本书</p>
+  <h1 class="book-title">断舍离</h1>
+  <p class="hero-sub">斩「断」欲望 · 「舍」弃废物 · 脱「离」执念</p>
+  <p class="hero-author">山下英子 —— 一场关于选择与放手的心灵修行</p>
+  <div class="hero-line"></div>
+</header>
+
+<main>
+
+<!-- 壹 · 被围困的生活 -->
+<section class="chapter">
+  <div class="ch-head"><div class="seal">困</div><h2 class="ch-title">被物品围困的我们</h2></div>
+  <p class="ch-lead">你有没有过这样的时刻——</p>
+  <p>深夜整理房间，翻出一堆一年没穿的衣服、积满灰尘的摆件、永远用不上的赠品。明明占着空间，却总说「万一以后能用得上」。打开手机相册，几千张重复的照片、过期的截图、没意义的聊天记录，想删又舍不得。生活里，还拖着消耗自己的关系、超出能力的责任，明明身心俱疲，却不敢轻易放手。</p>
+  <div class="clutter-grid">
+    <span class="chip">🧥 一年没穿的衣服</span>
+    <span class="chip">🕰 积灰的摆件</span>
+    <span class="chip">🎁 用不上的赠品</span>
+    <span class="chip">📷 重复的照片</span>
+    <span class="chip">💬 舍不得删的记录</span>
+    <span class="chip">🥀 消耗自己的关系</span>
+    <span class="chip">⚖️ 超出能力的责任</span>
+  </div>
+  <div class="quote-block">我们总以为拥有的越多越幸福，却在不知不觉中被物品、欲望和执念缠得喘不过气。</div>
+  <p>今晚这本《断舍离》，或许能为我们提供一把钥匙。它不是教你如何整理，而是引领你开启一场关于选择与放手的心灵修行。</p>
+</section>
+
+<!-- 贰 · 视角的翻转 -->
+<section class="chapter">
+  <div class="ch-head"><div class="seal">转</div><h2 class="ch-title">焦点不是物品，而是自己</h2></div>
+  <p class="ch-lead">作者山下英子是断舍离理念的创始人。她让整理不再是单纯的家务劳动，而变成一场关于自我认知、自我接纳的修行。很多人一听断舍离，第一反应就是「扔东西」，但她从一开始就纠正了这个误区。</p>
+  <div class="vs-wrap">
+    <div class="vs-card vs-old">
+      <span class="vs-tag">旧的整理逻辑</span>
+      <h4>以物为主语</h4>
+      <ul>
+        <li>这东西还能用，所以得留着</li>
+        <li>这是别人送的，扔了不礼貌</li>
+        <li>这个很贵，虽然不用，但舍不得</li>
+      </ul>
+      <p style="font-size:13px;margin-top:12px;color:var(--text2)">判断标准是物品本身的价值、他人的眼光、过去的投入——我们被「可惜」「浪费」的愧疚感所支配。</p>
+    </div>
+    <div class="vs-card vs-new">
+      <span class="vs-tag">断舍离的逻辑</span>
+      <h4>以我为主语</h4>
+      <ul>
+        <li>现在的我，还需要它吗？</li>
+        <li>用它，我舒服吗？</li>
+        <li>它让我快乐吗？</li>
+      </ul>
+      <p style="font-size:13px;margin-top:12px;color:var(--text2)">这是一个翻天覆地的视角转换：核心是「我需要什么」，而不是「这东西还能用吗」。</p>
+    </div>
+  </div>
+  <p>这个标准是<strong>以当下为轴心</strong>的，只关注「我与物」此时此刻的关系——</p>
+  <div class="axis">
+    <div class="axis-node"><div class="axis-dot"></div><h5>过去</h5><p>那件很贵却不自在的大衣，<br>是过去的虚荣与错误消费</p></div>
+    <div class="axis-node now"><div class="axis-dot"></div><h5>当下</h5><p>唯一需要审视的，<br>是此时此刻的关系</p></div>
+    <div class="axis-node"><div class="axis-dot"></div><h5>未来</h5><p>「总有一天会用到」的材料，<br>是对未来的不安与囤积</p></div>
+  </div>
+  <p style="margin-top:24px">而那件别人送的、你并不喜欢的摆件，承载的或许只是人情负担。</p>
+</section>
+
+<!-- 叁 · 家是内心的场 -->
+<section class="chapter">
+  <div class="ch-head"><div class="seal">场</div><h2 class="ch-title">家，是内心的场</h2></div>
+  <p>书中有一个非常形象的比喻：我们的家是我们身体的延伸，是我们内心的场。当这个场里堆满了与当下生命不相关、甚至带来负担的物品时，就像身体里塞满了无法消化的东西，自然会感到沉重、淤堵、没有活力。</p>
+  <div class="quote-block">断舍离，就是为这个场做一次彻底的新陈代谢——只留下与当下的、真实的你同频共振的能量。</div>
+  <div class="cups">
+    <figure class="cup-scene">
+      <div class="cup full"><div class="fill"></div></div>
+      <figcaption>装满杂物的杯子<br><strong>再甘甜的水，也倒不进去</strong></figcaption>
+    </figure>
+    <figure class="cup-scene">
+      <div class="cup empty"><div class="drop"></div></div>
+      <figcaption>腾出空间的杯子<br><strong>才有余地接纳真正重要的</strong></figcaption>
+    </figure>
+  </div>
+  <p class="center" style="color:var(--text2);font-size:14px">我们的时间、精力、空间都是有限的。把它们都用来容纳不需要的东西，就没有余地去接纳那些真正重要的、能让你感到幸福的东西。</p>
+</section>
+
+<!-- 肆 · 三步修行 -->
+<section class="chapter">
+  <div class="ch-head"><div class="seal">修</div><h2 class="ch-title">由浅入深的三步修行</h2></div>
+  <p class="ch-lead">那么具体该如何开始呢？山下英子提供了非常清晰的行动路径——它更像一场由浅入深的自我对话。</p>
+
+  <div class="step-card" data-kanji="断">
+    <div class="step-no">第一步 · 由外而内的边界</div>
+    <div class="step-head"><span class="step-kanji">断</span><span class="step-name">断绝不需要的东西进入生活</span></div>
+    <p>很多人之所以被杂物困扰，不是因为不会扔东西，而是因为一直在无节制地<em style="font-style:normal;color:var(--accent)">接收</em>——接收不需要的物品，接收超出能力的责任，接收消耗自己的情绪。逛街时看到打折商品，明明不需要，却觉得划算就买了；刷直播间被主播说得心动的，忍不住下单一堆可有可无的东西；同事拜托的事，哪怕超出能力范围，也不敢说不。</p>
+    <p>这些不需要的物品、责任、关系，就像不断涌入房间的洪水——哪怕我们每天都在整理，也永远整理不完。「断」，就是要我们学会设立边界，对不需要的东西说不。</p>
+    <div class="q-list">
+      <span class="q-pill">我真的需要它吗？</span>
+      <span class="q-pill">我会立即使用它吗？</span>
+      <span class="q-pill">我有地方妥善安置它吗？</span>
+    </div>
+    <p>断绝不需要的东西不是吝啬，而是对自己负责。当你开始实践「断」，你会发现你对自己真正需要什么，变得越来越清晰。</p>
+  </div>
+
+  <div class="step-card" data-kanji="舍">
+    <div class="step-no">第二步 · 怀着感恩的清理</div>
+    <div class="step-head"><span class="step-kanji">舍</span><span class="step-name">怀着感恩，对物品说「谢谢，再见」</span></div>
+    <p>「舍」是针对已经存在于你空间中的物品。它不是粗暴的丢弃，而是怀着感恩和尊重，对物品说一声「谢谢，再见」，然后将其请出你的生活。如果说「断」是阻止新的负担进入，那么「舍」就是清理已经存在的多余负担——那些虽然曾经有用，但现在已经不需要、不合适、或者不能让你感到愉悦的东西。</p>
+    <p>「舍」的过程往往比「断」更难，因为它要面对的，是我们内心的执念。我们总会找各种借口：</p>
+    <ul class="excuses">
+      <li>这是我花很多钱买的，扔了太可惜了</li>
+      <li>这是朋友送我的，扔了就是不珍惜友情</li>
+      <li>万一以后能用得上呢</li>
+    </ul>
+    <div class="truth-box">但山下英子告诉我们：<em>物品是为了服务人而存在的，而不是人为了服务物品而活着。</em>一件东西，不管当初花了多少钱、是谁送的，如果它现在不能给你带来价值，反而成为负担，那它就失去了存在的意义。与其让它在角落里积灰，不如让它去到更需要它的地方。</div>
+    <span class="small-start">💡 从最简单的地方开始：一个抽屉、一个化妆包——小而确定的胜利，带来掌控感与成就感</span>
+    <p style="margin-top:16px">你会发现，舍掉的不仅仅是物品，更是附着在物品上的执念——对过去的留恋、对未来的恐惧、对自我的否定。</p>
+  </div>
+
+  <div class="step-card" data-kanji="离">
+    <div class="step-no">第三步 · 内在的修行</div>
+    <div class="step-head"><span class="step-kanji">离</span><span class="step-name">脱离执念，活在当下</span></div>
+    <p>「断」和「舍」是外在的行动，而「离」是内在的修行——脱离对物品的执念，以及对过去和未来的纠结。通过反复实践断与舍，你逐渐达到一种「离」的状态：不再被物质所困，能够游刃有余地选择和驾驭物品。</p>
+    <p>你的家保持在一个流动的、舒适的状态；更重要的是，你的内心也随之变得清明、果断。你会形成一种新陈代谢式的生活方式，让物品、信息乃至人际关系，都能健康地流动起来。</p>
+    <div class="quote-block" style="margin-bottom:0">这个过程，山下英子称之为——从看得见的世界，走向看不见的世界。<span class="small">表面是整理衣柜、书柜、厨房，深层是在整理你的思维、情感和人生选择。每处理掉一件无用之物，你内心就多了一份空间和轻盈。</span></div>
+  </div>
+</section>
+
+<!-- 伍 · 执念的根源 -->
+<section class="chapter">
+  <div class="ch-head"><div class="seal">执</div><h2 class="ch-title">执念的根源</h2></div>
+  <p class="ch-lead">山下英子在书中说：很多人对物品的执念，其实是对过去的留恋，或是对未来的焦虑。</p>
+  <div class="roots">
+    <div class="root-card"><div class="thing">🧥 舍不得扔的旧衣服</div><div class="arrow">↓</div><div class="heart">留恋过去的青春岁月</div></div>
+    <div class="root-card"><div class="thing">📦 囤积的生活用品</div><div class="arrow">↓</div><div class="heart">担心未来会不够用</div></div>
+    <div class="root-card"><div class="thing">👜 执着昂贵的奢侈品</div><div class="arrow">↓</div><div class="heart">希望借物品证明自己的价值</div></div>
+  </div>
+  <p>但这些执念，只会让我们被过去或未来绑架，无法好好享受当下的生活。「离」的修行就是让我们明白——</p>
+  <div class="quote-block" style="text-align:center;border-left:none;border-radius:10px">幸福不是拥有的越多，而是内心越自由。</div>
+  <p>当我们不再执着于物品，不再被过去和未来困扰，就能专注于当下的每一刻，感受生活中的小美好——</p>
+  <div class="joy-chips">
+    <span class="chip">☀️ 阳光洒在身上的温暖</span>
+    <span class="chip">🍚 饭菜的香气</span>
+    <span class="chip">🏠 家人的陪伴</span>
+    <span class="chip">💛 朋友的关心</span>
+  </div>
+  <p class="center" style="color:var(--text2);font-size:14px">这些简单而真实的瞬间，才是幸福的本质。</p>
+</section>
+
+<!-- 陆 · 四个误区 -->
+<section class="chapter">
+  <div class="ch-head"><div class="seal">误</div><h2 class="ch-title">践行路上的四个误区</h2></div>
+  <p class="ch-lead">在践行断舍离的过程中，很多人会陷入一些误区，反而让自己更焦虑。山下英子在书中也给出了明确的指引。</p>
+  <div class="mis-grid">
+    <div class="mis-card">
+      <span class="mis-num">壹</span>
+      <h4>为断舍离而断舍离</h4>
+      <p>强迫自己扔掉有特殊意义的物品——比如去世亲人留下的遗物，结果反而陷入深深的自责和悲伤。</p>
+      <p class="answer">断舍离的核心是<em>愉悦和自愿</em>。如果一件物品能给你带来温暖和力量，哪怕它「没用」，也可以保留。</p>
+    </div>
+    <div class="mis-card">
+      <span class="mis-num">贰</span>
+      <h4>过度追求极简</h4>
+      <p>扔掉了所有的爱好和乐趣，家里空荡荡的，反而觉得孤独，把生活变得枯燥无味。</p>
+      <p class="answer">极简不是一无所有，而是<em>只留所爱</em>。让生活既有秩序，又有温度。</p>
+    </div>
+    <div class="mis-card">
+      <span class="mis-num">叁</span>
+      <h4>只整理物品，不整理内心</h4>
+      <p>把房间整理得一尘不染，但内心依然被焦虑、执念所困扰。</p>
+      <p class="answer">断舍离的本质是<em>内外兼修</em>。整理物品只是手段，清理内心的杂物才是目的。</p>
+    </div>
+    <div class="mis-card">
+      <span class="mis-num">肆</span>
+      <h4>一次突击，不再维护</h4>
+      <p>花一天时间把家里彻底整理干净，但没过多久又恢复了混乱。</p>
+      <p class="answer">断舍离是<em>一种生活习惯</em>，而不是一次突击行动。每天几分钟整理桌面，用完归位，定期清理闲置。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 柒 · 三重回报 -->
+<section class="chapter">
+  <div class="ch-head"><div class="seal">得</div><h2 class="ch-title">远超一个整洁的家</h2></div>
+  <p class="ch-lead">当你持续实践，你会发现断舍离带来的回报，远超一个整洁的家。</p>
+  <div class="gain-grid">
+    <div class="gain-card">
+      <div class="gain-icon">🔥</div>
+      <h4>能量的回升</h4>
+      <p>杂乱的环境会无意识地消耗你的注意力，让你更容易疲劳和烦躁。一个清爽的空间，本身就是巨大的能量补给站——你身处其中，会感到平静、专注、有行动力。</p>
+    </div>
+    <div class="gain-card">
+      <div class="gain-icon">⚖️</div>
+      <h4>决断力的锤炼</h4>
+      <p>每天面对无数物品做出「留或舍」的选择，这是一个绝佳的决策训练场。你不再模棱两可、优柔寡断，这种决断力会自然迁移到工作、感情、投资的重大选择上。</p>
+    </div>
+    <div class="gain-card">
+      <div class="gain-icon">🪞</div>
+      <h4>深刻的自我认知</h4>
+      <p>你留下的每一件物品，都构成了当下你的自画像。通过审视物品，你实际上是在回答「我是谁」这个根本问题——这促使你更诚实地面对自己，活出更真实的自我。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 捌 · 不止于房间 -->
+<section class="chapter">
+  <div class="ch-head"><div class="seal">延</div><h2 class="ch-title">智慧，不止于整理房间</h2></div>
+  <p class="ch-lead">断舍离的智慧，可以延伸到生活的方方面面，帮我们解决现实中的很多困扰。</p>
+  <div class="ext-list">
+    <div class="ext-row"><span class="ico">📵</span><div><h4>信息的断舍离</h4><p>关掉无用的推送，退出消耗能量的群聊。</p></div></div>
+    <div class="ext-row"><span class="ico">🚪</span><div><h4>人际关系的断舍离</h4><p>有意识地远离那些总是带给你负面情绪的人。</p></div></div>
+    <div class="ext-row"><span class="ico">📅</span><div><h4>日程的断舍离</h4><p>拒绝那些并非真正重要、只是出于不好意思的邀约。</p></div></div>
+  </div>
+  <div class="quote-block">它的本质，是帮你夺回生活的选择权和主导权。说到底，断舍离就是一种减法思维——减去生活中多余的负担，减去内心的执念和焦虑，让我们把有限的时间、精力和资源，投入到真正重要的事情上。</div>
+</section>
+
+<!-- 玖 · 流动的生命体 -->
+<section class="chapter">
+  <div class="ch-head"><div class="seal">流</div><h2 class="ch-title">不是仓库，而是流动的生命体</h2></div>
+  <div class="big-quote">生活也好，人生也罢，<br>不是一个<em>只进不出</em>的仓库，<br>而是一个需要持续<em>流动、呼吸、更新</em>的生命体。</div>
+  <div class="three-brave">
+    <div class="brave-cell"><div class="k">断</div><p>敢于断，是拥有对欲望的觉知与节制</p></div>
+    <div class="brave-cell"><div class="k">舍</div><p>敢于舍，是拥有对过去的告别勇气，和对自我的诚实</p></div>
+    <div class="brave-cell"><div class="k">离</div><p>最终达到的离，是一种轻盈自在、专注于当下的生命状态</p></div>
+  </div>
+  <p>我们通过管理物品，实则是在练习如何管理自己的生命能量。</p>
+  <p>所以亲爱的你，如果你此刻正被周围的杂乱和内心的拥堵所困扰，请不要责备自己——囤积，或许是人类面对不确定性的古老本能。看见这份混乱，就是你走向有序的第一步。</p>
+  <p>如果你觉得无从下手、感到被压垮，请一定记住：断舍离没有及格线。哪怕今天只找到一支写不出字的笔，把它扔掉，你也是成功的。</p>
+  <div class="cm-box">
+    <div class="cm">第一立方厘米的空间</div>
+    <p>你已经在为你的人生，腾出第一立方厘米的空间。<br>每一次小小的取舍，都是一次成长；每一次勇敢的放下，都是一次新生。</p>
+  </div>
+</section>
+
+<!-- 拾 · 今晚的五分钟 -->
+<section class="chapter">
+  <div class="ch-head"><div class="seal">行</div><h2 class="ch-title">今晚睡前的五分钟</h2></div>
+  <p class="ch-lead">你值得拥有更简单、更自由、更幸福的生活，而这一切，都从断舍离开始。今晚睡前，不妨花五分钟做一件小事——</p>
+  <div class="tonight">
+    <h3>五分钟 · 迈出第一步</h3>
+    <p class="sub">FIVE MINUTES TONIGHT</p>
+    <div class="tonight-item">
+      <span class="n">一</span>
+      <p>打开衣柜，找出一件你已经一年没穿、并且以后大概率也不会穿的衣服，把它放进捐赠袋。<span class="hint">让它去到更需要它的地方</span></p>
+    </div>
+    <div class="tonight-item">
+      <span class="n">二</span>
+      <p>或者打开手机，删掉十张你觉得没必要留存的照片、截图或聊天记录。<span class="hint">给相册也做一次新陈代谢</span></p>
+    </div>
+    <div class="tonight-item">
+      <span class="n">三</span>
+      <p>又或者在心里想一想：有没有一件让你一直纠结的小事？明天，试着果断做一次选择。<span class="hint">把决断力，用在真实的人生里</span></p>
+    </div>
+    <p class="end-line">不要小看这五分钟——它是你践行断舍离的第一步，<br>也是你走向更通透人生的第一步。</p>
+  </div>
+</section>
+
+<!-- 思维导图 -->
+<section class="chapter-static">
+  <div class="ch-head"><div class="seal">图</div><h2 class="ch-title">全书脉络 · 一图回望</h2></div>
+  <div class="markmap-box">
+    <div class="markmap">
+      <script type="text/template">
+# 《断舍离》
+## 起点 · 被围困的我们
+### 占着空间，却说「万一用得上」
+### 被物品、欲望与执念缠绕
+## 视角的翻转
+### 焦点不是物品，而是自己
+### 「我需要什么」取代「还能用吗」
+### 以当下的我为轴心
+### 家是身体的延伸、内心的场
+## 三步修行
+### 断 · 设立边界，拒绝不需要的进入
+### 捨 · 怀着感恩说「谢谢，再见」
+### 離 · 脱离执念，活在当下
+## 执念的根源
+### 留恋过去
+### 焦虑未来
+### 借物证明价值
+## 四个误区
+### 为断舍离而断舍离
+### 过度追求极简
+### 只整理物品，不整理内心
+### 一次突击，不再维护
+## 三重回报
+### 能量回升
+### 决断力锤炼
+### 深刻自我认知
+## 延伸
+### 信息 · 人际 · 日程的断舍离
+### 夺回生活的选择权与主导权
+## 减法人生
+### 生活是流动的生命体，不是仓库
+### 每一次放下，都是一次新生
+      </script>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="goodnight">晚安</div>
+  <p class="wish">愿你在断舍离的修行中，慢慢清空生活的杂物，净化内心的执念，活在每一个平静而美好的当下。<br>愿你往后的日子，简单而丰盈，温柔而有力量。<br>愿你今晚在梦中，也能感受到那份放下重负后的轻松与自由。
+  <span class="moon"></span></p>
+  <p class="src-note">睡前听完一本书 · 断舍离</p>
+</footer>
+
+<script>
+// 上升放手的微尘
+!function(){
+  var box=document.getElementById('drift');
+  if(!box)return;
+  for(var i=0;i<26;i++){
+    var s=document.createElement('span');
+    var sz=(Math.random()*4+2.5).toFixed(1);
+    s.style.width=sz+'px';
+    s.style.height=sz+'px';
+    s.style.left=(Math.random()*100)+'%';
+    s.style.animationDuration=(Math.random()*9+9).toFixed(1)+'s';
+    s.style.animationDelay=(-Math.random()*18).toFixed(1)+'s';
+    box.appendChild(s);
+  }
+}();
+// 滚动显现
+!function(){
+  var els=document.querySelectorAll('.chapter');
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});
+  },{threshold:.12});
+  els.forEach(function(el){io.observe(el);});
+}();
+// 同步主题选择器
+document.querySelector('.theme-select').value=document.body.className;
+// 强制 markmap 按最终容器宽度重绘，避免首次渲染时读到的宽度为 0
+window.addEventListener('load',function(){
+  window.dispatchEvent(new Event('resize'));
+  setTimeout(function(){window.dispatchEvent(new Event('resize'));},500);
+  setTimeout(function(){window.dispatchEvent(new Event('resize'));},1500);
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+</body>
+</html>
