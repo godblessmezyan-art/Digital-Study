@@ -77,7 +77,7 @@ function shell(){return `<section class="lm-page">${header()}<main class="lm-sur
 
 export async function createLibraryPage(root,{showToast,navigateToStudio}){
   root.innerHTML='<div class="lm-loading">正在整理藏书目录…</div>';
-  if(!state.loaded){const loaded=await loadCatalogBooks().catch(()=>[]);state.books=(loaded.length?loaded:fallbackBooks).map(normalizeBook);rebuildTaxonomies();state.loaded=true}
+  if(!state.loaded){const loaded=await loadCatalogBooks({fresh:true}).catch(()=>[]);state.books=(loaded.length?loaded:fallbackBooks).map(normalizeBook);rebuildTaxonomies();state.loaded=true}
   const render=()=>{root.innerHTML=shell();bind()};
   const notifyMock=message=>showToast(`${message}；后端接口接入后可持久化`);
   const closeDetail=()=>{state.selected=null;render()};

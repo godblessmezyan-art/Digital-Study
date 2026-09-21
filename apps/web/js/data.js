@@ -1,5 +1,5 @@
 export const stats = [
-  { icon: 'bookshelf', label: '我的书架', detail: '珍藏所有的阅读时光', target: 'home.html#shelf' },
+  { icon: 'bookshelf', label: '我的书架', detail: '珍藏所有的阅读时光', target: 'index.html#shelf' },
   { icon: 'compass', label: '书籍分类', detail: '探索不同的知识大陆', target: 'index.html#categories' },
   { icon: 'quill', label: '阅读笔记', detail: '记录思考与灵感', target: 'index.html#reading?tab=notes' },
   { icon: 'scroll', label: '精选书摘', detail: '收集触动心灵的文字', target: 'index.html#reading?tab=quotes' },

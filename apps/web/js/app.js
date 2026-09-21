@@ -78,7 +78,7 @@ void validateAuth().then(()=>updateAuthButton());
 function showToast(text){toast.textContent=text;toast.classList.add('show');clearTimeout(showToast.t);showToast.t=setTimeout(()=>toast.classList.remove('show'),1800)}
 function metrics(items){return `<div class="metric-strip">${items.map(x=>`<div class="metric"><span class="metric-icon">${x[0]}</span><span><small>${x[1]}</small><strong>${x[2]}</strong></span></div>`).join('')}</div>`}
 function topActions(search=true){return search?'<div class="top-actions"><label class="searchbox">⌕<input id="globalSearch" placeholder="搜索书名、作者或标签..."></label></div>':''}
-function setActive(page){document.querySelectorAll('[data-nav-id]').forEach(item=>{const active=item.dataset.navId===page;item.classList.toggle('active',active);item.toggleAttribute('aria-current',active)})}
+function setActive(page){document.querySelectorAll('[data-nav-id]').forEach(item=>{const active=item.dataset.navId===page;item.classList.toggle('is-active',active);item.toggleAttribute('aria-current',active)})}
 
 function renderLibraryLegacy(){
  document.body.classList.remove('category-mode','studio-v2-mode','studio-workshop-mode');
@@ -126,7 +126,6 @@ const categoryBooks=[
 
 async function renderCategories(){
  setActive('categories');document.title='书籍分类 · 云天幻境';document.body.classList.remove('studio-v2-mode','studio-workshop-mode','library-management-mode');document.body.classList.add('category-mode');
- app.innerHTML='<div class="category-loading">正在读取 Git 内容索引…</div>';
  const catalogBooks=await loadCatalogBooks();
  const categoryCounts=new Map();catalogBooks.forEach(book=>{const name=book.category?.name||'其他';categoryCounts.set(name,(categoryCounts.get(name)||0)+1)});
  const categoryTabs=[['全部',catalogBooks.length],...[...categoryCounts.entries()].sort((a,b)=>a[0].localeCompare(b[0],'zh-CN'))];
@@ -145,6 +144,18 @@ async function renderCategories(){
  document.querySelectorAll('.category-tab').forEach(tab=>tab.addEventListener('click',()=>{document.querySelectorAll('.category-tab').forEach(x=>x.classList.remove('active'));tab.classList.add('active');activeCategory=tab.dataset.categoryName;history.replaceState(null,'',activeCategory==='全部'?'#categories':`#categories?category=${encodeURIComponent(activeCategory)}`);paint();showToast(`已切换至${activeCategory}`)}));
  document.querySelectorAll('.category-view').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.category-view').forEach(x=>x.classList.remove('active'));btn.classList.add('active');list.classList.toggle('list-view',btn.dataset.view==='list')}));
  bindGlobal();
+}
+
+async function renderShelf(){
+ setActive('shelf');document.title='我的书架 · 云天幻境';document.body.classList.remove('studio-v2-mode','studio-workshop-mode','library-management-mode');document.body.classList.add('category-mode');
+ const catalogBooks=await loadCatalogBooks();
+ app.innerHTML=`<section class="category-page shelf-page"><header class="category-hero">${topActions(false)}<h1>我的书架</h1><p>浏览已经收藏和发布的书籍</p><label class="category-search">${icon('search')}<input id="shelfSearch" placeholder="搜索书名、作者、分类或标签..."></label><div class="category-tabs shelf-status-tabs"><button class="category-tab active" data-shelf-status="all"><strong>全部</strong><small>${catalogBooks.length}</small></button><button class="category-tab" data-shelf-status="published"><strong>已发布</strong><small>${catalogBooks.filter(book=>book.status==='published').length}</small></button><button class="category-tab" data-shelf-status="draft"><strong>草稿</strong><small>${catalogBooks.filter(book=>book.status==='draft').length}</small></button></div></header><section class="category-library"><div class="category-heading"><div><h2 id="shelfTitle">全部藏书 <span>${catalogBooks.length} 本书</span></h2><p>书籍内容来自 Git 仓库，打开后进入沉浸阅读页面。</p></div><div class="category-controls"><select class="category-sort" id="shelfSort" aria-label="排序"><option value="updated">最近更新</option><option value="title">书名</option><option value="author">作者</option></select><button class="category-view active" data-view="grid">▦</button><button class="category-view" data-view="list">☷</button></div></div><div class="category-books" id="shelfBooks"></div></section></section>`;
+ const list=document.querySelector('#shelfBooks');let status='all',query='',sort='updated';
+ const escapeValue=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+ const filtered=()=>catalogBooks.filter(book=>(status==='all'||book.status===status)&&`${book.title}${book.author}${book.summary}${book.category?.name||''}${book.tags.join('')}`.toLowerCase().includes(query)).sort((a,b)=>sort==='title'?a.title.localeCompare(b.title,'zh-CN'):sort==='author'?a.author.localeCompare(b.author,'zh-CN'):String(b.updatedAt||b.publishedAt||'').localeCompare(String(a.updatedAt||a.publishedAt||'')));
+ const paint=()=>{const items=filtered();list.innerHTML=items.length?items.map(book=>`<article class="category-book" data-content-url="${escapeValue(book.contentUrl)}"><div class="category-cover" style="--book-art:url('${escapeValue(book.coverUrl||'assets/cloud-realm-study-v2.webp')}')"><div class="cover-shade"></div><strong>${escapeValue(book.title)}</strong><small>${escapeValue(book.author)}</small></div><div class="category-book-meta"><h3>${escapeValue(book.title)}</h3><p>${escapeValue(book.author)}</p><span class="reading-status ${book.status==='draft'?'unread':''}">${book.status==='published'?'已发布':'草稿'}</span></div></article>`).join(''):'<div class="category-empty">书架中暂未找到相关书籍</div>';document.querySelector('#shelfTitle').innerHTML=`${status==='all'?'全部藏书':status==='published'?'已发布':'草稿'} <span>${items.length} 本书</span>`;document.querySelectorAll('.category-book').forEach(card=>card.addEventListener('click',()=>{if(card.dataset.contentUrl)window.open(card.dataset.contentUrl,'_blank','noopener')}))};
+ paint();
+ document.querySelector('#shelfSearch').addEventListener('input',event=>{query=event.target.value.trim().toLowerCase();paint()});document.querySelector('#shelfSort').addEventListener('change',event=>{sort=event.target.value;paint()});document.querySelectorAll('[data-shelf-status]').forEach(tab=>tab.addEventListener('click',()=>{document.querySelectorAll('[data-shelf-status]').forEach(item=>item.classList.remove('active'));tab.classList.add('active');status=tab.dataset.shelfStatus;paint()}));document.querySelectorAll('.category-view').forEach(button=>button.addEventListener('click',()=>{document.querySelectorAll('.category-view').forEach(item=>item.classList.remove('active'));button.classList.add('active');list.classList.toggle('list-view',button.dataset.view==='list')}));
 }
 
 function renderStudio(){
@@ -188,5 +199,5 @@ function renderReadingSpace(){
 
 function bindGlobal(){document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{setAppScenic(false);if(b.dataset.page==='home')window.location.href='home.html';else if(b.dataset.page==='library'||b.dataset.page==='content')location.hash='#content';else if(b.dataset.page==='studio')location.hash='#studio';else if(b.dataset.page==='categories')location.hash='#categories';else showToast(`${b.textContent.trim()}功能即将开放`)});document.querySelectorAll('[data-toast]').forEach(b=>b.onclick=()=>showToast(b.dataset.toast))}
 sidebar.addEventListener('click',()=>sidebar.classList.remove('open'));document.querySelector('#menuButton').addEventListener('click',()=>sidebar.classList.toggle('open'));
-const route=()=>{const page=location.hash.slice(1).split('?')[0];if(page==='studio')return renderStudioV3();if(page==='categories')return renderCategories();if(page==='reading')return renderReadingSpace();if(page==='content'||page==='library')return renderLibrary();window.location.replace('home.html')};route();
+const route=()=>{const page=location.hash.slice(1).split('?')[0];if(page==='studio')return renderStudioV3();if(page==='shelf')return renderShelf();if(page==='categories')return renderCategories();if(page==='reading')return renderReadingSpace();if(page==='content'||page==='library')return renderLibrary();window.location.replace('home.html')};route();
 window.addEventListener('hashchange',route);
