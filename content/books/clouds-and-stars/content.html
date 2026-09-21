@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<!-- ============================================================
+  人生的智慧 · 晚安读书页
+  核心意象：雪夜钟摆（痛苦↔无聊）+ 豪猪困境
+  默认主题：雪夜（深色）
+============================================================ -->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>人生的智慧 · 深夜书房今夜共读</title>
+<link rel="preconnect" href="https://fonts.loli.net" crossorigin>
+<link href="https://fonts.loli.net/css2?family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+/* ============ 16 主题变量 ============ */
+/* ★★★ theme-default 雪夜：深蓝底、冷灰字、银金点缀 ★★★ */
+body.theme-snow{--bg:#0f1923;--text:#d8e0e8;--text2:#8a9aaa;--card:#192633;--border:#2a3d4d;--accent:#c8b89a;--accent2:#8a9ab0;--accent3:#b08060;--soft:#1d2e3a;--gold:#c8b89a;--hero-top:#0f1923;--hero-via:#152530;--hero-bot:#1a2a38;--quote-bg:#1d2e3a;--shadow:rgba(0,0,0,.5)}
+body.theme-mint{--bg:#f2faf5;--text:#2f3f36;--text2:#7d9488;--card:#fdfffd;--border:#d3e8da;--accent:#3e9d6e;--accent2:#2b8a8a;--accent3:#d98e5f;--soft:#e6f4ea;--gold:#c8a23e;--hero-top:#eef8f1;--hero-via:#e8f4ec;--hero-bot:#e0f0e5;--quote-bg:#eff8f1;--shadow:rgba(60,110,80,.14)}
+body.theme-cloud{--bg:#f5f7fa;--text:#37404d;--text2:#8b95a5;--card:#ffffff;--border:#dde4ec;--accent:#5b84b1;--accent2:#8f7bb0;--accent3:#c98a7d;--soft:#edf1f6;--gold:#c2a24d;--hero-top:#f2f5f9;--hero-via:#eef2f7;--hero-bot:#e9eef4;--quote-bg:#f0f4f8;--shadow:rgba(80,100,130,.14)}
+body.theme-bamboo{--bg:#f4f7ee;--text:#33402e;--text2:#7f8f76;--card:#fcfdf7;--border:#dbe3cd;--accent:#5f8a46;--accent2:#b0a03c;--accent3:#c07a50;--soft:#eef2e3;--gold:#b3a044;--hero-top:#f1f5e8;--hero-via:#ecf1e0;--hero-bot:#e6edd9;--quote-bg:#eff3e6;--shadow:rgba(90,110,60,.14)}
+body.theme-amber{--bg:#fbf5e8;--text:#463a24;--text2:#97875f;--card:#fffaf0;--border:#e8dab5;--accent:#c08a2d;--accent2:#a76b2f;--accent3:#7d8a4a;--soft:#f5ecd6;--gold:#c08a2d;--hero-top:#faf1da;--hero-via:#f7ecd2;--hero-bot:#f3e6c6;--quote-bg:#f7efd9;--shadow:rgba(140,110,50,.16)}
+body.theme-dawn{--bg:#fdf3ec;--text:#4a3530;--text2:#a2837a;--card:#fff9f4;--border:#f0d9c9;--accent:#d8794a;--accent2:#c25e6a;--accent3:#7a9b8d;--soft:#faeadf;--gold:#d08a4e;--hero-top:#fdeee2;--hero-via:#fbe7dc;--hero-bot:#f7dfd3;--quote-bg:#fbeee4;--shadow:rgba(170,100,70,.15)}
+body.theme-lavender{--bg:#f6f3fa;--text:#3c3547;--text2:#8f86a0;--card:#fdfcff;--border:#e2dbee;--accent:#8a6fb8;--accent2:#b0789a;--accent3:#6f9b8d;--soft:#f0ecf7;--gold:#b99a55;--hero-top:#f3eef9;--hero-via:#f0eaf6;--hero-bot:#ece4f2;--quote-bg:#f2edf8;--shadow:rgba(110,90,150,.14)}
+body.theme-slate{--bg:#eef1f0;--text:#35403d;--text2:#7e8b87;--card:#f9fbfa;--border:#d6dedb;--accent:#557d6e;--accent2:#7d8a9b;--accent3:#b08968;--soft:#e5eae8;--gold:#b3985a;--hero-top:#eaeef0;--hero-via:#e6ebe9;--hero-bot:#e2e8e5;--quote-bg:#e9eeec;--shadow:rgba(70,90,85,.14)}
+body.theme-rose{--bg:#fdf2f4;--text:#4a3238;--text2:#a3838b;--card:#fffafa;--border:#f0d8dd;--accent:#c25e75;--accent2:#a8769b;--accent3:#6f9b7f;--soft:#f9e8ec;--gold:#c39a55;--hero-top:#fbebee;--hero-via:#f9e6ea;--hero-bot:#f6e0e5;--quote-bg:#faedf0;--shadow:rgba(160,90,110,.14)}
+body.theme-sakura{--bg:#fdf5f6;--text:#45343c;--text2:#a18a92;--card:#fffbfc;--border:#f0dde1;--accent:#d68799;--accent2:#9bb08a;--accent3:#b98d6e;--soft:#f9edef;--gold:#c3a25e;--hero-top:#fbf0f2;--hero-via:#f9eaee;--hero-bot:#f7e5e9;--quote-bg:#faeff1;--shadow:rgba(170,110,130,.14)}
+body.theme-forest{--bg:#17231c;--text:#e4ead9;--text2:#93a48f;--card:#1e2d23;--border:#2f4234;--accent:#8fbf6f;--accent2:#d3a94f;--accent3:#c07a58;--soft:#24352a;--gold:#d8b25e;--hero-top:#0f1a14;--hero-via:#16241b;--hero-bot:#1d2e22;--quote-bg:#213226;--shadow:rgba(0,0,0,.4)}
+body.theme-ocean{--bg:#14212b;--text:#e2e9ee;--text2:#8fa3b0;--card:#1b2b37;--border:#2c4252;--accent:#5fa8c9;--accent2:#d3a94f;--accent3:#c9806a;--soft:#203140;--gold:#d8b25e;--hero-top:#0e1a24;--hero-via:#14242f;--hero-bot:#1a2e3a;--quote-bg:#1d2e3b;--shadow:rgba(0,0,0,.42)}
+body.theme-sand{--bg:#f7f1e3;--text:#4a4030;--text2:#9a8c6e;--card:#fdf8ec;--border:#e5d8bb;--accent:#b3873f;--accent2:#8a9b5a;--accent3:#bf6e4e;--soft:#f1e8d3;--gold:#b3873f;--hero-top:#f5ecd6;--hero-via:#f2e7cd;--hero-bot:#efe2c3;--quote-bg:#f4ecd7;--shadow:rgba(130,110,60,.16)}
+body.theme-night{--bg:#171a26;--text:#e8e4d8;--text2:#98a0b3;--card:#1e2333;--border:#2f3750;--accent:#d3a94f;--accent2:#8fa8c9;--accent3:#c0705a;--soft:#232a40;--gold:#d8b25e;--hero-top:#101322;--hero-via:#171b2e;--hero-bot:#221f30;--quote-bg:#1f2536;--shadow:rgba(0,0,0,.45)}
+body.theme-charcoal{--bg:#1b1b1d;--text:#e9e6e0;--text2:#9b968c;--card:#242426;--border:#38383a;--accent:#c9a25c;--accent2:#8aa39b;--accent3:#c07a5a;--soft:#28282a;--gold:#d0ac62;--hero-top:#161618;--hero-via:#1d1d1f;--hero-bot:#242426;--quote-bg:#232325;--shadow:rgba(0,0,0,.45)}
+body.theme-deepsea{--bg:#101b26;--text:#dde8ee;--text2:#8499a8;--card:#162532;--border:#253d4e;--accent:#6fb8c9;--accent2:#d3a94f;--accent3:#c9806a;--soft:#1a2c3b;--gold:#d8b25e;--hero-top:#0b141d;--hero-via:#122029;--hero-bot:#182a36;--quote-bg:#152634;--shadow:rgba(0,0,0,.45)}
+
+/* ============ 基础 ============ */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:'Noto Serif SC',serif;background:var(--bg);color:var(--text);line-height:1.95;font-size:17px;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%;transition:background .5s,color .5s}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at 12% 8%,var(--soft) 0%,transparent 40%),radial-gradient(circle at 88% 92%,var(--soft) 0%,transparent 42%);pointer-events:none;z-index:0}
+svg{max-width:100%}
+h1,h2,h3,.zw{font-family:'ZCOOL XiaoWei','Noto Serif SC',serif}
+
+.theme-select{position:fixed;top:16px;right:16px;z-index:999;font-family:'Noto Serif SC',serif;background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:999px;padding:8px 16px;font-size:14px;cursor:pointer;box-shadow:0 4px 18px var(--shadow)}
+
+/* ============ HERO ============ */
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:90px 22px 70px;background:linear-gradient(180deg,var(--hero-top),var(--hero-via),var(--hero-bot));overflow:hidden;z-index:1}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at 70% 20%,var(--gold) 0%,transparent 38%);opacity:.12;pointer-events:none}
+.series-tag{display:inline-block;font-size:13px;letter-spacing:.32em;color:var(--text2);border:1px solid var(--border);border-radius:999px;padding:7px 22px;margin-bottom:30px;background:var(--card)}
+.hero h1{font-size:clamp(2.2rem,7vw,3.8rem);letter-spacing:.08em;color:var(--text);text-shadow:0 2px 18px var(--shadow)}
+.hero .hero-sub{margin-top:18px;font-size:clamp(1rem,3vw,1.3rem);color:var(--accent);letter-spacing:.14em}
+.hero .hero-quote{margin-top:26px;color:var(--text2);font-size:1rem;letter-spacing:.06em;max-width:560px}
+.hero-author{margin-top:22px;font-size:13.5px;color:var(--text2);letter-spacing:.2em}
+
+/* 首屏插画：雪夜钟摆 */
+.hero-illust{position:relative;width:280px;height:200px;margin:36px auto 0}
+.swing-wrap{position:absolute;left:50%;top:10px;transform:translateX(-50%);width:120px;height:160px;transform-origin:top center;animation:swing 4.5s ease-in-out infinite}
+.swing-arm{width:2px;height:120px;background:linear-gradient(180deg,var(--accent),var(--accent2));margin:0 auto;border-radius:2px;position:relative}
+.swing-weight{width:18px;height:18px;background:var(--accent3);border-radius:50%;position:absolute;left:-8px;bottom:-9px;box-shadow:0 0 18px var(--shadow)}
+.swing-pendulum{width:60px;height:60px;margin:30px auto 0;border:2px solid var(--border);border-radius:50%;position:relative;overflow:hidden}
+.swing-pendulum::before{content:'';position:absolute;top:0;left:0;right:0;height:50%;background:linear-gradient(180deg,var(--accent2),transparent);opacity:.5}
+.swing-dot{width:8px;height:8px;background:var(--accent);border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);animation:swing 4.5s ease-in-out infinite}
+@keyframes swing{0%,100%{transform:translateX(-50%) rotate(-18deg)}50%{transform:translateX(-50%) rotate(18deg)}}
+.snowflake{position:absolute;color:var(--text2);opacity:.5;font-size:12px;animation:fall linear infinite}
+.snowflake:nth-child(1){left:10%;animation-duration:8s;animation-delay:0s}
+.snowflake:nth-child(2){left:25%;animation-duration:10s;animation-delay:2s}
+.snowflake:nth-child(3){left:50%;animation-duration:7s;animation-delay:4s}
+.snowflake:nth-child(4){left:70%;animation-duration:9s;animation-delay:1s}
+.snowflake:nth-child(5){left:85%;animation-duration:11s;animation-delay:3s}
+@keyframes fall{0%{transform:translateY(-20px) rotate(0deg);opacity:.7}100%{transform:translateY(200px) rotate(360deg);opacity:.1}}
+
+/* ============ 章节 ============ */
+.chapter{max-width:820px;margin:0 auto;padding:78px 26px;opacity:0;transform:translateY(36px);transition:opacity .9s ease,transform .9s ease;position:relative;z-index:1}
+.chapter.visible{opacity:1;transform:translateY(0)}
+.chapter-static{max-width:820px;margin:0 auto;padding:78px 26px;position:relative;z-index:1}
+.ch-tag{display:inline-block;font-size:13px;letter-spacing:.3em;color:var(--accent);margin-bottom:14px}
+.chapter h2,.chapter-static h2{font-size:clamp(1.5rem,4.6vw,2rem);letter-spacing:.06em;margin-bottom:26px;position:relative;display:inline-block}
+.chapter h2::after,.chapter-static h2::after{content:'';position:absolute;left:2px;bottom:-10px;width:56px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.chapter p{margin-bottom:18px;color:var(--text)}
+.muted{color:var(--text2)}
+.lead{font-size:1.06rem}
+
+.quote{background:var(--quote-bg);border-left:4px solid var(--accent);border-radius:0 14px 14px 0;padding:22px 26px;margin:28px 0;color:var(--text);font-size:1.05rem;letter-spacing:.03em}
+.quote.big{font-size:1.18rem;text-align:center;border-left:none;border-radius:16px;padding:34px 26px}
+.quote .src{display:block;margin-top:10px;font-size:.85rem;color:var(--text2)}
+
+/* 加餐/补充徽章 */
+.sup-badge{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;letter-spacing:.24em;color:#fff;background:linear-gradient(90deg,var(--accent2),var(--accent3));border-radius:999px;padding:6px 18px;margin-bottom:16px}
+.sup-note{border-left:3px dashed var(--accent2);background:var(--soft);border-radius:0 12px 12px 0;padding:14px 18px;margin:22px 0;color:var(--text2);font-size:.95rem}
+.sup-note b{color:var(--accent2);font-weight:600}
+
+/* 方法卡（壹/贰/叁/肆 编号） */
+.tip-card{display:flex;gap:18px;background:var(--card);border:1px solid var(--border);border-radius:18px;padding:26px 24px;margin-bottom:18px;box-shadow:0 6px 22px var(--shadow);align-items:flex-start}
+.tip-num{font-family:'ZCOOL XiaoWei',serif;font-size:2.2rem;color:var(--accent);line-height:1;flex-shrink:0;width:44px;text-align:center;padding-top:4px}
+.tip-body h3{font-size:1.12rem;color:var(--text);margin-bottom:8px;letter-spacing:.04em}
+.tip-body p{font-size:.94rem;color:var(--text2);margin:0}
+
+/* 数据格 */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:30px 0}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px 10px;text-align:center;box-shadow:0 6px 22px var(--shadow)}
+.stat-card .v{font-family:'ZCOOL XiaoWei',serif;font-size:1.5rem;color:var(--accent2)}
+.stat-card .l{font-size:.8rem;color:var(--text2);margin-top:6px}
+
+/* 金句胶囊 */
+.say-grid{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.say-chip{background:var(--quote-bg);border:1px solid var(--border);border-radius:14px;padding:14px 18px;font-size:.9rem;color:var(--text);max-width:380px;box-shadow:0 4px 14px var(--shadow)}
+
+/* ============ 本书专属组件：钟摆两极 ============ */
+.pendulum-box{display:flex;justify-content:center;align-items:center;gap:60px;margin:36px 0;flex-wrap:wrap}
+.pole{display:flex;flex-direction:column;align-items:center;gap:10px;max-width:220px;text-align:center}
+.pole-label{font-family:'ZCOOL XiaoWei',serif;font-size:1.2rem;color:var(--accent);letter-spacing:.1em}
+.pole-desc{font-size:.9rem;color:var(--text2)}
+.pole-line{width:1px;height:60px;background:linear-gradient(180deg,var(--accent),transparent)}
+.pole-dot{width:14px;height:14px;border-radius:50%;background:var(--accent3);box-shadow:0 0 14px var(--shadow)}
+
+/* ============ 本书专属组件：豪猪距离 ============ */
+.hedgehog-box{position:relative;width:100%;max-width:520px;height:160px;margin:30px auto;background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 8px 30px var(--shadow)}
+.hedgehog-svg{position:absolute;inset:0;width:100%;height:100%}
+.hg-left{position:absolute;left:40px;top:50%;transform:translateY(-50%);width:60px;height:60px;background:radial-gradient(circle at 30% 30%,var(--accent2),var(--accent3));border-radius:50%;box-shadow:0 0 20px var(--shadow)}
+.hg-right{position:absolute;right:40px;top:50%;transform:translateY(-50%);width:60px;height:60px;background:radial-gradient(circle at 30% 30%,var(--accent2),var(--accent3));border-radius:50%;box-shadow:0 0 20px var(--shadow)}
+.hg-distance{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--soft);border:1px solid var(--border);border-radius:10px;padding:6px 14px;font-size:.85rem;color:var(--accent);white-space:nowrap}
+.hg-spines{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:calc(100% - 160px);height:2px;background:repeating-linear-gradient(90deg,var(--accent) 0,var(--accent) 2px,transparent 2px,transparent 8px);opacity:.5}
+
+/* ============ 思维导图 ============ */
+.markmap-box{width:100%;max-width:100%;overflow:hidden;background:var(--card);border:1px solid var(--border);border-radius:20px;box-shadow:0 8px 30px var(--shadow);margin-top:26px}
+.markmap{min-height:560px;width:100%;max-width:100%;overflow:hidden}
+.markmap svg{display:block;width:100%;max-width:100%;height:auto}
+.markmap-foreign{color:var(--text)!important;font-family:'Noto Serif SC',serif!important}
+.markmap-link{stroke:var(--accent)!important;opacity:.5}
+.markmap-node circle{fill:var(--accent)!important}
+
+/* ============ 页脚 ============ */
+.tonight{padding:64px 26px;text-align:center;position:relative;z-index:1}
+.moon{font-size:2rem;display:block;margin-bottom:18px;animation:moonGlow 4s ease-in-out infinite}
+@keyframes moonGlow{0%,100%{opacity:.75}50%{opacity:1}}
+.tonight .goodnight{font-family:'ZCOOL XiaoWei',serif;font-size:1.6rem;letter-spacing:.5em;text-indent:.5em;color:var(--text);margin-bottom:20px}
+.tonight .bless{color:var(--text2);font-size:.98rem;max-width:560px;margin:0 auto 26px;letter-spacing:.04em}
+.src-note{font-size:.78rem;color:var(--text2);opacity:.7;letter-spacing:.06em}
+
+/* ============ 移动端加固 ============ */
+@media(max-width:768px){
+  body{font-size:15.5px;background-attachment:scroll}
+  .theme-select{top:10px;right:10px;padding:6px 12px;font-size:12px}
+  .tonight{padding:34px 22px}
+  .chapter,.chapter-static{padding:60px 20px}
+  .stat-grid{grid-template-columns:repeat(2,1fr)}
+  .hero{padding:80px 18px 56px}
+  .pendulum-box{gap:30px}
+  .pole{max-width:160px}
+  .hedgehog-box{height:130px}
+}
+</style>
+</head>
+<body class="theme-snow">
+<script>
+(function(){var t=['theme-snow','theme-mint','theme-cloud','theme-bamboo','theme-amber','theme-dawn','theme-lavender','theme-slate','theme-rose','theme-sakura','theme-forest','theme-ocean','theme-sand','theme-night','theme-charcoal','theme-deepsea'];var i=Math.floor(Math.random()*t.length);document.body.className=t[i];})();
+</script>
+
+<select class="theme-select" onchange="document.body.className=this.value">
+  <option value="theme-snow">❄️ 雪夜</option>
+  <option value="theme-mint">🍃 薄荷</option>
+  <option value="theme-cloud">☁️ 白云</option>
+  <option value="theme-bamboo">🎋 青竹</option>
+  <option value="theme-amber">🌾 麦浪</option>
+  <option value="theme-dawn">🌅 晨光</option>
+  <option value="theme-lavender">🪻 薰衣草</option>
+  <option value="theme-slate">🪨 苔石</option>
+  <option value="theme-rose">🌹 蔷薇</option>
+  <option value="theme-sakura">🌸 樱花</option>
+  <option value="theme-forest">🌲 森林</option>
+  <option value="theme-ocean">🌊 海洋</option>
+  <option value="theme-sand">🏜️ 沙丘</option>
+  <option value="theme-night">🌙 夜晚</option>
+  <option value="theme-charcoal">🖤 炭黑</option>
+  <option value="theme-deepsea">🐋 深海</option>
+</select>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="series-tag">深 夜 书 房 · 今 夜 共 读</div>
+  <h1>人生的智慧</h1>
+  <div class="hero-sub">痛苦与无聊之间，钟摆从未停歇</div>
+  <div class="hero-quote">"人生就像钟摆，在痛苦和无聊之间来回摇晃。"</div>
+  <!-- 首屏插画：雪夜钟摆 -->
+  <div class="hero-illust">
+    <div class="snowflake">❄</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❄</div>
+    <div class="snowflake">❅</div>
+    <div class="swing-wrap">
+      <div class="swing-arm"><div class="swing-weight"></div></div>
+      <div class="swing-pendulum"><div class="swing-dot"></div></div>
+    </div>
+  </div>
+  <div class="hero-author">〔德〕阿图尔·叔本华 著 ／ 译者：韦启昌</div>
+</section>
+
+<!-- ============ 引入 ============ -->
+<section class="chapter">
+  <div class="ch-tag">引 入</div>
+  <h2>为什么我们总是不快乐</h2>
+  <p class="lead">叔本华在《人生的智慧》中开宗明义：人生的幸福，从根本上说，是依赖于外界的东西太少，而依赖于自身的东西太多。我们追寻财富、名誉、地位，以为这些能带来快乐，但大多数时候，它们只是痛苦的不同形态。</p>
+  <div class="quote">"我们所拥有的的东西，并不像我们想象的那样，能带来幸福；我们所缺少的东西，也不像我们想象的那样，会带来痛苦。"
+    <span class="src">—— 叔本华</span>
+  </div>
+</section>
+
+<!-- ============ 核心概念：钟摆意象 ============ -->
+<section class="chapter">
+  <div class="ch-tag">核 心 概 念</div>
+  <h2>钟摆的两极</h2>
+  <p class="lead">人生就像悬挂在痛苦与无聊之间的钟摆。当欲望得不到满足时，我们感到痛苦；当欲望得到满足后，我们又陷入无聊。这两种状态交替出现，构成人类存在的底色。</p>
+  <!-- 专属组件：钟摆两极 -->
+  <div class="pendulum-box">
+    <div class="pole">
+      <div class="pole-label">痛苦</div>
+      <div class="pole-line"></div>
+      <div class="pole-dot"></div>
+      <div class="pole-desc">欲望未满<br>匮乏、焦虑、求而不得</div>
+    </div>
+    <div class="pole">
+      <div class="pole-label">无聊</div>
+      <div class="pole-line"></div>
+      <div class="pole-dot"></div>
+      <div class="pole-desc">欲望已满<br>空虚、倦怠、了无生趣</div>
+    </div>
+  </div>
+  <div class="quote big">"生命是一团欲望，欲望不满足便痛苦，满足便无聊。人生就在痛苦和无聊之间摇摆。"
+    <span class="src">—— 《人生的智慧》</span>
+  </div>
+</section>
+
+<!-- ============ 幸福三要素 ============ -->
+<section class="chapter">
+  <div class="ch-tag">壹 · 幸 福 的 三 要 素</div>
+  <h2>什么是人的幸福</h2>
+  <p class="lead">叔本华将决定人生命运的根本因素分为三类：人的自身（健康、力量、外貌、气质、道德品质、智力、教养），人所拥有的（财产和其他占有物），以及人向外界展示的样子（名誉、地位、名声）。</p>
+  <div class="stat-grid">
+    <div class="stat-card"><div class="v">第一</div><div class="l">人的自身</div></div>
+    <div class="stat-card"><div class="v">第二</div><div class="l">人所拥有的</div></div>
+    <div class="stat-card"><div class="v">第三</div><div class="l">外在的名声</div></div>
+    <div class="stat-card"><div class="v">结论</div><div class="l">自身幸福占绝对主导</div></div>
+  </div>
+  <p>健康是所有幸福中最重要的因素。一个健康的乞丐确实比一个染病的国王更幸福。内在的丰富比外在的财富更能决定一个人的幸福感。</p>
+  <div class="say-grid">
+    <div class="say-chip">"健康的身体加上健康的心灵，才是对人真正的幸福。"</div>
+    <div class="say-chip">"幸福不是来自于外在，而是来自于内心。"</div>
+    <div class="say-chip">"我们应该把现有的财富视为能够抵御多种不幸的城墙，而不是用来挥霍的许可证。"</div>
+  </div>
+</section>
+
+<!-- ============ 豪猪困境 ============ -->
+<section class="chapter">
+  <div class="ch-tag">贰 · 社 交 与 孤 独</div>
+  <h2>豪猪困境</h2>
+  <p class="lead">一群豪猪在寒冬里想要挤在一起取暖，但凑得太近又会刺痛彼此。它们反复尝试，终于找到一个适当的距离——既温暖又不至于互相伤害。这就是人类社会交往的隐喻。</p>
+  <!-- 专属组件：豪猪距离 -->
+  <div class="hedgehog-box">
+    <div class="hedgehog-svg">
+      <svg viewBox="0 0 520 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+        <line x1="130" y1="80" x2="390" y2="80" stroke="var(--accent)" stroke-width="1" stroke-dasharray="4 6" opacity=".5"/>
+        <circle cx="100" cy="80" r="28" fill="var(--accent2)" opacity=".85"/>
+        <circle cx="420" cy="80" r="28" fill="var(--accent2)" opacity=".85"/>
+        <text x="260" y="52" text-anchor="middle" fill="var(--text)" font-size="13" font-family="Noto Serif SC,serif" letter-spacing="3">适 度 距 离</text>
+        <text x="260" y="112" text-anchor="middle" fill="var(--text2)" font-size="11" font-family="Noto Serif SC,serif">温暖而不刺痛</text>
+        <!-- 刺 -->
+        <g stroke="var(--accent)" stroke-width="1.2" opacity=".6">
+          <line x1="128" y1="60" x2="140" y2="48"/><line x1="128" y1="80" x2="145" y2="80"/><line x1="128" y1="100" x2="140" y2="112"/>
+          <line x1="392" y1="60" x2="380" y2="48"/><line x1="392" y1="80" x2="375" y2="80"/><line x1="392" y1="100" x2="380" y2="112"/>
+        </g>
+      </svg>
+    </div>
+    <div class="hg-distance">恰到好处的孤独</div>
+  </div>
+  <p>叔本华因此认为，一个人只有在独处时才能成为自己。谁要是不热爱独处，那他就不热爱自由，因为一个人只有在独处时才能获得真正的自由。</p>
+  <div class="quote">"只有当一个人独处的时候，他才可以完全成为自己。"
+    <span class="src">—— 叔本华</span>
+  </div>
+</section>
+
+<!-- ============ 方法：四重修炼 ============ -->
+<section class="chapter">
+  <div class="ch-tag">叁 · 四 重 修 炼</div>
+  <h2>如何过好这一生</h2>
+  <p class="lead">基于叔本华的核心思想，我们可以提炼出四重修炼：保护生命的根本、节制欲望、丰富内在、以及智慧地独处。</p>
+  <div class="tip-card"><div class="tip-num">壹</div><div class="tip-body"><h3>保护健康</h3><p>健康是所有幸福的基石。叔本华说："健康的乞丐比有病的国王更幸福。"规律作息、适度运动、减少内耗，是人生第一要务。</p></div></div>
+  <div class="tip-card"><div class="tip-num">贰</div><div class="tip-body"><h3>节制欲望</h3><p>欲望是痛苦的根源。学会区分"需要"和"想要"，减少不必要的占有欲。知足不是消极，而是对生命有限性的清醒认知。</p></div></div>
+  <div class="tip-card"><div class="tip-num">叁</div><div class="tip-body"><h3>丰富内在</h3><p>读书、思考、欣赏艺术——这些精神活动能让我们在物质匮乏时依然保持富足。一个精神世界丰富的人，即使在荒岛上也不会孤独。</p></div></div>
+  <div class="tip-card"><div class="tip-num">肆</div><div class="tip-body"><h3>智慧地独处</h3><p>像豪猪一样，找到与他人相处的最佳距离。独处不是孤僻，而是给自己留出沉淀和反思的空间。只有在独处中，我们才能听见内心的声音。</p></div></div>
+</section>
+
+<!-- ============ 加餐/补充 ============ -->
+<section class="chapter">
+  <div class="sup-badge">🌙 深 夜 加 餐</div>
+  <div class="ch-tag">实 践 练 习</div>
+  <h2>今晚就能做的 5 件小事</h2>
+  <p class="lead">理论只有在转化为行动时才真正属于我们。以下是五件可以在今晚开始的小事，让《人生的智慧》从书本走进生活。</p>
+  <div class="sup-note"><b>加餐说明：</b>以下内容基于叔本华的核心观点原创补充，旨在提供可操作的实践路径，非原书直接引用。</div>
+  <div class="tip-card"><div class="tip-num">1</div><div class="tip-body"><h3>欲望清点</h3><p>睡前写下今天产生的 5 个欲望，分类为"需要"或"想要"。明天再看，你会发现大部分痛苦来自"想要"。</p></div></div>
+  <div class="tip-card"><div class="tip-num">2</div><div class="tip-body"><h3>独处时刻</h3><p>每天留出 30 分钟不受打扰的独处时间，不带手机，只与自己对话。可以是散步、冥想，或 simply 坐着。</p></div></div>
+  <div class="tip-card"><div class="tip-num">3</div><div class="tip-body"><h3>内在富足记录</h3><p>记录今天让你感到精神富足的三件事（如读到的好句子、一次深刻的对话、片刻的宁静）。</p></div></div>
+  <div class="tip-card"><div class="tip-num">4</div><div class="tip-body"><h3>社交距离校准</h3><p>回忆今天与人交往的感受，是太近（疲惫）还是太远（空虚）？为明天的人际关系设定一个"舒适距离"。</p></div></div>
+  <div class="tip-card"><div class="tip-num">5</div><div class="tip-body"><h3>痛苦转化</h3><p>把今天的一个小痛苦写下来，然后尝试用一句话将其转化为智慧。痛苦本身没有意义，但对痛苦的反思有意义。</p></div></div>
+</section>
+
+<!-- ============ 收尾金句 ============ -->
+<section class="chapter">
+  <div class="ch-tag">收 尾</div>
+  <h2>钟摆的启示</h2>
+  <p class="lead">认识到人生的痛苦本质，不是消极，而是一种清醒。正是这种清醒，让我们有机会在痛苦与无聊之间，找到第三条路——一条通往内在自由与平静的路。</p>
+  <div class="quote big">"一个人唯有当他抛弃一切外在的虚荣，而全心追求内在的富足时，他才能真正获得幸福。"
+    <span class="src">—— 《人生的智慧》</span>
+  </div>
+</section>
+
+<!-- ============ 思维导图（必须 .chapter-static） ============ -->
+<section class="chapter-static">
+  <div class="ch-tag">全 书 脉 络</div>
+  <h2>一张图，带走整本书</h2>
+  <div class="markmap-box">
+    <div class="markmap" style="height:560px">
+<script type="text/template">
+## 《人生的智慧》
+### 核心命题
+#### 痛苦与无聊的钟摆
+#### 幸福取决于自身而非外在
+### 幸福三要素
+#### 人的自身（健康、智力、气质）
+#### 人所拥有的（财产）
+#### 外在名声（名誉、地位）
+### 社交与孤独
+#### 豪猪困境：距离之美
+#### 独处是自由的最高形式
+### 四重修炼
+#### 保护健康
+#### 节制欲望
+#### 丰富内在
+#### 智慧地独处
+### 一句话
+#### 幸福不是向外抓取，而是向内扎根
+</script>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 页脚 ============ -->
+<footer class="tonight">
+  <span class="moon">🌙</span>
+  <div class="goodnight">晚安</div>
+  <div class="bless">愿你在痛苦与无聊之间，找到属于自己的宁静。</div>
+  <div class="src-note">文稿来源 ·「深夜书房今夜共读」·《人生的智慧》〔德〕阿图尔·叔本华 ｜ 含延伸阅读与补充实践</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+<script>
+// 滚动渐显（.chapter-static 不参与）
+(function(){
+  var els=document.querySelectorAll('.chapter');
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}
+    });
+  },{threshold:.12});
+  els.forEach(function(el){io.observe(el);});
+})();
+// 主题下拉同步
+(function(){
+  var sel=document.querySelector('.theme-select');
+  if(sel){sel.value=document.body.className;}
+})();
+// markmap 尺寸自适应
+window.addEventListener('load',function(){
+  window.dispatchEvent(new Event('resize'));
+  setTimeout(function(){window.dispatchEvent(new Event('resize'));},600);
+  setTimeout(function(){window.dispatchEvent(new Event('resize'));},1800);
+});
+</script>
+</body>
+</html>
