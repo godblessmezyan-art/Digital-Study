@@ -55,6 +55,6 @@ docker compose -f deploy/docker-compose.yml run --rm api pnpm sync-content
 docker compose -f deploy/docker-compose.yml up -d api web
 ```
 
-访问 `http://服务器地址:${WEB_PORT:-8080}`。发布接口当前没有用户鉴权，不应直接暴露给不可信网络；用户系统不在本阶段范围内。
+访问 `http://服务器地址:${WEB_PORT:-8080}`。发布、AI 生成和模型配置接口复用 `wxhappylife.top` 的 Halo/Study 登录，并且只允许管理员角色执行写操作。
 
-更多说明见 [架构文档](docs/ARCHITECTURE.md)、[AI 工坊](docs/AI_WORKSHOP.md) 和 [开发指南](docs/DEVELOPMENT.md)。
+更多说明见 [架构文档](docs/ARCHITECTURE.md)、[AI 工坊](docs/AI_WORKSHOP.md)、[开发指南](docs/DEVELOPMENT.md) 和 [后端 Agent 交接文档](docs/BACKEND_AGENT_HANDOFF.md)。
