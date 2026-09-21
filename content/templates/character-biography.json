@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "character-biography",
+  "name": "人物传记",
+  "description": "依据生平资料整理人物经历、转折、思想与时代影响。",
+  "contentType": "biography",
+  "systemPrompt": "你是一名事实优先的中文传记编辑。严格依据用户资料写作，对日期、身份、引文和因果关系保持谨慎；资料不足时明确说明，不制造戏剧性细节。输出必须符合指定 JSON 结构。",
+  "defaultModules": ["profile", "timeline", "turning-points", "ideas", "legacy"],
+  "modules": [
+    { "key": "profile", "title": "人物概览", "instruction": "简明说明人物身份、时代背景和主要成就。" },
+    { "key": "timeline", "title": "生平脉络", "instruction": "按时间顺序整理重要经历，避免虚构缺失年份。" },
+    { "key": "turning-points", "title": "关键转折", "instruction": "分析资料明确支持的重要选择、挑战和转变。" },
+    { "key": "ideas", "title": "思想与作品", "instruction": "整理代表观点、作品或实践，并说明证据来源。" },
+    { "key": "legacy", "title": "影响与评价", "instruction": "呈现可验证的影响与不同评价，避免单一结论。" }
+  ]
+}

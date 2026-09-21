@@ -7,6 +7,7 @@ import { RegenerateSectionRequest } from './dto/regenerate-section.dto';
 import { SaveModelConfigRequest } from './dto/save-model-config.dto';
 import { GenerationsService } from './generations.service';
 import { TemplatesService } from './templates.service';
+import { UpdateTemplateRequest } from './dto/update-template.dto';
 
 @Controller('ai')
 export class AiController {
@@ -64,6 +65,18 @@ export class AiController {
   @Get('templates')
   async listTemplates() {
     return (await this.templates.list()).map(({ systemPrompt: _systemPrompt, schemaVersion: _schemaVersion, ...template }) => template);
+  }
+
+  @Get('templates/:id')
+  @UseGuards(StudyAdminGuard)
+  getTemplate(@Param('id') id: string) {
+    return this.templates.get(id);
+  }
+
+  @Patch('templates/:id')
+  @UseGuards(StudyAdminGuard)
+  updateTemplate(@Param('id') id: string, @Body() input: UpdateTemplateRequest) {
+    return this.templates.update(id, input);
   }
 
   @Post('generations')

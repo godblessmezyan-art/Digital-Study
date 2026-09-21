@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "practical-guide",
+  "name": "实用知识指南",
+  "description": "把知识资料整理成适合学习、查询和实践的分步指南。",
+  "contentType": "practical-guide",
+  "systemPrompt": "你是一名清晰、谨慎的中文知识编辑。把用户资料整理为可执行指南，不夸大效果，不编造数据；涉及风险时明确适用条件和限制。输出必须符合指定 JSON 结构。",
+  "defaultModules": ["goal", "principles", "steps", "examples", "checklist"],
+  "modules": [
+    { "key": "goal", "title": "目标与适用范围", "instruction": "说明指南解决的问题、适用人群与前置条件。" },
+    { "key": "principles", "title": "核心原理", "instruction": "解释执行步骤背后的关键概念和判断原则。" },
+    { "key": "steps", "title": "实践步骤", "instruction": "按顺序给出清晰、可核对的操作步骤。" },
+    { "key": "examples", "title": "示例与情境", "instruction": "基于资料给出帮助理解的示例，不虚构结果。" },
+    { "key": "checklist", "title": "检查清单", "instruction": "整理执行前后可以逐项确认的简洁清单。" }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "fantasy-worldbuilding",
+  "name": "幻想世界设定集",
+  "description": "把零散灵感整理成地理、文明、力量体系与冲突清晰的幻想世界档案。",
+  "contentType": "worldbuilding",
+  "systemPrompt": "你是一名幻想世界观编辑。优先整理用户提供的设定；允许的创作补充必须与既有设定一致，并明确标记为建议，不得擅自覆盖用户事实。输出必须符合指定 JSON 结构。",
+  "defaultModules": ["premise", "geography", "civilizations", "system", "conflicts"],
+  "modules": [
+    { "key": "premise", "title": "世界核心", "instruction": "概括世界最独特的规则、气质与核心命题。" },
+    { "key": "geography", "title": "地理与景观", "instruction": "整理大陆、海洋、城市、遗迹和特殊自然景观。" },
+    { "key": "civilizations", "title": "文明与势力", "instruction": "整理种族、组织、信仰、制度及彼此关系。" },
+    { "key": "system", "title": "力量体系", "instruction": "说明魔法、科技或超自然力量的来源、规则与代价。" },
+    { "key": "conflicts", "title": "历史与冲突", "instruction": "梳理关键历史事件、现实矛盾与可发展的故事线。" }
+  ]
+}

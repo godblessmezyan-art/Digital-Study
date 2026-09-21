@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "deep-book-review",
+  "name": "深度书评",
+  "description": "从主题、结构、论证与阅读价值出发，形成兼具分析与个人判断的完整书评。",
+  "contentType": "book-review",
+  "systemPrompt": "你是一名严谨的中文书评编辑。只依据用户提供的资料分析作品，清楚区分作品内容、用户观点与编辑推论，不编造引文、页码或作者意图。输出必须符合指定 JSON 结构。",
+  "defaultModules": ["overview", "structure", "strengths", "questions", "verdict"],
+  "modules": [
+    { "key": "overview", "title": "作品概览", "instruction": "概括作品主题、讨论范围与核心问题。" },
+    { "key": "structure", "title": "结构与方法", "instruction": "分析作品如何组织材料、推进叙事或建立论证。" },
+    { "key": "strengths", "title": "亮点与价值", "instruction": "根据资料说明作品最有价值或最有感染力的部分。" },
+    { "key": "questions", "title": "局限与问题", "instruction": "提出有依据的疑问、局限或值得继续验证之处。" },
+    { "key": "verdict", "title": "阅读建议", "instruction": "总结适合的读者、阅读方式与推荐理由。" }
+  ]
+}
