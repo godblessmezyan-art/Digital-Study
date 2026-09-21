@@ -20,6 +20,11 @@ let atlasViewId = document.documentElement.dataset.sceneView || 'default';
 let globeController = null;
 let worldMapReturnFocus = null;
 
+const worldArt = document.querySelector('.world__art');
+const revealWorldArt = () => worldArt?.classList.add('is-loaded');
+if (worldArt?.complete) revealWorldArt();
+else worldArt?.addEventListener('load', revealWorldArt, { once: true });
+
 const homeNavId = () => location.hash === '#shelf' ? 'shelf' : location.hash === '#settings' ? 'settings' : 'home';
 renderSidebar(sidebar, { variant: 'home', activeId: homeNavId(), brandName: theme.name, brandEnglish: theme.englishName, brandIcon: icons[theme.logo] });
 
