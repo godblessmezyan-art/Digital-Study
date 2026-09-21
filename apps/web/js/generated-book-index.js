@@ -2,6 +2,27 @@
 export const GIT_BOOK_INDEX = [
   {
     "schemaVersion": 1,
+    "slug": "clouds-and-stars",
+    "title": "人生的智慧 · 深夜书房今夜共读",
+    "author": "星海旅人",
+    "summary": "一场穿越云海与群星的旅程",
+    "tags": [
+      "奇幻",
+      "世界观",
+      "冒险"
+    ],
+    "cover": "cover.svg",
+    "status": "published",
+    "category": {
+      "slug": "fantasy",
+      "name": "幻想文学"
+    },
+    "publishedAt": "2026-09-21T01:45:24.989Z",
+    "coverUrl": "/content/books/clouds-and-stars/cover.svg",
+    "contentUrl": "/content/books/clouds-and-stars/content.html"
+  },
+  {
+    "schemaVersion": 1,
     "slug": "welcome-to-digital-study",
     "title": "欢迎来到数字书房",
     "author": "数字书房",

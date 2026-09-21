@@ -36,3 +36,16 @@ content/books/{slug}/
 - `status` 只能是 `draft` 或 `published`；公开 API 只返回 `published`。
 - 修改内容后执行根目录的 `pnpm sync-content`，将索引字段 upsert 到数据库。
 - 以下划线或点开头的目录会被同步器忽略，可用于本地草稿或模板。
+
+## 从旧 Study 导入
+
+旧 `wxhappylife.top/study` 的书籍可以在同一台服务器上一次性导入：
+
+```bash
+pnpm import:legacy-study -- --dry-run
+pnpm import:legacy-study
+pnpm build-content-index
+pnpm sync-content
+```
+
+脚本从旧服务 API 读取书籍和分类元数据，从 `/opt/study-api/books_html` 复制原始 HTML，写入稳定目录 `content/books/legacy-study-{id}`。默认不会覆盖已导入书籍；只有明确传入 `--overwrite` 才会覆盖对应目录。
