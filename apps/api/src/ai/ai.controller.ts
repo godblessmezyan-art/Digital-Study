@@ -9,6 +9,7 @@ import { GenerationsService } from './generations.service';
 import { TemplatesService } from './templates.service';
 import { UpdateTemplateRequest } from './dto/update-template.dto';
 import { CompleteBookMetadataRequest } from './dto/complete-book-metadata.dto';
+import { PublishOptionsRequest } from '../books/dto/publish-book.dto';
 
 @Controller('ai')
 export class AiController {
@@ -129,7 +130,7 @@ export class AiController {
 
   @Post('generations/:id/publish')
   @UseGuards(StudyAdminGuard)
-  publish(@Param('id') id: string) {
-    return this.generations.publish(id);
+  publish(@Param('id') id: string, @Body() input: PublishOptionsRequest) {
+    return this.generations.publish(id, Boolean(input?.syncToGit));
   }
 }

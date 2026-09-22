@@ -1,4 +1,5 @@
 export type BookStatus = 'draft' | 'published';
+export type GitSyncStatus = 'never_synced' | 'pending' | 'syncing' | 'synced' | 'outdated' | 'conflict' | 'error';
 
 export interface CategoryDto {
   slug: string;
@@ -15,6 +16,16 @@ export interface BookSummaryDto {
   status: BookStatus;
   publishedAt: string | null;
   category: CategoryDto | null;
+  createdAt?: string;
+  updatedAt?: string;
+  deletedAt?: string | null;
+  contentHash?: string | null;
+  gitSync?: {
+    status: GitSyncStatus;
+    commitSha: string | null;
+    lastSyncedAt: string | null;
+    lastError: string | null;
+  };
 }
 
 export interface BookDetailDto extends BookSummaryDto {

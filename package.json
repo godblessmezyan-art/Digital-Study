@@ -18,6 +18,7 @@
     "build:cloudflare": "pnpm run build:shared && pnpm run build:web",
     "deploy:cloudflare": "wrangler deploy",
     "sync-content": "node scripts/sync-content.mjs",
+    "migrate-content-storage": "node scripts/migrate-content-storage.mjs",
     "import:legacy-study": "node scripts/import-legacy-study.mjs",
     "build-content-index": "node scripts/build-content-index.mjs",
     "validate-content": "node scripts/validate-content.mjs",

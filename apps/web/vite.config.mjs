@@ -2,7 +2,7 @@ import { resolve } from 'node:path';
 import { readFile, stat } from 'node:fs/promises';
 import { defineConfig } from 'vite';
 
-const contentRoot = resolve(import.meta.dirname, '..', '..', 'content', 'books');
+const contentRoot = resolve(import.meta.dirname, '..', '..', process.env.CONTENT_ROOT || 'runtime-data/books');
 const contentTypes = {
   '.html': 'text/html; charset=utf-8',
   '.json': 'application/json; charset=utf-8',

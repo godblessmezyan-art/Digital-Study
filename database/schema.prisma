@@ -21,6 +21,21 @@ enum GenerationStatus {
   CANCELLED
 }
 
+enum GitSyncStatus {
+  NEVER_SYNCED
+  PENDING
+  SYNCING
+  SYNCED
+  OUTDATED
+  CONFLICT
+  ERROR
+}
+
+enum GitSyncOperation {
+  UPSERT
+  DELETE
+}
+
 model Category {
   id          Int      @id @default(autoincrement())
   slug        String   @unique @db.VarChar(100)
@@ -45,12 +60,54 @@ model Book {
   publishedAt  DateTime?
   categoryId   Int?
   category     Category?  @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  contentHash  String?    @db.VarChar(64)
+  deletedAt    DateTime?
+  gitSync      BookGitSync?
+  gitSyncJobs  GitSyncJob[]
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
 
   @@index([status, publishedAt])
   @@index([categoryId])
+  @@index([deletedAt])
   @@map("books")
+}
+
+model BookGitSync {
+  id                Int           @id @default(autoincrement())
+  bookId            Int           @unique
+  status            GitSyncStatus @default(NEVER_SYNCED)
+  syncedContentHash String?       @db.VarChar(64)
+  gitBranch         String?       @db.VarChar(160)
+  gitPath           String?       @db.VarChar(500)
+  gitCommitSha      String?       @db.VarChar(64)
+  lastSyncedAt      DateTime?
+  lastError         String?       @db.Text
+  book              Book          @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  @@index([status, updatedAt])
+  @@map("book_git_syncs")
+}
+
+model GitSyncJob {
+  id          String           @id @default(uuid()) @db.VarChar(36)
+  bookId      Int
+  operation   GitSyncOperation @default(UPSERT)
+  status      GitSyncStatus    @default(PENDING)
+  attempts    Int              @default(0)
+  error       String?          @db.Text
+  commitSha   String?          @db.VarChar(64)
+  book        Book             @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  createdAt   DateTime         @default(now())
+  startedAt   DateTime?
+  completedAt DateTime?
+  updatedAt   DateTime         @updatedAt
+
+  @@index([status, createdAt])
+  @@index([bookId, createdAt])
+  @@map("git_sync_jobs")
 }
 
 model GenerationTask {

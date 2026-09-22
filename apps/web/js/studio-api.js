@@ -51,6 +51,9 @@ export const createGeneration = (input) => request('/ai/generations', { method: 
 export const cancelGeneration = (id) => request(`/ai/generations/${id}/cancel`, { method: 'POST' });
 export const regenerateSection = (id, key, instruction) => request(`/ai/generations/${id}/sections/${key}/regenerate`, { method: 'POST', body: JSON.stringify({ instruction }) });
 export const saveGenerationDraft = (id) => request(`/ai/generations/${id}/save-draft`, { method: 'POST' });
-export const publishGeneration = (id) => request(`/ai/generations/${id}/publish`, { method: 'POST' });
+export const publishGeneration = (id, options = {}) => request(`/ai/generations/${id}/publish`, { method: 'POST', body: JSON.stringify(options) });
 export const publishBook = (input) => request('/books', { method: 'POST', body: JSON.stringify(input) });
 export const saveBookDraft = (input) => request('/books/drafts', { method: 'POST', body: JSON.stringify(input) });
+export const getAdminBooks = () => request('/admin/books');
+export const deleteAdminBook = (slug, deleteFromGit = false) => request(`/admin/books/${slug}`, { method: 'DELETE', body: JSON.stringify({ deleteFromGit }) });
+export const syncAdminBookToGit = (slug) => request(`/admin/books/${slug}/git-sync`, { method: 'POST' });

@@ -26,3 +26,5 @@ coverage/
 *.log
 .tmp/
 .wrangler/
+runtime-data/
+git-mirror/

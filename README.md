@@ -1,13 +1,14 @@
 # 数字书房 Monorepo
 
-代码、长期书籍内容、数据库迁移和部署配置统一保存在这个仓库。书籍正文以 `content/books` 为准，MySQL 只承担索引和运行时状态，因此更换服务器时不需要从数据库反向导出正文。
+代码与网站运行书库已经分离。书籍正文以服务器 `CONTENT_ROOT` 为准，MySQL 承担索引和运行状态；`content/books` 是可选 Git 镜像。
 
 ## 目录
 
 ```text
 apps/web        原有静态前端（Vite 仅负责开发服务和构建）
 apps/api        NestJS + Prisma API
-content/books   可纳入 Git 的书籍元数据、HTML 正文和封面
+runtime-data/books  本地运行书库（不入 Git）
+content/books   可选 Git 镜像和首次迁移来源
 content/templates AI 工坊长期模板
 packages/shared 前后端共享 TypeScript 类型
 database        Prisma schema、migration、seed
@@ -27,6 +28,7 @@ pnpm install
 docker compose -f deploy/docker-compose.yml up -d db
 pnpm prisma:generate
 pnpm prisma:migrate
+pnpm migrate-content-storage
 pnpm validate-content
 pnpm sync-content
 pnpm dev:api
@@ -38,9 +40,9 @@ pnpm dev:api
 
 `.env.example` 默认启用 `AI_PROVIDER=mock`，无需外部服务即可验证 AI 工坊完整流程。真实模型可在 AI 工坊的“配置模型”中添加；服务端需设置稳定的 `AI_SETTINGS_ENCRYPTION_KEY` 来加密保存 API Key。环境变量 `AI_BASE_URL`、`AI_API_KEY` 和 `AI_MODEL` 仍可作为回退。写入书籍、生成内容和模型管理统一复用 `wxhappylife.top` 的 Halo/Study 登录，且只允许管理员账号。
 
-MySQL 或 API 暂时不可用时，AI 工坊的手动创建和 HTML 导入模式可使用“写入 Git 内容目录”，选择仓库的 `content/books` 后直接生成长期内容文件。该功能不会自动执行 Git commit 或 push。
+AI 工坊的“导出到本地 Git 目录”是离线备用能力；正常保存和发布写入服务器书库。勾选“发布后同步到 Git”时才创建 Git 同步任务。
 
-分类页优先合并 API 数据，并以 `content/books/index.json` 作为静态回退。手工修改内容文件后可执行 `pnpm build-content-index` 重新生成索引；通过工坊写入时会自动更新。
+网站目录只读取服务器 API，不再合并 Git 静态索引，因此服务器删除的书籍不会从 Git 自动恢复。
 
 ## 新服务器恢复
 

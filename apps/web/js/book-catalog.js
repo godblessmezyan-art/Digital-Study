@@ -1,5 +1,4 @@
 import { withAppBase } from './runtime-paths.js';
-import { GIT_BOOK_INDEX } from './generated-book-index.js';
 
 const isLocalStaticPreview = ['localhost', '127.0.0.1'].includes(window.location.hostname)
   && window.location.port === '5175';
@@ -64,27 +63,14 @@ function readCache() {
 }
 
 export async function refreshCatalogBooks() {
-  const [apiResult, indexResult] = await Promise.allSettled([
-    fetchJson(`${apiBase}/books`),
-    fetchJson(withAppBase('/content/books/index.json')),
-  ]);
-  if (apiResult.status === 'rejected') console.warn('API book catalog unavailable:', apiResult.reason);
-  if (indexResult.status === 'rejected') console.warn('Git book catalog unavailable:', indexResult.reason);
-  const indexedSource = indexResult.status === 'fulfilled' && Array.isArray(indexResult.value?.books)
-    ? indexResult.value.books
-    : GIT_BOOK_INDEX;
-  const apiBooks = apiResult.status === 'fulfilled' && Array.isArray(apiResult.value)
-    ? apiResult.value
-    : [];
-  const books = mergeBooks(indexedSource, apiBooks);
+  const apiBooks = await fetchJson(`${apiBase}/books`);
+  const books = mergeBooks([], Array.isArray(apiBooks) ? apiBooks : []);
   try { sessionStorage.setItem(CACHE_KEY, JSON.stringify({ savedAt: Date.now(), books })); } catch { /* 浏览器禁用存储时仍返回新数据。 */ }
   return books;
 }
 
 export async function loadCatalogBooks({ fresh = false } = {}) {
   const cached = readCache();
-  const snapshot = mergeBooks(GIT_BOOK_INDEX, cached?.books || []);
-  if (fresh) return refreshCatalogBooks().catch(() => snapshot);
-  if (!cached || Date.now() - cached.savedAt > 30_000) void refreshCatalogBooks();
-  return snapshot;
+  const snapshot = mergeBooks([], cached?.books || []);
+  return refreshCatalogBooks().catch(() => snapshot);
 }

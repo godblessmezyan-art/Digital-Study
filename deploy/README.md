@@ -1,6 +1,6 @@
 # 部署基础框架
 
-`docker-compose.yml` 提供 MySQL、NestJS API 和 Nginx 前端三项服务。它刻意不包含自动 Git 操作、证书签发、云厂商绑定和零停机发布；这些应在服务器环境确定后补充。
+`docker-compose.yml` 提供 MySQL、NestJS API 和 Nginx 前端三项服务。服务器书库位于 `runtime-data/books`，与代码仓库的 `content/books` 分离。
 
 生产使用前至少需要：修改 `.env` 密码、设置真实 `CORS_ORIGIN`、配置 HTTPS，并确认 `STUDY_AUTH_BASE_URL` 指向可用的主站认证服务。
 
@@ -23,6 +23,9 @@ Cloudflare 第一阶段仅用于部署静态前端，配置与 Dashboard 命令�
 ```bash
 docker compose -f deploy/wxhappylife.compose.yml build
 docker compose -f deploy/wxhappylife.compose.yml run --rm api ./node_modules/.bin/prisma migrate deploy --schema database/schema.prisma
+pnpm migrate-content-storage
 docker compose -f deploy/wxhappylife.compose.yml run --rm api node apps/api/dist/scripts/sync-content.js
 docker compose -f deploy/wxhappylife.compose.yml up -d
 ```
+
+首次切换前先备份数据库与 `content/books`，再运行迁移脚本。脚本只复制缺失目录，不覆盖 `runtime-data/books` 中已有书籍。Git 同步需要在 `git-mirror` 中准备一份检出 `content` 分支的专用 clone，并为容器配置可推送凭据；未配置时网站发布仍正常，只会拒绝 Git 同步任务。

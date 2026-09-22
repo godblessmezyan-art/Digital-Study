@@ -14,7 +14,7 @@ RUN pnpm prisma:generate && pnpm build:shared && pnpm build:api
 FROM node:22-alpine AS runtime
 WORKDIR /workspace
 ENV NODE_ENV=production
-RUN corepack enable
+RUN apk add --no-cache git openssh-client && corepack enable
 COPY --from=build /workspace/node_modules ./node_modules
 COPY --from=build /workspace/package.json /workspace/pnpm-lock.yaml /workspace/pnpm-workspace.yaml ./
 COPY --from=build /workspace/apps/api/package.json apps/api/package.json

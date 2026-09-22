@@ -6,8 +6,6 @@ COPY apps/web/package.json apps/web/package.json
 COPY packages/shared/package.json packages/shared/package.json
 RUN corepack enable && pnpm install --frozen-lockfile
 COPY apps/web apps/web
-COPY content content
-COPY scripts scripts
 RUN pnpm build:web
 
 FROM nginx:1.27-alpine

@@ -1,10 +1,10 @@
 import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
 import { BookStatus } from '@prisma/client';
-import { randomUUID } from 'node:crypto';
-import { mkdir, readFile, readdir, rename, rm, stat, writeFile } from 'node:fs/promises';
+import { createHash, randomUUID } from 'node:crypto';
+import { cp, mkdir, readFile, readdir, rename, rm, stat, writeFile } from 'node:fs/promises';
 import { basename, join, posix } from 'node:path';
 import { PrismaService } from '../prisma/prisma.service';
-import { getContentRoot } from '../config/paths';
+import { getContentRoot, getContentTrashRoot } from '../config/paths';
 import type { CreateBookRequest } from '../books/dto/create-book.dto';
 import type { BookMetadata, GeneratedDraftInput, SyncResult } from './content.types';
 
@@ -14,6 +14,7 @@ const COVER_PATTERN = /^cover\.(?:svg|webp|jpe?g|png)$/i;
 @Injectable()
 export class ContentService {
   private readonly contentRoot = getContentRoot();
+  private readonly trashRoot = getContentTrashRoot();
 
   constructor(private readonly prisma: PrismaService) {}
 
@@ -34,8 +35,10 @@ export class ContentService {
     return { scanned: slugs.length, synced: slugs.length, slugs };
   }
 
-  async syncBook(slug: string) {
+  async syncBook(slug: string, restore = false) {
     this.assertSlug(slug);
+    const existing = await this.prisma.book.findUnique({ where: { slug } });
+    if (existing?.deletedAt && !restore) return this.prisma.book.findUniqueOrThrow({ where: { slug }, include: { category: true } });
     const metadata = await this.readMetadata(slug);
     const contentFile = join(this.contentRoot, slug, 'content.html');
     await stat(contentFile);
@@ -61,14 +64,23 @@ export class ContentService {
       status: metadata.status === 'published' ? BookStatus.PUBLISHED : BookStatus.DRAFT,
       publishedAt: metadata.publishedAt ? new Date(metadata.publishedAt) : null,
       categoryId: category?.id ?? null,
+      contentHash: await this.contentHash(slug),
+      ...(restore ? { deletedAt: null } : {}),
     };
 
-    return this.prisma.book.upsert({
+    const book = await this.prisma.book.upsert({
       where: { slug },
       update: data,
       create: { slug, ...data },
       include: { category: true },
     });
+    const currentSync = await this.prisma.bookGitSync.findUnique({ where: { bookId: book.id } });
+    await this.prisma.bookGitSync.upsert({
+      where: { bookId: book.id },
+      create: { bookId: book.id },
+      update: existing && existing.contentHash !== book.contentHash && currentSync?.status === 'SYNCED' ? { status: 'OUTDATED' } : {},
+    });
+    return book;
   }
 
   async publish(input: CreateBookRequest): Promise<BookMetadata> {
@@ -163,7 +175,7 @@ export class ContentService {
     return metadata;
   }
 
-  async publishDraft(slug: string) {
+  async publishDraft(slug: string, restore = false) {
     this.assertSlug(slug);
     const metadata = await this.readMetadata(slug);
     const published: BookMetadata = {
@@ -186,12 +198,49 @@ export class ContentService {
     }
     await rm(backup, { force: true });
     await this.rebuildContentIndex();
-    return this.syncBook(slug);
+    return this.syncBook(slug, restore);
   }
 
   async readContent(slug: string): Promise<string> {
     this.assertSlug(slug);
     return readFile(join(this.contentRoot, slug, 'content.html'), 'utf8');
+  }
+
+  async copyBookTo(slug: string, destinationRoot: string): Promise<void> {
+    this.assertSlug(slug);
+    await this.readMetadata(slug);
+    const destination = join(destinationRoot, slug);
+    const temporary = join(destinationRoot, `.${slug}-${randomUUID()}`);
+    await mkdir(destinationRoot, { recursive: true });
+    await cp(join(this.contentRoot, slug), temporary, { recursive: true });
+    if (await this.pathExists(destination)) await this.replaceExternalDirectory(destinationRoot, destination, temporary);
+    else await rename(temporary, destination);
+  }
+
+  async removeBook(slug: string): Promise<void> {
+    this.assertSlug(slug);
+    const book = await this.prisma.book.findUnique({ where: { slug } });
+    if (!book || book.deletedAt) throw new BadRequestException(`Book not found: ${slug}`);
+    const source = join(this.contentRoot, slug);
+    await stat(source);
+    await mkdir(this.trashRoot, { recursive: true });
+    const destination = join(this.trashRoot, `${slug}-${new Date().toISOString().replace(/[:.]/g, '-')}`);
+    await rename(source, destination);
+    try {
+      await this.prisma.book.update({ where: { id: book.id }, data: { deletedAt: new Date() } });
+      await this.rebuildContentIndex();
+    } catch (error) {
+      await rename(destination, source);
+      throw error;
+    }
+  }
+
+  async contentHash(slug: string): Promise<string> {
+    const metadata = await this.readMetadata(slug);
+    const files = ['book.json', 'content.html', metadata.cover].sort();
+    const hash = createHash('sha256');
+    for (const file of files) hash.update(file).update('\0').update(await readFile(join(this.contentRoot, slug, file))).update('\0');
+    return hash.digest('hex');
   }
 
   private async readMetadata(slug: string): Promise<BookMetadata> {
@@ -229,6 +278,18 @@ export class ContentService {
 
   private async replaceDirectory(target: string, replacement: string): Promise<void> {
     const backup = join(this.contentRoot, `.${basename(target)}-backup-${randomUUID()}`);
+    await rename(target, backup);
+    try {
+      await rename(replacement, target);
+    } catch (error) {
+      if (await this.pathExists(backup)) await rename(backup, target);
+      throw error;
+    }
+    await rm(backup, { recursive: true, force: true });
+  }
+
+  private async replaceExternalDirectory(root: string, target: string, replacement: string): Promise<void> {
+    const backup = join(root, `.${basename(target)}-backup-${randomUUID()}`);
     await rename(target, backup);
     try {
       await rename(replacement, target);

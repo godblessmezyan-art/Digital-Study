@@ -4,7 +4,7 @@ import { extname, resolve, sep } from 'node:path';
 
 const workspaceRoot = resolve(import.meta.dirname, '..');
 const webRoot = resolve(workspaceRoot, 'apps', 'web');
-const booksRoot = resolve(workspaceRoot, 'content', 'books');
+const booksRoot = resolve(workspaceRoot, process.env.CONTENT_ROOT || 'runtime-data/books');
 const port = Number(process.env.STATIC_PORT ?? 5175);
 const mimeTypes = {
   '.css': 'text/css; charset=utf-8',
@@ -79,5 +79,5 @@ const server = createServer(async (request, response) => {
 });
 
 server.listen(port, '0.0.0.0', () => {
-  console.log(`Static web and Git content server: http://localhost:${port}`);
+  console.log(`Static web and runtime content server: http://localhost:${port}`);
 });

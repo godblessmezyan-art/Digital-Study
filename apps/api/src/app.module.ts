@@ -7,6 +7,7 @@ import { WORKSPACE_ROOT } from './config/paths';
 import { AiModule } from './ai/ai.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
+import { GitSyncModule } from './git-sync/git-sync.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { AuthModule } from './auth/auth.module';
       envFilePath: [join(WORKSPACE_ROOT, '.env'), join(process.cwd(), '.env')],
     }),
     PrismaModule,
+    GitSyncModule,
     AuthModule,
     AiModule,
     BooksModule,

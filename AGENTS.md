@@ -2,9 +2,9 @@
 
 ## Source-of-truth boundaries
 
-- `content/books/{slug}` is the source of truth for a book's metadata, HTML body, and cover.
+- The server runtime book directory (`CONTENT_ROOT`, normally `runtime-data/books`) is the source of truth for website content. `content/books` is an optional Git export/import mirror.
 - MySQL stores searchable metadata and runtime state. Never make the database the only copy of book content.
-- Do not add automatic Git commit or push behavior. Publishing content changes local files only.
+- Publishing updates the server library first. Git commit/push is allowed only when the user explicitly checks Git sync or triggers a manual sync.
 - Preserve the existing framework-free frontend in `apps/web` unless a task explicitly requests a rewrite.
 
 ## Repository map

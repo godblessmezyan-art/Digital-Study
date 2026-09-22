@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import { GenerationStatus, Prisma, type GenerationTask } from '@prisma/client';
 import { ContentService } from '../content/content.service';
+import { GitSyncService } from '../git-sync/git-sync.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { AiProviderService } from './ai-provider.service';
 import type { GenerationInput, StoredGenerationResult } from './ai.types';
@@ -25,6 +26,7 @@ export class GenerationsService implements OnApplicationBootstrap {
     private readonly provider: AiProviderService,
     private readonly renderer: HtmlRendererService,
     private readonly content: ContentService,
+    private readonly gitSync: GitSyncService,
   ) {}
 
   async onApplicationBootstrap(): Promise<void> {
@@ -163,17 +165,22 @@ export class GenerationsService implements OnApplicationBootstrap {
       },
       task.bookSlug === input.slug,
     );
-    await this.content.syncBook(input.slug);
+    await this.content.syncBook(input.slug, true);
     await this.prisma.generationTask.update({ where: { id }, data: { bookSlug: input.slug } });
     return { slug: input.slug, status: 'draft' };
   }
 
-  async publish(id: string) {
+  async publish(id: string, syncToGit = false) {
     const task = await this.requireTask(id);
     if (!task.bookSlug) await this.saveDraft(id);
     const refreshed = await this.requireTask(id);
     const book = await this.content.publishDraft(refreshed.bookSlug!);
-    return { slug: book.slug, status: 'published' };
+    let gitSync = null;
+    if (syncToGit) {
+      try { gitSync = await this.gitSync.enqueue(book.slug); }
+      catch (error) { gitSync = { status: 'error', error: error instanceof Error ? error.message : 'Git sync failed' }; }
+    }
+    return { slug: book.slug, status: 'published', gitSyncJob: gitSync };
   }
 
   private kick(): void {

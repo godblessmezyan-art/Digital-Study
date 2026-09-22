@@ -145,3 +145,5 @@
 }
 @keyframes lm-slide{from{transform:translateX(18px);opacity:.6}to{transform:none;opacity:1}}
 @media(prefers-reduced-motion:reduce){.lm-book-row,.lm-taxonomy-row,.lm-tag-card,.lm-detail{transition:none;animation:none}}
+.lm-git-state{display:inline-flex;margin:.35rem 0 0;padding:.18rem .48rem;border:1px solid rgba(138,161,177,.3);border-radius:999px;color:#8aa1b1;font-size:.7rem;line-height:1.2;white-space:nowrap}
+.lm-git-state.synced{border-color:rgba(83,181,139,.4);color:#74cba5}.lm-git-state.outdated{border-color:rgba(224,174,91,.45);color:#e0ae5b}.lm-git-state.pending,.lm-git-state.syncing{border-color:rgba(104,163,224,.45);color:#80b8ed}.lm-git-state.error,.lm-git-state.conflict{border-color:rgba(224,103,103,.45);color:#ea8585}
