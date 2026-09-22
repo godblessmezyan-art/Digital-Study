@@ -34,12 +34,51 @@ export interface GeneratedSection {
   key: string;
   title: string;
   content: string;
+  blocks?: GeneratedContentBlock[];
+}
+
+export type GeneratedBlockType =
+  | 'lead'
+  | 'paragraph'
+  | 'quote'
+  | 'callout'
+  | 'cards'
+  | 'steps'
+  | 'comparison'
+  | 'checklist'
+  | 'tags'
+  | 'stats';
+
+export interface GeneratedBlockItem {
+  title?: string;
+  content: string;
+  label?: string;
+  value?: string;
+}
+
+export interface GeneratedContentBlock {
+  type: GeneratedBlockType;
+  title?: string;
+  content?: string;
+  attribution?: string;
+  items?: GeneratedBlockItem[];
+  left?: GeneratedBlockItem;
+  right?: GeneratedBlockItem;
+}
+
+export interface GeneratedBookDesign {
+  theme: 'cosmic' | 'literary' | 'forest' | 'ocean' | 'amber' | 'rose' | 'slate';
+  motif: 'constellation' | 'orbit' | 'path' | 'waves' | 'mountain' | 'library';
+  eyebrow: string;
+  subtitle: string;
+  heroQuote: string;
 }
 
 export interface GeneratedBook {
   title: string;
   summary: string;
   tags: string[];
+  design?: GeneratedBookDesign;
   sections: GeneratedSection[];
 }
 

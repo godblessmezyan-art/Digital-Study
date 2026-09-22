@@ -10,7 +10,8 @@
     "prisma:generate": "dotenv -e ../../.env -- prisma generate --schema ../../database/schema.prisma",
     "prisma:migrate": "dotenv -e ../../.env -- prisma migrate deploy --schema ../../database/schema.prisma",
     "prisma:migrate:dev": "dotenv -e ../../.env -- prisma migrate dev --schema ../../database/schema.prisma",
-    "prisma:seed": "dotenv -e ../../.env -- ts-node -r tsconfig-paths/register ../../database/seed.ts"
+    "prisma:seed": "dotenv -e ../../.env -- ts-node -r tsconfig-paths/register ../../database/seed.ts",
+    "verify:rich-renderer": "ts-node -r tsconfig-paths/register src/scripts/verify-rich-renderer.ts"
   },
   "dependencies": {
     "@digital-study/shared": "workspace:*",

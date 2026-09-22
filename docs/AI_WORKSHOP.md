@@ -2,17 +2,19 @@
 
 ## 工作流
 
-AI 工坊以用户提供的资料为主要事实来源。模型返回结构化 JSON，NestJS 使用固定模板转成不包含脚本的 HTML。完成结果在用户确认前属于临时任务数据；保存草稿或发布后才进入 `content/books/{slug}`。
+AI 工坊优先使用用户提供的资料；资料为空时可使用模型的可靠通用知识，并要求明确不确定内容。模型返回经过约束的视觉策划、章节和丰富内容块 JSON，NestJS 使用安全组件库渲染成不包含脚本的 HTML。完成结果在用户确认前属于临时任务数据；保存草稿或发布后才进入 `content/books/{slug}`。
 
 ```text
-模板 + 书籍信息 + 参考资料
+模板 + 书籍信息 + 可选参考资料
   → GenerationTask
-  → AI Provider 返回 JSON
-  → 服务端校验 sections
-  → 服务端转义文本并渲染 HTML
+  → AI Provider 返回设计方案、章节和丰富内容块 JSON
+  → 服务端校验 design / sections / blocks
+  → 服务端转义文本并通过主题化组件渲染 HTML
   → 审阅 / 逐段重生成
   → 保存草稿 / 发布 / sync Book 索引
 ```
+
+丰富内容块支持导语、正文、重点提示、引用、观点卡、步骤、对照、清单、标签和数据卡。视觉策划支持多套配色主题与安全的内置 SVG 意象；模型不能直接注入 HTML、CSS 或脚本。
 
 ## 手动创建与 HTML 导入
 
@@ -65,6 +67,7 @@ Provider 使用 `POST {AI_BASE_URL}/chat/completions` 和 JSON object 输出。�
 - `POST /api/ai/models/:id/activate`：切换当前模型。
 - `POST /api/ai/models/:id/test`：发送一次最小真实请求测试连接，可能产生少量费用。
 - `DELETE /api/ai/models/:id`：删除模型配置。
+- `POST /api/ai/book-metadata`：根据书名补全作者与合法 Slug。
 - `POST /api/ai/generations`：创建任务。
 - `GET /api/ai/generations`：最近 20 条任务。
 - `GET /api/ai/generations/:id`：任务进度和结果。
@@ -81,7 +84,7 @@ Provider 使用 `POST {AI_BASE_URL}/chat/completions` 和 JSON object 输出。�
 
 - API Key 在提交后不再发送到浏览器，数据库仅保存 AES-256-GCM 密文。
 - 模型管理和测试接口受现有 Study/Halo 管理员登录保护；密码不会保存在 Digital Study 数据库中。
-- 模型内容按纯文本处理，HTML 特殊字符会转义。
+- 模型内容以受限 JSON 内容块处理，所有文本都会转义；HTML、CSS 和脚本不能由模型直接注入。
 - 输入限制为 100,000 字符，请求体限制为 2 MB。
 - 模板明确要求不编造引用；仍需人工审阅，不能把模型结果当作事实证明。
 - 当前没有用户系统，普通 `POST /api/books` 仍应通过 Nginx 或防火墙限制访问。

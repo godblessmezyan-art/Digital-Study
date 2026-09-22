@@ -65,12 +65,39 @@ export interface GeneratedSectionDto {
   key: string;
   title: string;
   content: string;
+  blocks?: GeneratedContentBlockDto[];
+}
+
+export interface GeneratedBlockItemDto {
+  title?: string;
+  content: string;
+  label?: string;
+  value?: string;
+}
+
+export interface GeneratedContentBlockDto {
+  type: 'lead' | 'paragraph' | 'quote' | 'callout' | 'cards' | 'steps' | 'comparison' | 'checklist' | 'tags' | 'stats';
+  title?: string;
+  content?: string;
+  attribution?: string;
+  items?: GeneratedBlockItemDto[];
+  left?: GeneratedBlockItemDto;
+  right?: GeneratedBlockItemDto;
+}
+
+export interface GeneratedBookDesignDto {
+  theme: 'cosmic' | 'literary' | 'forest' | 'ocean' | 'amber' | 'rose' | 'slate';
+  motif: 'constellation' | 'orbit' | 'path' | 'waves' | 'mountain' | 'library';
+  eyebrow: string;
+  subtitle: string;
+  heroQuote: string;
 }
 
 export interface GeneratedBookDto {
   title: string;
   summary: string;
   tags: string[];
+  design?: GeneratedBookDesignDto;
   sections: GeneratedSectionDto[];
   renderedHtml: string;
 }
