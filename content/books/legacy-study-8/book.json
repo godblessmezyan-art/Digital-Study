@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "slug": "legacy-study-8",
+  "title": "早起的奇迹",
+  "author": "哈尔·埃尔罗德",
+  "summary": "重要的不是早起的方法，而是那颗不甘平凡的心！",
+  "tags": [],
+  "cover": "cover.svg",
+  "status": "published",
+  "publishedAt": "2026-07-23T22:57:14.000Z",
+  "category": {
+    "slug": "legacy-category-63",
+    "name": "个人成长"
+  }
+}

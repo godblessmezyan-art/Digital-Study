@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "slug": "legacy-study-27",
+  "title": "如何停止胡思乱想",
+  "author": "佚名",
+  "summary": "从旧 Study 项目迁移的书籍内容。",
+  "tags": [],
+  "cover": "cover.svg",
+  "status": "published",
+  "publishedAt": "2026-08-24T23:39:03.000Z",
+  "category": {
+    "slug": "legacy-category-60",
+    "name": "心灵修炼"
+  }
+}

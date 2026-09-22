@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>荒原狼</title>
+    <link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4A9FD4;
+            --primary-light: #6BB5E0;
+            --primary-dark: #3A7FAA;
+            --bg: #0F1218;
+            --bg-card: #1A1F2A;
+            --text: #E8E4DF;
+            --text-light: #A8A29E;
+            --border: rgba(74, 159, 212, 0.2);
+            --shadow: rgba(0, 0, 0, 0.4);
+            --mm-filter: grayscale(1) sepia(.9) hue-rotate(169deg) saturate(1.2) brightness(1.05);
+            --hero-glow: rgba(74, 159, 212, 0.15);
+        }
+        body.theme-sky { --primary: #4A9FD4; --primary-light: #6BB5E0; --primary-dark: #3A7FAA; --border: rgba(74,159,212,.2); --hero-glow: rgba(74,159,212,.15); --mm-filter: grayscale(1) sepia(.9) hue-rotate(169deg) saturate(1.2) brightness(1.05); }
+        body.theme-moon { --primary: #46759B; --primary-light: #5E8DAF; --primary-dark: #3A6183; --border: rgba(70,117,155,.2); --hero-glow: rgba(70,117,155,.15); --mm-filter: grayscale(1) sepia(.9) hue-rotate(172deg) saturate(1.1) brightness(.95); }
+        body.theme-haze { --primary: #7D99AE; --primary-light: #95ADBF; --primary-dark: #6A8499; --border: rgba(125,153,174,.2); --hero-glow: rgba(125,153,174,.12); --mm-filter: grayscale(1) sepia(.9) hue-rotate(170deg) saturate(.8) brightness(1.1); }
+        body.theme-indigo { --primary: #4A6FA5; --primary-light: #6285B5; --primary-dark: #3D5C8A; --border: rgba(74,111,165,.2); --hero-glow: rgba(74,111,165,.15); --mm-filter: grayscale(1) sepia(.9) hue-rotate(182deg) saturate(1.2) brightness(1.0); }
+        body.theme-teal { --primary: #4E9B8F; --primary-light: #68AFA4; --primary-dark: #418378; --border: rgba(78,155,143,.2); --hero-glow: rgba(78,155,143,.12); --mm-filter: grayscale(1) sepia(.9) hue-rotate(136deg) saturate(1.1) brightness(1.0); }
+        body.theme-bamboo { --primary: #7A9B76; --primary-light: #90AE8C; --primary-dark: #678463; --border: rgba(122,155,118,.2); --hero-glow: rgba(122,155,118,.12); --mm-filter: grayscale(1) sepia(.9) hue-rotate(80deg) saturate(1.0) brightness(1.05); }
+        body.theme-vermilion { --primary: #C0564F; --primary-light: #D07069; --primary-dark: #A84842; --border: rgba(192,86,79,.2); --hero-glow: rgba(192,86,79,.12); --mm-filter: grayscale(1) sepia(.9) hue-rotate(-31deg) saturate(1.3) brightness(1.0); }
+        body.theme-sakura { --primary: #D19090; --primary-light: #DDA5A5; --primary-dark: #B87C7C; --border: rgba(209,144,144,.2); --hero-glow: rgba(209,144,144,.12); --mm-filter: grayscale(1) sepia(.9) hue-rotate(-35deg) saturate(1.0) brightness(1.1); }
+        body.theme-lotus { --primary: #C48F9B; --primary-light: #D2A5AF; --primary-dark: #AB7B86; --border: rgba(196,143,155,.2); --hero-glow: rgba(196,143,155,.12); --mm-filter: grayscale(1) sepia(.9) hue-rotate(310deg) saturate(1.0) brightness(1.05); }
+        body.theme-rose { --primary: #A78B8B; --primary-light: #B9A0A0; --primary-dark: #927979; --border: rgba(167,139,139,.2); --hero-glow: rgba(167,139,139,.12); --mm-filter: grayscale(1) sepia(.9) hue-rotate(-35deg) saturate(.7) brightness(1.05); }
+        body.theme-purple { --primary: #9B87B5; --primary-light: #AE9CC5; --primary-dark: #8674A0; --border: rgba(155,135,181,.2); --hero-glow: rgba(155,135,181,.12); --mm-filter: grayscale(1) sepia(.9) hue-rotate(232deg) saturate(1.0) brightness(1.05); }
+        body.theme-amber { --primary: #C08A3E; --primary-light: #D0A05A; --primary-dark: #A87735; --border: rgba(192,138,62,.2); --hero-glow: rgba(192,138,62,.12); --mm-filter: grayscale(1) sepia(.9) hue-rotate(0deg) saturate(1.3) brightness(1.05); }
+        body.theme-caramel { --primary: #A06B3F; --primary-light: #B58258; --primary-dark: #8A5C36; --border: rgba(160,107,63,.2); --hero-glow: rgba(160,107,63,.12); --mm-filter: grayscale(1) sepia(.9) hue-rotate(-7deg) saturate(1.2) brightness(.95); }
+        body.theme-wood { --primary: #B08D57; --primary-light: #C2A370; --primary-dark: #987A4B; --border: rgba(176,141,87,.2); --hero-glow: rgba(176,141,87,.12); --mm-filter: grayscale(1) sepia(.9) hue-rotate(0deg) saturate(1.0) brightness(1.05); }
+        body.theme-ink { --primary: #7A8A96; --primary-light: #92A2AE; --primary-dark: #5A6670; --border: rgba(122,138,150,.2); --hero-glow: rgba(122,138,150,.12); --mm-filter: grayscale(1) sepia(.9) hue-rotate(175deg) saturate(.5) brightness(.9); }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 2;
+            transition: background .4s, color .4s;
+        }
+        .container { max-width: 780px; margin: 0 auto; padding: 0 24px; }
+
+        /* ===== Hero ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 80px 24px;
+            background: radial-gradient(ellipse at 50% 20%, var(--hero-glow) 0%, transparent 50%),
+                        linear-gradient(180deg, #0A0D12 0%, #12161F 40%, #0F1218 100%);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+        /* 月亮 */
+        .hero-moon {
+            position: absolute;
+            top: 8%;
+            right: 15%;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #FFF8E7, #E8D9A0);
+            box-shadow: 0 0 60px rgba(255,248,220,.3), 0 0 120px rgba(255,248,220,.1);
+            opacity: .85;
+        }
+        /* 狼剪影 */
+        .hero-wolf {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 420px;
+            max-width: 90vw;
+            opacity: .18;
+        }
+        /* 星星 */
+        .hero-stars {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle 3s infinite alternate;
+        }
+        @keyframes twinkle { 0%{opacity:.2} 100%{opacity:.9} }
+
+        .hero-content { position: relative; z-index: 2; }
+        .hero h1 {
+            font-family: 'ZCOOL XiaoWei', 'Noto Serif SC', serif;
+            font-size: clamp(3.5rem, 12vw, 6.5rem);
+            font-weight: 400;
+            letter-spacing: .15em;
+            margin-bottom: 24px;
+            text-shadow: 0 0 40px var(--hero-glow);
+        }
+        .hero-sub {
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            opacity: .85;
+            max-width: 520px;
+            line-height: 2;
+            letter-spacing: .05em;
+        }
+        .hero-author {
+            margin-top: 32px;
+            font-size: .9rem;
+            opacity: .6;
+            letter-spacing: .2em;
+        }
+        .hero-scroll {
+            position: absolute;
+            bottom: 36px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: .4;
+            animation: float 2.5s ease-in-out infinite;
+            font-size: .8rem;
+            letter-spacing: .3em;
+        }
+        @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+        /* ===== Theme Switcher ===== */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1.5px solid var(--border);
+            box-shadow: 0 2px 16px var(--shadow);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: transform .3s;
+        }
+        .theme-toggle:hover { transform: scale(1.1); }
+        .theme-panel {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            z-index: 999;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px;
+            box-shadow: 0 8px 40px var(--shadow);
+            display: none;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            width: 220px;
+        }
+        .theme-panel.open { display: grid; }
+        .theme-option {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: .78rem;
+            color: var(--text);
+            border: 1.5px solid transparent;
+            transition: all .2s;
+        }
+        .theme-option:hover { background: var(--border); }
+        .theme-option.active { border-color: var(--primary); background: var(--border); }
+        .theme-dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+
+        /* ===== Chapters ===== */
+        .chapter {
+            padding: 70px 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity .8s ease, transform .8s ease;
+        }
+        .chapter.visible { opacity: 1; transform: translateY(0); }
+        .chapter-label {
+            font-size: .75rem;
+            color: var(--primary);
+            letter-spacing: .3em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .chapter-label::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 1px;
+            background: var(--primary);
+        }
+        .chapter h3 {
+            font-family: 'ZCOOL XiaoWei', 'Noto Serif SC', serif;
+            font-size: clamp(1.5rem, 4.5vw, 2.1rem);
+            font-weight: 400;
+            color: var(--primary-light);
+            margin-bottom: 28px;
+            line-height: 1.6;
+            letter-spacing: .05em;
+        }
+        .lead {
+            font-size: 1.05rem;
+            color: var(--text-light);
+            margin-bottom: 26px;
+            border-left: 2px solid var(--border);
+            padding-left: 18px;
+        }
+        .chapter p { margin-bottom: 20px; text-align: justify; color: var(--text); }
+
+        /* ===== Components ===== */
+        .quote-block {
+            border-left: 3px solid var(--primary);
+            padding: 22px 26px;
+            margin: 32px 0;
+            background: linear-gradient(135deg, rgba(255,255,255,.03), transparent);
+            border-radius: 0 12px 12px 0;
+            font-style: italic;
+            color: var(--text-light);
+            position: relative;
+        }
+        .quote-block::before {
+            content: '"';
+            position: absolute;
+            top: 8px;
+            left: 12px;
+            font-size: 2.5rem;
+            color: var(--primary);
+            opacity: .3;
+            font-family: Georgia, serif;
+        }
+        .quote-src { display: block; margin-top: 12px; font-size: .85rem; color: var(--primary); font-style: normal; }
+
+        .scene-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            margin: 32px 0;
+            box-shadow: 0 6px 30px var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        .scene-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle at top right, var(--hero-glow), transparent 70%);
+        }
+        .scene-card h4 { color: var(--primary-light); margin-bottom: 14px; font-size: 1.05rem; letter-spacing: .05em; }
+        .scene-card p { color: var(--text-light); }
+
+        .key-list { margin: 28px 0; }
+        .key-item {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            margin-bottom: 22px;
+            padding: 18px;
+            background: rgba(255,255,255,.02);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,.04);
+        }
+        .key-num {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .8rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+        .key-item strong { color: var(--primary-light); }
+
+        .insight-card {
+            background: linear-gradient(135deg, var(--border), transparent);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            margin: 32px 0;
+        }
+        .insight-card h4 { color: var(--primary-light); margin-bottom: 12px; letter-spacing: .05em; }
+
+        /* 狼爪分隔符 */
+        .divider-paw {
+            text-align: center;
+            margin: 50px 0;
+            opacity: .5;
+        }
+        .divider-paw svg { width: 36px; height: 36px; fill: var(--primary); }
+
+        /* 二元对立视觉 */
+        .duality {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+            margin: 32px 0;
+            border-radius: 14px;
+            overflow: hidden;
+        }
+        .duality-side {
+            padding: 28px 22px;
+            text-align: center;
+        }
+        .duality-human {
+            background: linear-gradient(135deg, rgba(74,159,212,.08), rgba(74,159,212,.02));
+            border: 1px solid rgba(74,159,212,.15);
+            border-radius: 14px 0 0 14px;
+        }
+        .duality-wolf {
+            background: linear-gradient(135deg, rgba(192,86,79,.08), rgba(192,86,79,.02));
+            border: 1px solid rgba(192,86,79,.15);
+            border-radius: 0 14px 14px 0;
+        }
+        .duality-side h5 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            letter-spacing: .1em;
+        }
+        .duality-human h5 { color: #6BB5E0; }
+        .duality-wolf h5 { color: #D07069; }
+        .duality-side p { font-size: .9rem; color: var(--text-light); line-height: 1.8; }
+
+        /* ===== Mindmap ===== */
+        .mindmap-section { padding: 70px 0; }
+        .mindmap-section h3 { text-align: center; }
+        .markmap {
+            width: 100%;
+            height: 540px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+        }
+        .markmap svg { filter: var(--mm-filter); }
+
+        /* ===== Epilogue ===== */
+        .epilogue {
+            padding: 100px 0 80px;
+            text-align: center;
+            position: relative;
+        }
+        .epilogue::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, transparent, var(--primary));
+        }
+        .epilogue-inner { max-width: 600px; margin: 0 auto; }
+        .final-quote {
+            font-size: 1.08rem;
+            line-height: 2.4;
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 50px;
+        }
+        .goodnight {
+            font-family: 'ZCOOL XiaoWei', 'Noto Serif SC', serif;
+            font-size: 2.4rem;
+            font-weight: 400;
+            color: var(--primary-light);
+            letter-spacing: .5em;
+            text-align: center;
+            text-shadow: 0 0 30px var(--hero-glow);
+        }
+
+        /* 页脚狼爪印 */
+        .footer-paws {
+            text-align: center;
+            padding: 40px 0 60px;
+            opacity: .25;
+        }
+        .footer-paws svg { width: 22px; height: 22px; fill: var(--primary); margin: 0 12px; }
+
+        @media (max-width: 600px) {
+            .hero { min-height: 85vh; padding: 60px 20px; }
+            .hero-moon { width: 60px; height: 60px; top: 10%; right: 10%; }
+            .hero-wolf { width: 300px; }
+            .chapter { padding: 50px 0; }
+            .theme-panel { width: 190px; right: 12px; }
+            .markmap { height: 420px; }
+            .duality { grid-template-columns: 1fr; }
+            .duality-human { border-radius: 14px 14px 0 0; }
+            .duality-wolf { border-radius: 0 0 14px 14px; }
+        }
+    </style>
+</head>
+<body class="theme-sky">
+<script>
+    (function () {
+        var themes = ['sky','moon','haze','indigo','teal','bamboo','vermilion','sakura','lotus','rose','purple','amber','caramel','wood','ink'];
+        document.body.className = 'theme-' + themes[Math.floor(Math.random() * themes.length)];
+    })();
+</script>
+
+<!-- Theme Switcher -->
+<button class="theme-toggle" id="themeToggle">🐺</button>
+<div class="theme-panel" id="themePanel">
+    <div class="theme-option" data-theme="sky"><span class="theme-dot" style="background:#4A9FD4"></span>天青蓝</div>
+    <div class="theme-option" data-theme="moon"><span class="theme-dot" style="background:#46759B"></span>月海蓝</div>
+    <div class="theme-option" data-theme="haze"><span class="theme-dot" style="background:#7D99AE"></span>雾霾蓝</div>
+    <div class="theme-option" data-theme="indigo"><span class="theme-dot" style="background:#4A6FA5"></span>靛青蓝</div>
+    <div class="theme-option" data-theme="teal"><span class="theme-dot" style="background:#4E9B8F"></span>松石绿</div>
+    <div class="theme-option" data-theme="bamboo"><span class="theme-dot" style="background:#7A9B76"></span>竹青色</div>
+    <div class="theme-option" data-theme="vermilion"><span class="theme-dot" style="background:#C0564F"></span>朱砂红</div>
+    <div class="theme-option" data-theme="sakura"><span class="theme-dot" style="background:#D19090"></span>绯樱色</div>
+    <div class="theme-option" data-theme="lotus"><span class="theme-dot" style="background:#C48F9B"></span>藕荷色</div>
+    <div class="theme-option" data-theme="rose"><span class="theme-dot" style="background:#A78B8B"></span>玫瑰灰</div>
+    <div class="theme-option" data-theme="purple"><span class="theme-dot" style="background:#9B87B5"></span>暮山紫</div>
+    <div class="theme-option" data-theme="amber"><span class="theme-dot" style="background:#C08A3E"></span>琥珀色</div>
+    <div class="theme-option" data-theme="caramel"><span class="theme-dot" style="background:#A06B3F"></span>焦糖色</div>
+    <div class="theme-option" data-theme="wood"><span class="theme-dot" style="background:#B08D57"></span>木头色</div>
+    <div class="theme-option" data-theme="ink"><span class="theme-dot" style="background:#7A8A96"></span>墨玉色</div>
+</div>
+
+<!-- Hero -->
+<header class="hero">
+    <div class="hero-stars" id="heroStars"></div>
+    <div class="hero-moon"></div>
+    <!-- 狼剪影 SVG -->
+    <svg class="hero-wolf" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+        <path fill="currentColor" d="M462 178c-14-22-38-36-64-42-8-24-26-44-50-56-6-28-24-52-50-66l-8-4-6 8c-10 14-16 30-18 46-18-6-38-6-56 0-2-16-8-32-18-46l-6-8-8 4c-26 14-44 38-50 66-24 12-42 32-50 56-26 6-50 20-64 42l-6 10 10 6c16 8 34 12 52 12-2 10-2 20 0 30-18 0-36 4-52 12l-10 6 6 10c14 22 38 36 64 42 8 24 26 44 50 56 6 28 24 52 50 66l8 4 6-8c10-14 16-30 18-46 18 6 38 6 56 0 2 16 8 32 18 46l6 8 8-4c26-14 44-38 50-66 24-12 42-32 50-56 26-6 50-20 64-42l6-10-10-6c-16-8-34-12-52-12 2-10 2-20 0-30 18 0 36-4 52-12l10-6-6-10zM256 340c-46 0-84-38-84-84s38-84 84-84 84 38 84 84-38 84-84 84z"/>
+    </svg>
+    <div class="hero-content">
+        <h1>荒原狼</h1>
+        <p class="hero-sub">愿我们都能更好地玩这场人生游戏</p>
+        <p class="hero-author">赫尔曼·黑塞 著</p>
+    </div>
+    <div class="hero-scroll">▼ 向下阅读</div>
+</header>
+
+<main class="container">
+
+    <!-- 序 -->
+    <section class="chapter">
+        <div class="chapter-label">序</div>
+        <h3>一个在深渊里写下路标的人</h3>
+        <p class="lead">如果你曾在深夜怀疑过自己活着的方式，如果你曾一边渴望人群、一边推开所有人，如果你曾觉得自己心里住着一头格格不入的野兽——那么这个故事，就是写给你的。</p>
+        <p>它的作者赫尔曼·黑塞，诺贝尔文学奖得主，生于德国南部一个传教士家庭，从小在宗教和诗歌里长大。后来因为反战，被整个德国社会排挤；两次婚姻失败，儿子被人领养，自己住进了精神病诊所。写下《荒原狼》那年，他刚好五十岁。</p>
+        <p>这本书在德国出版时，一开始几乎没人敢说它好——因为它太痛了。他把现代人精神上的伤痕一条一条扒开给人看。但很快它变成了全球范围内的现象，无数人在信里告诉黑塞：你写的就是我。</p>
+        <div class="quote-block">
+            世界上任何书籍都不能带给你好运，但它们能让你悄悄成为你自己。
+            <span class="quote-src">—— 赫尔曼·黑塞</span>
+        </div>
+        <p>心理学家荣格帮助他进行精神分析，将内在那些黑暗的、分裂的人格摊在阳光下，让它们释放、对话、和解。一个被撕裂到濒临崩溃的中年人，把痛苦写成了一部书。这不是为了炫耀自己的伤口，而是为了在废墟上，为更多人留下一个发光的路标。</p>
+    </section>
+
+    <!-- 狼爪分隔 -->
+    <div class="divider-paw">
+        <svg viewBox="0 0 512 512"><path d="M256 224c-26.5 0-48 28.7-48 64s21.5 64 48 64 48-28.7 48-64-21.5-64-48-64zm-112-32c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32zm224 0c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32zm-272-64c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32zm320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32z"/></svg>
+    </div>
+
+    <!-- 第一章 -->
+    <section class="chapter">
+        <div class="chapter-label">第一章</div>
+        <h3>身在人间，心在荒原</h3>
+        <p class="lead">故事的主人公名叫哈里·哈勒尔，人到中年，独居孤僻，热爱文学与精神世界，厌恶世俗浮躁与虚伪客套。他自称"荒原狼"——顾名思义，身在人间，心在荒原。</p>
+        <p>他住在城市的小楼里，房间安静冷清，没有烟火气，没有家人围绕，没有朋友往来。他不参与邻里闲谈，不参与社交应酬，不跟风世俗潮流，不讨好任何人。他像一个寄居在人间的陌生人，默默看着这个热闹的世界，却永远无法真正融入。</p>
+        <p>很多人会以为他痛苦是因为贫穷落魄。恰恰相反——他有学识、有思想、有风骨，比身边绝大多数人都清醒。他的痛苦从来不是平庸带来的困顿，而是清醒带来的荒芜。</p>
+
+        <!-- 二元对立视觉 -->
+        <div class="duality">
+            <div class="duality-side duality-human">
+                <h5>人的灵魂</h5>
+                <p>渴望高尚<br>渴望秩序<br>渴望精神性的生活<br>做出善事时感到安宁</p>
+            </div>
+            <div class="duality-side duality-wolf">
+                <h5>狼的灵魂</h5>
+                <p>渴望野性<br>渴望自由<br>渴望与尘世决裂<br>嘲笑一切虚伪的高尚</p>
+            </div>
+        </div>
+
+        <p>它们不是邻居，偶尔打个招呼——它们是死对头，一辈子都在撕扯他。当他以人的身份做出一件善事时，狼就在体内冷笑；当他表现出狼性的孤僻与粗野时，人又立刻站出来谴责他。他就这样活着，在两种力量的夹击中备受煎熬。</p>
+        <div class="quote-block">
+            他没有能力建立关系。无论是他的意识还是他的渴望，都无法让他真正融入任何人。人类的平庸低俗他看不惯，狼的自由孤独他又无法真正忍受。一半反抗着另一半，一半否定着另一半。
+        </div>
+        <p>于是他成了一个不知道自己要什么的人。而一个不知道自己要什么的人，注定无法真正快乐。</p>
+    </section>
+
+    <div class="divider-paw">
+        <svg viewBox="0 0 512 512"><path d="M256 224c-26.5 0-48 28.7-48 64s21.5 64 48 64 48-28.7 48-64-21.5-64-48-64zm-112-32c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32zm224 0c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32zm-272-64c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32zm320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32z"/></svg>
+    </div>
+
+    <!-- 第二章 -->
+    <section class="chapter">
+        <div class="chapter-label">第二章</div>
+        <h3>你不是两者之一，你是两者的总和</h3>
+        <p class="lead">就在他最绝望的时候，他在街上被人塞了一本小册子，书名是《论荒原狼》。小册子像学术论文一样分析了他的处境。</p>
+        <div class="quote-block">
+            一只迷了路来到城里的荒原狼。他胆怯、孤独、粗野、豪放、急躁不安、思念家乡、无家可归。
+            <span class="quote-src">—— 《论荒原狼》</span>
+        </div>
+        <p>小册子告诉哈里：荒原狼并非真正分裂的人。他的痛苦恰恰在于，他执着于自己是分裂的。他认为人和狼不能共存，他逼自己必须选择其中之一。所以他永远在两个极端之间摇摆，永远无法安顿下来。</p>
+        <div class="insight-card">
+            <h4>你是两者的总和</h4>
+            <p>如果你要求自己只能成为纯粹的人或纯粹的狼，那你就注定会毁灭。因为你根本就不是两者之一——你是两者的总和，比这二者还要多得多。</p>
+        </div>
+        <p>这意味着人类从不是简单的一分为二，而是无数碎片的集合。每一个你觉得矛盾的瞬间——渴望上进又渴望偷懒，渴望陪伴又渴望独处——那些矛盾并不是你出错了，恰恰是你在活成一个真实的人。</p>
+        <div class="quote-block">
+            你是对的，荒原狼，你一千个对，一万个对，可是你注定要毁灭。对当前这个简单、舒适、容易满足的世界来说，你的要求太高了。这个世界把你吐了出来，因为你与众不同。
+        </div>
+        <p>太清醒，所以太痛苦。这些痛苦的积累，终于把哈里推到了一个边缘。那天他去拜访一位教授朋友，餐桌上他的反战言论遭到了强烈斥责。从朋友家离开时已经很晚了，他感到一种前所未有的决绝——他下定决心，回到住处就结束自己的生命。但当他真的站在家门口时，他退缩了。他在街上漫无目的地走了一整夜，像个幽灵一样，飘荡在这座他永远无法融入的城市里。</p>
+    </section>
+
+    <div class="divider-paw">
+        <svg viewBox="0 0 512 512"><path d="M256 224c-26.5 0-48 28.7-48 64s21.5 64 48 64 48-28.7 48-64-21.5-64-48-64zm-112-32c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32zm224 0c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32zm-272-64c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32zm320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32z"/></svg>
+    </div>
+
+    <!-- 第三章 -->
+    <section class="chapter">
+        <div class="chapter-label">第三章</div>
+        <h3>沙砾石缝中开出的花</h3>
+        <p class="lead">直到精疲力尽，他才在一家酒吧门前停下来。他推开那扇门，店里灯光昏暗，飘着爵士乐和香水味。他一进去就注意到一个年轻女人——她的眼神中有一种说不清道不明的东西，像是看穿了他的秘密，又对他毫无保留地接纳。</p>
+        <p>她的名字叫赫尔米娜。</p>
+        <div class="quote-block">
+            哪怕是最不幸的人生，也有阳光明媚的时光，也会在沙砾石缝中长出小小的幸福之花。
+        </div>
+        <p>赫尔米娜就是哈里那漫漫荒原上，沙砾石缝中开出的花。她像是看透了哈里的一切——他的孤独、他的矛盾、他的绝望。她的眼睛里没有丝毫评判，有的只是理解。她对他说：</p>
+        <div class="quote-block">
+            我和你一样孤独。和你一样，不能爱生活，不能爱人，不能爱我自己。
+        </div>
+        <p>她不是在可怜他。她说的是真的——她的生命里也有一个空洞，一个和她开朗的外表截然相反的虚无与幻灭的空洞。她和哈里一样在这个世界上飘荡，不知道意义何在。她只是选择用另一种方式面对它：舞步、酒杯、笑声。而哈里选择的是沉默、疏离和剃刀。</p>
+        <div class="scene-card">
+            <h4>乡愁——灵魂在不属于之处的思念</h4>
+            <p>"我们不得不越过这么多的污泥浊水，经历这么多的荒唐蠢事，才能回到家里。而且没有人指引我们，我们唯一的向导是乡愁。"</p>
+            <p>乡愁，是当你走在热闹的人群中却觉得自己身处异国；是当你拥有了一切却仍旧感到空荡荡；是对一种你从未真正拥有过的东西的渴求。</p>
+        </div>
+        <p>赫尔米娜来到他身边，有一个任务：教会他享受生活，教会他跳舞，教会他笑，教会他在这个世界活下去。然后离开他，让他独自面对剩下的一切。</p>
+        <p>于是这位年近五十的知识分子，一辈子读歌德、听莫扎特的学者，开始跟着赫尔米娜学跳舞。他开始参加舞会，接触他曾经鄙视的流行爵士乐，认识了萨克斯管乐手帕勃罗。帕勃罗不思考什么哲学，不评判什么文明，只在乎一件事：演奏他的音乐，让身边每一个人感受到快乐。</p>
+        <div class="insight-card">
+            <h4>活着本身就是意义</h4>
+            <p>有时候我们拼命思考活着的意义，却忘记了活着本身就是意义。哈里开始重新学会大笑，开始接纳那些他过去鄙视的东西，开始意识到自己所谓的"高尚理想"里，有一部分不过是傲慢的伪装。</p>
+        </div>
+    </section>
+
+    <div class="divider-paw">
+        <svg viewBox="0 0 512 512"><path d="M256 224c-26.5 0-48 28.7-48 64s21.5 64 48 64 48-28.7 48-64-21.5-64-48-64zm-112-32c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32zm224 0c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32zm-272-64c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32zm320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32z"/></svg>
+    </div>
+
+    <!-- 第四章 -->
+    <section class="chapter">
+        <div class="chapter-label">第四章</div>
+        <h3>魔剧院：无数扇门后的无数个自己</h3>
+        <p class="lead">赫尔米娜曾对哈里说，有一天他会杀死她。这话听起来像一句谜——赫尔米娜不是一个人，她是哈里的另一面，是那个明明知道世界毫无意义、却依然愿意起舞的自己。</p>
+        <p>那天深夜，盛大的化妆舞会结束后，帕勃罗带哈里走进一栋从未来过的房子——魔剧院。推开大门，你会看见一座无尽的迷宫。走廊两侧有无数的门，每一扇门后面都是一个不同的哈里——一个平行于现实世界、沉睡在潜意识深处的分身。</p>
+        <div class="key-list">
+            <div class="key-item">
+                <span class="key-num">1</span>
+                <div><strong>猎杀汽车</strong>——他看到一个自己正以狂野的姿态追猎着马路上飞驰的汽车，用一种荒谬的暴力反抗着他痛恨的工业文明。就像我们每个人心里那个愤世嫉俗的自己。</div>
+            </div>
+            <div class="key-item">
+                <span class="key-num">2</span>
+                <div><strong>人格塑造指南</strong>——无数个自己摆在面前：一个喜欢独自读书，一个正在与人谈笑风生，一个用冰冷的言辞骂自己懦弱，一个正在为他递上一杯酒。每一个都是他，每一个又都不是完整的他。</div>
+            </div>
+            <div class="key-item">
+                <span class="key-num">3</span>
+                <div><strong>爱情的重演</strong>——他看见了初恋的女孩，与生命里遇见的每一个女子重演爱情。从少年时懵懂的悸动，到如今连拥抱都觉得虚无的中年。一切他没有活过的可能性，都是真的。</div>
+            </div>
+        </div>
+        <div class="quote-block">
+            人不是永恒的单一生命，人是无数个平行世界的总和。每一个念头，每一个未付诸行动的决定，每一种被压制下去的欲望，都在这座魔剧院里获得了生命。
+        </div>
+        <p>我们一直以来认为的那个唯一的自我，或许是一种幻觉。早晨的你慷慨大方，晚上小气又记仇；在家人面前温和体贴，在网上却犀利刻薄。哪一个才是真正的你？也许都不是，也许都是。魔剧院就是把所有互相矛盾的碎片摊开给你看——这是哈里的地狱之旅，也是他的治愈之旅。</p>
+    </section>
+
+    <div class="divider-paw">
+        <svg viewBox="0 0 512 512"><path d="M256 224c-26.5 0-48 28.7-48 64s21.5 64 48 64 48-28.7 48-64-21.5-64-48-64zm-112-32c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32zm224 0c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32zm-272-64c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32zm320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32z"/></svg>
+    </div>
+
+    <!-- 第五章 -->
+    <section class="chapter">
+        <div class="chapter-label">第五章</div>
+        <h3>在绞刑架下微笑</h3>
+        <p class="lead">最后一个场景，是一个让人颤栗的画面。莫扎特的古典乐经由爵士收音机播放出来，失真变调，像被什么东西玷污了。哈里的愤怒一层层漫上来。他冲进一个房间，看见了赫尔米娜和帕勃罗睡在一起。当狼性的嫉妒彻底压倒他的时候，他从身上掏出刀来。</p>
+        <p>在杀死她的那一瞬间，魔剧院碎裂了。人群消失，灯光熄灭。帕勃罗变成莫扎特出现在他面前，露出温和又嘲弄的笑容：</p>
+        <div class="quote-block">
+            亲爱的小傻子，你的天分非常低。但不管再怎么低，你还是会慢慢领悟自己需要的是什么。你必须学会笑。你需要笑。你必须理解人生的幽默——是这个人生的死刑犯的小曲。
+            <span class="quote-src">—— 莫扎特</span>
+        </div>
+        <p>哈里跪在地上哭泣，他说自己杀了人。莫扎特却说：你没杀死任何人，你只是太严肃了。</p>
+        <div class="insight-card">
+            <h4>永恒只是一瞬间，刚好开一个玩笑</h4>
+            <p>严肃是对时间价值的过高估计造成的。而在永恒中没有时间。永恒只是一瞬间，刚好开一个玩笑。</p>
+        </div>
+        <p>还记得他当初下决心用刮胡刀片了结自己吗？他没有。而他在这里赐死了赫尔米娜——赐死了那个能在这个世界上游刃有余地活着的那部分自己。但死不是终点。因为当你真正杀死了那个不想再活下去的自己，你就能学会笑——不是为了迎合世界而笑，而是知道一切都荒谬、一切都没有意义，但你偏要活的那种笑。</p>
+        <div class="quote-block">
+            我总有一天会更好地学会玩这人生游戏。我总有一天会学会笑。
+            <span class="quote-src">—— 哈里·哈勒尔</span>
+        </div>
+        <div class="scene-card">
+            <h4>西西弗的巨石</h4>
+            <p>加缪说：西西弗每天推着巨石上山，石头滚下来，他再推上去，日复一日。但必须想象西西弗是幸福的——因为他在他的荒谬命运中找到了自己的意义。不是推上山顶的结果，而是推的那一瞬间的全部力量。</p>
+        </div>
+        <p>不管命运多荒谬，你都得学会在绞刑架下微笑。</p>
+    </section>
+
+    <div class="divider-paw">
+        <svg viewBox="0 0 512 512"><path d="M256 224c-26.5 0-48 28.7-48 64s21.5 64 48 64 48-28.7 48-64-21.5-64-48-64zm-112-32c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32zm224 0c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32zm-272-64c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32zm320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32z"/></svg>
+    </div>
+
+    <!-- 全书思维导图 -->
+    <section class="chapter mindmap-section">
+        <h3>全书思维导图</h3>
+        <div class="markmap">
+<script type="text/template">
+---
+markmap:
+  colorFreezeLevel: 2
+---
+# 荒原狼
+## 序：深渊中的路标
+### 黑塞的精神危机
+### 反战·婚姻失败·诊所
+### 荣格精神分析
+## 身在人间，心在荒原
+### 哈里·哈勒尔
+### 两个灵魂的撕扯
+#### 人：高尚·秩序
+#### 狼：野性·自由
+### 清醒带来的荒芜
+## 你是两者的总和
+### 《论荒原狼》小册子
+### 不是分裂，是执着于分裂
+### 无数碎片的集合
+## 沙砾石缝中的花
+### 赫尔米娜：另一面的自己
+### 学会跳舞·学会笑
+### 帕勃罗：活着即意义
+### 乡愁：唯一的向导
+## 魔剧院
+### 无数扇门·无数个自己
+### 猎杀汽车
+### 人格塑造指南
+### 爱情重演
+### 唯一的自我是幻觉
+## 在绞刑架下微笑
+### 杀死赫尔米娜
+### 莫扎特：你必须学会笑
+### 永恒只是一瞬间
+### 西西弗的幸福
+### 更好地玩这场人生游戏
+</script>
+        </div>
+    </section>
+
+    <!-- 尾声 -->
+    <section class="chapter epilogue">
+        <div class="epilogue-inner">
+            <p class="final-quote">
+                也许你内心也住着一只荒原狼，在理想与现实之间拉锯。你在白天扮演一个正常、稳定、按部就班的人，深夜却总有一个声音在质问意义。<br><br>
+                你没有问题，你不是分裂的，你只是更真实。<br><br>
+                我们不需要杀死体内的狼，也不需要囚禁自己的灵魂。我们只需要学会在绞刑架下微笑，学会在灰烬里重新点火，学会在这个不完美的世界里，用略带戏谑的心情拥抱每一天的荒谬与美好。<br><br>
+                愿我们都能更好地玩这场人生游戏。
+            </p>
+            <p class="goodnight">晚安</p>
+        </div>
+    </section>
+
+    <!-- 页脚狼爪印 -->
+    <div class="footer-paws">
+        <svg viewBox="0 0 512 512"><path d="M256 224c-26.5 0-48 28.7-48 64s21.5 64 48 64 48-28.7 48-64-21.5-64-48-64zm-112-32c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32zm224 0c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32zm-272-64c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32zm320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32z"/></svg>
+        <svg viewBox="0 0 512 512"><path d="M256 224c-26.5 0-48 28.7-48 64s21.5 64 48 64 48-28.7 48-64-21.5-64-48-64zm-112-32c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32zm224 0c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32zm-272-64c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32zm320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32z"/></svg>
+        <svg viewBox="0 0 512 512"><path d="M256 224c-26.5 0-48 28.7-48 64s21.5 64 48 64 48-28.7 48-64-21.5-64-48-64zm-112-32c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32zm224 0c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32zm-272-64c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32zm320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32z"/></svg>
+    </div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+<script>
+    // 生成星星
+    (function(){
+        var c = document.getElementById('heroStars');
+        for(var i=0;i<40;i++){
+            var s = document.createElement('div');
+            s.className='star';
+            s.style.left = Math.random()*100+'%';
+            s.style.top = Math.random()*60+'%';
+            s.style.animationDelay = Math.random()*3+'s';
+            s.style.width = s.style.height = (Math.random()*2+1)+'px';
+            c.appendChild(s);
+        }
+    })();
+
+    const toggle = document.getElementById('themeToggle');
+    const panel = document.getElementById('themePanel');
+    const options = document.querySelectorAll('.theme-option');
+    const currentTheme = document.body.className.replace('theme-', '');
+    options.forEach(o => o.classList.toggle('active', o.dataset.theme === currentTheme));
+    toggle.addEventListener('click', (e) => { e.stopPropagation(); panel.classList.toggle('open'); });
+    document.addEventListener('click', (e) => { if (!panel.contains(e.target)) panel.classList.remove('open'); });
+    options.forEach(opt => {
+        opt.addEventListener('click', () => {
+            document.body.className = 'theme-' + opt.dataset.theme;
+            options.forEach(o => o.classList.toggle('active', o === opt));
+            panel.classList.remove('open');
+        });
+    });
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+        });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.chapter').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

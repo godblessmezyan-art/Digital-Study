@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高效能人士的七个习惯</title>
+<link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400;600;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F7F9FC;--card:#FFFFFF;--text:#1E293B;--text-secondary:#64748B;--primary:#1B4965;--accent:#E8A838;--border:#E2E8F0;--shadow:0 4px 24px rgba(27,73,101,.08);--radius:16px}
+body.theme-ink{--bg:#F7F9FC;--card:#FFFFFF;--text:#1E293B;--text-secondary:#64748B;--primary:#1B4965;--accent:#E8A838;--border:#E2E8F0;--shadow:0 4px 24px rgba(27,73,101,.08)}
+body.theme-forest{--bg:#F0F7F4;--card:#FFFFFF;--text:#1B3A2D;--text-secondary:#4A7C6A;--primary:#2D6A4F;--accent:#95D5B2;--border:#D8F3DC;--shadow:0 4px 24px rgba(45,106,79,.08)}
+body.theme-wine{--bg:#FDF2F4;--card:#FFFFFF;--text:#3D1522;--text-secondary:#8B4560;--primary:#800F2F;--accent:#FF758F;--border:#FFCCD5;--shadow:0 4px 24px rgba(128,15,47,.08)}
+body.theme-ocean{--bg:#EFF6FF;--card:#FFFFFF;--text:#1E3A5F;--text-secondary:#4A7FB5;--primary:#1D4ED8;--accent:#60A5FA;--border:#BFDBFE;--shadow:0 4px 24px rgba(29,78,216,.08)}
+body.theme-sand{--bg:#FFFBF0;--card:#FFFFFF;--text:#44361E;--text-secondary:#8B7355;--primary:#92600A;--accent:#F59E0B;--border:#FDE68A;--shadow:0 4px 24px rgba(146,96,10,.08)}
+body.theme-plum{--bg:#FAF5FF;--card:#FFFFFF;--text:#3B0764;--text-secondary:#7C3AED;--primary:#6D28D9;--accent:#A78BFA;--border:#DDD6FE;--shadow:0 4px 24px rgba(109,40,217,.08)}
+body.theme-slate{--bg:#F8FAFC;--card:#FFFFFF;--text:#0F172A;--text-secondary:#475569;--primary:#334155;--accent:#94A3B8;--border:#CBD5E1;--shadow:0 4px 24px rgba(51,65,85,.08)}
+body.theme-coral{--bg:#FFF5F5;--card:#FFFFFF;--text:#451A1A;--text-secondary:#B91C1C;--primary:#DC2626;--accent:#FCA5A5;--border:#FECACA;--shadow:0 4px 24px rgba(220,38,38,.08)}
+body.theme-teal{--bg:#F0FDFA;--card:#FFFFFF;--text:#134E4A;--text-secondary:#0F766E;--primary:#0D9488;--accent:#5EEAD4;--border:#99F6E4;--shadow:0 4px 24px rgba(13,148,136,.08)}
+body.theme-midnight{--bg:#0F172A;--card:#1E293B;--text:#E2E8F0;--text-secondary:#94A3B8;--primary:#38BDF8;--accent:#F59E0B;--border:#334155;--shadow:0 4px 24px rgba(0,0,0,.3)}
+body.theme-charcoal{--bg:#18181B;--card:#27272A;--text:#FAFAFA;--text-secondary:#A1A1AA;--primary:#FBBF24;--accent:#F97316;--border:#3F3F46;--shadow:0 4px 24px rgba(0,0,0,.3)}
+body.theme-abyss{--bg:#0C1222;--card:#162032;--text:#E0F2FE;--text-secondary:#7DD3FC;--primary:#0EA5E9;--accent:#A78BFA;--border:#1E3A5F;--shadow:0 4px 24px rgba(0,0,0,.4)}
+body.theme-moss{--bg:#1A2E1A;--card:#243524;--text:#D9F99D;--text-secondary:#A3E635;--primary:#84CC16;--accent:#FDE047;--border:#365336;--shadow:0 4px 24px rgba(0,0,0,.3)}
+body.theme-ember{--bg:#1C1008;--card:#2A1A0E;--text:#FED7AA;--text-secondary:#FB923C;--primary:#F97316;--accent:#FBBF24;--border:#4A2C17;--shadow:0 4px 24px rgba(0,0,0,.4)}
+body.theme-orchid{--bg:#1A0A2E;--card:#251240;--text:#F3E8FF;--text-secondary:#C084FC;--primary:#A855F7;--accent:#EC4899;--border:#3B1D6E;--shadow:0 4px 24px rgba(0,0,0,.4)}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Serif SC',serif;background:var(--bg);color:var(--text);line-height:1.9;transition:background .4s,color .4s}
+.container{max-width:780px;margin:0 auto;padding:0 24px}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;overflow:hidden;background:linear-gradient(160deg,#0B1D33 0%,#1B4965 40%,#2C7DA0 70%,#468FAF 100%);padding:60px 24px}
+.hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(255,255,255,.03) 79px,rgba(255,255,255,.03) 80px),repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(255,255,255,.03) 79px,rgba(255,255,255,.03) 80px)}
+.hero-steps{position:absolute;bottom:0;left:50%;transform:translateX(-50%);display:flex;align-items:flex-end;gap:6px;opacity:.15}
+.hero-steps .step-block{width:48px;background:linear-gradient(to top,#E8A838,#F5D78E);border-radius:4px 4px 0 0}
+.hero h1{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(2.8rem,9vw,5rem);color:#fff;letter-spacing:.12em;margin-bottom:16px;position:relative;z-index:1;text-shadow:0 4px 30px rgba(0,0,0,.3)}
+.hero .subtitle{font-size:clamp(1rem,3vw,1.3rem);color:rgba(255,255,255,.85);letter-spacing:.15em;position:relative;z-index:1;margin-bottom:12px}
+.hero .author{font-size:.95rem;color:rgba(255,255,255,.6);position:relative;z-index:1;letter-spacing:.1em}
+.hero .tagline{margin-top:32px;font-size:1.05rem;color:rgba(255,255,255,.75);position:relative;z-index:1;max-width:500px;line-height:2}
+
+/* Theme toggle */
+.theme-btn{position:fixed;top:20px;right:20px;z-index:999;width:44px;height:44px;border-radius:50%;border:2px solid var(--border);background:var(--card);color:var(--text);font-size:1.2rem;cursor:pointer;box-shadow:var(--shadow);transition:all .3s}
+.theme-btn:hover{transform:scale(1.1)}
+
+/* Sections */
+.chapter{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease;margin:80px auto;max-width:780px;padding:0 24px}
+.chapter.visible{opacity:1;transform:translateY(0)}
+.chapter-label{font-size:.8rem;letter-spacing:.3em;color:var(--accent);text-transform:uppercase;margin-bottom:8px;font-weight:600}
+.chapter h2{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(1.6rem,5vw,2.2rem);color:var(--primary);margin-bottom:24px;line-height:1.5}
+.chapter h3{font-family:'ZCOOL XiaoWei',serif;font-size:1.3rem;color:var(--primary);margin:40px 0 16px;padding-left:16px;border-left:3px solid var(--accent)}
+.chapter p{margin-bottom:18px;color:var(--text);font-size:1.02rem}
+.chapter p.secondary{color:var(--text-secondary);font-size:.95rem}
+
+/* Divider - Concentric Circles */
+.divider{display:flex;justify-content:center;align-items:center;margin:60px 0;gap:0}
+.divider svg{opacity:.5}
+
+/* Staircase - 7 habits overview */
+.staircase{display:flex;flex-direction:column;gap:0;margin:40px 0;position:relative}
+.staircase::before{content:'';position:absolute;left:24px;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,var(--primary),var(--accent));border-radius:2px}
+.stair-item{position:relative;padding:20px 20px 20px 60px;margin-bottom:4px}
+.stair-item::before{content:attr(data-num);position:absolute;left:12px;top:22px;width:28px;height:28px;border-radius:50%;background:var(--primary);color:#fff;font-size:.8rem;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:'ZCOOL XiaoWei',serif}
+.stair-item h4{font-size:1.05rem;color:var(--primary);margin-bottom:6px;font-weight:600}
+.stair-item p{font-size:.92rem;color:var(--text-secondary);margin:0;line-height:1.7}
+.stair-item.phase-label{padding-top:28px}
+.stair-item.phase-label h4{font-size:.85rem;letter-spacing:.2em;color:var(--accent);font-weight:700}
+
+/* Quadrant Matrix */
+.matrix{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin:32px 0;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.matrix-cell{padding:24px 20px;background:var(--card);text-align:center}
+.matrix-cell h5{font-size:.9rem;margin-bottom:8px;font-weight:700}
+.matrix-cell p{font-size:.82rem;color:var(--text-secondary);margin:0;line-height:1.6}
+.matrix-cell.q1{border-top:3px solid #DC2626}
+.matrix-cell.q1 h5{color:#DC2626}
+.matrix-cell.q2{border-top:3px solid var(--primary)}
+.matrix-cell.q2 h5{color:var(--primary)}
+.matrix-cell.q3{border-top:3px solid #F59E0B}
+.matrix-cell.q3 h5{color:#F59E0B}
+.matrix-cell.q4{border-top:3px solid #94A3B8}
+.matrix-cell.q4 h5{color:#94A3B8}
+.matrix-label{display:flex;justify-content:center;gap:24px;margin-top:12px;font-size:.78rem;color:var(--text-secondary)}
+
+/* Key insight cards */
+.insight-grid{display:grid;grid-template-columns:1fr;gap:16px;margin:32px 0}
+.insight-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.insight-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--accent)}
+.insight-card h4{font-size:1rem;color:var(--primary);margin-bottom:8px}
+.insight-card p{font-size:.92rem;color:var(--text-secondary);margin:0;line-height:1.8}
+
+/* Four dimensions */
+.dimensions{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:32px 0}
+.dim-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;text-align:center;box-shadow:var(--shadow)}
+.dim-card .dim-icon{font-size:2rem;margin-bottom:12px}
+.dim-card h4{font-size:.95rem;color:var(--primary);margin-bottom:8px}
+.dim-card p{font-size:.82rem;color:var(--text-secondary);margin:0;line-height:1.7}
+
+/* Quote block */
+.quote{background:var(--card);border-left:4px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;padding:24px 28px;margin:32px 0;box-shadow:var(--shadow)}
+.quote p{font-style:italic;color:var(--primary);font-size:1.05rem;margin:0;line-height:2}
+
+/* Markmap */
+.mindmap-section{margin:80px auto;max-width:780px;padding:0 24px}
+.mindmap-section h2{font-family:'ZCOOL XiaoWei',serif;font-size:1.8rem;color:var(--primary);text-align:center;margin-bottom:32px}
+.markmap{width:100%;height:520px;border-radius:var(--radius);background:var(--card);box-shadow:var(--shadow);border:1px solid var(--border)}
+
+/* Goodnight */
+.goodnight{text-align:center;padding:100px 24px 120px}
+.goodnight .word{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(2.5rem,8vw,4rem);color:var(--primary);letter-spacing:.5em;text-indent:.5em}
+
+/* Footer */
+.footer{text-align:center;padding:40px 24px 60px;color:var(--text-secondary);font-size:.8rem}
+.footer .footer-icons{display:flex;justify-content:center;gap:12px;margin-bottom:16px}
+.footer .footer-icons span{width:8px;height:8px;border-radius:50%;background:var(--accent);opacity:.6}
+
+/* Responsive */
+@media(max-width:600px){
+  .dimensions{grid-template-columns:1fr}
+  .matrix{grid-template-columns:1fr}
+  .hero-steps .step-block{width:32px}
+}
+</style>
+</head>
+<body class="theme-ink">
+<script>!function(){var t=['theme-ink','theme-forest','theme-wine','theme-ocean','theme-sand','theme-plum','theme-slate','theme-coral','theme-teal','theme-midnight','theme-charcoal','theme-abyss','theme-moss','theme-ember','theme-orchid'];document.body.className=t[Math.floor(Math.random()*t.length)]}()</script>
+
+<button class="theme-btn" onclick="!function(){var t=['theme-ink','theme-forest','theme-wine','theme-ocean','theme-sand','theme-plum','theme-slate','theme-coral','theme-teal','theme-midnight','theme-charcoal','theme-abyss','theme-moss','theme-ember','theme-orchid'];var c=document.body.className;var i=(t.indexOf(c)+1)%t.length;document.body.className=t[i]}()" title="切换主题">🔑</button>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-steps" id="heroSteps"></div>
+  <p class="subtitle">不能管理自己的人，终将被别人管理</p>
+  <h1>高效能人士的<br>七个习惯</h1>
+  <p class="author">史蒂芬·柯维 Stephen R. Covey</p>
+  <p class="tagline">高效能不是指你一天能做多少事，而是指你做的是不是对的事，是不是能让你离想要的生活越来越近。</p>
+</header>
+
+<!-- 序 -->
+<section class="chapter">
+  <p class="chapter-label">序</p>
+  <h2>由内而外：先搞定思维，再搞定生活</h2>
+  <p>同样是上班，有人轻松搞定KPI还能陪伴家人，你却天天加班还总出错。同样是经营关系，有人朋友满天下、家庭和睦，你却总在误会和矛盾里打转。其实不是你不够努力，而是没找对做事的底层逻辑。</p>
+  <p>柯维告诉我们，高效从不是靠熬夜拼体力，也不是靠技巧玩套路，而是得从根上改变——先搞定自己的思维和习惯，才能真正掌控生活。</p>
+  <div class="quote">
+    <p>效率是把事做对，而效能是做对的事。真正的高效能必须先保证方向没错。</p>
+  </div>
+  <p>什么是由内而外的成长？打个比方，你想让院子里的花开得好，不能光盯着花瓣浇水施肥，得往根上使劲儿。人也一样，想改脾气、提升能力、处好关系，光学表面的话术和技巧没用，得先改自己的思维方式、价值观——这些藏在骨子里的东西。</p>
+  <p>有个管理者总抱怨团队成员懒散不听话，开会时动不动就批评人，结果团队氛围越来越差。后来他开始主动问员工"你需要我提供什么支持"，愿意听大家的想法时，团队反而慢慢有了活力。这就是由内而外的力量——先改变自己的心态和认知，外在的行为和结果自然会跟着变。</p>
+</section>
+
+<div class="divider">
+  <svg width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="none" stroke="var(--primary)" stroke-width="1.5"/><circle cx="30" cy="30" r="20" fill="none" stroke="var(--accent)" stroke-width="1.5"/><circle cx="30" cy="30" r="12" fill="none" stroke="var(--primary)" stroke-width="1.5"/><circle cx="30" cy="30" r="4" fill="var(--accent)"/></svg>
+</div>
+
+<!-- 七个习惯总览 -->
+<section class="chapter">
+  <p class="chapter-label">框架</p>
+  <h2>七个习惯的进阶之路</h2>
+  <p>柯维把七个习惯分成了三个阶段，就像人成长的三个层次。它们不是孤立的技巧，而是一套完整的行为准则，能帮你在混乱的生活里找到锚点。</p>
+  <div class="staircase">
+    <div class="stair-item phase-label" data-num="Ⅰ"><h4>从依赖到独立 · 私人成功</h4></div>
+    <div class="stair-item" data-num="1"><h4>积极主动</h4><p>掌控选择的自由，把精力放在影响圈</p></div>
+    <div class="stair-item" data-num="2"><h4>以终为始</h4><p>先想清楚终点，再开始跑</p></div>
+    <div class="stair-item" data-num="3"><h4>要事第一</h4><p>把时间花在重要不紧急的事上</p></div>
+    <div class="stair-item phase-label" data-num="Ⅱ"><h4>从独立到互赖 · 公众成功</h4></div>
+    <div class="stair-item" data-num="4"><h4>双赢思维</h4><p>找到大家都赢的方案</p></div>
+    <div class="stair-item" data-num="5"><h4>知彼解己</h4><p>先听懂别人，再让别人听懂你</p></div>
+    <div class="stair-item" data-num="6"><h4>统合综效</h4><p>1+1＞2 的创造性合作</p></div>
+    <div class="stair-item phase-label" data-num="Ⅲ"><h4>持续更新</h4></div>
+    <div class="stair-item" data-num="7"><h4>不断更新</h4><p>身体·精神·智力·社会情感 四维充电</p></div>
+  </div>
+  <p class="secondary">习惯是知识、技巧和意愿的结合体。这三者凑齐了，习惯自然会慢慢养成。而且七个习惯是递进式的，像爬楼梯一样，一步一步来反而更稳。</p>
+</section>
+
+<div class="divider">
+  <svg width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="none" stroke="var(--primary)" stroke-width="1.5"/><circle cx="30" cy="30" r="20" fill="none" stroke="var(--accent)" stroke-width="1.5"/><circle cx="30" cy="30" r="12" fill="none" stroke="var(--primary)" stroke-width="1.5"/><circle cx="30" cy="30" r="4" fill="var(--accent)"/></svg>
+</div>
+
+<!-- 第一章 -->
+<section class="chapter">
+  <p class="chapter-label">第一阶段</p>
+  <h2>从依赖到独立：搞定自己是高效的起点</h2>
+
+  <h3>习惯一 · 积极主动</h3>
+  <p>积极主动不是勤快点、遇事往前冲。它的真正含义是：你的行为不是由外界刺激决定的，而是由自己的选择决定的。你控制不了发生什么事，但能控制自己怎么应对。</p>
+  <p>柯维给了一个超实用的工具——关注圈和影响圈。关注圈是你平时会在意的事（天气、房价、别人的评价），影响圈是你能实实在在改变的部分。消极的人总盯着关注圈里管不了的事，积极的人会把精力放在影响圈里。越做，你的影响圈就会越大。</p>
+  <div class="insight-grid">
+    <div class="insight-card">
+      <h4>语言转换</h4>
+      <p>少说"我必须""我不得不"，多换成"我选择"。前者是被动接受，后者是主动选择。心态变了，做事的动力和效果也会跟着变。</p>
+    </div>
+    <div class="insight-card">
+      <h4>每日练习</h4>
+      <p>每天花10分钟想想今天遇到的事里，哪些是自己能控制的，哪些是管不了的。把注意力放在能控制的部分，坚持一段时间，你会发现自己越来越少抱怨。</p>
+    </div>
+  </div>
+
+  <h3>习惯二 · 以终为始</h3>
+  <p>盖房子得先画好图纸，人生也是一样。要是不知道自己想要什么，就跟着别人瞎跑——别人考公你也考公，别人创业你也创业——最后很可能累死累活，却发现不是自己想要的生活。</p>
+  <p>柯维的方法是写个人使命宣言。不是喊口号的空话，而是能指导你做选择的实实在在的准则。写的时候可以想象：假如今天是你人生的最后一天，你希望自己活成什么样？希望家人朋友怎么评价你？</p>
+  <div class="quote">
+    <p>使命宣言就像你的人生导航，不管走多远，看看导航就知道自己有没有偏离方向。</p>
+  </div>
+  <p>有个企业家在使命宣言里写了"做一个诚信的商人，不赚昧良心的钱"。后来有客户找他做不合格产品、给双倍的钱，他想起使命宣言，最终拒绝了。半年后那客户又找来了——说上次找了别人做，结果出了大问题被监管查了，觉得还是他靠谱，想长期合作。</p>
+
+  <h3>习惯三 · 要事第一</h3>
+  <p>很多人忙不过来，不是因为事情太多，而是因为把紧急的事当成了重要的事。柯维发明了时间管理矩阵，把所有事分成四个象限：</p>
+  <div class="matrix">
+    <div class="matrix-cell q1"><h5>Ⅰ 重要且紧急</h5><p>马上要交的报告<br>突然生病去医院</p></div>
+    <div class="matrix-cell q2"><h5>Ⅱ 重要不紧急</h5><p>学习新技能<br>陪家人·锻炼身体</p></div>
+    <div class="matrix-cell q3"><h5>Ⅲ 紧急不重要</h5><p>别人突然找你帮忙<br>临时开没必要的会</p></div>
+    <div class="matrix-cell q4"><h5>Ⅳ 不重要不紧急</h5><p>刷短视频<br>无目的闲聊</p></div>
+  </div>
+  <div class="matrix-label"><span>← 紧急 →</span><span>← 不紧急 →</span></div>
+  <p>高效能人士会把大部分时间花在第二象限。因为第二象限的事虽然不着急，但能决定你的未来。比如你每天花一小时学英语，短期内可能没效果，但半年后公司有个去国外出差的机会，你就能抓住。</p>
+  <p class="secondary">落地方法：每周日晚上花30分钟规划下周的要事，把它们像开会一样固定进时间表。先学会拒绝不重要的事——先表示理解，再说明自己的情况，最后给出替代方案。</p>
+</section>
+
+<div class="divider">
+  <svg width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="none" stroke="var(--primary)" stroke-width="1.5"/><circle cx="30" cy="30" r="20" fill="none" stroke="var(--accent)" stroke-width="1.5"/><circle cx="30" cy="30" r="12" fill="none" stroke="var(--primary)" stroke-width="1.5"/><circle cx="30" cy="30" r="4" fill="var(--accent)"/></svg>
+</div>
+
+<!-- 第二章 -->
+<section class="chapter">
+  <p class="chapter-label">第二阶段</p>
+  <h2>从独立到互赖：会合作才能走得更远</h2>
+  <p>当我们能把自己的日子理顺，真正做到独立自强后，就会发现：不管是工作里的项目合作，还是家里的琐事商量，光靠自己厉害根本不够，还得学会跟人打交道、搞配合。</p>
+
+  <h3>习惯四 · 双赢思维</h3>
+  <p>真正的双赢不是妥协或各让一步，而是找到一个让双方都能得到想要的东西的办法，甚至能创造出比原来更好的结果。</p>
+  <p>有两个孩子抢橘子，吵了半天决定一人一半。结果一个孩子把橘子肉吃了、把皮扔了；另一个孩子本来是想用橘子皮做蛋糕、把肉扔了。如果他们一开始就问清楚对方想要什么，完全可以一个拿肉、一个拿皮，两人都办成了事儿。</p>
+  <div class="insight-grid">
+    <div class="insight-card">
+      <h4>品格基础</h4>
+      <p>你要有诚信、有勇气。既不能为了赢就骗别人，也不能为了怕冲突就委屈自己。守住底线，也考虑对方的需求。</p>
+    </div>
+    <div class="insight-card">
+      <h4>情感账户</h4>
+      <p>对别人好就是存钱，对别人不好就是取钱。记住别人的生日、认真听别人说话、答应的事一定做到——这些都是存钱。账户里有钱，双赢才有可能。</p>
+    </div>
+  </div>
+
+  <h3>习惯五 · 知彼解己</h3>
+  <p>大部分人跟人说话时，满脑子想的都是"我要怎么反驳他""我要怎么让她同意"，根本没认真听别人说什么。有个爸爸听儿子说"不想上学了"，立马火了骂儿子不懂事。结果后来才知道，儿子是在学校被欺负了，想找他帮忙，话都没说完就被骂了。</p>
+  <p>倾听分五个层次：忽略式倾听→假装式倾听→选择性倾听→回应式倾听→移情式倾听。最高层次是移情式倾听——真正站在别人的角度理解他的感受和需求，让别人觉得"你懂我"。</p>
+  <div class="quote">
+    <p>你先懂别人，别人才愿意懂你。</p>
+  </div>
+  <p class="secondary">表达技巧——综合陈述法：先讲你看到的事实（别说主观评价）→再讲你的感受→然后说你的需求→最后提建议。这样说，别人不容易生气，还更容易接受你的建议。</p>
+
+  <h3>习惯六 · 统合综效</h3>
+  <p>统合综效就是把不同的想法放在一起，创造出更好的东西。有个公司要做新饮料，市场部说做甜的年轻人喜欢，研发部说得做健康的少加糖，两个部门吵了半天。最后老板说"能不能做一款低糖但口感好的？"结果研发部找了新的甜味剂，市场部做了年轻的包装，饮料卖得特别好。</p>
+  <p>统合综效的关键是尊重差异。差异不是障碍，是财富。就像开车得有后视镜、侧视镜、前挡风玻璃，缺了哪个都不行。</p>
+  <p class="secondary">步骤：第一步，先倾听别人的想法，不管觉得多离谱都先听懂；第二步，表达自己的想法，别藏着掖着；第三步，一起找第三方案——既不是你的方案，也不是他的方案，而是更好的方案。</p>
+</section>
+
+<div class="divider">
+  <svg width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="none" stroke="var(--primary)" stroke-width="1.5"/><circle cx="30" cy="30" r="20" fill="none" stroke="var(--accent)" stroke-width="1.5"/><circle cx="30" cy="30" r="12" fill="none" stroke="var(--primary)" stroke-width="1.5"/><circle cx="30" cy="30" r="4" fill="var(--accent)"/></svg>
+</div>
+
+<!-- 第三章 -->
+<section class="chapter">
+  <p class="chapter-label">第三阶段</p>
+  <h2>不断更新：高效能的加油站</h2>
+  <p>有个伐木工人每天砍树到很晚，可砍的树却越来越少。别人问他怎么回事，他说："我太忙了，根本没时间磨斧头。"斧头钝了都不磨，再用力也砍不动。人也一样——身体累了不休息，脑子空了不学习，关系淡了不维护，慢慢就会力不从心。</p>
+  <p>柯维说，不断更新主要是四个维度，就像桌子的四条腿，缺了哪一条桌子都站不稳：</p>
+  <div class="dimensions">
+    <div class="dim-card"><div class="dim-icon">💪</div><h4>身体</h4><p>运动·饮食·睡眠<br>每天20分钟快走<br>坚持八分饱<br>保证7-8小时睡眠</p></div>
+    <div class="dim-card"><div class="dim-icon">🧘</div><h4>精神</h4><p>冥想·读经典·亲近自然<br>每天写感恩日记<br>记录三件值得感恩的事</p></div>
+    <div class="dim-card"><div class="dim-icon">📚</div><h4>智力</h4><p>读书·学新技能·教别人<br>每周一本书<br>上下班路上听有声书</p></div>
+    <div class="dim-card"><div class="dim-icon">🤝</div><h4>社会情感</h4><p>维护关系·自我反思<br>每周留时间陪家人<br>说话之前先想三秒</p></div>
+  </div>
+  <p>前面六个习惯帮你实现成功，第七个习惯帮你维持成功，还能让你不断进步。没有身体更新，你可能连早起做计划的力气都没有；没有精神更新，遇到挫折就容易放弃；没有智力更新，你就想不出双赢的方案；没有社会情感更新，人际关系账户里没钱，知彼解己也没人愿意听你说。</p>
+</section>
+
+<div class="divider">
+  <svg width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="none" stroke="var(--primary)" stroke-width="1.5"/><circle cx="30" cy="30" r="20" fill="none" stroke="var(--accent)" stroke-width="1.5"/><circle cx="30" cy="30" r="12" fill="none" stroke="var(--primary)" stroke-width="1.5"/><circle cx="30" cy="30" r="4" fill="var(--accent)"/></svg>
+</div>
+
+<!-- 第四章 -->
+<section class="chapter">
+  <p class="chapter-label">落地</p>
+  <h2>避开误区，让习惯真正长在身上</h2>
+  <p>习惯的养成需要时间——至少21天才能初步形成，三个月才能稳定，半年以上才能变成自然的行为。就像学骑自行车，刚开始总摔觉得难，但练得多了，不用想也能骑得稳。</p>
+  <div class="insight-grid">
+    <div class="insight-card">
+      <h4>误区一：只学技巧不学思维</h4>
+      <p>比如照搬时间管理矩阵，但根本没搞清楚自己的要事到底是什么。就像只学了游泳的动作没学换气，肯定游不远。先搞懂每个习惯的底层逻辑，再学技巧才不会走偏。</p>
+    </div>
+    <div class="insight-card">
+      <h4>误区二：追求完美、急于求成</h4>
+      <p>刚开始没坚持几天，就因为一次没做到而放弃。习惯的养成本来就是试错、调整、坚持的过程。偶尔没做到很正常，关键是别放弃，第二天继续改就行。</p>
+    </div>
+    <div class="insight-card">
+      <h4>误区三：依赖习惯、失去灵活</h4>
+      <p>把七个习惯当成教条，不管遇到什么事都硬套。七个习惯是工具，不是枷锁。跟家人吵架的时候，有时候一个拥抱、一句"我错了"，比什么方法都管用。</p>
+    </div>
+  </div>
+  <p>柯维在书里写过一句话：人生最大的投资就是投资自己，而这七个习惯就是最好的自我投资。它不会让你马上变厉害，但只要你坚持下去，每天改变一点点——今天少抱怨一次，明天想清楚自己要做什么，后天先做最重要的事——慢慢的你会发现自己越来越从容，越来越有力量。</p>
+  <div class="quote">
+    <p>高效能的本质是成长与贡献的平衡。你不断成长，让自己变得更厉害；同时你也不断贡献，用自己的能力去帮助别人、影响社会。</p>
+  </div>
+</section>
+
+<!-- Markmap -->
+<section class="mindmap-section chapter">
+  <h2>全书思维导图</h2>
+  <div class="markmap">
+    <script type="text/template">
+---
+markmap:
+  colorFreezeLevel: 3
+---
+# 高效能人士的七个习惯
+## 核心理念
+### 效能 ≠ 效率
+### 由内而外的成长
+### 思维→行为→结果
+## Ⅰ 私人成功（依赖→独立）
+### 习惯一：积极主动
+#### 选择的自由
+#### 关注圈 vs 影响圈
+#### "我选择"替代"我必须"
+### 习惯二：以终为始
+#### 个人使命宣言
+#### 人生导航
+#### 以原则为中心
+### 习惯三：要事第一
+#### 时间管理四象限
+#### 聚焦第二象限
+#### 每周规划优先
+## Ⅱ 公众成功（独立→互赖）
+### 习惯四：双赢思维
+#### 品格（诚信+勇气）
+#### 情感账户
+#### 双赢协议
+### 习惯五：知彼解己
+#### 五层倾听
+#### 移情式倾听
+#### 综合陈述法
+### 习惯六：统合综效
+#### 尊重差异
+#### 第三方案
+#### 1+1＞2
+## Ⅲ 持续更新
+### 习惯七：不断更新
+#### 身体（运动·饮食·睡眠）
+#### 精神（冥想·感恩·自然）
+#### 智力（读书·学习·教授）
+#### 社会情感（关系·反思）
+## 落地原则
+### 21天→3月→半年
+### 小步快跑 逐个击破
+### 工具不是枷锁
+### 成长与贡献的平衡
+    </script>
+  </div>
+</section>
+
+<!-- 晚安 -->
+<section class="goodnight chapter">
+  <p class="word">晚安</p>
+</section>
+
+<footer class="footer">
+  <div class="footer-icons"><span></span><span></span><span></span></div>
+  <p>《高效能人士的七个习惯》 · 史蒂芬·柯维</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+<script>
+// Scroll reveal
+const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:0.1});
+document.querySelectorAll('.chapter').forEach(el=>obs.observe(el));
+
+// Hero staircase blocks
+const steps=document.getElementById('heroSteps');
+const heights=[40,65,90,115,140,165,190];
+heights.forEach(h=>{const d=document.createElement('div');d.className='step-block';d.style.height=h+'px';steps.appendChild(d)});
+</script>
+</body>
+</html>

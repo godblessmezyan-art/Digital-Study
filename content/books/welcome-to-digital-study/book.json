@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "slug": "welcome-to-digital-study",
+  "title": "欢迎来到数字书房",
+  "author": "数字书房",
+  "summary": "用于验证内容同步、数据库索引和正文读取流程的仓库示例。",
+  "cover": "cover.svg",
+  "status": "published",
+  "publishedAt": "2026-09-15T12:00:00.000Z",
+  "category": {
+    "slug": "guides",
+    "name": "使用指南"
+  }
+}

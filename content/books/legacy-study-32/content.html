@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>八万四千问</title>
+<link href="https://fonts.loli.net/css2?family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f5f0;--text:#2e2a25;--accent:#4a5a8a;--accent2:#8a9ac4;--card:#fff;--card-border:#e0ddd5;--hero-top:#0e1225;--hero-mid:#1a2245;--hero-bot:#2a3a6a;--gold:#c4a35a;--shadow:rgba(74,90,138,.08)}
+body.theme-ink{--bg:#f5f3ef;--text:#2c2c2c;--accent:#4a4a4a;--accent2:#7a7a7a;--card:#fff;--card-border:#ddd;--hero-top:#111;--hero-mid:#2a2a2a;--hero-bot:#4a4a4a;--gold:#8a7a5a;--shadow:rgba(0,0,0,.06)}
+body.theme-ocean{--bg:#f0f6f8;--text:#2a3a42;--accent:#3a7a8a;--accent2:#6aacbc;--card:#fff;--card-border:#d8e8ec;--hero-top:#0e2228;--hero-mid:#1a3a42;--hero-bot:#3a6a7a;--gold:#c4a35a;--shadow:rgba(58,122,138,.08)}
+body.theme-dusk{--bg:#faf5f0;--text:#3a2a2a;--accent:#a05a3a;--accent2:#c88a6a;--card:#fff;--card-border:#e8d8d0;--hero-top:#1a0e0a;--hero-mid:#3a1a10;--hero-bot:#6a3a20;--gold:#d4a040;--shadow:rgba(160,90,58,.08)}
+body.theme-plum{--bg:#f8f4f8;--text:#3a2a3a;--accent:#7a4a7a;--accent2:#aa7aaa;--card:#fff;--card-border:#e8d8e8;--hero-top:#150e15;--hero-mid:#2a1a2a;--hero-bot:#4a2a4a;--gold:#c4a35a;--shadow:rgba(122,74,122,.08)}
+body.theme-night{--bg:#14181e;--text:#c8d0dc;--accent:#7a9ac4;--accent2:#5a7aa4;--card:#1e242e;--card-border:#2e3a4a;--hero-top:#080a0e;--hero-mid:#101418;--hero-bot:#1a2230;--gold:#c4a35a;--shadow:rgba(0,0,0,.3)}
+body.theme-warm{--bg:#fdf6ee;--text:#4a3520;--accent:#b87a2a;--accent2:#d4a050;--card:#fff;--card-border:#f0e0c8;--hero-top:#1a1008;--hero-mid:#3a2510;--hero-bot:#6a4a20;--gold:#e0b040;--shadow:rgba(184,122,42,.08)}
+body.theme-mist{--bg:#f4f6f4;--text:#3a4a3a;--accent:#6a8a6a;--accent2:#9ab89a;--card:#fff;--card-border:#dce8dc;--hero-top:#0e150e;--hero-mid:#1a2a1a;--hero-bot:#3a5a3a;--gold:#b8a050;--shadow:rgba(106,138,106,.08)}
+body.theme-rose{--bg:#fdf5f5;--text:#4a2a2a;--accent:#b05a5a;--accent2:#d08a8a;--card:#fff;--card-border:#f0d8d8;--hero-top:#150a0a;--hero-mid:#2a1212;--hero-bot:#5a2a2a;--gold:#c4a35a;--shadow:rgba(176,90,90,.08)}
+body.theme-stone{--bg:#f6f5f3;--text:#3a3835;--accent:#6a6560;--accent2:#9a9590;--card:#fff;--card-border:#e5e2dd;--hero-top:#12110f;--hero-mid:#2a2825;--hero-bot:#4a4540;--gold:#b0956a;--shadow:rgba(106,101,96,.08)}
+body.theme-lake{--bg:#f2f7f6;--text:#2a3a38;--accent:#3a7a72;--accent2:#6aaa9a;--card:#fff;--card-border:#d8e8e5;--hero-top:#0a1514;--hero-mid:#142a28;--hero-bot:#2a5248;--gold:#c4a35a;--shadow:rgba(58,122,114,.08)}
+body.theme-autumn{--bg:#faf6f0;--text:#3a2a1a;--accent:#a06a2a;--accent2:#c49a5a;--card:#fff;--card-border:#eee0cc;--hero-top:#150e05;--hero-mid:#2a1a0a;--hero-bot:#5a3a1a;--gold:#d4a030;--shadow:rgba(160,106,42,.08)}
+body.theme-bamboo{--bg:#f5f8f2;--text:#2a3a25;--accent:#4a7a3a;--accent2:#7aaa6a;--card:#fff;--card-border:#dce8d5;--hero-top:#0a1208;--hero-mid:#1a2a12;--hero-bot:#3a5a2a;--gold:#b8a040;--shadow:rgba(74,122,58,.08)}
+body.theme-cloud{--bg:#f8f9fc;--text:#2a2a3a;--accent:#5a6a9a;--accent2:#8a9ac4;--card:#fff;--card-border:#dde2f0;--hero-top:#0e0e1a;--hero-mid:#1a1a30;--hero-bot:#3a3a5a;--gold:#c4a35a;--shadow:rgba(90,106,154,.08)}
+body.theme-sand{--bg:#faf8f2;--text:#3a3225;--accent:#8a7a4a;--accent2:#b8a87a;--card:#fff;--card-border:#e8e0d0;--hero-top:#12100a;--hero-mid:#2a2415;--hero-bot:#4a4028;--gold:#c4a040;--shadow:rgba(138,122,74,.08)}
+body.theme-snow{--bg:#f8fafb;--text:#2a3038;--accent:#4a6a8a;--accent2:#7a9ab8;--card:#fff;--card-border:#dde5ec;--hero-top:#0a1015;--hero-mid:#152028;--hero-bot:#2a4050;--gold:#b8a060;--shadow:rgba(74,106,138,.08)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Serif SC',serif;background:var(--bg);color:var(--text);line-height:2;overflow-x:hidden;transition:background .5s,color .5s}
+.theme-select{position:fixed;top:16px;right:16px;z-index:999;padding:8px 14px;border-radius:20px;border:1px solid var(--card-border);background:var(--card);color:var(--text);font-size:.85rem;font-family:'Noto Serif SC',serif;cursor:pointer;box-shadow:0 2px 12px var(--shadow)}
+/* Hero */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;background:linear-gradient(175deg,var(--hero-top) 0%,var(--hero-mid) 50%,var(--hero-bot) 100%);overflow:hidden;padding:60px 20px}
+.hero h1{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(2.2rem,7vw,3.8rem);color:#fff;margin-bottom:16px;letter-spacing:.12em;text-shadow:0 0 40px rgba(196,163,90,.3)}
+.hero .subtitle{font-size:clamp(1rem,3vw,1.25rem);color:rgba(255,255,255,.75);margin-bottom:12px}
+.hero .author{font-size:.9rem;color:rgba(255,255,255,.5);letter-spacing:.2em;margin-bottom:36px}
+.hero .epigraph{max-width:480px;font-size:clamp(.95rem,2.5vw,1.1rem);color:var(--gold);line-height:2.2;font-style:italic;opacity:.9}
+/* Stars */
+.star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;animation:twinkle 3s infinite ease-in-out}
+@keyframes twinkle{0%,100%{opacity:.2}50%{opacity:.8}}
+/* Mist */
+.mist{position:absolute;bottom:0;left:0;width:200%;height:30%;background:linear-gradient(to top,rgba(255,255,255,.04),transparent);animation:driftMist 20s infinite linear}
+@keyframes driftMist{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+/* Content */
+.content{max-width:720px;margin:0 auto;padding:60px 24px}
+.chapter{margin-bottom:64px;opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
+.chapter.visible{opacity:1;transform:translateY(0)}
+.chapter h2{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(1.4rem,4vw,1.85rem);color:var(--accent);margin-bottom:24px;display:flex;align-items:center;gap:12px}
+.q-num{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;font-size:.85rem;flex-shrink:0;font-family:'Noto Serif SC',serif}
+.chapter p{margin-bottom:1.2em;text-align:justify;font-size:1.05rem}
+.chapter .highlight{color:var(--accent);font-weight:600}
+.chapter .quote{background:var(--card);border-left:3px solid var(--gold);padding:20px 24px;border-radius:0 12px 12px 0;margin:24px 0;font-style:italic;box-shadow:0 2px 12px var(--shadow)}
+/* Mirror divider */
+.mirror-divider{display:flex;align-items:center;justify-content:center;margin:52px 0;position:relative}
+.mirror-divider::before{content:'';width:120px;height:1px;background:linear-gradient(90deg,transparent,var(--accent2),transparent)}
+.mirror-divider .dot{width:8px;height:8px;border-radius:50%;border:1.5px solid var(--gold);margin:0 16px;position:relative}
+.mirror-divider .dot::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:3px;height:3px;background:var(--gold);border-radius:50%}
+.mirror-divider::after{content:'';width:120px;height:1px;background:linear-gradient(90deg,transparent,var(--accent2),transparent)}
+/* Insight card */
+.insight-card{background:var(--card);border:1px solid var(--card-border);border-radius:16px;padding:28px;margin:28px 0;box-shadow:0 4px 20px var(--shadow);position:relative;overflow:hidden}
+.insight-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--accent),var(--gold),var(--accent2))}
+.insight-card h3{font-family:'ZCOOL XiaoWei',serif;color:var(--accent);font-size:1.1rem;margin-bottom:12px}
+/* Practice box */
+.practice-box{background:linear-gradient(135deg,var(--card),var(--bg));border:1px dashed var(--accent2);border-radius:14px;padding:24px;margin:28px 0}
+.practice-box h4{font-family:'ZCOOL XiaoWei',serif;color:var(--gold);margin-bottom:10px;font-size:1rem}
+.practice-box p{font-size:.95rem;margin-bottom:.8em}
+/* Markmap */
+.markmap-section{max-width:900px;margin:60px auto;padding:0 24px}
+.markmap-section h2{font-family:'ZCOOL XiaoWei',serif;text-align:center;color:var(--accent);font-size:1.5rem;margin-bottom:24px}
+.markmap{width:100%;height:500px;background:var(--card);border-radius:16px;border:1px solid var(--card-border);box-shadow:0 4px 20px var(--shadow)}
+.markmap-foreign{color:var(--text)!important}
+/* Goodnight */
+.goodnight{text-align:center;padding:80px 20px 100px}
+.goodnight p{font-family:'ZCOOL XiaoWei',serif;font-size:1.6rem;color:var(--accent);letter-spacing:.5em}
+/* Progress */
+.progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--gold));z-index:1000;transition:width .1s}
+@media(max-width:600px){.content{padding:40px 18px}.theme-select{top:10px;right:10px;padding:6px 10px;font-size:.8rem}.chapter h2{font-size:1.3rem}}
+</style>
+</head>
+<body class="theme-indigo">
+<script>!function(){var t=["theme-indigo","theme-ink","theme-ocean","theme-dusk","theme-plum","theme-night","theme-warm","theme-mist","theme-rose","theme-stone","theme-lake","theme-autumn","theme-bamboo","theme-cloud","theme-sand","theme-snow"];document.body.className=t[Math.floor(Math.random()*t.length)]}()</script>
+<div class="progress" id="progress"></div>
+<select class="theme-select" onchange="document.body.className=this.value">
+<option value="theme-indigo">🌌 靛蓝</option>
+<option value="theme-ink">🖋 水墨</option>
+<option value="theme-ocean">🌊 海洋</option>
+<option value="theme-dusk">🌅 暮色</option>
+<option value="theme-plum">🌸 梅子</option>
+<option value="theme-night">🌙 夜色</option>
+<option value="theme-warm">🕯 暖阳</option>
+<option value="theme-mist">🌫 薄雾</option>
+<option value="theme-rose">🌹 玫瑰</option>
+<option value="theme-stone">🪨 磐石</option>
+<option value="theme-lake">💧 湖水</option>
+<option value="theme-autumn">🍂 秋意</option>
+<option value="theme-bamboo">🎋 青竹</option>
+<option value="theme-cloud">☁️ 流云</option>
+<option value="theme-sand">🏜 沙丘</option>
+<option value="theme-snow">❄️ 初雪</option>
+</select>
+
+<section class="hero">
+<h1>八万四千问</h1>
+<p class="subtitle">解答你所有的人生困惑</p>
+<p class="author">宗萨蒋扬钦哲仁波切</p>
+<p class="epigraph">世界上最大的监狱是人的大脑<br>走不出自己的观念<br>到哪里都是囚徒</p>
+<div class="mist"></div>
+</section>
+
+<div class="content">
+
+<div class="chapter">
+<h2>一面心灵的镜子</h2>
+<p>此刻的你，是不是已经卸下了一天的疲惫，躺在柔软的床上？窗外的夜色渐深，城市慢慢安静下来，而你的心里，或许还藏着一些没来得及消化的情绪——可能是白天工作的焦虑，可能是关系里的小纠结，也可能只是单纯的迷茫，好像人生一直在追逐什么，却从来不知道自己真正想要的是什么。</p>
+<p>没关系。这本书不像一本严肃的典籍，更像一位通透的老友，坐在你身边，用最温柔的语气回答你人生中那些说不出口的困惑。读完它，你可能不会立刻找到所有答案，但一定会学会<span class="highlight">和自己的迷茫痛苦温柔相处</span>。</p>
+<p>宗萨仁波切，出生于不丹王室，却喜欢旅行、拍电影；精通佛法，却从不强迫别人信仰什么，反而总说："你可以不信佛，但一定要懂生活。"他既懂佛法的精髓，也懂现代人的焦虑与困境。</p>
+<p>书名源于佛教里的"八万四千法门"——佛陀为度化不同根基的众生，开设了八万四千种修行方法。而这本书，正是仁波切针对现代人的生活场景，精选最核心、最贴近生活的问题，给出的智慧解答。</p>
+<div class="quote">它就像一面镜子，让你清晰地看见自己的内心，也看见世界的本质。</div>
+</div>
+
+<div class="mirror-divider"><span class="dot"></span></div>
+
+<div class="chapter">
+<h2><span class="q-num">一</span>我们为什么总是不快乐</h2>
+<p>仁波切在书里说：<span class="highlight">痛苦不是命运的惩罚。</span>我们总想要恒常，可世界的本质偏偏是无常。</p>
+<p>你有没有发现，我们的很多烦恼都来自于"期待"——期待工作能一直稳定，可突然面临裁员时就会崩溃；期待爱人能永远像热恋时那样爱自己，可感情慢慢平淡后就会失落；期待自己能永远快乐，可悲伤来临时就会抗拒。</p>
+<p>我们总以为好的状态应该一直持续，可实际上生活就像四季更替——有春天的温暖，就有冬天的寒冷；有花开的喜悦，就有花落的惆怅。</p>
+<p>其实很多时候我们痛苦，不是因为事情本身有多糟，而是因为我们<span class="highlight">不愿意接受它的变化</span>。就像有人失去了工作，会觉得天塌下来了，可换个角度想，这或许也是一个重新选择的机会。有人结束了一段感情，会深陷悲伤，可慢慢会发现这段经历让自己变得更成熟。</p>
+<div class="insight-card">
+<h3>无常不是灾难，而是生活的常态</h3>
+<p>当我们学会接纳无常，不再执着于"不变"，痛苦自然会减轻很多。</p>
+</div>
+<p>我们之所以不快乐，还因为我们总是在向外求。我们以为拥有更多的金钱、更好的名声、更完美的伴侣就能获得幸福。于是拼命赚钱、追逐名利、讨好他人。可当我们真正拥有这些东西时，却发现内心依然空虚。</p>
+<div class="quote">现代人最大的误区，是把幸福寄托在外部事物上，却忘记了内心才是幸福的源泉。就像一个乞丐四处寻找宝藏，却不知道宝藏就在自己的口袋里。</div>
+</div>
+
+<div class="mirror-divider"><span class="dot"></span></div>
+
+<div class="chapter">
+<h2><span class="q-num">二</span>修行是什么</h2>
+<p>提到修行，很多人会想到出家、打坐、念经，觉得修行就是要逃离世俗生活，远离红尘烦恼。但仁波切告诉我们：<span class="highlight">修行不是避世，而是让你在红尘中保持清醒，在喧嚣中找到平静。</span></p>
+<p>仁波切自己就是最好的例子。他没有躲在寺庙里不问世事，而是经常旅行、演讲、拍电影，甚至会关注社交媒体上的热点话题。他说："真正的修行不是让你远离生活，而是让你学会如何面对生活。"</p>
+<p>你依然可以工作、恋爱、结婚、生子，但你不再被这些事情所困扰，不再因为得失而大喜大悲。</p>
+<div class="quote">修行就像在湍急的河流中划船。你不需要逆流而上，也不需要顺流而下，你只需要保持平衡，专注于当下的每一个动作。</div>
+<p>生活中的每一件事都是修行的契机——吃饭时好好吃饭，走路时好好走路，工作时好好工作，爱一个人时好好去爱。当你能在每一个当下保持清醒的觉知，你就是在修行。</p>
+<div class="insight-card">
+<h3>修行不是逃避</h3>
+<p>很多人把修行当成了一种逃避——工作不顺心了，就说自己要"佛系"；感情受伤了，就说自己要"修行"；遇到困难了，就说自己要"躺平"。可真正的修行不是逃避问题，而是直面问题。</p>
+<p>就像他说的："你害怕蜘蛛却敢吃龙虾，你晕血却对生鱼片大快朵颐。你不敢面对自己的恐惧和矛盾，却躲在修行的外衣下自欺欺人。这不是修行，这是懦弱。"</p>
+</div>
+</div>
+
+<div class="mirror-divider"><span class="dot"></span></div>
+
+<div class="chapter">
+<h2><span class="q-num">三</span>爱情和婚姻的真相</h2>
+<p>仁波切说：<span class="highlight">爱情的本质是无常的，婚姻的真相是共修。</span></p>
+<p>一个为情所困的女孩问："怎样才能找到完美的伴侣？"仁波切说了一句让人深思的话："在你想要被爱之前，先学会独处。"</p>
+<p>他巧妙地比喻道：我们总是期待另一个人给我们快乐，就像期待荧幕上的影像走出来陪我们。但真正的幸福来自于认清这只是一场电影，然后尽情享受它。</p>
+<p>你有没有过这样的经历？一开始觉得爱人是完美的，可相处久了就会发现他的各种缺点——睡觉打呼噜、不爱做家务、偶尔会发脾气。这时候很多人会失望、会争吵，甚至会怀疑"我是不是选错人了"。</p>
+<p>但仁波切告诉我们：爱情里没有完美的人，只有愿意接纳不完美的两颗心。<span class="highlight">你爱的不是对方的完美，而是对方的真实。</span>可很多人爱的是自己想象出来的完美伴侣，当对方不符合这个想象时就会受伤。</p>
+<div class="quote">你的伴侣就像一面镜子，照出你的自私、你的傲慢、你的控制欲。婚姻不是让你找一个人来宠你惯你，而是让你通过和另一个人的相处，慢慢修正自己的缺点，学会包容、理解和付出。</div>
+<p>很多人在婚姻里追求永恒，可永恒是不存在的。你能做的是珍惜当下的每一刻。当你不再执着于"永远"，不再要求对方完美，不再试图改变对方，你才能真正享受婚姻带来的温暖和成长。</p>
+</div>
+
+<div class="mirror-divider"><span class="dot"></span></div>
+
+<div class="chapter">
+<h2><span class="q-num">四</span>如何摆脱精神内耗</h2>
+<p>现代人最大的痛苦之一就是精神内耗。你是不是也这样——晚上躺在床上，脑子里像放电影一样：白天说的某句话是不是得罪人了？明天的会议会不会出问题？下个月的房贷该怎么还？曾经的某个遗憾反复在心里琢磨，未来的各种不确定让你辗转难眠。</p>
+<p>仁波切说：<span class="highlight">精神内耗的本质，是我们活在了过去和未来，唯独没有活在当下。</span></p>
+<p>他打了一个很形象的比喻：人的意识就像一条河流，过去的已经流走，未来的还没有到来，我们能抓住的只有当下的这一刻。可很多人却拼命想要抓住已经流走的水，又或者拼命想要冲到还没到来的下游，结果只能是精疲力尽。</p>
+<div class="insight-card">
+<h3>觉察：摆脱内耗的钥匙</h3>
+<p>当你发现自己又在胡思乱想时，不要批评自己，也不要试图控制自己的想法，只需要静静地观察它——"我现在在想过去的事情""我现在在担心未来"。当你能觉察到这些想法时，你就已经不再被它控制了。</p>
+<p>比如你因为白天的一次失误而自责，这时候你可以对自己说："我现在在自责，可自责改变不了什么，不如明天好好弥补。"然后把注意力拉回到当下——听听舒缓的音乐，看看窗外的夜色，或者只是静静地呼吸。</p>
+</div>
+<p>慢慢地你会发现，那些让你内耗的想法，会像云朵一样慢慢飘走。</p>
+</div>
+
+<div class="mirror-divider"><span class="dot"></span></div>
+
+<div class="chapter">
+<h2><span class="q-num">五</span>怎么才能获得真正的自由</h2>
+<p>很多人都在追求自由——财务自由、时间自由、心灵自由。可仁波切说：<span class="highlight">真正的自由不是拥有更多的选择，而是接纳自己的一切，不再和自己对抗。</span></p>
+<p>你有没有过这样的感受？总是对自己不满意，觉得自己不够漂亮、不够聪明、不够优秀；总是羡慕别人的生活，觉得别人的人生都很顺利，只有自己充满坎坷。我们总在和自己较劲，总在试图变成"更好的人"，可往往越较劲越痛苦。</p>
+<div class="quote">你明明是一朵玫瑰，却非要活成莲花的模样，这本身就是一种痛苦。每个人都有自己的花期，有自己的生长节奏，不必和别人比较，也不必强迫自己变成别人喜欢的样子。</div>
+<p>有读者问："我总是很在意别人的看法，别人的一句话就能影响我的心情，该怎么办？"仁波切一针见血："你一直在用社会的尺子丈量自己的价值，却从未问过这把尺子是否准确。这就像用温度计来称体重，不仅得不到正确答案，还会把温度计弄坏。"</p>
+<p>其实接纳自己不是躺平，不是放弃努力，而是在了解自己的基础上做真实的自己。你可以内向，但依然可以真诚待人；你可以追求安稳，但依然可以在自己的领域里发光发热。<span class="highlight">当你不再和自己对抗，不再试图改变自己的本质，你才能获得真正的心灵自由。</span></p>
+</div>
+
+<div class="mirror-divider"><span class="dot"></span></div>
+
+<div class="chapter">
+<h2>出离心与日常修行</h2>
+<p>当你在工作中感到压力山大时，可以试着实践书中的正念练习——不是强迫自己停止思考，而是像看车流一样观察念头来来去去。你会发现焦虑就像夜空中的云，看着它，它自然会飘走。</p>
+<p>当你在人际关系中感到受伤时，记得仁波切的提醒：把每个人，包括伤害你的人，看做你的老师。这不是要你忍气吞声，而是转变视角——每一次冲突都是认识自己、修炼心性的机会。</p>
+<p>当你对未来感到迷茫时，不妨想想这个比喻：<span class="highlight">人生就像在雾中开车，你不需要看清整条路，只需要看清前方三米就够了。</span>专注当下能做的事，而不是为看不清的远方焦虑。</p>
+<div class="insight-card">
+<h3>欲望不是问题，执着才是</h3>
+<p>仁波切说："就算你继续逛街、打麻将、涂指甲和口红，你依然可以成为一位佛教徒，只要你心中有觉知、有慈悲、有善良。喝咖啡或者看世界杯，都不是你修行的敌人。欲望才是问题——并不在于财富或者世俗的成功本身，那些从来都不是问题。对财富和成功的贪婪与执着，才是问题。你要抛弃的是对一切的执着，而不是一切。"</p>
+</div>
+<p>拥有出离心不是要我们抛弃一切，恰恰相反——如果我们拥有出离心，事实上它会让我们的生活更加丰富。一个懂得无常的人，每次品茶都像是品人生的最后一杯茶，因而会倍加珍惜。</p>
+</div>
+
+<div class="mirror-divider"><span class="dot"></span></div>
+
+<div class="chapter">
+<h2>过程即意义</h2>
+<p>八万四千问，最终给我们的不是一个个标准答案，而是一副看世界的新眼镜。它让我们明白：<span class="highlight">问题本身不是问题，我们与问题的关系才是问题。</span>当我们停止对抗，开始理解，转变就已经发生。</p>
+<p>如果你正处在人生的低谷，请记住：黑夜再长，天也会亮。你的每一个困惑、每一次挣扎，都不是白费的。就像仁波切说的："质疑是智慧的开始，迷茫是觉醒的前奏。"</p>
+<p>如果你感到孤独，要知道你并不是一个人在面对这些生命课题。千百年来，无数人都曾走过这条路。</p>
+<div class="practice-box">
+<h4>睡前小练习</h4>
+<p>关掉灯，静静地呼吸，然后问自己一个问题："此刻，我真正需要的是什么？"</p>
+<p>不要急着回答，只是让这个问题在心中回荡。或许答案会以意想不到的方式浮现。</p>
+</div>
+<div class="quote">生命的意义在于过程，而非结果。因为结果是所有的生命终将消亡，而过程才是你在这个世界上真实的足迹。</div>
+<p>每一个清醒的提问，都比浑浑噩噩的答案更有价值。</p>
+</div>
+
+</div>
+
+<section class="markmap-section">
+<h2>全书脉络</h2>
+<div class="markmap">
+<script type="text/template">
+# 八万四千问
+## 核心理念
+### 问题本身不是问题
+### 我们与问题的关系才是问题
+### 停止对抗 → 理解 → 转变
+## 第一问：为何不快乐
+### 痛苦源于期待恒常
+### 世界本质是无常
+### 接纳无常 → 痛苦减轻
+### 幸福在内心，非外物
+#### 乞丐口袋里的宝藏
+## 第二问：修行是什么
+### 不是避世，是面对生活
+### 河流中划船：保持平衡
+### 每个当下都是修行
+### 不是逃避，是直面
+#### 佛系/躺平 ≠ 修行
+## 第三问：爱情与婚姻
+### 爱情本质是无常
+### 婚姻真相是共修
+### 先学会独处
+### 伴侣是镜子
+#### 照出自私/傲慢/控制欲
+### 珍惜当下，不执着永远
+## 第四问：精神内耗
+### 活在过去和未来
+### 意识如河流
+### 觉察：观察念头
+### 想法如云朵飘走
+## 第五问：真正的自由
+### 不是更多选择
+### 是接纳自己
+### 玫瑰不必活成莲花
+### 不用社会的尺子量自己
+### 温度计称体重的比喻
+## 出离心
+### 不是抛弃一切
+### 是抛弃执着
+### 让生命更丰富
+### 最后一杯茶的珍惜
+## 日常实践
+### 正念：观察念头如车流
+### 视人为师
+### 雾中开车：看清三米
+### 睡前一问：此刻我需要什么
+## 终极智慧
+### 质疑是智慧的开始
+### 迷茫是觉醒的前奏
+### 意义在过程，非结果
+</script>
+</div>
+</section>
+
+<footer class="goodnight"><p>晚安</p></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+<script>
+document.querySelector('.theme-select').value=document.body.className;
+// Stars in hero
+(function(){var hero=document.querySelector('.hero');for(var i=0;i<60;i++){var s=document.createElement('div');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*70+'%';s.style.animationDuration=(2+Math.random()*4)+'s';s.style.animationDelay=Math.random()*3+'s';s.style.width=s.style.height=(1+Math.random()*2)+'px';hero.appendChild(s)}})();
+// Scroll progress
+window.addEventListener('scroll',function(){var h=document.documentElement;var pct=h.scrollTop/(h.scrollHeight-h.clientHeight)*100;document.getElementById('progress').style.width=pct+'%'});
+// IntersectionObserver
+var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:0.1});
+document.querySelectorAll('.chapter').forEach(function(el){obs.observe(el)});
+</script>
+</body>
+</html>

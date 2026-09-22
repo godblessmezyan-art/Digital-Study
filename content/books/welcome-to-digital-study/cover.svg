@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="840" viewBox="0 0 600 840" role="img" aria-label="欢迎来到数字书房">
+  <rect width="600" height="840" fill="#24384a"/>
+  <rect x="34" y="34" width="532" height="772" rx="8" fill="none" stroke="#d7c59b" stroke-width="3"/>
+  <text x="300" y="400" fill="#f5eedc" font-family="serif" font-size="42" text-anchor="middle">欢迎来到数字书房</text>
+  <text x="300" y="470" fill="#d7c59b" font-family="sans-serif" font-size="20" text-anchor="middle">内容恢复示例</text>
+</svg>

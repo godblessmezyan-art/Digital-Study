@@ -1,0 +1,688 @@
+{
+  "schemaVersion": 1,
+  "books": [
+    {
+      "schemaVersion": 1,
+      "slug": "clouds-and-stars",
+      "title": "人生的智慧 · 深夜书房今夜共读",
+      "author": "星海旅人",
+      "summary": "一场穿越云海与群星的旅程",
+      "tags": [
+        "奇幻",
+        "世界观",
+        "冒险"
+      ],
+      "cover": "cover.svg",
+      "status": "published",
+      "category": {
+        "slug": "fantasy",
+        "name": "幻想文学"
+      },
+      "publishedAt": "2026-09-21T01:45:24.989Z",
+      "coverUrl": "/content/books/clouds-and-stars/cover.svg",
+      "contentUrl": "/content/books/clouds-and-stars/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "welcome-to-digital-study",
+      "title": "欢迎来到数字书房",
+      "author": "数字书房",
+      "summary": "用于验证内容同步、数据库索引和正文读取流程的仓库示例。",
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-09-15T12:00:00.000Z",
+      "category": {
+        "slug": "guides",
+        "name": "使用指南"
+      },
+      "coverUrl": "/content/books/welcome-to-digital-study/cover.svg",
+      "contentUrl": "/content/books/welcome-to-digital-study/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-41",
+      "title": "高效能人士的七个习惯",
+      "author": "佚名",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-08-24T23:42:22.000Z",
+      "category": {
+        "slug": "legacy-category-63",
+        "name": "个人成长"
+      },
+      "coverUrl": "/content/books/legacy-study-41/cover.svg",
+      "contentUrl": "/content/books/legacy-study-41/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-40",
+      "title": "万水千山走遍",
+      "author": "佚名",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-08-24T23:42:04.000Z",
+      "category": {
+        "slug": "legacy-category-59",
+        "name": "文学经典"
+      },
+      "coverUrl": "/content/books/legacy-study-40/cover.svg",
+      "contentUrl": "/content/books/legacy-study-40/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-39",
+      "title": "心湖上的倒影",
+      "author": "佚名",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-08-24T23:41:52.000Z",
+      "category": {
+        "slug": "legacy-category-59",
+        "name": "文学经典"
+      },
+      "coverUrl": "/content/books/legacy-study-39/cover.svg",
+      "contentUrl": "/content/books/legacy-study-39/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-38",
+      "title": "荒原狼",
+      "author": "佚名",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-08-24T23:41:35.000Z",
+      "category": {
+        "slug": "legacy-category-59",
+        "name": "文学经典"
+      },
+      "coverUrl": "/content/books/legacy-study-38/cover.svg",
+      "contentUrl": "/content/books/legacy-study-38/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-37",
+      "title": "悉达多",
+      "author": "佚名",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-08-24T23:41:28.000Z",
+      "category": {
+        "slug": "legacy-category-59",
+        "name": "文学经典"
+      },
+      "coverUrl": "/content/books/legacy-study-37/cover.svg",
+      "contentUrl": "/content/books/legacy-study-37/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-36",
+      "title": "原子习惯",
+      "author": "佚名",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-08-24T23:41:15.000Z",
+      "category": {
+        "slug": "legacy-category-63",
+        "name": "个人成长"
+      },
+      "coverUrl": "/content/books/legacy-study-36/cover.svg",
+      "contentUrl": "/content/books/legacy-study-36/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-35",
+      "title": "反脆弱",
+      "author": "佚名",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-08-24T23:41:03.000Z",
+      "category": {
+        "slug": "legacy-category-63",
+        "name": "个人成长"
+      },
+      "coverUrl": "/content/books/legacy-study-35/cover.svg",
+      "contentUrl": "/content/books/legacy-study-35/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-34",
+      "title": "次第花开",
+      "author": "佚名",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-08-24T23:40:51.000Z",
+      "category": {
+        "slug": "legacy-category-60",
+        "name": "心灵修炼"
+      },
+      "coverUrl": "/content/books/legacy-study-34/cover.svg",
+      "contentUrl": "/content/books/legacy-study-34/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-33",
+      "title": "人生只有一件事",
+      "author": "佚名",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-08-24T23:40:40.000Z",
+      "category": {
+        "slug": "legacy-category-60",
+        "name": "心灵修炼"
+      },
+      "coverUrl": "/content/books/legacy-study-33/cover.svg",
+      "contentUrl": "/content/books/legacy-study-33/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-32",
+      "title": "八万四千问",
+      "author": "佚名",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-08-24T23:40:22.000Z",
+      "category": {
+        "slug": "legacy-category-60",
+        "name": "心灵修炼"
+      },
+      "coverUrl": "/content/books/legacy-study-32/cover.svg",
+      "contentUrl": "/content/books/legacy-study-32/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-31",
+      "title": "生命的重建",
+      "author": "佚名",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-08-24T23:40:11.000Z",
+      "category": {
+        "slug": "legacy-category-59",
+        "name": "文学经典"
+      },
+      "coverUrl": "/content/books/legacy-study-31/cover.svg",
+      "contentUrl": "/content/books/legacy-study-31/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-30",
+      "title": "微习惯",
+      "author": "佚名",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-08-24T23:39:44.000Z",
+      "category": {
+        "slug": "legacy-category-63",
+        "name": "个人成长"
+      },
+      "coverUrl": "/content/books/legacy-study-30/cover.svg",
+      "contentUrl": "/content/books/legacy-study-30/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-29",
+      "title": "空腹力",
+      "author": "佚名",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-08-24T23:39:27.000Z",
+      "category": {
+        "slug": "legacy-category-65",
+        "name": "健康生活"
+      },
+      "coverUrl": "/content/books/legacy-study-29/cover.svg",
+      "contentUrl": "/content/books/legacy-study-29/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-28",
+      "title": "杀死一只知更鸟",
+      "author": "佚名",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-08-24T23:39:18.000Z",
+      "category": {
+        "slug": "legacy-category-59",
+        "name": "文学经典"
+      },
+      "coverUrl": "/content/books/legacy-study-28/cover.svg",
+      "contentUrl": "/content/books/legacy-study-28/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-27",
+      "title": "如何停止胡思乱想",
+      "author": "佚名",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-08-24T23:39:03.000Z",
+      "category": {
+        "slug": "legacy-category-60",
+        "name": "心灵修炼"
+      },
+      "coverUrl": "/content/books/legacy-study-27/cover.svg",
+      "contentUrl": "/content/books/legacy-study-27/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-26",
+      "title": "认知觉醒",
+      "author": "佚名",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-08-24T23:38:54.000Z",
+      "category": {
+        "slug": "legacy-category-63",
+        "name": "个人成长"
+      },
+      "coverUrl": "/content/books/legacy-study-26/cover.svg",
+      "contentUrl": "/content/books/legacy-study-26/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-25",
+      "title": "断舍离",
+      "author": "佚名",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-08-24T23:38:42.000Z",
+      "category": {
+        "slug": "legacy-category-60",
+        "name": "心灵修炼"
+      },
+      "coverUrl": "/content/books/legacy-study-25/cover.svg",
+      "contentUrl": "/content/books/legacy-study-25/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-24",
+      "title": "福格行为模型",
+      "author": "佚名",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-08-24T23:38:17.000Z",
+      "category": {
+        "slug": "legacy-category-63",
+        "name": "个人成长"
+      },
+      "coverUrl": "/content/books/legacy-study-24/cover.svg",
+      "contentUrl": "/content/books/legacy-study-24/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-23",
+      "title": "掌控习惯",
+      "author": "佚名",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-08-24T23:38:03.000Z",
+      "category": {
+        "slug": "legacy-category-63",
+        "name": "个人成长"
+      },
+      "coverUrl": "/content/books/legacy-study-23/cover.svg",
+      "contentUrl": "/content/books/legacy-study-23/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-22",
+      "title": "当尼采哭泣",
+      "author": "佚名",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-08-24T23:37:51.000Z",
+      "category": {
+        "slug": "legacy-category-78",
+        "name": "哲学思考"
+      },
+      "coverUrl": "/content/books/legacy-study-22/cover.svg",
+      "contentUrl": "/content/books/legacy-study-22/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-21",
+      "title": "65种微习惯",
+      "author": "佚名",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-08-24T23:37:35.000Z",
+      "category": {
+        "slug": "legacy-category-63",
+        "name": "个人成长"
+      },
+      "coverUrl": "/content/books/legacy-study-21/cover.svg",
+      "contentUrl": "/content/books/legacy-study-21/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-20",
+      "title": "青铜葵花",
+      "author": "曹文轩",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-08-11T12:58:35.000Z",
+      "category": {
+        "slug": "legacy-category-59",
+        "name": "文学经典"
+      },
+      "coverUrl": "/content/books/legacy-study-20/cover.svg",
+      "contentUrl": "/content/books/legacy-study-20/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-19",
+      "title": "自卑与超越",
+      "author": "阿尔弗雷德·阿德勒",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-07-27T01:16:49.000Z",
+      "category": {
+        "slug": "legacy-category-63",
+        "name": "个人成长"
+      },
+      "coverUrl": "/content/books/legacy-study-19/cover.svg",
+      "contentUrl": "/content/books/legacy-study-19/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-18",
+      "title": "正念的奇迹",
+      "author": "一行禅师",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-07-27T01:13:48.000Z",
+      "category": {
+        "slug": "legacy-category-60",
+        "name": "心灵修炼"
+      },
+      "coverUrl": "/content/books/legacy-study-18/cover.svg",
+      "contentUrl": "/content/books/legacy-study-18/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-17",
+      "title": "乌合之众",
+      "author": "古斯塔夫·勒庞",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-07-27T01:12:15.000Z",
+      "category": {
+        "slug": "legacy-category-63",
+        "name": "个人成长"
+      },
+      "coverUrl": "/content/books/legacy-study-17/cover.svg",
+      "contentUrl": "/content/books/legacy-study-17/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-16",
+      "title": "生命之书",
+      "author": "克里希那穆提",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-07-27T01:10:08.000Z",
+      "category": {
+        "slug": "legacy-category-60",
+        "name": "心灵修炼"
+      },
+      "coverUrl": "/content/books/legacy-study-16/cover.svg",
+      "contentUrl": "/content/books/legacy-study-16/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-15",
+      "title": "如何度过每天的二十四小时",
+      "author": "阿诺德·本涅特",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-07-27T01:09:07.000Z",
+      "category": {
+        "slug": "legacy-category-63",
+        "name": "个人成长"
+      },
+      "coverUrl": "/content/books/legacy-study-15/cover.svg",
+      "contentUrl": "/content/books/legacy-study-15/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-14",
+      "title": "橘子不是唯一的水果",
+      "author": "珍妮特·温特森",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-07-27T01:07:33.000Z",
+      "category": {
+        "slug": "legacy-category-70",
+        "name": "人物传记"
+      },
+      "coverUrl": "/content/books/legacy-study-14/cover.svg",
+      "contentUrl": "/content/books/legacy-study-14/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-13",
+      "title": "丰盛",
+      "author": "杨定一",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-07-27T01:03:03.000Z",
+      "category": {
+        "slug": "legacy-category-60",
+        "name": "心灵修炼"
+      },
+      "coverUrl": "/content/books/legacy-study-13/cover.svg",
+      "contentUrl": "/content/books/legacy-study-13/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-12",
+      "title": "心流",
+      "author": "米哈里·契克森米哈赖",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-07-26T22:28:18.000Z",
+      "category": {
+        "slug": "legacy-category-63",
+        "name": "个人成长"
+      },
+      "coverUrl": "/content/books/legacy-study-12/cover.svg",
+      "contentUrl": "/content/books/legacy-study-12/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-11",
+      "title": "运动改变大脑",
+      "author": "佚名",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-07-25T01:24:13.000Z",
+      "category": {
+        "slug": "legacy-category-65",
+        "name": "健康生活"
+      },
+      "coverUrl": "/content/books/legacy-study-11/cover.svg",
+      "contentUrl": "/content/books/legacy-study-11/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-10",
+      "title": "控糖革命",
+      "author": "杰西・安佐斯佩",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-07-25T01:07:32.000Z",
+      "category": {
+        "slug": "legacy-category-65",
+        "name": "健康生活"
+      },
+      "coverUrl": "/content/books/legacy-study-10/cover.svg",
+      "contentUrl": "/content/books/legacy-study-10/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-8",
+      "title": "早起的奇迹",
+      "author": "哈尔·埃尔罗德",
+      "summary": "重要的不是早起的方法，而是那颗不甘平凡的心！",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-07-23T22:57:14.000Z",
+      "category": {
+        "slug": "legacy-category-63",
+        "name": "个人成长"
+      },
+      "coverUrl": "/content/books/legacy-study-8/cover.svg",
+      "contentUrl": "/content/books/legacy-study-8/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-7",
+      "title": "正见",
+      "author": "宗萨蒋扬钦哲仁波切",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-07-23T00:06:54.000Z",
+      "category": {
+        "slug": "legacy-category-60",
+        "name": "心灵修炼"
+      },
+      "coverUrl": "/content/books/legacy-study-7/cover.svg",
+      "contentUrl": "/content/books/legacy-study-7/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-6",
+      "title": "人生永远没有太晚的开始",
+      "author": "摩西奶奶",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-07-22T21:43:13.000Z",
+      "category": {
+        "slug": "legacy-category-61",
+        "name": "成功励志"
+      },
+      "coverUrl": "/content/books/legacy-study-6/cover.svg",
+      "contentUrl": "/content/books/legacy-study-6/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-4",
+      "title": "克林索尔的最后夏天",
+      "author": "赫尔曼·黑塞",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-07-22T21:40:03.000Z",
+      "category": {
+        "slug": "legacy-category-59",
+        "name": "文学经典"
+      },
+      "coverUrl": "/content/books/legacy-study-4/cover.svg",
+      "contentUrl": "/content/books/legacy-study-4/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-3",
+      "title": "红书",
+      "author": "卡尔·荣格",
+      "summary": "从旧 Study 项目迁移的书籍内容。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-07-22T21:39:27.000Z",
+      "category": {
+        "slug": "legacy-category-60",
+        "name": "心灵修炼"
+      },
+      "coverUrl": "/content/books/legacy-study-3/cover.svg",
+      "contentUrl": "/content/books/legacy-study-3/content.html"
+    },
+    {
+      "schemaVersion": 1,
+      "slug": "legacy-study-2",
+      "title": "秘密",
+      "author": "朗达·拜恩",
+      "summary": "万物皆为能量，同类相吸，同频共振。吸引力法则的完整解读。",
+      "tags": [],
+      "cover": "cover.svg",
+      "status": "published",
+      "publishedAt": "2026-07-22T13:03:51.000Z",
+      "category": {
+        "slug": "legacy-category-61",
+        "name": "成功励志"
+      },
+      "coverUrl": "/content/books/legacy-study-2/cover.svg",
+      "contentUrl": "/content/books/legacy-study-2/content.html"
+    }
+  ]
+}

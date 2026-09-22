@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>空腹力 — 石原结实</title>
+<link href="https://fonts.loli.net/css2?family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fafaf7;--text:#3a3a38;--card:#ffffff;--border:#e8e6e0;--accent:#5a8a72;--accent2:#8ab4a0;--gold:#c8a855;--hero-from:#f0f5f2;--hero-to:#fafaf7;--quote-bg:#f5f8f6;--shadow:0 2px 20px rgba(90,138,114,0.08)}
+body.theme-mint{--bg:#f7faf8;--text:#2d3d35;--card:#ffffff;--border:#d8ece2;--accent:#3a9a7a;--accent2:#7ac4a8;--gold:#c8a855;--hero-from:#e8f5ee;--hero-to:#f7faf8;--quote-bg:#f0f8f4;--shadow:0 2px 20px rgba(58,154,122,0.1)}
+body.theme-cloud{--bg:#f8f9fc;--text:#35384a;--card:#ffffff;--border:#e0e3ee;--accent:#6878b0;--accent2:#9aa4d0;--gold:#c8a855;--hero-from:#eceef8;--hero-to:#f8f9fc;--quote-bg:#f2f3fa;--shadow:0 2px 20px rgba(104,120,176,0.1)}
+body.theme-bamboo{--bg:#f8faf5;--text:#363d2e;--card:#ffffff;--border:#dde8d4;--accent:#6a9a48;--accent2:#98c474;--gold:#c8a855;--hero-from:#eaf2e0;--hero-to:#f8faf5;--quote-bg:#f2f6ee;--shadow:0 2px 20px rgba(106,154,72,0.1)}
+body.theme-amber{--bg:#fdfaf5;--text:#3d3528;--card:#ffffff;--border:#ece4d4;--accent:#b08a40;--accent2:#d4b468;--gold:#b08a40;--hero-from:#f8f0e0;--hero-to:#fdfaf5;--quote-bg:#faf5ea;--shadow:0 2px 20px rgba(176,138,64,0.1)}
+body.theme-dawn{--bg:#fdf8f5;--text:#3d322a;--card:#ffffff;--border:#ece0d6;--accent:#c07850;--accent2:#e0a080;--gold:#c8a855;--hero-from:#f8ece2;--hero-to:#fdf8f5;--quote-bg:#faf2ec;--shadow:0 2px 20px rgba(192,120,80,0.1)}
+body.theme-lavender{--bg:#f8f5fc;--text:#352d42;--card:#ffffff;--border:#e4daf0;--accent:#8a68b0;--accent2:#b498d4;--gold:#c8a855;--hero-from:#efe8f8;--hero-to:#f8f5fc;--quote-bg:#f5f0fa;--shadow:0 2px 20px rgba(138,104,176,0.1)}
+body.theme-slate{--bg:#f5f7f8;--text:#353a3d;--card:#ffffff;--border:#dce2e6;--accent:#5a7a8a;--accent2:#88a8b8;--gold:#c8a855;--hero-from:#e8eef2;--hero-to:#f5f7f8;--quote-bg:#f0f4f6;--shadow:0 2px 20px rgba(90,122,138,0.1)}
+body.theme-rose{--bg:#fdf5f5;--text:#3d2d2d;--card:#ffffff;--border:#ecdada;--accent:#c06868;--accent2:#e09898;--gold:#c8a855;--hero-from:#f8e8e8;--hero-to:#fdf5f5;--quote-bg:#faf0f0;--shadow:0 2px 20px rgba(192,104,104,0.1)}
+body.theme-sakura{--bg:#fdf5f8;--text:#3d2d35;--card:#ffffff;--border:#ecdce2;--accent:#c06888;--accent2:#e098b0;--gold:#c8a855;--hero-from:#f8e8ee;--hero-to:#fdf5f8;--quote-bg:#faf0f4;--shadow:0 2px 20px rgba(192,104,136,0.1)}
+body.theme-forest{--bg:#f5f8f4;--text:#2d382a;--card:#ffffff;--border:#d8e6d4;--accent:#4a7a42;--accent2:#78a870;--gold:#c8a855;--hero-from:#e4f0e0;--hero-to:#f5f8f4;--quote-bg:#eef5ec;--shadow:0 2px 20px rgba(74,122,66,0.1)}
+body.theme-ocean{--bg:#f4f8fa;--text:#2a353d;--card:#ffffff;--border:#d4e2ea;--accent:#3a7a9a;--accent2:#68a8c4;--gold:#c8a855;--hero-from:#e2f0f6;--hero-to:#f4f8fa;--quote-bg:#eaf4f8;--shadow:0 2px 20px rgba(58,122,154,0.1)}
+body.theme-sand{--bg:#faf8f2;--text:#3d3a2d;--card:#ffffff;--border:#e8e4d8;--accent:#a09060;--accent2:#c8b888;--gold:#a09060;--hero-from:#f2eed8;--hero-to:#faf8f2;--quote-bg:#f6f4ea;--shadow:0 2px 20px rgba(160,144,96,0.1)}
+body.theme-night{--bg:#1a1e28;--text:#d0d4dc;--card:#222838;--border:#333a4a;--accent:#6898c0;--accent2:#88b8e0;--gold:#d4b468;--hero-from:#101420;--hero-to:#1a1e28;--quote-bg:#1e2430;--shadow:0 2px 20px rgba(0,0,0,0.3)}
+body.theme-charcoal{--bg:#28282a;--text:#c8c8cc;--card:#323236;--border:#44444a;--accent:#70b890;--accent2:#98d8b0;--gold:#d4b468;--hero-from:#1e1e22;--hero-to:#28282a;--quote-bg:#2e2e34;--shadow:0 2px 20px rgba(0,0,0,0.3)}
+body.theme-deepsea{--bg:#141822;--text:#c0c8d8;--card:#1c2230;--border:#2a3244;--accent:#5888b8;--accent2:#80b0d8;--gold:#d4b468;--hero-from:#0c1018;--hero-to:#141822;--quote-bg:#181e2a;--shadow:0 2px 20px rgba(0,0,0,0.35)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Serif SC',serif;background:var(--bg);color:var(--text);line-height:1.9;transition:background .5s,color .5s}
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 24px;background:linear-gradient(180deg,var(--hero-from),var(--hero-to));overflow:hidden}
+.hero-particles{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.particle{position:absolute;border-radius:50%;background:var(--accent);opacity:0;animation:floatUp linear infinite}
+@keyframes floatUp{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:.3}90%{opacity:.15}100%{transform:translateY(-20vh) scale(1);opacity:0}}
+.hero-sub{font-family:'ZCOOL XiaoWei',serif;font-size:.95rem;letter-spacing:.4em;color:var(--accent);margin-bottom:20px;opacity:.7}
+.hero-title{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(2.2rem,7vw,3.8rem);font-weight:400;line-height:1.3;margin-bottom:16px;color:var(--text)}
+.hero-author{font-size:.9rem;color:var(--accent);letter-spacing:.2em;margin-bottom:40px}
+.hero-line{width:1px;height:80px;background:linear-gradient(to bottom,transparent,var(--accent),transparent);margin:0 auto 30px}
+.hero-quote{max-width:600px;font-size:1.05rem;line-height:2;color:var(--text);opacity:.75;font-style:italic}
+.breath-bar{display:flex;align-items:center;justify-content:center;gap:12px;padding:40px 0;opacity:.4}
+.breath-bar .dot{width:4px;height:4px;border-radius:50%;background:var(--accent)}
+.breath-bar .line{width:60px;height:1px;background:var(--border)}
+.content{max-width:720px;margin:0 auto;padding:0 24px}
+.chapter{padding:60px 0;opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
+.chapter.visible{opacity:1;transform:translateY(0)}
+.chapter-num{font-family:'ZCOOL XiaoWei',serif;font-size:.8rem;letter-spacing:.3em;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:12px}
+.chapter-num::after{content:'';flex:1;height:1px;background:var(--border)}
+.chapter-title{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(1.4rem,4vw,1.8rem);font-weight:400;line-height:1.5;margin-bottom:28px;color:var(--text)}
+.chapter p{margin-bottom:1.5em;font-size:1rem;text-align:justify}
+.insight-card{background:var(--quote-bg);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:24px 28px;margin:32px 0;font-style:italic;line-height:2;position:relative}
+.insight-card::before{content:'\201C';position:absolute;top:-8px;left:12px;font-size:3rem;color:var(--accent);opacity:.2;font-style:normal}
+.core-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px;margin:36px 0;box-shadow:var(--shadow);text-align:center}
+.core-box .icon{font-size:2.4rem;margin-bottom:12px}
+.core-box .label{font-family:'ZCOOL XiaoWei',serif;font-size:1.1rem;color:var(--accent);margin-bottom:8px}
+.core-box .detail{font-size:.95rem;line-height:2;color:var(--text);opacity:.85}
+.pollution-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:32px 0}
+@media(max-width:520px){.pollution-grid{grid-template-columns:1fr}}
+.pollution-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;box-shadow:var(--shadow);transition:transform .3s}
+.pollution-item:hover{transform:translateY(-3px)}
+.pollution-item .num{font-family:'ZCOOL XiaoWei',serif;font-size:1.6rem;color:var(--accent);opacity:.3;margin-bottom:6px}
+.pollution-item .name{font-weight:600;font-size:.95rem;margin-bottom:6px}
+.pollution-item .desc{font-size:.85rem;opacity:.75;line-height:1.7}
+.timeline{margin:36px 0;padding-left:24px;border-left:2px solid var(--border);position:relative}
+.timeline-item{position:relative;padding:0 0 28px 24px}
+.timeline-item::before{content:'';position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--bg);transition:background .5s}
+.timeline-item:last-child{padding-bottom:0}
+.timeline-item .time-label{font-size:.8rem;color:var(--accent);letter-spacing:.1em;margin-bottom:4px}
+.timeline-item .time-content{font-size:.95rem;line-height:1.9}
+.step-flow{margin:36px 0}
+.step-item{display:flex;gap:16px;padding:16px 0;border-bottom:1px dashed var(--border)}
+.step-item:last-child{border-bottom:none}
+.step-badge{flex-shrink:0;width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'ZCOOL XiaoWei',serif;font-size:.9rem}
+.step-text{padding-top:6px;font-size:.95rem;line-height:1.9}
+.temp-bar{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;margin:36px 0;box-shadow:var(--shadow)}
+.temp-scale{display:flex;justify-content:space-between;margin:16px 0 8px;position:relative}
+.temp-scale::before{content:'';position:absolute;top:50%;left:0;right:0;height:3px;background:linear-gradient(to right,#6898d0,#68c090,#d4a040,#d06848);border-radius:2px;transform:translateY(-50%)}
+.temp-mark{width:28px;height:28px;border-radius:50%;background:var(--card);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;z-index:1;position:relative}
+.temp-labels{display:flex;justify-content:space-between;font-size:.75rem;opacity:.6}
+.temp-fact{text-align:center;margin-top:20px;font-size:.9rem;line-height:1.9}
+.temp-fact strong{color:var(--accent)}
+.recipe-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;margin:20px 0;box-shadow:var(--shadow)}
+.recipe-card .recipe-title{font-family:'ZCOOL XiaoWei',serif;font-size:1.1rem;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.recipe-card .recipe-body{font-size:.9rem;line-height:2;opacity:.85}
+.vs-card{display:grid;grid-template-columns:1fr auto 1fr;gap:0;margin:32px 0;background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}
+.vs-side{padding:24px;text-align:center}
+.vs-side .vs-label{font-family:'ZCOOL XiaoWei',serif;font-size:.85rem;color:var(--accent);letter-spacing:.15em;margin-bottom:10px}
+.vs-side .vs-text{font-size:.9rem;line-height:1.9}
+.vs-divider{width:1px;background:var(--border);position:relative;display:flex;align-items:center;justify-content:center}
+.vs-divider::after{content:'VS';position:absolute;background:var(--card);color:var(--accent);font-size:.7rem;font-weight:700;letter-spacing:.1em;padding:8px 0}
+.mindmap-section{max-width:900px;margin:60px auto;padding:0 24px}
+.mindmap-section .chapter-title{text-align:center;margin-bottom:36px}
+.markmap{width:100%;min-height:400px;background:var(--card);border-radius:16px;border:1px solid var(--border);box-shadow:var(--shadow)}
+.markmap-foreign{color:var(--text)!important}
+.footer{text-align:center;padding:80px 24px 100px;position:relative}
+.footer .goodnight{font-family:'ZCOOL XiaoWei',serif;font-size:1.4rem;letter-spacing:.5em;color:var(--accent);margin-bottom:16px}
+.footer .wish{font-size:.9rem;opacity:.5}
+.theme-select{position:fixed;top:16px;right:16px;z-index:999;padding:8px 14px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:.85rem;font-family:'Noto Serif SC',serif;cursor:pointer;box-shadow:var(--shadow);outline:none;transition:all .3s}
+.theme-select:hover{border-color:var(--accent)}
+</style>
+</head>
+<body class="theme-default">
+<script>!function(){var t=["theme-default","theme-mint","theme-cloud","theme-bamboo","theme-amber","theme-dawn","theme-lavender","theme-slate","theme-rose","theme-sakura","theme-forest","theme-ocean","theme-sand","theme-night","theme-charcoal","theme-deepsea"];document.body.className=t[Math.floor(Math.random()*t.length)]}()</script>
+
+<section class="hero">
+<div class="hero-particles" id="particles"></div>
+<div class="hero-sub">睡前听完一本书</div>
+<h1 class="hero-title">空腹力</h1>
+<div class="hero-author">石原结实</div>
+<div class="hero-line"></div>
+<p class="hero-quote">不吃也可以是一种力量<br>有时候，给身体留出空间<br>才是真正的滋养</p>
+</section>
+
+<div class="breath-bar"><span class="line"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="line"></span></div>
+
+<div class="content">
+
+<div class="chapter" id="c1">
+<div class="chapter-num">壹</div>
+<h2 class="chapter-title">吃饱了，反而更累</h2>
+<p>你有没有这样的感觉——明明一日三餐都按时吃了，甚至吃得挺丰盛，但下午两三点钟，整个人就像被抽空了一样，困得睁不开眼，脑子像裹了一层雾。到了晚上又累又不想动，可躺在床上却翻来覆去睡不着。第二天早上起来，感觉根本没休息好。</p>
+<p>我们这一代人，大概是人类历史上吃得最饱的一代。可奇怪的是，吃得越饱，身体反而越多问题——肥胖、体寒、总是倦怠、慢性炎症，这些困扰几乎成了现代人的标配。</p>
+<p>作者石原结实出生于日本长崎县，家族世代都是御医。他本人是长崎大学的医学博士，从小体弱多病，正是因为这个原因才立志从医。他曾前往瑞士贝纳医院研习饮食疗法，多次深入格鲁吉亚的高加索长寿村做医学调查——那里生活着大量身体硬朗的百岁老人。后来他亲自尝试断食疗法，竟然从豆芽菜一样的瘦弱少年，变成了全九州大学生举重冠军。</p>
+<div class="insight-card">他告诉我们：有时候不吃反而更有力量。</div>
+</div>
+
+<div class="chapter" id="c2">
+<div class="chapter-num">贰</div>
+<h2 class="chapter-title">血液不净是万病之源</h2>
+<p>你可能觉得奇怪，不吃东西怎么会有力量？我们先从一件你可能每天都在经历的事情说起。你有没有发现每次吃完一顿大餐之后，整个人反而特别困、特别沉，脑袋昏昏的，只想躺着不动？你可能会觉得这是因为吃太饱了，但石原结实告诉你——问题不在于吃太饱，而在于你的血液变脏了。</p>
+<div class="core-box">
+<div class="icon">🩸</div>
+<div class="label">核心观点</div>
+<div class="detail">血液不净是万病之源<br>所谓血液不净，指的是血液里堆积了太多代谢不掉的废物和杂质</div>
+</div>
+<p>你吃进去的食物，身体能消化吸收的只是一部分，剩下的用不掉的就成了垃圾。这些脏东西在血液里循环，流到哪里，哪里就可能出问题——流到心脏，心血管可能出问题；流到大脑，脑血管可能出问题；流到关节，可能引发炎症和疼痛。</p>
+<p>你可以把血液想象成一条河流：河水浑浊，两岸的草木自然凋零。书中引用了一句经典的话——</p>
+<div class="insight-card">人吃下的食物，四分之一养活了自己，四分之三养活了医生。</div>
+</div>
+
+<div class="chapter" id="c3">
+<div class="chapter-num">叁</div>
+<h2 class="chapter-title">五大血液污染源</h2>
+<p>是什么让血液变脏的？石原医生指出了现代人生活方式的五大"排污口"：</p>
+<div class="pollution-grid">
+<div class="pollution-item">
+<div class="num">一</div>
+<div class="name">动物性蛋白过量</div>
+<div class="desc">肉类、蛋类、奶制品餐餐都有，多余的蛋白质分解后产生尿酸，让血液变得粘稠酸性化</div>
+</div>
+<div class="pollution-item">
+<div class="num">二</div>
+<div class="name">运动不足</div>
+<div class="desc">大部分时间都坐着，肌肉不工作，血液循环就慢，脏东西就容易沉淀</div>
+</div>
+<div class="pollution-item">
+<div class="num">三</div>
+<div class="name">长期压力</div>
+<div class="desc">长期压力让身体分泌过量皮质醇，血管收缩，血液变得更粘稠</div>
+</div>
+<div class="pollution-item">
+<div class="num">四</div>
+<div class="name">体寒</div>
+<div class="desc">体温一低，血管收缩，血流变慢，代谢废物更容易沉积。万病从寒起不是空话</div>
+</div>
+<div class="pollution-item" style="grid-column:1/-1">
+<div class="num">五</div>
+<div class="name">外界有毒物质</div>
+<div class="desc">食品添加剂、农药、药物——石原医生甚至直言：药品也是会污染血液的有毒物质。用药物压住发烧发炎，却没有把引起症状的脏东西排出去，只是把它们按在了体内更深处</div>
+</div>
+</div>
+<p>这五个原因几乎每一个都是现代生活的标配，血液就这样一天比一天浑浊。</p>
+<p>而身体其实一直在向我们求救——疾病本身就是身体在清除不净血液的一种反应。发烧是想烧死病毒，发炎是白细胞在集中兵力，咳嗽、流鼻涕、拉肚子都是身体在往外排毒。我们一有症状就吃药压下去，却不知道这些不适正是身体努力自救的信号。</p>
+<div class="insight-card">与其压制症状，不如帮身体把血液清理干净。而清理血液最强大、最天然的工具，就是空腹。</div>
+</div>
+
+<div class="chapter" id="c4">
+<div class="chapter-num">肆</div>
+<h2 class="chapter-title">空腹时，身体在做什么</h2>
+<p>所谓空腹力，就是你忍受适度空腹的能力。它不是让你饿肚子，而是让你学会和饥饿感和平共处，让身体从永不停歇的消化模式里解脱出来，切换到修复模式。</p>
+<p>他用了一个比喻：身体就像一部手机，白天一直在运行各种app，到了晚上总该充充电、清清缓存吧。可如果你一天到晚不停往手机里装新程序，它迟早会卡顿、发热、死机。我们的身体也是一样，不给它留出清理的时间，它就会出问题。而空腹就是那个清理缓存的黄金时段。</p>
+
+<div class="core-box">
+<div class="icon">🔬</div>
+<div class="label">白细胞的饥饿机制</div>
+<div class="detail">白细胞就像一群清道夫，在血液里吞噬病菌、癌细胞和代谢废物。<br><br>吃饱后 → 白细胞也大快朵颐 → 吃饱了不愿意干活 → 病原体入侵时没精力应对<br><br>空腹时 → 白细胞饿着肚子 → 反而更有动力吞噬有害物质</div>
+</div>
+
+<p>这就是为什么人生病时会本能地丧失食欲——身体在告诉你：现在我要集中全部能量对付疾病了，别让肠胃来争抢血液和能量。这是亿万年的进化智慧。所以石原医生说，每天制造一次空腹状态，就能有效地控制生病。</p>
+
+<div class="core-box">
+<div class="icon">🏅</div>
+<div class="label">2016年诺贝尔生理学/医学奖 — 细胞自噬机制</div>
+<div class="detail">当细胞处于饥饿状态时，它会开始吃掉自己内部那些衰老受损的零件，完成一次自我清理和修复。<br><br>空腹 = 身体给自己做了一次大扫除</div>
+</div>
+</div>
+
+<div class="chapter" id="c5">
+<div class="chapter-num">伍</div>
+<h2 class="chapter-title">半日断食法</h2>
+<p>原理讲完了，你可能最关心的是具体怎么做。石原医生给出了一个非常温和、几乎人人都能尝试的方案——半日断食法。不是让你整天不吃，而是把三餐压缩成两顿。</p>
+
+<div class="step-flow">
+<div class="step-item">
+<div class="step-badge">晨</div>
+<div class="step-text"><strong>用一杯胡萝卜苹果汁或生姜红茶代替早餐</strong>，让消化系统在上午得到休息</div>
+</div>
+<div class="step-item">
+<div class="step-badge">午</div>
+<div class="step-text"><strong>午餐正常吃</strong>，但坚持八分饱——觉得不饿了、还没有撑的感觉，就可以放下筷子</div>
+</div>
+<div class="step-item">
+<div class="step-badge">晚</div>
+<div class="step-text"><strong>晚餐也正常吃</strong>，甚至不需要刻意少吃。因为早餐那一顿已经减少了很多热量，晚上可以稍微犒劳自己</div>
+</div>
+</div>
+
+<p>为什么不吃早餐？从小我们就被教育"早餐是一天中最重要的一餐"，但石原医生的解释是：对于大多数久坐少动的现代成年人来说，不吃早餐或尽可能少吃反而更健康。</p>
+<p>第一，现代人晚餐往往吃得太晚太多，到了第二天早上，肠胃里还存着昨晚没消化完的食物，再塞一顿丰盛早餐，负担就太重了。第二，早上起床后身体并不需要那么多热量——我们不用下地干活、打猎、耕田，最多坐车到办公室，在电脑前坐一上午。身体储存的糖原和脂肪足够支撑这几个小时的低强度活动。当你感到饿时，身体才开始燃烧脂肪；如果一早就把血糖喂得满满的，脂肪就永远没机会被消耗。</p>
+
+<div class="recipe-card">
+<div class="recipe-title">🥕 胡萝卜苹果汁</div>
+<div class="recipe-body">胡萝卜两根（约400克）、苹果一个（约300克），刷洗干净。注意<strong>胡萝卜不去皮，苹果不去核</strong>，一起榨成汁，连渣带汁喝下去。果糖和胡萝卜糖分足够给身体提供能量，既补充维生素和矿物质，又不给消化系统增加负担。</div>
+</div>
+<div class="recipe-card">
+<div class="recipe-title">🫚 生姜红茶</div>
+<div class="recipe-body">热红茶里加一小勺生姜末，再加一点红糖或蜂蜜。生姜能温暖身体、促进血液循环，红茶本身也能提神。</div>
+</div>
+
+<p>这就是半日断食法的精髓：不是让你饿肚子，而是把一天三顿饭的热量重新分配——早餐的固体食物换成了一杯营养丰富、温暖易消化的液体，既减轻了肠胃负担，又确保了必要的营养。</p>
+
+<div class="vs-card">
+<div class="vs-side">
+<div class="vs-label">进阶 · 一日断食</div>
+<div class="vs-text">每周选择一天<br>简化饮食<br>不摄入主食和油腻食物<br>仅饮温水、淡茶水、少量果蔬汁<br>全天保持轻度空腹</div>
+</div>
+<div class="vs-divider"></div>
+<div class="vs-side">
+<div class="vs-label">基础 · 半日空腹</div>
+<div class="vs-text">拉长夜间空腹时长<br>坚持早睡+不吃夜宵<br>晚餐七点前结束<br>至次日保持12小时以上空腹期<br>最易坚持的空腹养生法</div>
+</div>
+</div>
+</div>
+
+<div class="chapter" id="c6">
+<div class="chapter-num">陆</div>
+<h2 class="chapter-title">体温：万病寒中起</h2>
+<p>石原医生非常认同"万病寒中起"这个观点。他认为体寒是很多疾病的根源。血液就像身体里的河流，温度高时流得顺畅，温度低了就变得粘稠缓慢。体寒的人血液循环本来就不好，再加上血液里的杂质，更容易堵住。</p>
+
+<div class="temp-bar">
+<div style="text-align:center;font-family:'ZCOOL XiaoWei',serif;font-size:1rem;color:var(--accent);margin-bottom:12px">体温与免疫力</div>
+<div class="temp-scale">
+<div class="temp-mark">35°</div>
+<div class="temp-mark">36°</div>
+<div class="temp-mark">36.5°</div>
+<div class="temp-mark">37°</div>
+</div>
+<div class="temp-labels">
+<span>癌细胞最活跃</span>
+<span></span>
+<span>正常体温</span>
+<span>免疫力最佳</span>
+</div>
+<div class="temp-fact">体温每下降<strong>1°C</strong>，免疫力下降<strong>30%</strong>，代谢下降<strong>12%</strong><br><strong>35°C</strong>是癌细胞繁殖最疯狂的温度</div>
+</div>
+
+<p>书中提到，心脏和脾脏是人体温度比较高的两个器官，这两个部位几乎不会得癌——因为癌细胞在体温不足36度的环境里最容易繁殖。</p>
+<p>生病发烧的时候，其实正是身体在主动提升体温来对抗病毒。体温升高，白细胞会更加活跃。</p>
+<p>怎么温暖身体？除了喝生姜红茶，他还建议适当运动，尤其是锻炼下半身的肌肉——下半身的肌肉占了全身肌肉的很大一部分，肌肉活动会产生热量，热量又能促进血液循环，这是一个正向循环。</p>
+<p>他还有一个简单建议：<strong>走路</strong>。每天走路不需要剧烈运动，就能有效温暖身体、促进代谢。泡澡也是温暖身体的好办法——不是淋浴，而是泡在热水里，40度左右，15到20分钟，身体微微出汗最好。泡澡不仅能温暖身体，还能放松神经、改善睡眠质量。</p>
+</div>
+
+<div class="chapter" id="c7">
+<div class="chapter-num">柒</div>
+<h2 class="chapter-title">水毒与适量饮水</h2>
+<p>他还特别提到一个很多人忽略的点：<strong>不要喝太多水</strong>。你可能觉得多喝水是好事，但他认为喝水太多反而会造成"水毒"，增加身体负担，尤其是一次性喝大量冷水会让身体温度下降。喝水要适量，而且要喝温的。</p>
+<p>关于水毒，他说很多人以为水肿是水喝多了排不出去，其实恰恰相反——水肿往往是身体为了稀释血液里的垃圾而主动锁住水分。如果你不解决血液不净的问题，光靠多喝水去排毒，反而会加重肾脏负担。</p>
+<div class="insight-card">先通过空腹力清理血液垃圾，然后再适量喝水，让身体自然排出代谢产物。顺序搞对了，效果事半功倍。</div>
+</div>
+
+<div class="chapter" id="c8">
+<div class="chapter-num">捌</div>
+<h2 class="chapter-title">空腹，是一种生活态度</h2>
+<p>石原医生自己就是活生生的例子——从小体弱多病，因对西医局限感到不满，开始研究自然疗法。他亲自实践断食、运动、温泉，不仅让身体变得强壮，还获得了举重冠军。他说他的一生都在证明一件事：</p>
+<div class="insight-card">身体有强大的自愈能力，只要你给它机会。</div>
+<p>空腹力讲的并不是一个复杂的养生理论，它讲的是一种生活态度。它不要求你立刻改变一切，不要求你花很多钱买补品，不要求你每天跑5公里。它只要求你——适当的时候，让身体空一下。</p>
+<p>就像一间堆满杂物的房间，你需要定期清理，才能让新的空气流进来。身体也是一样。</p>
+<p>书中有一句话：不要纵容自己的欲望，别让自己吃得太饱。随着空腹力的增强，身体状况会越来越好，也会让你觉得心情很舒爽。</p>
+<p>你可能会想，饿着肚子，心情怎么会舒爽呢？但如果你真的试过，你会发现——适当的空腹感会带来一种奇妙的轻盈和清醒。那种感觉不是被食物填满的沉重，而是身体被清空之后的通透。</p>
+<p>空腹还能带来精神的安宁。当你的胃没有被食物塞满的时候，整个人反而会变得更加平静、更加专注。石原医生解释说，空腹状态下副交感神经占据主导，身体处于休息和消化模式，大脑供血充足，神经递质分泌平衡，人自然会感到平静和清醒。</p>
+<p>从某种角度说，空腹是一种心理减负。它让你从"下一顿吃什么"的焦虑中解脱出来，重新关注呼吸、感受和身体的本能。很多有冥想习惯的人会发现，空腹时冥想更容易进入状态，因为胃里没有食物需要处理，能量可以自由流动。</p>
+<div class="insight-card">不管你现在的生活方式如何，都请记得善待你的身体，倾听它的声音。它比你想象的更聪明，也比你以为的更知道什么是它真正需要的。</div>
+</div>
+
+</div>
+
+<div class="mindmap-section">
+<h2 class="chapter-title" style="font-family:'ZCOOL XiaoWei',serif;font-size:1.4rem">全书脉络</h2>
+<div class="markmap">
+<script type="text/template">
+# 空腹力
+
+## 核心理论
+### 血液不净是万病之源
+### 五大污染源
+- 动物性蛋白过量
+- 运动不足
+- 长期压力
+- 体寒
+- 外界有毒物质
+
+## 空腹的科学
+### 白细胞饥饿机制
+- 吃饱 → 白细胞懒惰
+- 空腹 → 白细胞活跃
+### 2016诺贝尔奖
+- 细胞自噬机制
+- 清理衰老受损细胞
+
+## 实践方法
+### 半日断食法
+- 早餐：果蔬汁/姜茶
+- 午餐：八分饱
+- 晚餐：正常吃
+### 一日断食（进阶）
+- 每周一天
+- 温水+淡茶+果蔬汁
+
+## 体温管理
+### 体温每降1°C
+- 免疫力降30%
+- 代谢降12%
+### 升温方法
+- 生姜红茶
+- 锻炼下半身
+- 每天走路
+- 泡澡40°C/15-20分钟
+
+## 生活哲学
+### 空腹 = 心理减负
+### 轻盈与通透
+### 身体有自愈能力
+</script>
+</div>
+</div>
+
+<footer class="footer">
+<div class="goodnight">晚 安</div>
+<div class="wish">愿今晚你有一个轻盈的梦</div>
+</footer>
+
+<select class="theme-select" onchange="document.body.className=this.value">
+<option value="theme-default">🌿 素白</option>
+<option value="theme-mint">🍃 薄荷</option>
+<option value="theme-cloud">☁️ 云灰</option>
+<option value="theme-bamboo">🎋 竹青</option>
+<option value="theme-amber">🍯 琥珀</option>
+<option value="theme-dawn">🌅 晨光</option>
+<option value="theme-lavender">💜 薰衣草</option>
+<option value="theme-slate">🪨 石板</option>
+<option value="theme-rose">🌹 玫瑰</option>
+<option value="theme-sakura">🌸 樱花</option>
+<option value="theme-forest">🌲 深林</option>
+<option value="theme-ocean">🌊 海洋</option>
+<option value="theme-sand">🏜️ 沙丘</option>
+<option value="theme-night">🌙 夜幕</option>
+<option value="theme-charcoal">🖤 炭灰</option>
+<option value="theme-deepsea">🐋 深海</option>
+</select>
+
+<script>
+// Sync theme select to current body class
+document.querySelector('.theme-select').value=document.body.className;
+
+// Particles
+(function(){
+  var c=document.getElementById('particles');
+  for(var i=0;i<25;i++){
+    var p=document.createElement('div');
+    p.className='particle';
+    var s=2+Math.random()*5;
+    p.style.cssText='width:'+s+'px;height:'+s+'px;left:'+Math.random()*100+'%;animation-duration:'+(8+Math.random()*15)+'s;animation-delay:'+Math.random()*10+'s';
+    c.appendChild(p);
+  }
+})();
+
+// Scroll animation
+var obs=new IntersectionObserver(function(es){
+  es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:0.15});
+document.querySelectorAll('.chapter').forEach(function(el){obs.observe(el)});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+</body>
+</html>

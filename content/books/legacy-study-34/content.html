@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>次第花开 · 让内心平静的一本书</title>
+<link href="https://fonts.loli.net/css2?family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* === 16 Themes === */
+body.theme-lotus{--bg:#fdf9f6;--text:#3d3028;--card:#fff;--accent:#c47a8a;--accent2:#e8a87a;--border:#f0e4dc;--shadow:0 6px 30px rgba(196,122,138,.08);--hero-bg:linear-gradient(180deg,#fdf6f0 0%,#fceee8 40%,#f8e8e0 100%);--muted:#9a8a7e}
+body.theme-ink{--bg:#faf8f5;--text:#2c2c2c;--card:#fff;--accent:#555;--accent2:#888;--border:#e0dcd6;--shadow:0 4px 20px rgba(0,0,0,.05);--hero-bg:linear-gradient(180deg,#f5f2ee,#eae6e0);--muted:#888}
+body.theme-forest{--bg:#f4f8f4;--text:#1a3320;--card:#fff;--accent:#4a9a6a;--accent2:#7aba8a;--border:#d4e8d8;--shadow:0 4px 20px rgba(74,154,106,.07);--hero-bg:linear-gradient(180deg,#f0f8f2,#e4f0e6);--muted:#5a7a62}
+body.theme-wine{--bg:#faf5f6;--text:#3d1a24;--card:#fff;--accent:#b04a6a;--accent2:#d87a9a;--border:#f0d8de;--shadow:0 4px 20px rgba(176,74,106,.07);--hero-bg:linear-gradient(180deg,#faf2f4,#f4e6ea);--muted:#9a6a76}
+body.theme-ocean{--bg:#f2f8fc;--text:#1a2e3d;--card:#fff;--accent:#4a9ac5;--accent2:#7abae0;--border:#d0e8f4;--shadow:0 4px 20px rgba(74,154,197,.07);--hero-bg:linear-gradient(180deg,#f0f8fc,#e4f0f8);--muted:#5a8a9e}
+body.theme-sand{--bg:#faf7f0;--text:#3d3020;--card:#fff;--accent:#c49a4a;--accent2:#dab86a;--border:#ede0cc;--shadow:0 4px 20px rgba(196,154,74,.07);--hero-bg:linear-gradient(180deg,#faf6ee,#f4ece0);--muted:#9a8a6a}
+body.theme-plum{--bg:#f8f4fa;--text:#2e1a3d;--card:#fff;--accent:#9a5ab0;--accent2:#ba8ad0;--border:#e8d8f2;--shadow:0 4px 20px rgba(154,90,176,.07);--hero-bg:linear-gradient(180deg,#f8f2fa,#f0e8f4);--muted:#8a6a9e}
+body.theme-slate{--bg:#f5f6f8;--text:#2a2e35;--card:#fff;--accent:#6a8aa0;--accent2:#8aaaba;--border:#dde2e8;--shadow:0 4px 20px rgba(106,138,160,.07);--hero-bg:linear-gradient(180deg,#f4f6f8,#eaeef2);--muted:#7a8a9a}
+body.theme-coral{--bg:#fef6f4;--text:#3d2420;--card:#fff;--accent:#d87a5a;--accent2:#f0a07a;--border:#f8ddd6;--shadow:0 4px 20px rgba(216,122,90,.07);--hero-bg:linear-gradient(180deg,#fef4f0,#f8eae4);--muted:#9a7a6a}
+body.theme-teal{--bg:#f2faf8;--text:#1a3330;--card:#fff;--accent:#3a9a8a;--accent2:#6abaa8;--border:#d0ece8;--shadow:0 4px 20px rgba(58,154,138,.07);--hero-bg:linear-gradient(180deg,#f0faf6,#e4f2ee);--muted:#5a8a80}
+body.theme-midnight{--bg:#12141a;--text:#c9cdd5;--card:#1a1e26;--accent:#8ab4e8;--accent2:#b8a0e8;--border:#262c36;--shadow:0 8px 32px rgba(138,180,232,.05);--hero-bg:linear-gradient(180deg,#12141a,#1a1e28);--muted:#7a8494}
+body.theme-charcoal{--bg:#1e1c1a;--text:#e0dcd6;--card:#282624;--accent:#e8c070;--accent2:#d0a050;--border:#363230;--shadow:0 8px 32px rgba(232,192,112,.05);--hero-bg:linear-gradient(180deg,#1e1c1a,#282420);--muted:#8a8680}
+body.theme-abyss{--bg:#0c1018;--text:#b0c0d8;--card:#141a24;--accent:#50b8d8;--accent2:#4090c0;--border:#1e2836;--shadow:0 8px 32px rgba(80,184,216,.05);--hero-bg:linear-gradient(180deg,#0c1018,#121a24);--muted:#5a7a9a}
+body.theme-moss{--bg:#f6f8f2;--text:#2a3320;--card:#fff;--accent:#7aa04a;--accent2:#a0c06a;--border:#dde8cc;--shadow:0 4px 20px rgba(122,160,74,.07);--hero-bg:linear-gradient(180deg,#f6f8f0,#eef2e6);--muted:#7a8a5a}
+body.theme-ember{--bg:#181412;--text:#e8ddd4;--card:#221e1a;--accent:#e88050;--accent2:#f0a870;--border:#302a24;--shadow:0 8px 32px rgba(232,128,80,.05);--hero-bg:linear-gradient(180deg,#181412,#221a14);--muted:#9a8070}
+body.theme-orchid{--bg:#faf4fc;--text:#301a3d;--card:#fff;--accent:#c060d8;--accent2:#d890e8;--border:#eedaf6;--shadow:0 4px 20px rgba(192,96,216,.07);--hero-bg:linear-gradient(180deg,#faf2fc,#f2e8f6);--muted:#8a5a9e}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Serif SC',serif;background:var(--bg);color:var(--text);line-height:2.15;overflow-x:hidden;transition:background .5s,color .5s}
+
+/* Theme select */
+.theme-select{position:fixed;top:20px;right:20px;z-index:999;padding:8px 14px;border-radius:20px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-size:.85rem;font-family:'Noto Serif SC',serif;cursor:pointer;box-shadow:var(--shadow);transition:all .3s;appearance:auto}
+.theme-select:hover{border-color:var(--accent)}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:var(--hero-bg);position:relative;overflow:hidden;padding:80px 24px}
+.petals{position:absolute;inset:0;pointer-events:none}
+.petal{position:absolute;top:-20px;width:12px;height:12px;background:var(--accent);opacity:.15;border-radius:50% 0 50% 50%;animation:fall 12s infinite linear}
+@keyframes fall{0%{transform:translateY(-20px) rotate(0deg);opacity:0}10%{opacity:.2}90%{opacity:.15}100%{transform:translateY(105vh) rotate(360deg);opacity:0}}
+.hero-quote{font-size:.9rem;color:var(--muted);letter-spacing:.1em;margin-bottom:28px;max-width:440px;line-height:2.2}
+.hero h1{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(2.2rem,7vw,3.8rem);color:var(--text);line-height:1.4;margin-bottom:14px}
+.hero-author{font-size:.88rem;color:var(--muted);margin-bottom:30px}
+.hero-tagline{max-width:500px;font-size:.95rem;color:var(--text);line-height:2.1;opacity:.85}
+/* Breathing circle */
+.breath{width:60px;height:60px;border-radius:50%;border:2px solid var(--accent);margin:44px auto 0;animation:breathe 6s infinite ease-in-out;opacity:.5}
+@keyframes breathe{0%,100%{transform:scale(1);opacity:.3}50%{transform:scale(1.4);opacity:.6}}
+
+/* Chapter */
+.chapter{max-width:680px;margin:0 auto;padding:100px 24px;opacity:0;transform:translateY(36px);transition:opacity 1s ease,transform 1s ease}
+.chapter.visible{opacity:1;transform:translateY(0)}
+.chapter-label{display:inline-block;font-size:.72rem;letter-spacing:.3em;color:var(--accent);margin-bottom:22px;position:relative;padding-left:20px}
+.chapter-label::before{content:'';position:absolute;left:0;top:50%;width:12px;height:1.5px;background:var(--accent)}
+.chapter h2{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(1.4rem,4vw,1.9rem);margin-bottom:30px;color:var(--text);line-height:1.6}
+.chapter p{margin-bottom:1.7em;font-size:1.01rem;color:var(--text)}
+
+/* Quote */
+.quote{border-radius:16px;padding:26px 28px;margin:38px 0;background:var(--card);box-shadow:var(--shadow);border:1px solid var(--border)}
+.quote p{margin:0;font-style:italic;color:var(--muted);font-size:.96rem;line-height:2.1}
+
+/* Flower divider */
+.flower-divider{display:flex;align-items:center;justify-content:center;gap:16px;margin:70px auto;max-width:680px;padding:0 24px}
+.flower-divider::before,.flower-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.flower-icon{width:10px;height:10px;position:relative}
+.flower-icon::before,.flower-icon::after{content:'';position:absolute;inset:0;border-radius:50%;border:1.5px solid var(--accent);opacity:.5}
+.flower-icon::after{transform:scale(.5);background:var(--accent);border:none;opacity:.3}
+
+/* Insight */
+.insight{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:30px;margin:36px 0;box-shadow:var(--shadow)}
+.insight-title{font-family:'ZCOOL XiaoWei',serif;font-size:1rem;color:var(--accent);margin-bottom:14px}
+.insight p{font-size:.95rem;color:var(--text);margin-bottom:.8em}
+.insight p:last-child{margin-bottom:0}
+
+/* Markmap */
+.markmap-section{max-width:900px;margin:90px auto;padding:0 24px}
+.markmap-section h2{font-family:'ZCOOL XiaoWei',serif;text-align:center;font-size:1.4rem;margin-bottom:30px;color:var(--text)}
+.markmap{width:100%;height:480px;border-radius:20px;border:1px solid var(--border);background:var(--card);box-shadow:var(--shadow)}
+.markmap svg{background:transparent!important}
+.markmap-foreign{color:var(--text)!important;font-size:14px!important}
+
+/* Goodnight */
+.goodnight{text-align:center;padding:110px 24px 130px}
+.goodnight p{font-family:'ZCOOL XiaoWei',serif;font-size:1.6rem;letter-spacing:.5em;color:var(--muted)}
+
+@media(max-width:600px){
+  .chapter{padding:70px 20px}
+}
+</style>
+</head>
+<body class="theme-lotus">
+<script>!function(){var t=['theme-lotus','theme-ink','theme-forest','theme-wine','theme-ocean','theme-sand','theme-plum','theme-slate','theme-coral','theme-teal','theme-midnight','theme-charcoal','theme-abyss','theme-moss','theme-ember','theme-orchid'];document.body.className=t[Math.floor(Math.random()*t.length)]}()</script>
+
+<select class="theme-select" onchange="document.body.className=this.value">
+  <option value="theme-lotus">🪷 莲粉</option>
+  <option value="theme-ink">🖋 水墨</option>
+  <option value="theme-forest">🌲 松林</option>
+  <option value="theme-wine">🍷 酒红</option>
+  <option value="theme-ocean">🌊 海洋</option>
+  <option value="theme-sand">🏜 沙丘</option>
+  <option value="theme-plum">🌸 梅紫</option>
+  <option value="theme-slate">🪨 石灰</option>
+  <option value="theme-coral">🪸 珊瑚</option>
+  <option value="theme-teal">🍃 青瓷</option>
+  <option value="theme-midnight">🌌 午夜</option>
+  <option value="theme-charcoal">🔥 炭金</option>
+  <option value="theme-abyss">🐋 深渊</option>
+  <option value="theme-moss">🌿 苔藓</option>
+  <option value="theme-ember">🕯 余烬</option>
+  <option value="theme-orchid">🦋 兰紫</option>
+</select>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="petals" id="petals"></div>
+  <p class="hero-quote">问题若有办法解决，就不必担心；若没办法解决，担心也没有用。</p>
+  <h1>次第花开</h1>
+  <p class="hero-author">希阿荣博堪布</p>
+  <p class="hero-tagline">让内心的安宁与智慧，如花朵般顺应因缘，次第开放。不是消除烦恼的秘籍，而是一颗无论发生什么都能如如不动的平常心。</p>
+  <div class="breath"></div>
+</header>
+
+<!-- 壹 -->
+<section class="chapter">
+  <span class="chapter-label">壹</span>
+  <h2>承认痛苦，才是解脱的开始</h2>
+  <p>我们总以为快乐是常态，痛苦是意外。所以拼命追逐快乐，逃避痛苦。一旦感到焦虑、沮丧、不安，第一反应是"糟了，我出问题了"。然后要么拼命压抑，告诉自己要坚强；要么疯狂转移注意力，用工作、娱乐、购物来麻痹自己。</p>
+  <p>但堪布告诉我们：人生本就充满烦恼。生老病死、爱别离、怨憎会、求不得——这些都是生命的常态。就像天空会有乌云，大地会有尘埃，我们的心也自然会有烦恼。</p>
+  <div class="quote">
+    <p>这就像你陷入了沼泽，越是拼命挣扎，就下沉得越快。而解脱的第一步，是停止挣扎，承认"我现在陷入了沼泽"，然后冷静地寻找借力点。</p>
+  </div>
+  <p>就像你感冒了，你会承认自己身体不适，然后喝水、休息。你不会责怪自己"你为什么偏偏这时候感冒"。对待心里的不舒服，为什么不能同样温柔呢？</p>
+  <p>当你感到焦虑时，试着像对待一个感冒的朋友一样对待自己，轻轻地说一句："我知道你现在很焦虑，没关系的，我陪着你。"仅仅是这份承认和不抗拒，紧绷的神经就会开始松弛。</p>
+</section>
+
+<div class="flower-divider"><div class="flower-icon"></div></div>
+
+<!-- 贰 -->
+<section class="chapter">
+  <span class="chapter-label">贰</span>
+  <h2>拥抱无常，才能获得真正的自由</h2>
+  <p>很多人听到"无常"，会觉得消极悲观，意味着失去和不可靠。但堪布为我们揭示了无常的另一面——它是希望和改变的可能。无常意味着没有什么是永恒不变的，包括我们的痛苦。</p>
+  <p>你现在觉得天都要塌下来的事情，三年后甚至三个月后回头看，可能只是一片轻描淡写的云。我们痛苦，常常是因为在内心深处执着于一个"必须如此"的剧本。当生活偏离剧本，我们就慌了。</p>
+  <div class="quote">
+    <p>就像你计划了一场完美的户外野餐，却突然下起了大雨。你可以沮丧地抱怨天气毁掉一整天的心情，也可以转身回家泡一杯热茶，听着雨声，享受一个意外宁静的下午。无常只是打乱了你的A计划，但它从未阻止你拥有一个美好的B计划。</p>
+  </div>
+  <p>堪布讲过一位名叫贡布的牧民的故事。贡布曾拥有成群的牛羊、温柔的妻子和可爱的孩子，日子过得富足而安稳。他总觉得这样的幸福会永远持续。可一场突如其来的暴风雪，一夜之间摧毁了他的一切。牛羊死伤大半，家园被积雪掩埋。他整日酗酒抱怨，质问命运为何对自己如此不公。</p>
+  <p>就在他濒临崩溃的时候，他遇到了一位老僧人。老僧人没有安慰他，只是带他来到草原上，指着那些被暴风雪压弯却依然冒出新芽的草芽说：</p>
+  <div class="insight">
+    <p class="insight-title">草原的春天，从来不会因为一场暴风雪而缺席</p>
+    <p>牛羊会失去，家园会重建。生命的本质就是如此——有得有失，有起有落。无常不是命运的残酷，而是自然的规律，是让你学会珍惜的契机。贡布看着那些倔强的草芽，终于明白：自己痛苦的根源不是暴风雪带来的损失，而是对永恒幸福的执念。</p>
+  </div>
+  <p>没有永远的低谷，也没有永远的高峰。今天让你痛苦的事，或许明天就会成为你成长的垫脚石。今天让你遗憾的失去，或许是为了给更好的相遇腾出空间。</p>
+</section>
+
+<div class="flower-divider"><div class="flower-icon"></div></div>
+
+<!-- 叁 -->
+<section class="chapter">
+  <span class="chapter-label">叁</span>
+  <h2>修行不是远离红尘，是日常的觉察</h2>
+  <p>提到修行，很多人会想到青灯古佛、远离红尘的僧人，觉得那是与普通人无关的事。但堪布颠覆了这个认知：修行不需要特殊的环境，不需要复杂的仪式。吃饭时好好吃饭，走路时好好走路，遇到问题时保持觉察——这就是修行。</p>
+  <p>书中有一位上班族，每天过着朝九晚五的生活，挤地铁、赶项目、应付复杂的人际关系。他总觉得生活枯燥又无聊，找不到任何意义，甚至产生了辞职隐居的念头。</p>
+  <p>堪布问他：你通勤的时候在做什么？他说刷手机打发时间。你吃饭的时候在做什么？他说看视频或者想工作上的事。堪布笑着说：你连当下的事都做不好，就算隐居到深山里，心也依然会被杂念困扰。修行不是逃离生活，而是在生活中修炼心性。</p>
+  <div class="quote">
+    <p>他开始尝试：通勤路上不再刷手机，而是观察路边的树、天上的云，感受微风拂过脸颊的触感。吃饭时放下手机，认真品尝食物的味道。和家人相处时不再低头玩手机，而是认真倾听他们说话。慢慢地，他发现以前觉得枯燥的通勤路其实藏着很多小美好，以前觉得无味的饭菜其实饱含着生活的烟火气。</p>
+  </div>
+  <p>修行的核心是觉察。当你感到焦虑时，觉察到"我现在很焦虑"，而不是"我好焦虑怎么办"。当你感到愤怒时，觉察到"我现在很愤怒"，而不是"他怎么能这样对我"。这种觉察能让你与情绪保持距离，不再被情绪牵着走，而是成为情绪的主人。</p>
+</section>
+
+<div class="flower-divider"><div class="flower-icon"></div></div>
+
+<!-- 肆 -->
+<section class="chapter">
+  <span class="chapter-label">肆</span>
+  <h2>慈悲不是软弱，是对自己的温柔</h2>
+  <p>在这个充满竞争和压力的社会，我们总被教导要坚强、优秀、不能输。于是我们学会了用坚硬的外壳保护自己，甚至对自己也格外苛刻——做错一点小事就自责很久，达不到预期的目标就自我否定，看到别人比自己优秀就陷入焦虑。</p>
+  <p>我们以为这样是对自己负责，却忘了：真正的强大不是从不脆弱，而是能温柔地接纳自己的脆弱。</p>
+  <div class="quote">
+    <p>堪布说：慈悲不是对别人的怜悯，首先是对自己的温柔。我们常常是自己最苛刻的暴君，搞砸一件事就把自己鞭挞得体无完肤，却忘了每个人都会犯错，这都是成长的必经之路。</p>
+  </div>
+  <p>有一次堪布在赶路途中遇到了一位生病的乞丐，浑身散发着臭味，路人纷纷避让。可堪布却停下脚步，蹲在乞丐身边仔细询问病情，把自己的食物和水都给了他，甚至亲自把他送到了附近的医院。有人问他为什么，他笑着说：众生都是平等的，每个生命都渴望被关爱、被尊重。他现在生病了，很痛苦，我能帮他一把，为什么不帮呢？</p>
+  <div class="insight">
+    <p class="insight-title">像对待受伤的好友一样对待自己</p>
+    <p>当你正因一次工作失误而焦虑不安，或者因为一句说错的话而反复自责时，不妨试着对自己说："我知道你现在很难过，也很辛苦。没关系的，我在这里陪着你。"这种自我慈悲，是内心力量的源泉。一个无法善待自己的人，给予世界的爱也常常伴随着控制和索取。</p>
+  </div>
+  <p>慈悲不是软弱，而是内心最强大的力量。温柔不是妥协，而是对生命最深刻的尊重。当你学会接纳自己的平凡、接纳自己的不完美，不再用苛刻的标准绑架自己，你会发现内心的焦虑和内耗会减少很多。你会变得更加平静、更加从容。</p>
+</section>
+
+<div class="flower-divider"><div class="flower-icon"></div></div>
+
+<!-- 尾声 -->
+<section class="chapter">
+  <span class="chapter-label">尾声</span>
+  <h2>花会一朵一朵地开</h2>
+  <p>次第花开最终赋予我们的，不是一份消除烦恼的秘籍。它没有给我们提供解决所有问题的万能公式，却给我们指明了一条通往内心平静的道路。我们不再苦苦追寻一个绝对安全、永恒快乐的彼岸，而是学会了如何安心地、智慧地、慈悲地活在当下。</p>
+  <p>这本书的价值不在于给你一个万事如意的魔法，而在于给你一颗无论发生什么都能如如不动的平常心。它不能替你搬走生活中的巨石，但它会给你力量，让你知道如何与巨石共存，甚至坐在巨石上欣赏远处的风景。</p>
+  <div class="quote">
+    <p>真正的自由不是拥有全世界，而是无论世界如何变化，你的内心都拥有不被打扰的宁静与从容。真正的力量不是战胜一切，而是有勇气拥抱自己的脆弱，并与一切不如意和平共处。</p>
+  </div>
+  <p>改变从不在一朝一夕，而在于日复一日的温柔提醒和微小练习。请允许自己慢慢来，允许自己偶尔的反复。每一次你觉察到焦虑而没有随之起舞，每一次你感到痛苦而能给自己一份宽容，你的内心就已经在悄悄地次第花开了。</p>
+  <p>当你放下成见、伪装和打算，不再焦虑希求，你的心才真正敞开。敞开意味着允许光照射进来。路不是在前方被找到的，而是在你一步一个脚印的行走中被创造出来的。你走的每一步都算数。</p>
+  <div class="insight">
+    <p class="insight-title">今晚，把手轻轻放在心口</p>
+    <p>对自己默默地说一声：辛苦了，我们休息吧。花会一朵一朵地开，路会一步一步地明。所有的美好都在它的次第里，从容不迫地走向你。</p>
+  </div>
+</section>
+
+<!-- Markmap -->
+<section class="markmap-section">
+  <h2>全书脉络</h2>
+  <div class="markmap">
+    <script type="text/template">
+---
+markmap:
+  colorFreezeLevel: 3
+---
+# 次第花开
+## 承认痛苦
+### 痛苦是老师
+### 停止挣扎（沼泽比喻）
+### 像对待感冒的朋友
+### 不抗拒→松弛
+## 拥抱无常
+### 无常=希望与改变
+### 痛苦不是永恒的
+### 贡布与草芽
+### 执念是苦的根源
+### A计划与B计划
+## 日常觉察
+### 修行≠远离红尘
+### 吃饭时吃饭·走路时走路
+### 觉察"我在焦虑"
+### 与情绪保持距离
+### 成为情绪的主人
+## 自我慈悲
+### 慈悲首先对自己
+### 不做自己的暴君
+### 接纳不完美
+### 温柔是最强的力量
+## 核心智慧
+### 平常心
+### 与巨石共存
+### 路在行走中创造
+### 次第花开·从容不迫
+    </script>
+  </div>
+</section>
+
+<!-- 晚安 -->
+<footer class="goodnight">
+  <p>晚安</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+<script>
+document.querySelector('.theme-select').value=document.body.className;
+
+// Petals
+(function(){
+  var c=document.getElementById('petals');
+  for(var i=0;i<20;i++){
+    var p=document.createElement('div');
+    p.className='petal';
+    p.style.left=Math.random()*100+'%';
+    p.style.animationDelay=Math.random()*12+'s';
+    p.style.animationDuration=(10+Math.random()*8)+'s';
+    p.style.width=p.style.height=(8+Math.random()*8)+'px';
+    c.appendChild(p);
+  }
+})();
+
+// Scroll animation
+var obs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})
+},{threshold:0.1});
+document.querySelectorAll('.chapter').forEach(function(el){obs.observe(el)});
+</script>
+</body>
+</html>

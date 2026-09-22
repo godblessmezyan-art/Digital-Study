@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>心湖上的倒影</title>
+<link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400;600;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B1026;--card:#131A35;--text:#D6DFF0;--text-secondary:#8B9DC3;--primary:#A8C4E0;--accent:#E8D5A3;--border:#1E2A4A;--shadow:0 4px 30px rgba(0,0,0,.4);--radius:16px;--water:#1A2744}
+body.theme-indigo{--bg:#0B1026;--card:#131A35;--text:#D6DFF0;--text-secondary:#8B9DC3;--primary:#A8C4E0;--accent:#E8D5A3;--border:#1E2A4A;--shadow:0 4px 30px rgba(0,0,0,.4);--water:#1A2744}
+body.theme-ink{--bg:#F7F9FC;--card:#FFFFFF;--text:#1E293B;--text-secondary:#64748B;--primary:#1B4965;--accent:#C9A84C;--border:#E2E8F0;--shadow:0 4px 24px rgba(27,73,101,.08);--water:#EBF4FA}
+body.theme-forest{--bg:#F0F7F4;--card:#FFFFFF;--text:#1B3A2D;--text-secondary:#4A7C6A;--primary:#2D6A4F;--accent:#95D5B2;--border:#D8F3DC;--shadow:0 4px 24px rgba(45,106,79,.08);--water:#E8F5EE}
+body.theme-wine{--bg:#FDF2F4;--card:#FFFFFF;--text:#3D1522;--text-secondary:#8B4560;--primary:#800F2F;--accent:#FF758F;--border:#FFCCD5;--shadow:0 4px 24px rgba(128,15,47,.08);--water:#FFF0F3}
+body.theme-ocean{--bg:#EFF6FF;--card:#FFFFFF;--text:#1E3A5F;--text-secondary:#4A7FB5;--primary:#1D4ED8;--accent:#60A5FA;--border:#BFDBFE;--shadow:0 4px 24px rgba(29,78,216,.08);--water:#E8F2FF}
+body.theme-sand{--bg:#FFFBF0;--card:#FFFFFF;--text:#44361E;--text-secondary:#8B7355;--primary:#92600A;--accent:#F59E0B;--border:#FDE68A;--shadow:0 4px 24px rgba(146,96,10,.08);--water:#FFF8E6}
+body.theme-plum{--bg:#FAF5FF;--card:#FFFFFF;--text:#3B0764;--text-secondary:#7C3AED;--primary:#6D28D9;--accent:#A78BFA;--border:#DDD6FE;--shadow:0 4px 24px rgba(109,40,217,.08);--water:#F5F0FF}
+body.theme-slate{--bg:#F8FAFC;--card:#FFFFFF;--text:#0F172A;--text-secondary:#475569;--primary:#334155;--accent:#94A3B8;--border:#CBD5E1;--shadow:0 4px 24px rgba(51,65,85,.08);--water:#F1F5F9}
+body.theme-coral{--bg:#FFF5F5;--card:#FFFFFF;--text:#451A1A;--text-secondary:#B91C1C;--primary:#DC2626;--accent:#FCA5A5;--border:#FECACA;--shadow:0 4px 24px rgba(220,38,38,.08);--water:#FFF0F0}
+body.theme-teal{--bg:#F0FDFA;--card:#FFFFFF;--text:#134E4A;--text-secondary:#0F766E;--primary:#0D9488;--accent:#5EEAD4;--border:#99F6E4;--shadow:0 4px 24px rgba(13,148,136,.08);--water:#E6FFFA}
+body.theme-midnight{--bg:#0F172A;--card:#1E293B;--text:#E2E8F0;--text-secondary:#94A3B8;--primary:#38BDF8;--accent:#F59E0B;--border:#334155;--shadow:0 4px 24px rgba(0,0,0,.3);--water:#162036}
+body.theme-charcoal{--bg:#18181B;--card:#27272A;--text:#FAFAFA;--text-secondary:#A1A1AA;--primary:#FBBF24;--accent:#F97316;--border:#3F3F46;--shadow:0 4px 24px rgba(0,0,0,.3);--water:#222226}
+body.theme-abyss{--bg:#0C1222;--card:#162032;--text:#E0F2FE;--text-secondary:#7DD3FC;--primary:#0EA5E9;--accent:#A78BFA;--border:#1E3A5F;--shadow:0 4px 24px rgba(0,0,0,.4);--water:#0E1A30}
+body.theme-moss{--bg:#1A2E1A;--card:#243524;--text:#D9F99D;--text-secondary:#A3E635;--primary:#84CC16;--accent:#FDE047;--border:#365336;--shadow:0 4px 24px rgba(0,0,0,.3);--water:#1E331E}
+body.theme-ember{--bg:#1C1008;--card:#2A1A0E;--text:#FED7AA;--text-secondary:#FB923C;--primary:#F97316;--accent:#FBBF24;--border:#4A2C17;--shadow:0 4px 24px rgba(0,0,0,.4);--water:#221408}
+body.theme-orchid{--bg:#1A0A2E;--card:#251240;--text:#F3E8FF;--text-secondary:#C084FC;--primary:#A855F7;--accent:#EC4899;--border:#3B1D6E;--shadow:0 4px 24px rgba(0,0,0,.4);--water:#1E0E36}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Serif SC',serif;background:var(--bg);color:var(--text);line-height:2;transition:background .5s,color .5s}
+
+/* Theme select */
+.theme-select{position:fixed;top:20px;right:20px;z-index:999;padding:8px 14px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:.82rem;font-family:'Noto Serif SC',serif;cursor:pointer;box-shadow:var(--shadow);transition:all .3s}
+.theme-select:hover{border-color:var(--accent)}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;overflow:hidden;background:var(--bg)}
+.hero-sky{position:absolute;inset:0;background:linear-gradient(180deg,#060B1A 0%,#0B1026 30%,#131A35 60%,#1A2744 100%)}
+.stars{position:absolute;inset:0;overflow:hidden}
+.star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;animation:twinkle var(--dur) ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:.2}50%{opacity:.9}}
+.moon-wrap{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;margin-bottom:48px}
+.moon{width:80px;height:80px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#FFF8E7,#E8D5A3 60%,#C9A84C);box-shadow:0 0 60px rgba(232,213,163,.4),0 0 120px rgba(232,213,163,.15);animation:moonGlow 6s ease-in-out infinite}
+@keyframes moonGlow{0%,100%{box-shadow:0 0 60px rgba(232,213,163,.4),0 0 120px rgba(232,213,163,.15)}50%{box-shadow:0 0 80px rgba(232,213,163,.5),0 0 160px rgba(232,213,163,.2)}}
+.water-line{width:200px;height:1px;background:linear-gradient(90deg,transparent,rgba(168,196,224,.4),transparent);margin:32px 0}
+.moon-reflect{width:60px;height:60px;border-radius:50%;background:radial-gradient(circle at 35% 35%,rgba(255,248,231,.3),rgba(232,213,163,.2) 60%,transparent);filter:blur(3px);animation:reflectWave 4s ease-in-out infinite}
+@keyframes reflectWave{0%,100%{transform:scaleX(1) scaleY(1);opacity:.5}50%{transform:scaleX(1.15) scaleY(.9);opacity:.35}}
+.hero h1{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(2.6rem,9vw,4.5rem);color:var(--primary);letter-spacing:.2em;position:relative;z-index:2;margin-bottom:20px;text-indent:.2em}
+.hero .subtitle{font-size:clamp(.9rem,2.5vw,1.1rem);color:var(--text-secondary);letter-spacing:.12em;position:relative;z-index:2;max-width:480px;line-height:2.2}
+.hero .author{font-size:.85rem;color:var(--text-secondary);opacity:.6;position:relative;z-index:2;margin-top:24px;letter-spacing:.1em}
+
+/* Ripple divider */
+.divider{display:flex;justify-content:center;align-items:center;margin:72px 0;position:relative;height:40px}
+.ripple{position:absolute;width:40px;height:40px;border-radius:50%;border:1px solid var(--primary);opacity:0;animation:rippleOut 4s ease-out infinite}
+.ripple:nth-child(2){animation-delay:1.3s}
+.ripple:nth-child(3){animation-delay:2.6s}
+@keyframes rippleOut{0%{transform:scale(.3);opacity:.6}100%{transform:scale(2.5);opacity:0}}
+
+/* Sections */
+.chapter{opacity:0;transform:translateY(30px);transition:opacity 1s ease,transform 1s ease;margin:90px auto;max-width:720px;padding:0 28px}
+.chapter.visible{opacity:1;transform:translateY(0)}
+.chapter-label{font-size:.75rem;letter-spacing:.4em;color:var(--accent);margin-bottom:12px;opacity:.8}
+.chapter h2{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(1.5rem,5vw,2rem);color:var(--primary);margin-bottom:28px;line-height:1.6;letter-spacing:.08em}
+.chapter h3{font-family:'ZCOOL XiaoWei',serif;font-size:1.2rem;color:var(--primary);margin:48px 0 18px;letter-spacing:.06em;opacity:.9}
+.chapter p{margin-bottom:20px;font-size:1rem;color:var(--text)}
+.chapter p.soft{color:var(--text-secondary);font-size:.93rem}
+
+/* Quote - still water style */
+.quote{position:relative;padding:32px;margin:40px 0;text-align:center}
+.quote::before,.quote::after{content:'';position:absolute;left:50%;transform:translateX(-50%);width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent)}
+.quote::before{top:0}
+.quote::after{bottom:0}
+.quote p{font-style:italic;color:var(--primary);font-size:1.05rem;line-height:2.2;margin:0}
+
+/* Insight - floating leaf cards */
+.leaf-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;margin:28px 0;box-shadow:var(--shadow);position:relative}
+.leaf-card::after{content:'';position:absolute;top:16px;right:20px;width:8px;height:8px;border-radius:50%;background:var(--accent);opacity:.4}
+.leaf-card h4{font-size:.95rem;color:var(--accent);margin-bottom:10px;font-weight:600;letter-spacing:.05em}
+.leaf-card p{font-size:.93rem;color:var(--text-secondary);margin:0;line-height:1.9}
+
+/* Markmap */
+.mindmap-section{margin:90px auto;max-width:720px;padding:0 28px}
+.mindmap-section h2{font-family:'ZCOOL XiaoWei',serif;font-size:1.6rem;color:var(--primary);text-align:center;margin-bottom:32px;letter-spacing:.1em}
+.markmap{width:100%;height:520px;border-radius:var(--radius);background:var(--card);box-shadow:var(--shadow);border:1px solid var(--border)}
+.markmap svg{background:transparent!important}
+.markmap-foreign{color:var(--text)!important;font-size:14px!important}
+
+/* Goodnight */
+.goodnight{text-align:center;padding:120px 28px 140px}
+.goodnight .word{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(2.5rem,8vw,4rem);color:var(--primary);letter-spacing:.5em;text-indent:.5em;opacity:.9}
+
+/* Footer */
+.footer{text-align:center;padding:40px 28px 60px;color:var(--text-secondary);font-size:.78rem;opacity:.6}
+
+@media(max-width:600px){
+  .chapter{padding:0 20px}
+  .moon{width:60px;height:60px}
+}
+</style>
+</head>
+<body class="theme-indigo">
+<script>!function(){var t=['theme-indigo','theme-ink','theme-forest','theme-wine','theme-ocean','theme-sand','theme-plum','theme-slate','theme-coral','theme-teal','theme-midnight','theme-charcoal','theme-abyss','theme-moss','theme-ember','theme-orchid'];document.body.className=t[Math.floor(Math.random()*t.length)]}()</script>
+
+<select class="theme-select" onchange="document.body.className=this.value">
+  <option value="theme-indigo">🌙 静湖靛蓝</option>
+  <option value="theme-ink">🖋 水墨</option>
+  <option value="theme-forest">🌿 山林</option>
+  <option value="theme-wine">🍷 酒红</option>
+  <option value="theme-ocean">🌊 海蓝</option>
+  <option value="theme-sand">🏜 沙金</option>
+  <option value="theme-plum">🔮 梅紫</option>
+  <option value="theme-slate">🪨 石灰</option>
+  <option value="theme-coral">🪸 珊瑚</option>
+  <option value="theme-teal">💎 青碧</option>
+  <option value="theme-midnight">🌌 午夜</option>
+  <option value="theme-charcoal">🕯 炭火</option>
+  <option value="theme-abyss">🐋 深渊</option>
+  <option value="theme-moss">🌱 苔藓</option>
+  <option value="theme-ember">🔥 余烬</option>
+  <option value="theme-orchid">🦋 兰紫</option>
+</select>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-sky"></div>
+  <div class="stars" id="stars"></div>
+  <div class="moon-wrap">
+    <div class="moon"></div>
+    <div class="water-line"></div>
+    <div class="moon-reflect"></div>
+  </div>
+  <h1>心湖上的倒影</h1>
+  <p class="subtitle">湖水必须静止，才能映照明月；<br>心也必须静止，才能映照实相。</p>
+  <p class="author">丹津·葩默 Tenzin Palmo</p>
+</header>
+
+<!-- 序 -->
+<section class="chapter">
+  <p class="chapter-label">序</p>
+  <h2>坐在湖边，看一切来去</h2>
+  <p>她出生在1943年的英国伦敦，一个地地道道的西方女孩。18岁那年，她偶然读到一本关于佛教的书，读到一半就跟母亲说："我是佛教徒了。"20岁，她远赴印度，成为藏传佛教首批出家的西方女性之一。而最令人震撼的是，32岁那年，她独自一人在喜马拉雅山海拔一万三千多英尺的雪洞中，闭关修行了十二年。</p>
+  <p>这听起来像一个传奇。但她自己说，她去那里只是为了看清楚一件事——自己的心究竟是怎么一回事。</p>
+  <p>请你想象一面安静的高山湖泊。湖面平静的时候，天上的云、周围的山、岸边的树，都能清晰地倒映在水中。可一旦风吹过，湖面起皱了，倒影就碎了、扭曲了，什么都看不清了。</p>
+  <div class="quote">
+    <p>我们的心就像这面湖。你每天感受到的焦虑、烦躁、不安，往往不是因为外面的世界真的崩塌了，而是因为我们的心湖起了风浪。于是倒影便乱了。</p>
+  </div>
+</section>
+
+<div class="divider"><span class="ripple"></span><span class="ripple"></span><span class="ripple"></span></div>
+
+<!-- 第一章 -->
+<section class="chapter">
+  <p class="chapter-label">壹</p>
+  <h2>你为什么要修行</h2>
+  <p>书的一开始，丹津葩默没有急着教你怎么打坐、怎么呼吸。她先问了一个特别朴素却极易被忽略的问题：你为什么要修行？</p>
+  <p>为了睡个好觉？为了不再焦虑？为了成为一个更平和的人？为了摆脱某种痛苦？她说这些理由都没有错。但她提醒我们：如果修行的动机只是为了让自己感觉好一点，那这个动机本身反而可能成为新的障碍。</p>
+  <p>因为你把"感觉好"当成了目标。那么一旦你感觉不好，一旦烦躁又回来，一旦你发现自己还在生气、还在嫉妒，你就会立刻认为自己失败了、修错了。你开始评判自己、攻击自己。这样一来，你的平静就不再是真正的平静，而是另一种形式的执着——执着于平静。</p>
+  <div class="quote">
+    <p>世俗的欲望像盐水，越喝越渴。你追求一个东西，得到了快乐一小会儿，然后新的欲望又冒出来，永远差那么一点点。</p>
+  </div>
+  <p>那真正的动机应该是什么？修行的核心不是逃避世界，也不是获得某种神秘体验，而是彻底看清自己内心的运作方式——看清贪婪怎么升起，愤怒怎么爆发，困惑怎么笼罩。看清它们来了，又看清它们怎么走了。当你看清了，你就不再被它们牵着鼻子走了。</p>
+  <p class="soft">不是为了成为更好的人，而是为了看见真实的自己——连同那些你一直想藏起来的阴暗的、混乱的、懦弱的部分。也许真正的治愈从来不是把不好的抹掉，而是有勇气坐在湖边，看着湖水把一切都倒映出来。美的丑的，清的浊的，什么都不逃开。你知道它们都在，但你知道你比它们更大。</p>
+</section>
+
+<div class="divider"><span class="ripple"></span><span class="ripple"></span><span class="ripple"></span></div>
+
+<!-- 第二章 -->
+<section class="chapter">
+  <p class="chapter-label">贰</p>
+  <h2>觉知：温柔的旁观</h2>
+  <p>丹津葩默反复强调一个词：觉知。但她说的觉知不是绷紧神经去监控自己，而是一种温柔的旁观，一种退后一步的距离感。</p>
+  <p>想象你坐在湖边，看着湖面上一片枯叶、一朵白云、一只飞鸟的影子飘过来了，又走了。你不需要跳进湖里去追那片叶子，不需要对着那朵云升起什么情绪。你只是坐在那里，看着它们来来去去。你的湖底依然在那里，深静不动。</p>
+  <p>我们的念头和情绪就是这湖面上的倒影。一个念头升起了——关于明天的工作，关于某个人的眼神，关于过去的遗憾。你不需要抓住它、分析它、给它贴标签。你只需要知道："哦，有一个念头。"然后它就自己消散了。</p>
+  <div class="leaf-card">
+    <h4>一个古老的教导</h4>
+    <p>一个念头就只是一个念头，一种情绪就只是一种情绪。它仿佛水中的泡沫——升起，停留片刻，然后破灭。另一个泡沫又会升起。</p>
+  </div>
+  <p>下次你躺在床上，脑子里翻来覆去想着白天的某件事、某个人，你不需要跟着那个念头跑，也不需要拼命把它压下去。你只是轻轻地说："哦，有一个念头在想那件事。"然后回到呼吸，回到身体的感受，回到此时此刻。</p>
+  <p>当我们开始这样练习，内心会慢慢出现一种奇妙的变化——好像有一部分自己往后退了一步，变成了一个安静的观察者。它不评判，不卷入，只是知道。这种内在的空间感，会带来一种前所未有的自由。</p>
+  <div class="quote">
+    <p>你不再是你的念头，你只是那个看着念头的人。你不是你的焦虑，你不是你的愤怒，你不是你的故事。你是那个正在观察这一切的、更宽广的存在。</p>
+  </div>
+</section>
+
+<div class="divider"><span class="ripple"></span><span class="ripple"></span><span class="ripple"></span></div>
+
+<!-- 第三章 -->
+<section class="chapter">
+  <p class="chapter-label">叁</p>
+  <h2>磨砂纸：那些让你难受的人</h2>
+  <p>我们好比粗糙的木头。天鹅绒或丝绸不能让我们的边缘变光滑，我们需要的是磨砂纸。困扰我们的人就是磨砂纸。</p>
+  <p>生活中那些让你难受的人——那个总跟你作对的同事，那个永远无法理解你的家人，那个曾经伤害过你的旧人——我们通常的反应是躲开、怨恨，在脑海里一遍遍重复那些不愉快的对话。但她说，这些人恰恰是你修行路上最重要的磨砂纸，因为它们精准地触碰到了你内心最敏感的地方。</p>
+  <p>它们让你看见：哦，原来我这里还有一根刺。原来我这么在意被忽视。原来我这么害怕失去掌控。</p>
+  <p class="soft">这不是说要你喜欢他们，也不是说你要马上原谅。但你可以换一个角度：每一次被激怒、被冒犯、被伤害，都是一次绝佳的机会，照出你内心那些还没有被抚平的棱角。磨砂纸是粗糙的、不舒服的，但正是它一点一点把木头打磨得光滑明亮。</p>
+  <div class="leaf-card">
+    <h4>一个小小的转念</h4>
+    <p>下次你再遇到让你火冒三丈的人，可以先深呼吸一次，默默在心里说："谢谢你，让我看到我自己的边界。"你会发现，仅仅是这样一个小小的转念，心里的火气就已经消了小半。</p>
+  </div>
+</section>
+
+<div class="divider"><span class="ripple"></span><span class="ripple"></span><span class="ripple"></span></div>
+
+<!-- 第四章 -->
+<section class="chapter">
+  <p class="chapter-label">肆</p>
+  <h2>记忆、欲望与松手</h2>
+  <p>我们对自己的记忆保持着非常执着的态度，因为记忆定义着我们的身份。即使记忆是痛苦的，我们仍然不想放它走。很多年前的一件小事，每次想起来胸口还是堵、还是疼。你明明知道事情已经过去了，那个人已经不在你生活里了，但你的心好像还困在那个场景里面，一遍一遍重播同一部老电影。</p>
+  <p>她不是在说"你别想了"，因为那做不到。她是在邀请你做一个实验：下一次当那个痛苦的记忆浮现时，你能不能对自己说——"这件事发生在过去，但此刻我在这里，此刻我是安全的。"你能不能只是看着那个记忆，像一个旁观者看着一部老电影，而不跳进屏幕里去当主角。</p>
+  <p>修行的目标不是忘记，而是选择不再被那段记忆定义。暴风雨已经走了，湖水终究会恢复平静，那些涟漪最终也会融入湖水本身。</p>
+  <h3>欲望与执着</h3>
+  <p>你渴望被爱，这很正常。但如果你执着于必须从某一个人那里得到爱、必须在某个时刻得到特定形式的爱，那这种执着就注定带来痛苦。你渴望成功，这很正常。但如果你执着于必须在某个时间点达到某个标准，那这种执着就变成焦虑。</p>
+  <div class="quote">
+    <p>欲望是湖水自然的波动，像风吹过水面会起涟漪。执着是什么？是你在那些波浪上死死抓着不放，想让某一个波浪永远保持那个形状。可波浪怎么可能不变呢？你越是用力，水就越从指缝流走。</p>
+  </div>
+  <p>修行不是要消灭欲望，而是要松开手。让波浪来，让波浪走。湖水依然是湖水，你依然是那个更深的存在。你依然可以去努力、去爱、去创造，但你不必把整个自我的价值都系在结果上。无论结果如何，你内心的那面湖始终有它自己的深度和宁静。</p>
+</section>
+
+<div class="divider"><span class="ripple"></span><span class="ripple"></span><span class="ripple"></span></div>
+
+<!-- 第五章 -->
+<section class="chapter">
+  <p class="chapter-label">伍</p>
+  <h2>日常即道场</h2>
+  <p>你可能会想：我又不住在雪洞里，我没有十二年的时间闭关，我怎么修行？丹津葩默的回答是：日常生活就是最好的道场。</p>
+  <p>正式的静坐很重要，但真正的修行必须带到生活每一个角落。有时候动中禅比坐中禅更重要。她有一句话特别触动人心："我的人在什么地方，我的心就在什么地方。"你在吃饭，心就在吃饭。你在走路，心就在走路。你和一个人说话，心就在这段对话里。不跑回过去，不跳到未来。</p>
+  <p>我们大部分人的心都像一只猴子，永远在别的地方。吃饭时看手机，走路时想工作，睡觉时想明天，和人说话时想自己下一句要说什么。我们很少真正的、完整的存在于正在做的事情中。</p>
+  <div class="leaf-card">
+    <h4>一个很小的练习</h4>
+    <p>每天选一个日常动作，比如刷牙或喝第一杯茶，把全部注意力放在那个动作上。感受牙刷的触感，感受茶水的温度和香气。如果你发现思绪飘走了，没关系，轻轻把它拉回来。一次一次拉回来。温柔而坚持。</p>
+  </div>
+  <p>你不需要去喜马拉雅山的雪洞。你就在卧室里、沙发上、甚至堵车的方向盘后面。每一次你意识到自己又跑走了，然后轻轻说一声"回来吧"——这本身就是一次小小的觉醒。</p>
+  <p class="soft">真正的觉知不是紧张，而是放松。当你不再被念头裹挟、不再被情绪绑架，你反而有了空间，有了选择如何回应的空间。这才是真正的自由。</p>
+</section>
+
+<div class="divider"><span class="ripple"></span><span class="ripple"></span><span class="ripple"></span></div>
+
+<!-- 第六章 -->
+<section class="chapter">
+  <p class="chapter-label">陆</p>
+  <h2>慈悲与空性</h2>
+  <p>很多人把慈悲误解为自我牺牲或悲情的怜悯。但真正的慈悲首先来自于一种深刻的平等心——你知道所有生命都和你一样，都在渴望快乐、逃避痛苦。当你真正认识到这种平等时，你对别人的关心就不再是居高临下的施舍，而是一种自然的流动。</p>
+  <div class="leaf-card">
+    <h4>慈悲观想</h4>
+    <p>先从自己开始，静静对自己说：愿我平安，愿我快乐，愿我健康，愿我自在。然后把这份祝愿扩大到你爱的人，再到认识的人，再到无感的人，最后——到你讨厌的人。试着默默对他说：愿你也平安，愿你也快乐，愿你也自在。哪怕只是嘴上说一说，你的心也会开始松动。因为仇恨和怨恨最终腐蚀的是你自己。</p>
+  </div>
+  <h3>空性：一切皆有可能</h3>
+  <p>空性不是什么都没有，而恰恰是一切皆有可能。一面白墙，正因为它是空的，你才可以在上面投影任何电影。如果墙上已经画满了画，你就无法再投影新的东西。我们的心也是如此——当我们内心塞满固化的观念、僵化的自我定义，我们就失去了流动性和创造力。</p>
+  <p>我们总是给自己贴标签："我是焦虑的人""我是失败者。"这些标签只是暂时的概念，不是你本身。你比这些概念大得多。空性不是让你否定一切，而是让你松开对一切定论的执着。当你不再死死抓住"我就是这样的"，你就获得了改变的自由。</p>
+  <div class="quote">
+    <p>湖水是空的，所以才能映照万物。心是空的，所以才能容纳万千。</p>
+  </div>
+</section>
+
+<div class="divider"><span class="ripple"></span><span class="ripple"></span><span class="ripple"></span></div>
+
+<!-- 第七章 -->
+<section class="chapter">
+  <p class="chapter-label">柒</p>
+  <h2>你一直都在家</h2>
+  <p>如果你懂得了许多高深的知识，能够说出各种名词，但在现实生活中并没有变得更加宽容、慈悲、有同理心，那么就不能说你的修行有任何真正的进步。修行的成果从来不在你的脑子里，不在你的谈吐中，而在于你如何对待那个对你发脾气的家人，如何对待做错了事的同事，如何对待让你不耐烦的陌生人。</p>
+  <p>你是不是更温柔了？你是不是更稳了？你是不是在面对自己的脆弱时更有慈悲了？这才是唯一的检验标准。</p>
+  <p>别把开悟想象成一件未来的事。它不是一个终点，不是你要跋涉千里去取得的奖杯。它更像是一种回头——回头认出你本来就有的东西。就像你一直在自己家里找钥匙，翻遍了所有抽屉，最后发现钥匙就在你口袋里。</p>
+  <div class="quote">
+    <p>你一直都在家。你一直都很安全。你一直都很圆满。你不需要变成另一个人，你只需要从这个"想要变成另一个人"的梦里，醒来。</p>
+  </div>
+  <p class="soft">那个洞穴其实不在山上，它就在我们的心里。无论你身处何地，无论你正在经历什么，你都可以随时回到那片内心的宁静之中。我们无法改变世界，但我们可以改变看待世界的方式。我们无法停止所有的烦恼，但我们可以选择不被它们带走。</p>
+</section>
+
+<!-- Markmap -->
+<section class="mindmap-section chapter">
+  <h2>全书思维导图</h2>
+  <div class="markmap">
+    <script type="text/template">
+---
+markmap:
+  colorFreezeLevel: 3
+  maxWidth: 280
+---
+# 心湖上的倒影
+## 核心隐喻
+### 心 = 高山湖泊
+### 念头情绪 = 湖面倒影
+### 风浪起 → 倒影碎
+### 静止 → 映照实相
+## 修行的动机
+### 不是为了"感觉好"
+### 执着于平静 = 新障碍
+### 看清内心运作方式
+### 看见真实的自己
+## 觉知
+### 温柔的旁观
+### 不评判 不卷入
+### 念头只是念头
+### 退后一步的观察者
+### 内在空间 → 自由
+## 磨砂纸
+### 讨厌的人 = 修行助缘
+### 精准触碰敏感处
+### 照见未抚平的棱角
+### 转念：谢谢你的示现
+## 记忆与执着
+### 记忆定义身份 → 执着
+### 不忘记 但不再被定义
+### 旁观老电影
+### 此刻我在这里
+## 欲望 vs 执着
+### 欲望 = 自然波浪
+### 执着 = 死死抓住波浪
+### 松开手 让来让走
+### 湖依然是湖
+## 日常即道场
+### 人在哪里 心在哪里
+### 动中禅 > 坐中禅
+### 一个动作 全部注意力
+### 每次回来 = 小小觉醒
+## 慈悲
+### 平等心为基础
+### 愿我平安快乐
+### 扩展到一切众生
+### 仇恨腐蚀的是自己
+## 空性
+### 非虚无 是一切可能
+### 白墙喻：空才能投影
+### 标签非你本身
+### 松开定论 → 自由
+## 检验标准
+### 不在知识谈吐
+### 在如何对待他人
+### 更温柔 更稳 更慈悲
+### 你一直都在家
+    </script>
+  </div>
+</section>
+
+<!-- 晚安 -->
+<section class="goodnight chapter">
+  <p class="word">晚安</p>
+</section>
+
+<footer class="footer">
+  <p>《心湖上的倒影》 · 丹津·葩默</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+<script>
+// Stars
+const sc=document.getElementById('stars');
+for(let i=0;i<50;i++){const s=document.createElement('span');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*60+'%';s.style.setProperty('--dur',(2+Math.random()*4)+'s');s.style.animationDelay=Math.random()*4+'s';sc.appendChild(s)}
+
+// Scroll reveal
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:.08});
+document.querySelectorAll('.chapter').forEach(el=>obs.observe(el));
+
+// Sync select with random theme
+document.querySelector('.theme-select').value=document.body.className;
+</script>
+</body>
+</html>

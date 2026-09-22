@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>微习惯</title>
+<link href="https://fonts.loli.net/css2?family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f8faf9;--text:#2a3535;--accent:#2a9a8a;--accent2:#5ac4b4;--card:#fff;--card-border:#e0eae8;--hero-top:#0a1a18;--hero-mid:#143a35;--hero-bot:#2a6a5a;--gold:#d4a860;--shadow:rgba(42,154,138,.08)}
+body.theme-ink{--bg:#f5f3ef;--text:#2c2c2c;--accent:#4a4a4a;--accent2:#7a7a7a;--card:#fff;--card-border:#ddd;--hero-top:#111;--hero-mid:#2a2a2a;--hero-bot:#4a4a4a;--gold:#8a7a5a;--shadow:rgba(0,0,0,.06)}
+body.theme-ocean{--bg:#f0f6f8;--text:#2a3a42;--accent:#3a7a8a;--accent2:#6aacbc;--card:#fff;--card-border:#d8e8ec;--hero-top:#0e2228;--hero-mid:#1a3a42;--hero-bot:#3a6a7a;--gold:#c4a35a;--shadow:rgba(58,122,138,.08)}
+body.theme-dusk{--bg:#faf5f0;--text:#3a2a2a;--accent:#a05a3a;--accent2:#c88a6a;--card:#fff;--card-border:#e8d8d0;--hero-top:#1a0e0a;--hero-mid:#3a1a10;--hero-bot:#6a3a20;--gold:#d4a040;--shadow:rgba(160,90,58,.08)}
+body.theme-plum{--bg:#f8f4f8;--text:#3a2a3a;--accent:#7a4a7a;--accent2:#aa7aaa;--card:#fff;--card-border:#e8d8e8;--hero-top:#150e15;--hero-mid:#2a1a2a;--hero-bot:#4a2a4a;--gold:#c4a35a;--shadow:rgba(122,74,122,.08)}
+body.theme-night{--bg:#141e1e;--text:#c8dcd8;--accent:#4ac4a8;--accent2:#2a9a88;--card:#1e2828;--card-border:#2e3e3e;--hero-top:#080e0e;--hero-mid:#101a1a;--hero-bot:#1a3030;--gold:#c4a35a;--shadow:rgba(0,0,0,.3)}
+body.theme-warm{--bg:#fdf6ee;--text:#4a3520;--accent:#b87a2a;--accent2:#d4a050;--card:#fff;--card-border:#f0e0c8;--hero-top:#1a1008;--hero-mid:#3a2510;--hero-bot:#6a4a20;--gold:#e0b040;--shadow:rgba(184,122,42,.08)}
+body.theme-mist{--bg:#f4f6f4;--text:#3a4a3a;--accent:#6a8a6a;--accent2:#9ab89a;--card:#fff;--card-border:#dce8dc;--hero-top:#0e150e;--hero-mid:#1a2a1a;--hero-bot:#3a5a3a;--gold:#b8a050;--shadow:rgba(106,138,106,.08)}
+body.theme-rose{--bg:#fdf5f5;--text:#4a2a2a;--accent:#b05a5a;--accent2:#d08a8a;--card:#fff;--card-border:#f0d8d8;--hero-top:#150a0a;--hero-mid:#2a1212;--hero-bot:#5a2a2a;--gold:#c4a35a;--shadow:rgba(176,90,90,.08)}
+body.theme-stone{--bg:#f6f5f3;--text:#3a3835;--accent:#6a6560;--accent2:#9a9590;--card:#fff;--card-border:#e5e2dd;--hero-top:#12110f;--hero-mid:#2a2825;--hero-bot:#4a4540;--gold:#b0956a;--shadow:rgba(106,101,96,.08)}
+body.theme-lake{--bg:#f2f7f6;--text:#2a3a38;--accent:#3a7a72;--accent2:#6aaa9a;--card:#fff;--card-border:#d8e8e5;--hero-top:#0a1514;--hero-mid:#142a28;--hero-bot:#2a5248;--gold:#c4a35a;--shadow:rgba(58,122,114,.08)}
+body.theme-autumn{--bg:#faf6f0;--text:#3a2a1a;--accent:#a06a2a;--accent2:#c49a5a;--card:#fff;--card-border:#eee0cc;--hero-top:#150e05;--hero-mid:#2a1a0a;--hero-bot:#5a3a1a;--gold:#d4a030;--shadow:rgba(160,106,42,.08)}
+body.theme-bamboo{--bg:#f5f8f2;--text:#2a3a25;--accent:#4a7a3a;--accent2:#7aaa6a;--card:#fff;--card-border:#dce8d5;--hero-top:#0a1208;--hero-mid:#1a2a12;--hero-bot:#3a5a2a;--gold:#b8a040;--shadow:rgba(74,122,58,.08)}
+body.theme-cloud{--bg:#f8f9fc;--text:#2a2a3a;--accent:#5a6a9a;--accent2:#8a9ac4;--card:#fff;--card-border:#dde2f0;--hero-top:#0e0e1a;--hero-mid:#1a1a30;--hero-bot:#3a3a5a;--gold:#c4a35a;--shadow:rgba(90,106,154,.08)}
+body.theme-sand{--bg:#faf8f2;--text:#3a3225;--accent:#8a7a4a;--accent2:#b8a87a;--card:#fff;--card-border:#e8e0d0;--hero-top:#12100a;--hero-mid:#2a2415;--hero-bot:#4a4028;--gold:#c4a040;--shadow:rgba(138,122,74,.08)}
+body.theme-snow{--bg:#f8fafb;--text:#2a3038;--accent:#4a6a8a;--accent2:#7a9ab8;--card:#fff;--card-border:#dde5ec;--hero-top:#0a1015;--hero-mid:#152028;--hero-bot:#2a4050;--gold:#b8a060;--shadow:rgba(74,106,138,.08)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Serif SC',serif;background:var(--bg);color:var(--text);line-height:2;overflow-x:hidden;transition:background .5s,color .5s}
+.theme-select{position:fixed;top:16px;right:16px;z-index:999;padding:8px 14px;border-radius:20px;border:1px solid var(--card-border);background:var(--card);color:var(--text);font-size:.85rem;font-family:'Noto Serif SC',serif;cursor:pointer;box-shadow:0 2px 12px var(--shadow)}
+/* Hero */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;background:linear-gradient(170deg,var(--hero-top) 0%,var(--hero-mid) 50%,var(--hero-bot) 100%);overflow:hidden;padding:60px 20px}
+.hero h1{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(2.2rem,7vw,3.8rem);color:#fff;margin-bottom:12px;letter-spacing:.15em}
+.hero .subtitle{font-size:clamp(1rem,3vw,1.2rem);color:rgba(255,255,255,.75);margin-bottom:10px}
+.hero .author{font-size:.88rem;color:rgba(255,255,255,.5);letter-spacing:.2em;margin-bottom:36px}
+.hero .tagline{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(1.1rem,3.5vw,1.4rem);color:var(--gold);letter-spacing:.1em}
+/* Staircase animation */
+.stairs{position:absolute;bottom:0;left:0;width:100%;display:flex;align-items:flex-end;justify-content:center;gap:4px;padding:0 20%;opacity:.2}
+.stair{width:clamp(20px,4vw,40px);background:rgba(255,255,255,.5);border-radius:3px 3px 0 0;animation:growUp .6s ease forwards;transform-origin:bottom}
+@keyframes growUp{from{height:0}to{height:var(--h)}}
+/* Step dots floating */
+.step-dot{position:absolute;width:6px;height:6px;background:rgba(255,255,255,.3);border-radius:50%;animation:dotPulse 4s infinite ease-in-out}
+@keyframes dotPulse{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:.6;transform:scale(1.2)}}
+/* Content */
+.content{max-width:720px;margin:0 auto;padding:60px 24px}
+.chapter{margin-bottom:64px;opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
+.chapter.visible{opacity:1;transform:translateY(0)}
+.chapter h2{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(1.4rem,4vw,1.85rem);color:var(--accent);margin-bottom:24px;display:flex;align-items:center;gap:10px}
+.step-badge{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-size:.75rem;flex-shrink:0}
+.chapter p{margin-bottom:1.2em;text-align:justify;font-size:1.05rem}
+.chapter .highlight{color:var(--accent);font-weight:600}
+.chapter .quote{background:var(--card);border-left:3px solid var(--accent2);padding:20px 24px;border-radius:0 12px 12px 0;margin:24px 0;font-style:italic;box-shadow:0 2px 12px var(--shadow)}
+/* Dot divider */
+.dot-divider{display:flex;align-items:center;justify-content:center;gap:6px;margin:48px 0}
+.dot-divider .d{width:5px;height:5px;background:var(--accent2);border-radius:50%;opacity:.5}
+.dot-divider .d.big{width:8px;height:8px;opacity:.8}
+/* Concept card */
+.concept-card{background:var(--card);border:1px solid var(--card-border);border-radius:14px;padding:24px;margin:24px 0;box-shadow:0 4px 20px var(--shadow);position:relative;overflow:hidden}
+.concept-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(to bottom,var(--accent),var(--accent2))}
+.concept-card h3{font-family:'ZCOOL XiaoWei',serif;color:var(--accent);font-size:1.05rem;margin-bottom:10px;padding-left:12px}
+.concept-card p{font-size:.95rem;padding-left:12px}
+/* Brain diagram */
+.brain-compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0}
+.brain-item{background:var(--card);border:1px solid var(--card-border);border-radius:14px;padding:22px 18px;text-align:center;box-shadow:0 2px 12px var(--shadow)}
+.brain-item .icon{font-size:2rem;margin-bottom:8px}
+.brain-item h4{font-family:'ZCOOL XiaoWei',serif;color:var(--accent);margin-bottom:8px;font-size:1rem}
+.brain-item p{font-size:.88rem;line-height:1.8;opacity:.85}
+/* VS card */
+.vs-card{background:linear-gradient(135deg,var(--card),var(--bg));border:1px solid var(--card-border);border-radius:16px;padding:28px;margin:28px 0;text-align:center;box-shadow:0 4px 20px var(--shadow)}
+.vs-row{display:flex;align-items:center;justify-content:center;gap:24px;margin:16px 0}
+.vs-side{text-align:center}
+.vs-side h4{font-family:'ZCOOL XiaoWei',serif;font-size:1.2rem;margin-bottom:6px}
+.vs-side.bad h4{color:#c47a5a}
+.vs-side.good h4{color:var(--accent)}
+.vs-side p{font-size:.85rem;opacity:.8}
+.vs-vs{font-family:'ZCOOL XiaoWei',serif;font-size:1.2rem;color:var(--gold);font-weight:700}
+/* Step list */
+.step-list{margin:24px 0;counter-reset:step}
+.step-item{display:flex;gap:14px;margin-bottom:16px;align-items:flex-start}
+.step-item::before{counter-increment:step;content:counter(step);display:flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-size:.75rem;flex-shrink:0;margin-top:4px}
+.step-item p{font-size:.95rem;line-height:1.8}
+/* Markmap */
+.markmap-section{max-width:900px;margin:60px auto;padding:0 24px}
+.markmap-section h2{font-family:'ZCOOL XiaoWei',serif;text-align:center;color:var(--accent);font-size:1.5rem;margin-bottom:24px}
+.markmap{width:100%;height:500px;background:var(--card);border-radius:16px;border:1px solid var(--card-border);box-shadow:0 4px 20px var(--shadow)}
+.markmap-foreign{color:var(--text)!important}
+/* Goodnight */
+.goodnight{text-align:center;padding:80px 20px 100px}
+.goodnight p{font-family:'ZCOOL XiaoWei',serif;font-size:1.6rem;color:var(--accent);letter-spacing:.5em}
+/* Progress */
+.progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:1000;transition:width .1s}
+@media(max-width:600px){.content{padding:40px 18px}.brain-compare{grid-template-columns:1fr}.theme-select{top:10px;right:10px;padding:6px 10px;font-size:.8rem}}
+</style>
+</head>
+<body class="theme-mint">
+<script>!function(){var t=["theme-mint","theme-ink","theme-ocean","theme-dusk","theme-plum","theme-night","theme-warm","theme-mist","theme-rose","theme-stone","theme-lake","theme-autumn","theme-bamboo","theme-cloud","theme-sand","theme-snow"];document.body.className=t[Math.floor(Math.random()*t.length)]}()</script>
+<div class="progress" id="progress"></div>
+<select class="theme-select" onchange="document.body.className=this.value">
+<option value="theme-mint">🌱 薄荷</option>
+<option value="theme-ink">🖋 水墨</option>
+<option value="theme-ocean">🌊 海洋</option>
+<option value="theme-dusk">🌅 暮色</option>
+<option value="theme-plum">🌸 梅子</option>
+<option value="theme-night">🌙 夜色</option>
+<option value="theme-warm">🕯 暖阳</option>
+<option value="theme-mist">🌫 薄雾</option>
+<option value="theme-rose">🌹 玫瑰</option>
+<option value="theme-stone">🪨 磐石</option>
+<option value="theme-lake">💧 湖水</option>
+<option value="theme-autumn">🍂 秋意</option>
+<option value="theme-bamboo">🎋 青竹</option>
+<option value="theme-cloud">☁️ 流云</option>
+<option value="theme-sand">🏜 沙丘</option>
+<option value="theme-snow">❄️ 初雪</option>
+</select>
+
+<section class="hero">
+<div class="stairs">
+<div class="stair" style="--h:8px;animation-delay:.2s"></div>
+<div class="stair" style="--h:18px;animation-delay:.4s"></div>
+<div class="stair" style="--h:30px;animation-delay:.6s"></div>
+<div class="stair" style="--h:44px;animation-delay:.8s"></div>
+<div class="stair" style="--h:60px;animation-delay:1s"></div>
+<div class="stair" style="--h:78px;animation-delay:1.2s"></div>
+<div class="stair" style="--h:98px;animation-delay:1.4s"></div>
+<div class="stair" style="--h:120px;animation-delay:1.6s"></div>
+</div>
+<h1>微习惯</h1>
+<p class="subtitle">简单到不可能失败的自我管理法则</p>
+<p class="author">斯蒂芬·盖斯</p>
+<p class="tagline">小得不可思议的一小步</p>
+</section>
+
+<div class="content">
+
+<div class="chapter">
+<h2><span class="step-badge">1</span>一个俯卧撑改变人生</h2>
+<p>2012年年末，美国作家斯蒂芬·盖斯回顾了自己过去10年的个人成长经历。他尝试了各种主流的个人发展策略，却总是以失败告终。他意识到这些策略虽然听起来很有道理，但在实践中却很难坚持下去。</p>
+<p>那是一个临近新年的时候，盖斯像许多人一样希望在新的一年里有所改变，尤其是健身方面。他一直想把锻炼培养成习惯，但过去的努力总是以失败告终。这一次，他决定不再设定宏大的目标，而是从一个极其微小的行动开始——<span class="highlight">每天做一个俯卧撑</span>。</p>
+<p>这个想法听起来有些可笑，甚至有些可悲，因为一个俯卧撑对于健身来说几乎没有任何实质性的帮助。但盖斯决定试一试。</p>
+<p>令人意想不到的是，这个简单的行动却带来了巨大的变化。当他开始做第一个俯卧撑时，他发现自己的身体已经进入了运动状态，于是他又做了第二个、第三个，最终完成了一次完整的锻炼。</p>
+<div class="quote">微小的行动能够激发更大的动力，而且这种行动几乎不需要任何意志力的消耗。</div>
+<p>从那以后，盖斯将这种策略应用到写作和阅读等领域，同样取得了显著的进步。他的博客文章《挑战一个俯卧撑》也因此受到了广泛关注，许多人通过这个简单的策略开始了自己的改变之旅。</p>
+</div>
+
+<div class="dot-divider"><span class="d"></span><span class="d"></span><span class="d big"></span><span class="d"></span><span class="d"></span></div>
+
+<div class="chapter">
+<h2><span class="step-badge">2</span>什么是微习惯</h2>
+<p>微习惯的核心理念可以用一句话概括：<span class="highlight">小得不可思议的一小步。</span></p>
+<p>这种策略的关键在于，将目标设定得如此之小，以至于几乎不可能失败。这种微小的目标不会给大脑带来任何压力，也不会消耗大量的意志力，从而使得行动变得轻松自然。</p>
+<div class="concept-card">
+<h3>微习惯示例</h3>
+<p>想培养健身的习惯？→ 每天做1个俯卧撑<br>想培养阅读的习惯？→ 每天读2页书<br>想培养写作的习惯？→ 每天写50个字</p>
+</div>
+<p>这些微小的行动看起来微不足道，但它们却有着巨大的潜力。微习惯是一种非常微小的积极行为，你需要每天完成它。它小到几乎不需要任何意志力的消耗，小到即使在你最不愿意行动的时候，也能轻松完成。</p>
+<p>微习惯解决了传统习惯养成方法中存在的两个主要问题：<span class="highlight">动力不足</span>和<span class="highlight">压力过大</span>。</p>
+<p>传统方法往往依赖于动力——然而动力是不可靠的，它受到情绪、身体状态、环境等多种因素的影响。当我们感到疲惫、压力大或情绪低落时，动力就会消失。而微习惯的目标小到几乎不会引发任何抵触情绪，从而使得行动变得轻松自然。</p>
+<div class="quote">微习惯的优势在于它的低门槛和高成功率。因为目标微小，所以几乎不可能失败。每一次的成功，都会增强我们的自信心和自我效能感。</div>
+</div>
+
+<div class="dot-divider"><span class="d"></span><span class="d"></span><span class="d big"></span><span class="d"></span><span class="d"></span></div>
+
+<div class="chapter">
+<h2><span class="step-badge">3</span>大脑的两个系统</h2>
+<p>要理解微习惯为什么有效，我们需要先了解大脑的工作原理。大脑中可以简化为两个核心部分：</p>
+<div class="brain-compare">
+<div class="brain-item">
+<div class="icon">🔁</div>
+<h4>基底神经节</h4>
+<p>负责重复和模式识别，像一个"愚蠢的重复者"。它会自动执行已被大脑认定为安全和有效的行为模式，不需要每次重新思考和决策。高效，但很难改变——这就是为什么坏习惯很难改掉。</p>
+</div>
+<div class="brain-item">
+<div class="icon">🧠</div>
+<h4>前额皮层</h4>
+<p>负责意识和决策，像一个"聪明的管理者"。它能够理解长远利益，可以抑制冲动行为。但它很容易疲劳——当你压力大、疲惫时，它的功能下降，基底神经节就会接管大脑，让你回到旧习惯。</p>
+</div>
+</div>
+<p>习惯的形成与大脑中的<span class="highlight">神经通路</span>密切相关。当我们重复一个行为时，相关的神经通路会变得越来越强壮、高效。这就是为什么重复是形成习惯的关键——每一次重复都会加强通路，使行为变得更加自然和自动。</p>
+<p>而微习惯策略的精妙之处在于：它设定微小的目标，让前额皮层几乎没有抵触情绪；通过每天的重复，持续强化基底神经节的神经通路；当通路足够强壮时，行为就变成了自动化习惯，不再需要意志力。</p>
+<div class="concept-card">
+<h3>多巴胺回报机制</h3>
+<p>完成一个行为并获得回报时，大脑会释放多巴胺，让我们感到愉悦和满足。这种愉悦感会激励我们重复这个行为。微习惯的低门槛让你每天都能"完成"，持续获得这种正向反馈。</p>
+</div>
+</div>
+
+<div class="dot-divider"><span class="d"></span><span class="d"></span><span class="d big"></span><span class="d"></span><span class="d"></span></div>
+
+<div class="chapter">
+<h2><span class="step-badge">4</span>动力 vs 意志力</h2>
+<p>在习惯养成的过程中，是依靠动力还是意志力来推动自己行动？盖斯提出了一个重要的观点：<span class="highlight">意志力比动力更为可靠和有效。</span></p>
+<div class="vs-card">
+<div class="vs-row">
+<div class="vs-side bad">
+<h4>⚡ 动力</h4>
+<p>基于感受，不可预测<br>受情绪/身体/环境影响<br>看完励志视频热血沸腾<br>第二天闹钟响起却不想起</p>
+</div>
+<span class="vs-vs">VS</span>
+<div class="vs-side good">
+<h4>🧱 意志力</h4>
+<p>不依赖情绪或感受<br>即使疲惫也能行动<br>可以被练习和强化<br>允许设定明确计划并执行</p>
+</div>
+</div>
+</div>
+<p>动力的问题在于它的不可靠性。你可能在某个时刻感到非常有动力，但下一个时刻它就消失得无影无踪。依赖动力意味着你必须在每次行动前都感到足够的动力——这种依赖性使得动力成为非常不稳定的基础。</p>
+<p>意志力则不同。即使你感到疲惫、压力大或情绪低落，你仍然可以依靠意志力来完成任务。更重要的是，意志力可以被强化——通过不断练习，你可以逐渐增强自己的自控力。</p>
+<p>而微习惯策略的精妙之处就在于：因为目标微小，你<span class="highlight">不需要消耗大量意志力</span>就能完成任务。每天做一个俯卧撑或写50个字，这些目标几乎不会给大脑带来任何压力，却能持续积累，最终建立习惯。</p>
+</div>
+
+<div class="dot-divider"><span class="d"></span><span class="d"></span><span class="d big"></span><span class="d"></span><span class="d"></span></div>
+
+<div class="chapter">
+<h2><span class="step-badge">5</span>如何设定微习惯</h2>
+<p>设定微习惯是整个策略的第一步，也是最关键的一步。核心原则是：<span class="highlight">将目标设定得小到几乎不可能失败。</span></p>
+<div class="step-list">
+<div class="step-item"><p>选择一个你真正想要培养的习惯（健身/阅读/写作/学习），然后将大目标缩减为一个微小的行动</p></div>
+<div class="step-item"><p>确保目标具体且可衡量——"多喝水"是模糊的，"每天喝一杯水"是具体的</p></div>
+<div class="step-item"><p>将微习惯与现有习惯绑定——比如刷牙后立即做俯卧撑，利用已有习惯作为触发器</p></div>
+<div class="step-item"><p>每天重复，不设上限——最低完成一个俯卧撑/两页书/50个字就达标，多做是"超额奖励"</p></div>
+</div>
+<div class="concept-card">
+<h3>降低阻力的艺术</h3>
+<p>微习惯的目的是降低行动的阻力，让你更容易迈出第一步。设定微小的起点，确保你的目标小到几乎不需要任何意志力——即使你感到非常疲惫，也很难找到理由不去做"一个俯卧撑"。</p>
+<p>而一旦你开始了，往往不会只做一个。这就是微习惯的魔力：<span class="highlight">最难的不是"做多少"，而是"开始做"</span>。微习惯把"开始"的门槛降到了最低。</p>
+</div>
+</div>
+
+<div class="dot-divider"><span class="d"></span><span class="d"></span><span class="d big"></span><span class="d"></span><span class="d"></span></div>
+
+<div class="chapter">
+<h2><span class="step-badge">6</span>执行与坚持</h2>
+<p>设定好微习惯后，下一步就是执行。在这个过程中，有几个关键原则帮助你更容易坚持：</p>
+<p><span class="highlight">绝不提高目标。</span>很多人一开始热情满满，会不自觉地提高目标——从1个俯卧撑变成10个，从2页书变成20页。这恰恰是微习惯策略的大忌。提高目标会让大脑重新产生抵触情绪，让行动变得困难。永远记住：最低标准就是全部。</p>
+<p><span class="highlight">记录你的完成情况。</span>每天完成后做一个简单的记录（打勾、日历标记），让连续的成功可视化。连续完成的天数越长，你会越不想中断它——这就是习惯的惯性力量。</p>
+<p><span class="highlight">给自己小奖励。</span>完成微习惯后给自己一个小奖励（哪怕只是在心里给自己一个肯定），强化大脑的多巴胺回报回路，让行为更容易变成习惯。</p>
+<p><span class="highlight">保持积极心态。</span>不要因为目标太小而觉得"没有意义"。微习惯不是追求即时效果，而是在建立一个能持续一生的习惯系统。一个月做1个俯卧撑看起来没什么，但一年后你可能发现自己每天都在主动锻炼30分钟。</p>
+<div class="quote">习惯的形成需要时间和耐心。不要期望一夜之间就能养成一个新习惯，而是要通过持续的努力和坚持来逐步实现。微习惯策略可以帮助你轻松地迈出第一步，并且更容易坚持下去。</div>
+</div>
+
+<div class="dot-divider"><span class="d"></span><span class="d"></span><span class="d big"></span><span class="d"></span><span class="d"></span></div>
+
+<div class="chapter">
+<h2><span class="step-badge">7</span>从微习惯到持久改变</h2>
+<p>通过持续使用意志力完成微习惯，你可以逐渐增强自己的意志力，并最终将这些微小的行动变成习惯。一旦这些行动成为习惯，你将不再需要依靠意志力去完成它们，因为它们已经成为你生活的一部分。</p>
+<p>这就是微习惯策略最终赋予我们的力量——<span class="highlight">从命运的被动承受者，转变为习惯的主动塑造者</span>。</p>
+<p>我们不再被宏大的目标吓倒，不再被动力不足困住，不再被意志力耗尽打败。我们只需要每天做一件小得不可思议的事——一个俯卧撑、两页书、50个字——然后让时间和重复来创造奇迹。</p>
+<div class="concept-card">
+<h3>微习惯的连锁效应</h3>
+<p>当一个微习惯建立起来后，你会发现它会产生连锁效应。健身的习惯可能带动饮食习惯的改变；阅读的习惯可能激发写作的兴趣；写作的习惯可能让你更有纪律性。一个微小的改变，最终可能重塑你的整个生活方式。</p>
+</div>
+<p>在这个追求"快速成功""高效人生"的时代，微习惯提醒我们一个朴素的真理：<span class="highlight">真正持久的改变，不是靠一次性的爆发，而是靠每天微小的积累。</span></p>
+<p>今晚，不妨选择一个你一直想做却总做不到的事情，把它缩减为一个微小到不可能失败的行动。明天就开始。不需要动力，不需要意志力，只需要——做它。</p>
+</div>
+
+</div>
+
+<section class="markmap-section">
+<h2>全书脉络</h2>
+<div class="markmap">
+<script type="text/template">
+# 微习惯
+## 起源故事
+### 斯蒂芬·盖斯：10年尝试各种策略均失败
+### 2012年：每天1个俯卧撑
+### 开始1个 → 完成完整锻炼
+### 应用到写作/阅读 → 全面进步
+## 核心概念
+### 小得不可思议的一小步
+### 目标小到不可能失败
+### 1个俯卧撑 / 2页书 / 50个字
+### 低门槛 + 高成功率
+## 解决两大问题
+### 动力不可靠（情绪波动）
+### 大目标带来压力（大脑抵触）
+## 大脑科学
+### 基底神经节：愚蠢重复者
+#### 自动执行已有模式
+#### 高效但难改变
+### 前额皮层：聪明管理者
+#### 理解长远利益
+#### 容易疲劳
+### 神经通路：重复 → 变强壮 → 自动化
+### 多巴胺回报：完成 → 愉悦 → 重复
+## 动力 vs 意志力
+### 动力：不可预测/短期/依赖感受
+### 意志力：稳定可靠/可强化/可计划
+### 微习惯 = 微小目标 → 几乎不消耗意志力
+## 设定微习惯
+### 选择目标习惯 → 缩减为微行动
+### 具体且可衡量
+### 与现有习惯绑定
+### 每天重复，不设上限
+## 执行原则
+### 绝不提高目标
+### 记录完成情况
+### 给自己小奖励
+### 保持积极心态
+## 最终效果
+### 意志力增强
+### 微行动变成自动习惯
+### 连锁效应：一个习惯带动更多
+### 持久改变 = 每天微小积累
+</script>
+</div>
+</section>
+
+<footer class="goodnight"><p>晚安</p></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+<script>
+document.querySelector('.theme-select').value=document.body.className;
+// Step dots in hero
+(function(){var hero=document.querySelector('.hero');for(var i=0;i<12;i++){var d=document.createElement('div');d.className='step-dot';d.style.left=(10+Math.random()*80)+'%';d.style.top=(20+Math.random()*60)+'%';d.style.animationDuration=(3+Math.random()*4)+'s';d.style.animationDelay=Math.random()*3+'s';hero.appendChild(d)}})();
+// Scroll progress
+window.addEventListener('scroll',function(){var h=document.documentElement;var pct=h.scrollTop/(h.scrollHeight-h.clientHeight)*100;document.getElementById('progress').style.width=pct+'%'});
+// IntersectionObserver
+var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:0.1});
+document.querySelectorAll('.chapter').forEach(function(el){obs.observe(el)});
+</script>
+</body>
+</html>

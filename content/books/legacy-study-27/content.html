@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>如何停止胡思乱想 · 告别精神内耗</title>
+<link href="https://fonts.loli.net/css2?family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4fb;--text:#3b3548;--text2:#7a7391;--card:#ffffff;--border:#e3dcf0;
+  --accent:#7b68b8;--accent2:#a292d4;--soft:#eee9f8;--gold:#b99a5f;
+  --hero-top:#241f3f;--hero-via:#3a3266;--hero-bot:#6a5da0;
+  --quote-bg:#f0ecf9;--shadow:rgba(123,104,184,.14);
+}
+body.theme-default{--bg:#f6f4fb;--text:#3b3548;--text2:#7a7391;--card:#ffffff;--border:#e3dcf0;--accent:#7b68b8;--accent2:#a292d4;--soft:#eee9f8;--gold:#b99a5f;--hero-top:#241f3f;--hero-via:#3a3266;--hero-bot:#6a5da0;--quote-bg:#f0ecf9;--shadow:rgba(123,104,184,.14)}
+body.theme-mint{--bg:#f2faf6;--text:#2d3f37;--text2:#6b8579;--card:#ffffff;--border:#d9ece2;--accent:#3f9d7c;--accent2:#7fc0a8;--soft:#e6f4ed;--gold:#b99a5f;--hero-top:#16332a;--hero-via:#245443;--hero-bot:#3f8a6e;--quote-bg:#eaf6f0;--shadow:rgba(63,157,124,.13)}
+body.theme-cloud{--bg:#f4f6f8;--text:#37414d;--text2:#74808d;--card:#ffffff;--border:#dfe4ea;--accent:#5d7691;--accent2:#8ba3bb;--soft:#e9eef3;--gold:#b49b6c;--hero-top:#262f3a;--hero-via:#3c4c60;--hero-bot:#5f7893;--quote-bg:#ecf1f5;--shadow:rgba(93,118,145,.13)}
+body.theme-bamboo{--bg:#f4f8f1;--text:#33402e;--text2:#71816a;--card:#ffffff;--border:#dde7d6;--accent:#5f8c55;--accent2:#8fb383;--soft:#e9f2e4;--gold:#b39555;--hero-top:#22301e;--hero-via:#3a5232;--hero-bot:#5c8352;--quote-bg:#edf4e8;--shadow:rgba(95,140,85,.13)}
+body.theme-amber{--bg:#faf5eb;--text:#443722;--text2:#8a7a5e;--card:#ffffff;--border:#eee1c8;--accent:#bf8a2e;--accent2:#d7ae67;--soft:#f6edda;--gold:#bf8a2e;--hero-top:#3a2c14;--hero-via:#5c4620;--hero-bot:#93712f;--quote-bg:#f7f0e0;--shadow:rgba(191,138,46,.14)}
+body.theme-dawn{--bg:#fdf4ee;--text:#463428;--text2:#8d7360;--card:#ffffff;--border:#f2e0d2;--accent:#d0764f;--accent2:#e29d77;--soft:#fae9dd;--gold:#c08a3e;--hero-top:#42241a;--hero-via:#77402a;--hero-bot:#c06f44;--quote-bg:#faeee4;--shadow:rgba(208,118,79,.14)}
+body.theme-lavender{--bg:#f7f2fb;--text:#3d3449;--text2:#7e7292;--card:#ffffff;--border:#e6dcf1;--accent:#9668bd;--accent2:#b794d6;--soft:#f0e7f8;--gold:#b99a5f;--hero-top:#2d2140;--hero-via:#4c3768;--hero-bot:#7c58a6;--quote-bg:#f2ebf9;--shadow:rgba(150,104,189,.14)}
+body.theme-slate{--bg:#eef0f2;--text:#333d45;--text2:#6d7a85;--card:#ffffff;--border:#dae0e5;--accent:#4f6b80;--accent2:#7d97a9;--soft:#e4e9ed;--gold:#ab9464;--hero-top:#212a31;--hero-via:#374a58;--hero-bot:#54718a;--quote-bg:#e8edf1;--shadow:rgba(79,107,128,.13)}
+body.theme-rose{--bg:#fbf1f3;--text:#452f35;--text2:#8d6f78;--card:#ffffff;--border:#f1dbe0;--accent:#bd6079;--accent2:#d78da0;--soft:#f8e6ea;--gold:#b9915a;--hero-top:#3b1c26;--hero-via:#66303f;--hero-bot:#a3546b;--quote-bg:#f8eaee;--shadow:rgba(189,96,121,.14)}
+body.theme-sakura{--bg:#fdf5f7;--text:#473840;--text2:#8f7a83;--card:#ffffff;--border:#f3e1e7;--accent:#d0849c;--accent2:#e3a9bc;--soft:#fae9ee;--gold:#bd9a62;--hero-top:#422530;--hero-via:#6f3f50;--hero-bot:#b06d85;--quote-bg:#faeef2;--shadow:rgba(208,132,156,.15)}
+body.theme-forest{--bg:#eff4f0;--text:#2c3a31;--text2:#66796d;--card:#ffffff;--border:#d9e4db;--accent:#3c6b4f;--accent2:#6f9a82;--soft:#e3ede6;--gold:#a8925c;--hero-top:#16281e;--hero-via:#274634;--hero-bot:#3f6f52;--quote-bg:#e8f0ea;--shadow:rgba(60,107,79,.13)}
+body.theme-ocean{--bg:#f0f6fa;--text:#2e3c48;--text2:#697f90;--card:#ffffff;--border:#d8e5ee;--accent:#3a7cae;--accent2:#74a7cd;--soft:#e5eff7;--gold:#b1975f;--hero-top:#14283a;--hero-via:#24465f;--hero-bot:#3a729c;--quote-bg:#e9f2f8;--shadow:rgba(58,124,174,.13)}
+body.theme-sand{--bg:#f9f4e9;--text:#43392a;--text2:#877a63;--card:#ffffff;--border:#eadfc8;--accent:#a5854e;--accent2:#c4a877;--soft:#f3ebd8;--gold:#a5854e;--hero-top:#352a17;--hero-via:#574524;--hero-bot:#8a6f3d;--quote-bg:#f5efdf;--shadow:rgba(165,133,78,.14)}
+body.theme-night{--bg:#232230;--text:#e4e1f0;--text2:#a49fbd;--card:#2c2b3c;--border:#3d3b52;--accent:#9d8fd0;--accent2:#b9ade2;--soft:#333148;--gold:#c9ab6e;--hero-top:#14131f;--hero-via:#262342;--hero-bot:#453f6e;--quote-bg:#323049;--shadow:rgba(0,0,0,.35)}
+body.theme-charcoal{--bg:#262524;--text:#e8e4dc;--text2:#a8a196;--card:#302e2c;--border:#444039;--accent:#c9b489;--accent2:#dcc79e;--soft:#37342f;--gold:#c9b489;--hero-top:#161514;--hero-via:#2b2925;--hero-bot:#4a453b;--quote-bg:#35322d;--shadow:rgba(0,0,0,.35)}
+body.theme-deepsea{--bg:#1d2733;--text:#dfe8f0;--text2:#9db1c1;--card:#253241;--border:#35485c;--accent:#6fa8c9;--accent2:#93c1da;--soft:#2b3b4d;--gold:#c2a877;--hero-top:#0e1620;--hero-via:#1b2e42;--hero-bot:#2c516e;--quote-bg:#2a3a4c;--shadow:rgba(0,0,0,.35)}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Noto Serif SC',serif;line-height:1.95;transition:background .6s,color .6s;overflow-x:hidden}
+.wrap{max-width:860px;margin:0 auto;padding:0 22px}
+
+/* ============ theme select ============ */
+.theme-select{position:fixed;top:16px;right:16px;z-index:999;padding:8px 14px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text);font-family:'Noto Serif SC',serif;font-size:13px;cursor:pointer;box-shadow:0 4px 16px var(--shadow);outline:none;transition:background .6s,color .6s,border-color .6s}
+
+/* ============ hero ============ */
+.hero{position:relative;min-height:92vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:110px 22px 140px;background:linear-gradient(180deg,var(--hero-top) 0%,var(--hero-via) 55%,var(--hero-bot) 100%);overflow:hidden}
+.hero-bubbles{position:absolute;inset:0;pointer-events:none}
+.bubble{position:absolute;bottom:-30px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);animation:bubbleUp linear infinite}
+@keyframes bubbleUp{0%{transform:translateY(0);opacity:0}12%{opacity:.9}85%{opacity:.4}100%{transform:translateY(-76vh);opacity:0}}
+.hero-wave{position:absolute;left:0;width:200%;pointer-events:none}
+.hero-wave svg{display:block;width:100%;height:100%}
+.beta-wave{bottom:31%;height:92px;opacity:.42;animation:driftL 9s linear infinite}
+.alpha-wave{bottom:11%;height:92px;opacity:.85;animation:driftL 18s linear infinite}
+@keyframes driftL{to{transform:translateX(-50%)}}
+.wave-tag{position:absolute;font-size:12px;letter-spacing:.35em;color:rgba(255,255,255,.55);font-family:'ZCOOL XiaoWei',serif}
+.tag-beta{bottom:42%;right:8%}
+.tag-alpha{bottom:22%;left:8%}
+.hero-inner{position:relative;z-index:3;max-width:760px}
+.hero-series{color:rgba(255,255,255,.62);letter-spacing:.6em;font-size:.9rem;text-indent:.6em;margin-bottom:26px}
+.book-title{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(2.2rem,7vw,3.8rem);color:#fff;font-weight:400;letter-spacing:.1em;text-shadow:0 4px 30px rgba(0,0,0,.35);margin-bottom:20px}
+.book-sub{color:rgba(255,255,255,.82);font-size:1.06rem;letter-spacing:.22em;margin-bottom:42px}
+.hero-quote{color:rgba(255,255,255,.9);font-size:1rem;line-height:2.2;border-top:1px solid rgba(255,255,255,.25);border-bottom:1px solid rgba(255,255,255,.25);padding:22px 8px;max-width:620px;margin:0 auto 30px}
+.hero-author{color:rgba(255,255,255,.6);font-size:.85rem;letter-spacing:.14em}
+
+/* ============ chapter ============ */
+.chapter{padding:76px 0 10px;opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform .9s ease}
+.chapter.visible{opacity:1;transform:translateY(0)}
+.chapter-head{text-align:center;margin-bottom:44px}
+.chapter-num{font-family:'ZCOOL XiaoWei',serif;color:var(--accent);font-size:1rem;letter-spacing:.5em;text-indent:.5em;display:block;margin-bottom:10px}
+.chapter-title{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(1.5rem,4.5vw,2.1rem);font-weight:400;letter-spacing:.12em;color:var(--text)}
+.ornament{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:18px;color:var(--accent2)}
+.ornament .line{width:52px;height:1px;background:linear-gradient(90deg,transparent,var(--accent2))}
+.ornament .line.r{background:linear-gradient(90deg,var(--accent2),transparent)}
+.ornament svg{width:64px;height:16px;opacity:.85}
+p.lead{font-size:1.02rem;color:var(--text);margin-bottom:18px;text-align:justify}
+p.note{color:var(--text2);font-size:.92rem;text-align:justify;margin-bottom:18px}
+.hl{color:var(--accent);font-weight:600}
+.hl2{color:var(--gold);font-weight:600}
+
+/* quote card */
+.quote{background:var(--quote-bg);border-left:3px solid var(--accent);border-radius:0 14px 14px 0;padding:26px 28px;margin:30px 0;font-size:1rem;line-height:2.15;box-shadow:0 6px 22px var(--shadow);transition:background .6s}
+.quote .from{display:block;margin-top:12px;font-size:.82rem;color:var(--text2);letter-spacing:.1em}
+
+/* scenario grid */
+.scene-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0}
+.scene-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px 20px;box-shadow:0 6px 20px var(--shadow);transition:transform .35s,background .6s}
+.scene-card:hover{transform:translateY(-4px)}
+.scene-card .t{font-family:'ZCOOL XiaoWei',serif;font-size:1.1rem;color:var(--accent);letter-spacing:.1em;margin-bottom:8px}
+.scene-card .d{font-size:.9rem;color:var(--text2);line-height:1.9}
+
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:24px 0}
+.chip{background:var(--soft);border:1px solid var(--border);color:var(--text);border-radius:20px;padding:8px 20px;font-size:.9rem;letter-spacing:.08em}
+
+/* evolution duel */
+.evo-duel{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0}
+.evo-card{border-radius:16px;padding:26px 22px;border:1px solid var(--border);background:var(--card);box-shadow:0 6px 20px var(--shadow)}
+.evo-card.win{border-top:3px solid var(--accent)}
+.evo-card.lose{border-top:3px solid var(--gold)}
+.evo-card .who{font-family:'ZCOOL XiaoWei',serif;font-size:1.05rem;letter-spacing:.1em;margin-bottom:10px;color:var(--text)}
+.evo-card p{font-size:.9rem;color:var(--text2);line-height:1.95}
+.evo-card .end{margin-top:12px;font-size:.95rem;color:var(--accent);font-weight:600}
+.evo-card.lose .end{color:var(--gold)}
+
+/* wave duel */
+.wave-duel{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:30px 0}
+.wave-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:28px 24px;box-shadow:0 8px 24px var(--shadow);transition:background .6s}
+.wave-card .wname{font-family:'ZCOOL XiaoWei',serif;font-size:1.35rem;letter-spacing:.12em;margin:14px 0 4px}
+.wave-card.beta .wname{color:#d3826f}
+.wave-card.alpha .wname{color:#6f9fce}
+.wave-card .wtag{font-size:.82rem;color:var(--text2);letter-spacing:.2em;margin-bottom:16px}
+.wave-card ul{list-style:none}
+.wave-card li{font-size:.9rem;color:var(--text2);line-height:1.9;padding:7px 0 7px 20px;position:relative}
+.wave-card li::before{content:'';position:absolute;left:0;top:16px;width:8px;height:8px;border-radius:50%}
+.wave-card.beta li::before{background:#e0a394}
+.wave-card.alpha li::before{background:#9cc0de}
+.wave-card .wpic{display:block;width:120px;margin:0 auto}
+.verdict-bar{background:linear-gradient(120deg,var(--accent),var(--accent2));color:#fff;border-radius:16px;padding:26px 28px;text-align:center;font-size:1.02rem;line-height:2.1;margin:30px 0;box-shadow:0 10px 30px var(--shadow)}
+
+/* method cards */
+.method-badge{display:flex;align-items:center;gap:16px;margin:26px 0 20px}
+.method-badge .num{width:52px;height:52px;border-radius:50%;background:var(--soft);border:1px solid var(--accent2);color:var(--accent);font-family:'ZCOOL XiaoWei',serif;font-size:1.5rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.method-badge .mt{font-family:'ZCOOL XiaoWei',serif;font-size:1.25rem;letter-spacing:.12em;color:var(--text)}
+.method-badge .ms{font-size:.85rem;color:var(--text2);letter-spacing:.06em}
+.arrow-pair{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:center;margin:22px 0}
+.arrow-pair .from,.arrow-pair .to{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 18px;font-size:.92rem;color:var(--text2);box-shadow:0 4px 14px var(--shadow)}
+.arrow-pair .to{border-color:var(--accent2);color:var(--text);font-weight:600}
+.arrow-pair .arr{color:var(--accent);font-size:1.2rem}
+.case-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:30px 28px;margin:26px 0;box-shadow:0 8px 24px var(--shadow)}
+.case-card .ct{font-family:'ZCOOL XiaoWei',serif;color:var(--gold);letter-spacing:.2em;font-size:.95rem;margin-bottom:14px;display:block}
+.case-card p{font-size:.95rem;color:var(--text2);line-height:2.1;text-align:justify;margin-bottom:12px}
+.case-card p:last-child{margin-bottom:0}
+.say{background:var(--quote-bg);border-radius:12px;padding:18px 22px;margin:16px 0;color:var(--accent);font-size:1.02rem;text-align:center;letter-spacing:.06em}
+.gold-quote{font-family:'ZCOOL XiaoWei',serif;text-align:center;font-size:clamp(1.2rem,3.6vw,1.6rem);color:var(--accent);letter-spacing:.14em;padding:34px 10px;line-height:2}
+
+/* steps */
+.steps{margin:28px 0;display:flex;flex-direction:column;gap:16px}
+.step{display:flex;gap:18px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px 22px;box-shadow:0 6px 20px var(--shadow);transition:background .6s}
+.step .sn{width:42px;height:42px;border-radius:50%;background:var(--soft);color:var(--accent);font-family:'ZCOOL XiaoWei',serif;font-size:1.2rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--accent2)}
+.step .st{font-family:'ZCOOL XiaoWei',serif;font-size:1.08rem;letter-spacing:.1em;color:var(--text);margin-bottom:6px}
+.step .sd{font-size:.9rem;color:var(--text2);line-height:1.95}
+
+/* space exercise */
+.space-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:26px 0}
+.space-card{background:var(--card);border:1px dashed var(--accent2);border-radius:16px;padding:26px 16px;text-align:center;box-shadow:0 6px 18px var(--shadow)}
+.space-card .ic{font-size:1.5rem;display:block;margin-bottom:12px}
+.space-card .sp{font-size:.88rem;color:var(--text2);line-height:1.9}
+
+/* flow cycle */
+.flow-cycle{display:flex;align-items:stretch;gap:8px;margin:30px 0;flex-wrap:wrap;justify-content:center}
+.flow-stage{flex:1;min-width:150px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px 14px;text-align:center;box-shadow:0 6px 18px var(--shadow)}
+.flow-stage .fs{font-family:'ZCOOL XiaoWei',serif;font-size:1.15rem;letter-spacing:.15em;color:var(--text);margin-bottom:6px}
+.flow-stage .fw{font-size:.78rem;color:var(--accent);letter-spacing:.1em;display:block;margin-bottom:8px}
+.flow-stage .fd{font-size:.82rem;color:var(--text2);line-height:1.8}
+.flow-arr{display:flex;align-items:center;color:var(--accent2);font-size:1.3rem}
+
+/* three questions */
+.q-list{margin:26px 0;display:flex;flex-direction:column;gap:14px}
+.q-item{display:flex;gap:16px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 22px;box-shadow:0 5px 16px var(--shadow)}
+.q-item .qn{font-family:'ZCOOL XiaoWei',serif;color:var(--gold);font-size:1.15rem;flex-shrink:0}
+.q-item .qt{font-size:.98rem;color:var(--text)}
+
+/* breath */
+.breath-wrap{display:flex;flex-direction:column;align-items:center;margin:40px 0 16px}
+.breath{width:150px;height:150px;border-radius:50%;border:2px solid var(--accent2);display:flex;align-items:center;justify-content:center;position:relative;animation:breathe 8s ease-in-out infinite;background:radial-gradient(circle,var(--soft) 0%,transparent 72%)}
+.breath::before{content:'';position:absolute;inset:16px;border-radius:50%;border:1px solid var(--accent2);opacity:.55;animation:breathe 8s ease-in-out infinite}
+.breath .bt{font-family:'ZCOOL XiaoWei',serif;color:var(--accent);letter-spacing:.35em;text-indent:.35em;font-size:1rem}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.22)}}
+.breath-cap{margin-top:22px;color:var(--text2);font-size:.9rem;letter-spacing:.15em}
+
+/* markmap */
+.mindmap-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:26px 18px;margin:20px 0;box-shadow:0 8px 26px var(--shadow)}
+.markmap{height:480px}
+.markmap-foreign{color:var(--text)!important}
+
+/* footer */
+.footer{margin-top:90px;padding:80px 22px 66px;text-align:center;background:linear-gradient(180deg,var(--bg),var(--soft))}
+.goodnight{font-family:'ZCOOL XiaoWei',serif;font-size:2rem;color:var(--text);letter-spacing:.5em;text-indent:.5em;margin-bottom:16px}
+.wish{color:var(--text2);font-size:.92rem;letter-spacing:.2em}
+
+@media(max-width:640px){
+  .scene-grid,.wave-duel,.evo-duel{grid-template-columns:1fr}
+  .space-grid{grid-template-columns:1fr}
+  .flow-arr{transform:rotate(90deg);justify-content:center;width:100%}
+  .hero{min-height:84vh}
+}
+</style>
+</head>
+<body class="theme-default">
+<script>!function(){var t=["theme-default","theme-mint","theme-cloud","theme-bamboo","theme-amber","theme-dawn","theme-lavender","theme-slate","theme-rose","theme-sakura","theme-forest","theme-ocean","theme-sand","theme-night","theme-charcoal","theme-deepsea"];document.body.className=t[Math.floor(Math.random()*t.length)]}()</script>
+
+<select class="theme-select" onchange="document.body.className=this.value">
+<option value="theme-default">🌫️ 雾紫</option>
+<option value="theme-mint">🍃 薄荷</option>
+<option value="theme-cloud">☁️ 云灰</option>
+<option value="theme-bamboo">🎋 竹青</option>
+<option value="theme-amber">🍯 琥珀</option>
+<option value="theme-dawn">🌅 晨光</option>
+<option value="theme-lavender">💜 薰衣草</option>
+<option value="theme-slate">🪨 石板</option>
+<option value="theme-rose">🌹 玫瑰</option>
+<option value="theme-sakura">🌸 樱花</option>
+<option value="theme-forest">🌲 深林</option>
+<option value="theme-ocean">🌊 海洋</option>
+<option value="theme-sand">🏜️ 沙丘</option>
+<option value="theme-night">🌙 夜幕</option>
+<option value="theme-charcoal">🖤 炭灰</option>
+<option value="theme-deepsea">🐋 深海</option>
+</select>
+
+<header class="hero">
+  <div class="hero-bubbles" id="bubbles"></div>
+  <div class="hero-wave beta-wave"><svg viewBox="0 0 2400 90" preserveAspectRatio="none"><path id="betaPath" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="2"/></svg></div>
+  <div class="wave-tag tag-beta">贝 塔 波</div>
+  <div class="hero-wave alpha-wave"><svg viewBox="0 0 2400 90" preserveAspectRatio="none"><path id="alphaPath" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="2.5"/></svg></div>
+  <div class="wave-tag tag-alpha">阿 尔 法 波</div>
+  <div class="hero-inner">
+    <div class="hero-series">睡 前 听 完 一 本 书</div>
+    <h1 class="book-title">如何停止胡思乱想</h1>
+    <div class="book-sub">告别精神内耗，成为一个快乐的人</div>
+    <div class="hero-quote">我们最大的敌人，不是外部的挑战，<br>而是脑海中那个永不停歇、<br>不断制造恐惧和怀疑的声音。</div>
+    <div class="hero-author">比尔·韦德 &amp; 卡罗尔·克肖 著 · 心理学博士 · 30年职业经验</div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- 序 -->
+<section class="chapter">
+  <div class="chapter-head">
+    <span class="chapter-num">序 章</span>
+    <h2 class="chapter-title">你是不是也常常这样</h2>
+    <div class="ornament"><span class="line"></span><svg viewBox="0 0 64 16"><path d="M0 8 C8 2 16 2 24 8 C32 14 40 14 48 8 C52 5 58 5 64 8" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="line r"></span></div>
+  </div>
+  <div class="scene-grid">
+    <div class="scene-card"><div class="t">反复咀嚼</div><div class="d">一件小事发生之后，能在脑子里反复咀嚼好几天，怎么也停不下来。</div></div>
+    <div class="scene-card"><div class="t">脑补大戏</div><div class="d">把别人一句无心的话，脑补出一整部连续剧，剧情还越来越糟。</div></div>
+    <div class="scene-card"><div class="t">深夜遗憾</div><div class="d">明明已经过去了的遗憾，总在深夜里跳出来，让你一次次陷入自责和懊悔。</div></div>
+    <div class="scene-card"><div class="t">提前焦虑</div><div class="d">忍不住为还没发生的事提前焦虑，担心这个、害怕那个，没完没了。</div></div>
+  </div>
+  <p class="lead">你像一个被困在自己思绪里的囚徒，<span class="hl">筋疲力尽，却无处可逃</span>。如果你也正被这样的精神内耗折磨，那么这本书或许能帮你找到挣脱困境的出口。</p>
+  <p class="note">它没有空洞的大道理，只有能落地的方法——帮你从内部噪音中，夺回平静的主导权。它要解决的，正是我们脑海中那场看不见的内战。</p>
+</section>
+
+<!-- 一 -->
+<section class="chapter">
+  <div class="chapter-head">
+    <span class="chapter-num">第 一 章</span>
+    <h2 class="chapter-title">我们为什么会胡思乱想</h2>
+    <div class="ornament"><span class="line"></span><svg viewBox="0 0 64 16"><path d="M0 8 C8 2 16 2 24 8 C32 14 40 14 48 8 C52 5 58 5 64 8" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="line r"></span></div>
+  </div>
+  <p class="lead">曾经我以为，这是性格的缺陷——是自己太敏感、太爱钻牛角尖，甚至自我否定：「我就是这样的人，改不了。」</p>
+  <p class="lead">但这本书告诉我们：<span class="hl">胡思乱想不是性格缺陷，而是大脑的过度警觉机制在作祟</span>。这不是你的错，只是我们大脑的出厂设置，太古老了。</p>
+  <div class="quote">你的大脑天生就爱讲故事，尤其是那些负面的故事，因为它总想帮你规避风险。就像一个<span class="hl">过度负责的保安</span>——哪怕只是听到一点风吹草动，也会立刻拉响警报，告诉你：这里有危险。<span class="from">—— 书中的比喻</span></div>
+  <p class="lead">在远古时代，这个「烟雾报警器」能帮我们的祖先及时发现危险。进化就是这么残酷：</p>
+  <div class="evo-duel">
+    <div class="evo-card win">
+      <div class="who">祖先甲 · 把石头误认成狮子</div>
+      <p>立刻拔腿就跑，肾上腺素飙升，最后不过是白紧张一场。</p>
+      <div class="end">但他活下来了。</div>
+    </div>
+    <div class="evo-card lose">
+      <div class="who">祖先乙 · 把狮子误认成石头</div>
+      <p>毫无防备地走近，以为自己面对的只是一块普通的石头。</p>
+      <div class="end">他很可能成了狮子的午餐。</div>
+    </div>
+  </div>
+  <p class="lead">那些过度乐观、心大的祖先，都被自然淘汰了。活下来的，都是我们这种<span class="hl">「宁可错杀一千，不可放过一个」的焦虑型选手</span>。这种战斗或逃跑的本能，早就刻进了我们的基因里——所以大脑会习惯性地去预想可能发生的风险，去复盘已经发生的危机。</p>
+  <p class="lead">可到了现代社会，我们面对的「狮子」不再是凶猛的野兽，而是——</p>
+  <div class="chips">
+    <span class="chip">工作的压力</span>
+    <span class="chip">人际关系的摩擦</span>
+    <span class="chip">未来的不确定性</span>
+  </div>
+  <p class="note">但大脑的报警器依然保持着远古时的灵敏度，甚至变得过度敏感：一点小事就触发警报，让大脑进入高度戒备状态，反复回想、预演，生怕出一点差错。</p>
+  <p class="note">比如上班时不小心说错了一句话，回到家，脑子里就开始反复回放：我当时怎么会那么说？同事会不会觉得我很蠢？领导会不会因此对我有看法？会不会影响以后的晋升？越想越焦虑，甚至影响了吃饭和睡觉。其实你心里也知道，这只是件小事，别人早就忘了——但你的大脑就是不肯放过，非要把它无限放大，直到你被负面情绪淹没。</p>
+</section>
+
+<!-- 二 -->
+<section class="chapter">
+  <div class="chapter-head">
+    <span class="chapter-num">第 二 章</span>
+    <h2 class="chapter-title">两种脑波的博弈</h2>
+    <div class="ornament"><span class="line"></span><svg viewBox="0 0 64 16"><path d="M0 8 C8 2 16 2 24 8 C32 14 40 14 48 8 C52 5 58 5 64 8" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="line r"></span></div>
+  </div>
+  <p class="lead">这种过度警觉的背后，其实是大脑两种核心状态在博弈。两位博士说：我们所有的精神状态，都是脑波的产物。</p>
+  <div class="wave-duel">
+    <div class="wave-card beta">
+      <svg class="wpic" viewBox="0 0 120 30"><path d="M0 15 L12 4 L24 26 L36 6 L48 24 L60 5 L72 25 L84 7 L96 23 L108 6 L120 15" fill="none" stroke="#d3826f" stroke-width="2.5"/></svg>
+      <div class="wname">贝塔波</div>
+      <div class="wtag">焦 虑 之 波</div>
+      <ul>
+        <li>高度警觉、专注处理认知任务时由它主导：开车全神贯注、考试绞尽脑汁、辩论据理力争</li>
+        <li>适度的贝塔波是好的，能帮我们高效完成任务</li>
+        <li>但若长期被它占据：焦虑、紧张、抑郁、爱钻牛角尖，最后陷入灾难化思维</li>
+      </ul>
+    </div>
+    <div class="wave-card alpha">
+      <svg class="wpic" viewBox="0 0 120 30"><path d="M0 15 C10 3 20 3 30 15 C40 27 50 27 60 15 C70 3 80 3 90 15 C100 27 110 27 120 15" fill="none" stroke="#6f9fce" stroke-width="2.5"/></svg>
+      <div class="wname">阿尔法波</div>
+      <div class="wtag">平 静 之 波 · 心 流 之 波</div>
+      <ul>
+        <li>频率更慢：放松、冥想、快要睡着的时候，由它主导</li>
+        <li>它就像一个<span class="hl">降噪按钮</span>，能让你忽略那些不合时宜的焦虑想法</li>
+        <li>是我们渴望的平静与专注的源头</li>
+      </ul>
+    </div>
+  </div>
+  <p class="note">那些凌晨三点在你脑海里反复盘旋的胡思乱想，就是你的贝塔波在疯狂蹦迪。</p>
+  <div class="verdict-bar">大部分精神内耗的人，真相只有一个：<br>我们被困在贝塔波里太久了，失去了从贝塔波切换到阿尔法波的能力——<br><b>我们的贝塔波，刹车失灵了。</b></div>
+  <div class="quote">爱因斯坦说：「我们不能用制造问题的同一水平思维，来解决问题。」<br>你永远无法在贝塔波的状态下，解决贝塔波带来的焦虑。<span class="from">—— 所以，我们需要一套思绪重置的方法</span></div>
+</section>
+
+<!-- 三 -->
+<section class="chapter">
+  <div class="chapter-head">
+    <span class="chapter-num">第 三 章</span>
+    <h2 class="chapter-title">三个核心方法</h2>
+    <div class="ornament"><span class="line"></span><svg viewBox="0 0 64 16"><path d="M0 8 C8 2 16 2 24 8 C32 14 40 14 48 8 C52 5 58 5 64 8" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="line r"></span></div>
+  </div>
+  <p class="lead">作者在书中提供了一套完整的思绪重置方法。如何让阿尔法波占据主导、停止胡思乱想？这里是三个最核心的。</p>
+
+  <div class="method-badge">
+    <div class="num">壹</div>
+    <div><div class="mt">思绪标注法</div><div class="ms">给你的胡思乱想起个名字</div></div>
+  </div>
+  <p class="lead">很多时候我们之所以被胡思乱想困扰，是因为我们<span class="hl">认同了这些念头</span>——</p>
+  <div class="arrow-pair">
+    <span class="from">「我可能会搞砸会议」</span><span class="arr">→</span><span class="to">「我一定会搞砸会议」</span>
+  </div>
+  <div class="arrow-pair">
+    <span class="from">「他可能不喜欢我」</span><span class="arr">→</span><span class="to">「他就是不喜欢我」</span>
+  </div>
+  <p class="lead">而思绪标注法的核心，就是帮我们跳出念头本身，看清：<span class="hl">这只是一个想法，不是事实</span>。</p>
+  <div class="case-card">
+    <span class="ct">书 中 案 例</span>
+    <p>一位女士总是在睡前反复回想白天和同事的对话，纠结自己是不是说错了话，导致严重失眠。</p>
+    <p>治疗师让她每次产生这种念头时，在心里默默说一句——</p>
+    <div class="say">「哦，只是担心被否定的想法又来了。」</div>
+    <p>刚开始她觉得很奇怪，但坚持了两周后，她发现自己不再被念头牵着走了。当她给念头标注后，就像在观察别人的想法——<span class="hl">距离感产生了，焦虑感也随之减轻</span>。</p>
+  </div>
+  <p class="note">这个方法的原理很简单：当我们给念头命名时，大脑会从「沉浸在念头里」切换到「观察念头」的状态——这正是阿尔法波开始工作的信号。你不需要反驳念头，也不需要压抑它，只需要平静地标注它：「这是过度担忧的想法」「这是后悔过去的想法」。</p>
+  <div class="gold-quote">「我知道你来了，<br>但我不需要跟着你走。」</div>
+
+  <div class="method-badge">
+    <div class="num">贰</div>
+    <div><div class="mt">感官锚定法</div><div class="ms">用身体感受，拉回飘走的思绪</div></div>
+  </div>
+  <p class="lead">胡思乱想的本质，是大脑脱离了当下，飘到了过去或未来。而感官锚定法，就是通过关注当下的身体感受，把大脑从过去的遗憾、未来的担忧中拉回来，让阿尔法波接管。它特别适合睡前使用，简单又好操作——</p>
+  <div class="steps">
+    <div class="step">
+      <div class="sn">一</div>
+      <div><div class="st">关注触觉</div><div class="sd">轻轻握住身边的枕头，感受它的柔软和质感；也可以把手放在胸口，感受手掌与皮肤接触的温度，感受呼吸时胸口的起伏。不用刻意控制呼吸，只需要专注于触摸和感受本身。</div></div>
+    </div>
+    <div class="step">
+      <div class="sn">二</div>
+      <div><div class="st">关注听觉</div><div class="sd">仔细听听周围的声音：窗外的风声、远处的虫鸣，甚至是自己的呼吸声。不用去评判这些声音好听或难听，只需要像一个旁观者，静静聆听。</div></div>
+    </div>
+    <div class="step">
+      <div class="sn">三</div>
+      <div><div class="st">关注嗅觉</div><div class="sd">如果床边有香薰，可以轻轻嗅闻它的味道；如果没有，也可以感受空气中的气息——哪怕只是淡淡的被褥清香。让嗅觉成为一个锚点，把注意力牢牢固定在当下。</div></div>
+    </div>
+  </div>
+  <p class="note">为什么有效？因为我们的感官是活在当下的——触觉、听觉、嗅觉，都只能感知此刻的信息。当专注于这些感受时，大脑就没有精力去回想过去、担忧未来了；同时它还能激活大脑的放松反应，让心率变慢，焦虑感自然减轻。</p>
+  <div class="quote">做练习的时候，如果思绪飘走了，不用焦虑，这是很正常的。只需要在心里对自己说：<span class="hl">「没关系，漂走了就拉回来。」</span>这个过程就像训练肌肉，越练越熟练，你的大脑会越来越容易被锚定在当下。</div>
+
+  <div class="method-badge">
+    <div class="num">叁</div>
+    <div><div class="mt">全脑同步</div><div class="ms">专注空间，而非物体</div></div>
+  </div>
+  <p class="lead">如果说前两个是技术，那这个就是<span class="hl2">魔法</span>——它是全书最拍案叫绝的方法，也是最强大的阿尔法波启动器。</p>
+  <p class="lead">书里说，我们之所以会焦虑，是因为我们太专注了：专注于那个让你烦恼的问题，专注于那封让你不安的邮件，专注于那个让你压力山大的账单。而实现全脑同步、进入阿尔法波的终极秘密，就是——<span class="hl">停止关注物体，开始关注空间</span>。</p>
+  <div class="quote">两位博士引用了东方的禅宗智慧：当大脑关注一个物体时，它会立刻开始分析、判断、贴标签——「这件事很麻烦」「那个人不喜欢我」——这个过程就是贝塔波在主导。<br><br>可当大脑关注空间或者虚无时，它无法分析、无法判断，唯一的选择就是<span class="hl">放松和同步</span>——这时大脑就会立刻进入阿尔法波状态。</div>
+  <p class="lead">你可以试试这样想：当你盯着桌子上的一个杯子，脑子里会不自觉地想这个杯子好不好看、它多少钱；可当你盯着杯子和桌子之间的缝隙、那个空空的空间时，你的大脑就不会讲故事了。<span class="hl2">没有故事，就没有焦虑。</span></p>
+  <p class="lead">这个练习可以随时随地做。当焦虑上头时，立刻停下，闭上眼，专注地感受这些虚无，保持一分钟——你会发现，那个让你卡住的贝塔波，瞬间就松动了。</p>
+  <div class="space-grid">
+    <div class="space-card"><span class="ic">〰</span><div class="sp">感受两耳之间、穿过头部的那个想象中的空间</div></div>
+    <div class="space-card"><span class="ic">❀</span><div class="sp">感受心脏四周的空间</div></div>
+    <div class="space-card"><span class="ic">❋</span><div class="sp">感受身体和衣服之间的空间</div></div>
+  </div>
+</section>
+
+<!-- 四 -->
+<section class="chapter">
+  <div class="chapter-head">
+    <span class="chapter-num">第 四 章</span>
+    <h2 class="chapter-title">允许自己开小差</h2>
+    <div class="ornament"><span class="line"></span><svg viewBox="0 0 64 16"><path d="M0 8 C8 2 16 2 24 8 C32 14 40 14 48 8 C52 5 58 5 64 8" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="line r"></span></div>
+  </div>
+  <p class="lead">我们从小就被教育：做事要专心，别走神。但这本书提出了一个颠覆性的观点——<span class="hl">开小差不是毛病，而是大脑的主动修复机制</span>。</p>
+  <p class="lead">很多人会因为控制不住的胡思乱想而自责：「我怎么这么没用？」可这种自责反而会加重焦虑，形成一个恶性循环：<span class="hl2">胡思乱想 → 自责 → 更焦虑 → 更胡思乱想</span>。</p>
+  <p class="lead">偶尔的胡思乱想，其实是大脑的正常功能。就像机器运转久了需要休息一样，大脑也需要通过走神来放松。这就是为什么我们总是在洗澡、散步，或者快要睡着的时候突然灵光一闪——那不是偶然，那是你终于肯放过你的贝塔波，让阿尔法波接管了大脑。</p>
+  <p class="lead">所以下一次，当你被一个难题卡住、焦虑到不行的时候，不妨试试这三步：</p>
+  <div class="steps">
+    <div class="step">
+      <div class="sn">一</div>
+      <div><div class="st">停止硬扛</div><div class="sd">别再逼着自己反复思考，承认此刻的硬想没有出路。</div></div>
+    </div>
+    <div class="step">
+      <div class="sn">二</div>
+      <div><div class="st">启动释放</div><div class="sd">去做一件完全不相关、能让你放松的事：散步、听音乐、洗澡、发呆，都好。</div></div>
+    </div>
+    <div class="step">
+      <div class="sn">三</div>
+      <div><div class="st">相信你的后台</div><div class="sd">允许自己开小差二十分钟。答案往往会在你最不经意的时候，自己浮上来。</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 五 -->
+<section class="chapter">
+  <div class="chapter-head">
+    <span class="chapter-num">第 五 章</span>
+    <h2 class="chapter-title">想法不等于事实</h2>
+    <div class="ornament"><span class="line"></span><svg viewBox="0 0 64 16"><path d="M0 8 C8 2 16 2 24 8 C32 14 40 14 48 8 C52 5 58 5 64 8" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="line r"></span></div>
+  </div>
+  <p class="lead">很多人之所以陷入胡思乱想的怪圈，是因为他们混淆了想法和事实。作者说：<span class="hl">想法只是大脑产生的一种念头，它不等于事实</span>。</p>
+  <p class="lead">就像「你觉得天要下雨」——这只是你的一个想法；但事实是，天空可能只是飘来了几朵云。我们之所以被胡思乱想困扰，就是因为把自己的想法当成了事实，然后根据这个虚假的「事实」，产生了各种各样的负面情绪。</p>
+  <p class="lead">为了帮我们区分想法和事实，作者分享了一个小练习：当你产生一个负面想法的时候，把它写下来，然后问自己三个问题——</p>
+  <div class="q-list">
+    <div class="q-item"><span class="qn">一问</span><span class="qt">这个想法，有证据支持吗？</span></div>
+    <div class="q-item"><span class="qn">二问</span><span class="qt">有没有相反的证据？</span></div>
+    <div class="q-item"><span class="qn">三问</span><span class="qt">如果我的朋友遇到了同样的事，我会怎么安慰她？</span></div>
+  </div>
+  <div class="case-card">
+    <span class="ct">萨 拉 的 故 事</span>
+    <p>有个叫萨拉的女孩，在一次团队会议上提出了自己的想法，却被同事委婉地反驳了。从那之后，她陷入了无尽的自我怀疑：是不是自己的能力不够？是不是大家都不喜欢自己？这种胡思乱想让她变得越来越自卑，甚至不敢再在会议上发言。</p>
+    <p>听到这里，你是不是觉得很熟悉？其实我们每个人都当过萨拉，都曾被大脑里的负面声音牵着鼻子走。我们跟着练习走一遍——</p>
+    <p>「同事不喜欢我」，有证据支持吗？好像没有，只是自己的感觉而已。那有没有相反的证据呢？其实之前同事还帮她整理过资料，夸过她的 PPT 做得好，还主动跟她一起吃午饭。</p>
+    <p>如果萨拉的朋友遇到了同样的事，她肯定会说：<span class="hl">「别想太多啦，人家只是随口一说，没别的意思。你那么优秀，大家都很喜欢你的。」</span></p>
+  </div>
+  <p class="lead">你看，当我们这样去追问自己的时候，那些让我们焦虑的想法，就会慢慢失去力量。因为我们会发现：<span class="hl2">很多时候我们所担心的事情，其实根本就不存在</span>——只是我们的大脑在自导自演而已。</p>
+</section>
+
+<!-- 六 -->
+<section class="chapter">
+  <div class="chapter-head">
+    <span class="chapter-num">第 六 章</span>
+    <h2 class="chapter-title">心流：终极目的地</h2>
+    <div class="ornament"><span class="line"></span><svg viewBox="0 0 64 16"><path d="M0 8 C8 2 16 2 24 8 C32 14 40 14 48 8 C52 5 58 5 64 8" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="line r"></span></div>
+  </div>
+  <p class="lead">这本书的最后一章，把我们引向了一个终极目标——<span class="hl">心流</span>。这是心理学家米哈里·契克森米哈赖提出的概念：当我们全身心投入一项活动时，忘记了时间、忘记了自我，发挥出最佳水平的状态。</p>
+  <div class="verdict-bar">你不可能在心流状态下同时感到焦虑。<br>焦虑是自我意识过剩的产物，而心流，是自我意识消解的状态。<br>我们前面练习的所有方法，其实都是在为心流铺路。</div>
+  <p class="lead">书里还提到了一个心流循环，它分四个阶段：</p>
+  <div class="flow-cycle">
+    <div class="flow-stage"><div class="fs">挣 扎</div><span class="fw">贝塔波 · 加载</span><div class="fd">感觉很难、很焦虑</div></div>
+    <div class="flow-arr">→</div>
+    <div class="flow-stage"><div class="fs">释 放</div><span class="fw">阿尔法波 · 切换频道</span><div class="fd">主动开小差、放松</div></div>
+    <div class="flow-arr">→</div>
+    <div class="flow-stage"><div class="fs">心 流</div><span class="fw">西塔波 · 伽马波</span><div class="fd">进入巅峰状态</div></div>
+    <div class="flow-arr">→</div>
+    <div class="flow-stage"><div class="fs">恢 复</div><span class="fw">平静 · 充电</span><div class="fd">让大脑重新蓄能</div></div>
+  </div>
+  <p class="lead">这个循环打破了一个误区：我们总以为挣扎和焦虑是不好的，是需要逃避的。但这本书告诉我们——<span class="hl">挣扎不是心流的敌人，它恰恰是心流的第一阶段</span>。</p>
+  <p class="lead">你那个停不下来的胡思乱想、那个焦虑的贝塔波，不是在折磨你，而是在为你加载即将到来的心流状态。你唯一需要做的，就是在挣扎之后，学会按一下<span class="hl2">释放键</span>——去开小差、去专注空间。一旦你释放了，心流的奇迹时刻自然就会到来。</p>
+  <div class="quote">停止胡思乱想，不是一蹴而就的事，而是一个需要不断练习的过程。改变思维习惯，就像锻炼肌肉一样，需要耐心和坚持；也像在茂密的丛林里开辟一条新路——起初会很陌生，会反复走回老路，但没关系。</div>
+  <p class="lead">也许你今天练习了，明天还是会忍不住胡思乱想。但没关系，这很正常。只要你不放弃，每天进步一点点，总有一天你会发现，自己已经能从容地面对那些乱糟糟的思绪了。</p>
+  <p class="lead">读完这本书，最大的收获不是再也不会胡思乱想了，而是<span class="hl">不再害怕胡思乱想</span>。它给我们的，不是消灭焦虑的魔法，而是与焦虑和平共处的智慧。我们无法控制大脑产生念头，但我们可以控制自己对念头的态度——不用对抗，不用逃避，只需要温柔地引导，就能让思绪回到平静的轨道。</p>
+  <p class="note">每一次你意识到自己又陷入了反刍，并温柔地把自己带回来——这就是一次了不起的胜利。改变需要时间，成长需要过程，请对自己多一点耐心，多一点慈悲。</p>
+</section>
+
+<!-- 七 -->
+<section class="chapter">
+  <div class="chapter-head">
+    <span class="chapter-num">今 晚</span>
+    <h2 class="chapter-title">从一个最小的尝试开始</h2>
+    <div class="ornament"><span class="line"></span><svg viewBox="0 0 64 16"><path d="M0 8 C8 2 16 2 24 8 C32 14 40 14 48 8 C52 5 58 5 64 8" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="line r"></span></div>
+  </div>
+  <p class="lead">在准备沉入梦乡之前，或许你可以做一个最小的尝试：</p>
+  <div class="breath-wrap">
+    <div class="breath"><span class="bt">呼 吸</span></div>
+    <div class="breath-cap">闭上眼睛 · 慢慢吸气 · 慢慢呼气</div>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="sn">一</div>
+      <div><div class="st">五分钟的呼吸练习</div><div class="sd">闭上眼睛，慢慢地吸气，感受空气充满你的胸腔；慢慢地呼气，感受身体里的疲惫和焦虑，一点点地被排出去。如果思绪飘走了，没关系，温柔地把它拉回来就好，不要责怪自己。</div></div>
+    </div>
+    <div class="step">
+      <div class="sn">二</div>
+      <div><div class="st">给念头起个名字</div><div class="sd">如果你被某个念头困扰，试着在心里给它起个名字——比如：「又来了，那个担忧小怪。」</div></div>
+    </div>
+    <div class="step">
+      <div class="sn">三</div>
+      <div><div class="st">感受被子的包裹</div><div class="sd">然后翻个身，感受被子柔软的包裹。从这一个小小的、不评判的觉察开始，就好了。</div></div>
+    </div>
+  </div>
+  <p class="lead" style="text-align:center;margin-top:30px">愿这本书，能陪你度过一个平静的夜晚。</p>
+</section>
+
+<!-- 思维导图 -->
+<section class="chapter">
+  <div class="chapter-head">
+    <span class="chapter-num">全 书 脉 络</span>
+    <h2 class="chapter-title">一张图回顾这本书</h2>
+    <div class="ornament"><span class="line"></span><svg viewBox="0 0 64 16"><path d="M0 8 C8 2 16 2 24 8 C32 14 40 14 48 8 C52 5 58 5 64 8" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="line r"></span></div>
+  </div>
+  <div class="mindmap-card">
+    <div class="markmap">
+      <script type="text/template">
+# 如何停止胡思乱想
+## 为什么胡思乱想
+### 不是性格缺陷
+### 大脑的过度警觉机制
+### 过度负责的保安
+### 焦虑型选手的基因
+## 两种脑波
+### 贝塔波 · 焦虑之波
+### 阿尔法波 · 平静之波
+### 切换能力＝刹车
+## 三个重置方法
+### 思绪标注法：给念头起名字
+### 感官锚定法：触觉→听觉→嗅觉
+### 全脑同步：专注空间而非物体
+## 想法 ≠ 事实
+### 三问：证据／反证／安慰朋友
+## 心流循环
+### 挣扎 → 释放 → 心流 → 恢复
+### 挣扎是心流的第一阶段
+## 今晚开始
+### 五分钟呼吸
+### 温柔的觉察
+      </script>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+<div class="goodnight">晚 安</div>
+<div class="wish">愿今晚的你，与思绪温柔和解</div>
+</footer>
+
+<script>
+// Theme select sync
+document.querySelector('.theme-select').value=document.body.className;
+
+// Hero waves: build jagged beta + smooth alpha paths (period 300px, seamless at -50%)
+(function(){
+  var i,k,x,d;
+  d='M0 45';x=0;
+  var ys=[12,72,20,66,14,74,24,45];
+  for(i=0;i<8;i++){for(k=0;k<8;k++){x+=37.5;d+=' L'+x+' '+ys[k];}}
+  document.getElementById('betaPath').setAttribute('d',d);
+  d='M0 45';x=0;
+  for(i=0;i<8;i++){d+=' C'+(x+50)+' 15 '+(x+100)+' 15 '+(x+150)+' 45 C'+(x+200)+' 75 '+(x+250)+' 75 '+(x+300)+' 45';x+=300;}
+  document.getElementById('alphaPath').setAttribute('d',d);
+})();
+
+// Floating thought bubbles
+(function(){
+  var c=document.getElementById('bubbles');
+  for(var i=0;i<16;i++){
+    var b=document.createElement('div');
+    b.className='bubble';
+    var s=4+Math.random()*11;
+    b.style.cssText='width:'+s+'px;height:'+s+'px;left:'+(2+Math.random()*96)+'%;animation-duration:'+(11+Math.random()*12)+'s;animation-delay:-'+(Math.random()*20)+'s';
+    c.appendChild(b);
+  }
+})();
+
+// Scroll reveal
+var obs=new IntersectionObserver(function(es){
+  es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:0.12});
+document.querySelectorAll('.chapter').forEach(function(el){obs.observe(el)});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+</body>
+</html>

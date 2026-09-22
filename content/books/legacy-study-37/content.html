@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>悉达多</title>
+    <link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #C08A3E;
+            --primary-light: #D4A85A;
+            --primary-dark: #A07030;
+            --bg: #FDF9F0;
+            --bg-card: #FFFFFF;
+            --text: #3A3228;
+            --text-light: #7A6E5E;
+            --border: rgba(192, 138, 62, 0.18);
+            --shadow: rgba(160, 112, 48, 0.08);
+            --mm-filter: grayscale(1) sepia(.9) hue-rotate(0deg) saturate(1.3) brightness(1.05);
+            --water: rgba(74, 140, 180, 0.12);
+        }
+        body.theme-sky { --primary: #4A9FD4; --primary-light: #6BB5E0; --primary-dark: #3A7FAA; --border: rgba(74,159,212,.18); --shadow: rgba(74,159,212,.08); --water: rgba(74,159,212,.1); --mm-filter: grayscale(1) sepia(.9) hue-rotate(169deg) saturate(1.2) brightness(1.05); }
+        body.theme-moon { --primary: #46759B; --primary-light: #5E8DAF; --primary-dark: #3A6183; --border: rgba(70,117,155,.18); --shadow: rgba(70,117,155,.08); --water: rgba(70,117,155,.1); --mm-filter: grayscale(1) sepia(.9) hue-rotate(172deg) saturate(1.1) brightness(.95); }
+        body.theme-haze { --primary: #7D99AE; --primary-light: #95ADBF; --primary-dark: #6A8499; --border: rgba(125,153,174,.18); --shadow: rgba(125,153,174,.08); --water: rgba(125,153,174,.1); --mm-filter: grayscale(1) sepia(.9) hue-rotate(170deg) saturate(.8) brightness(1.1); }
+        body.theme-indigo { --primary: #4A6FA5; --primary-light: #6285B5; --primary-dark: #3D5C8A; --border: rgba(74,111,165,.18); --shadow: rgba(74,111,165,.08); --water: rgba(74,111,165,.1); --mm-filter: grayscale(1) sepia(.9) hue-rotate(182deg) saturate(1.2) brightness(1.0); }
+        body.theme-teal { --primary: #4E9B8F; --primary-light: #68AFA4; --primary-dark: #418378; --border: rgba(78,155,143,.18); --shadow: rgba(78,155,143,.08); --water: rgba(78,155,143,.1); --mm-filter: grayscale(1) sepia(.9) hue-rotate(136deg) saturate(1.1) brightness(1.0); }
+        body.theme-bamboo { --primary: #7A9B76; --primary-light: #90AE8C; --primary-dark: #678463; --border: rgba(122,155,118,.18); --shadow: rgba(122,155,118,.08); --water: rgba(122,155,118,.1); --mm-filter: grayscale(1) sepia(.9) hue-rotate(80deg) saturate(1.0) brightness(1.05); }
+        body.theme-vermilion { --primary: #C0564F; --primary-light: #D07069; --primary-dark: #A84842; --border: rgba(192,86,79,.18); --shadow: rgba(192,86,79,.08); --water: rgba(192,86,79,.08); --mm-filter: grayscale(1) sepia(.9) hue-rotate(-31deg) saturate(1.3) brightness(1.0); }
+        body.theme-sakura { --primary: #D19090; --primary-light: #DDA5A5; --primary-dark: #B87C7C; --border: rgba(209,144,144,.18); --shadow: rgba(209,144,144,.08); --water: rgba(209,144,144,.08); --mm-filter: grayscale(1) sepia(.9) hue-rotate(-35deg) saturate(1.0) brightness(1.1); }
+        body.theme-lotus { --primary: #C48F9B; --primary-light: #D2A5AF; --primary-dark: #AB7B86; --border: rgba(196,143,155,.18); --shadow: rgba(196,143,155,.08); --water: rgba(196,143,155,.08); --mm-filter: grayscale(1) sepia(.9) hue-rotate(310deg) saturate(1.0) brightness(1.05); }
+        body.theme-rose { --primary: #A78B8B; --primary-light: #B9A0A0; --primary-dark: #927979; --border: rgba(167,139,139,.18); --shadow: rgba(167,139,139,.08); --water: rgba(167,139,139,.08); --mm-filter: grayscale(1) sepia(.9) hue-rotate(-35deg) saturate(.7) brightness(1.05); }
+        body.theme-purple { --primary: #9B87B5; --primary-light: #AE9CC5; --primary-dark: #8674A0; --border: rgba(155,135,181,.18); --shadow: rgba(155,135,181,.08); --water: rgba(155,135,181,.08); --mm-filter: grayscale(1) sepia(.9) hue-rotate(232deg) saturate(1.0) brightness(1.05); }
+        body.theme-amber { --primary: #C08A3E; --primary-light: #D4A85A; --primary-dark: #A07030; --border: rgba(192,138,62,.18); --shadow: rgba(192,138,62,.08); --water: rgba(192,138,62,.08); --mm-filter: grayscale(1) sepia(.9) hue-rotate(0deg) saturate(1.3) brightness(1.05); }
+        body.theme-caramel { --primary: #A06B3F; --primary-light: #B58258; --primary-dark: #8A5C36; --border: rgba(160,107,63,.18); --shadow: rgba(160,107,63,.08); --water: rgba(160,107,63,.08); --mm-filter: grayscale(1) sepia(.9) hue-rotate(-7deg) saturate(1.2) brightness(.95); }
+        body.theme-wood { --primary: #B08D57; --primary-light: #C2A370; --primary-dark: #987A4B; --border: rgba(176,141,87,.18); --shadow: rgba(176,141,87,.08); --water: rgba(176,141,87,.08); --mm-filter: grayscale(1) sepia(.9) hue-rotate(0deg) saturate(1.0) brightness(1.05); }
+        body.theme-ink { --primary: #5A6670; --primary-light: #717D87; --primary-dark: #4C565E; --border: rgba(90,102,112,.18); --shadow: rgba(90,102,112,.08); --water: rgba(90,102,112,.08); --mm-filter: grayscale(1) sepia(.9) hue-rotate(175deg) saturate(.5) brightness(.9); }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 2.1;
+            transition: background .4s, color .4s;
+        }
+        .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+        /* ===== Hero：河上晨曦 ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 80px 24px 140px;
+            background: linear-gradient(180deg, #1A1A2E 0%, #2D2B55 25%, #4A3F6B 45%, #8B6B4A 70%, #C08A3E 90%, #E8C87A 100%);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-content { position: relative; z-index: 3; }
+        .hero h1 {
+            font-family: 'ZCOOL XiaoWei', 'Noto Serif SC', serif;
+            font-size: clamp(3.5rem, 12vw, 6rem);
+            font-weight: 400;
+            letter-spacing: .2em;
+            margin-bottom: 24px;
+            text-shadow: 0 2px 30px rgba(0,0,0,.3);
+        }
+        .hero-sub {
+            font-size: clamp(.95rem, 2.5vw, 1.2rem);
+            opacity: .9;
+            max-width: 500px;
+            line-height: 2.2;
+            letter-spacing: .08em;
+        }
+        .hero-author {
+            margin-top: 30px;
+            font-size: .88rem;
+            opacity: .65;
+            letter-spacing: .25em;
+        }
+        /* 河面波浪 */
+        .river-waves {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 120px;
+            z-index: 2;
+        }
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            animation: drift 8s linear infinite;
+            opacity: .6;
+        }
+        .wave:nth-child(2) { animation-duration: 12s; opacity: .4; bottom: 8px; }
+        .wave:nth-child(3) { animation-duration: 16s; opacity: .25; bottom: 16px; }
+        @keyframes drift { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+        /* 小舟 */
+        .hero-boat {
+            position: absolute;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            opacity: .7;
+            animation: bob 4s ease-in-out infinite;
+        }
+        @keyframes bob { 0%,100%{transform:translateX(-50%) translateY(0) rotate(-1deg)} 50%{transform:translateX(-50%) translateY(-6px) rotate(1deg)} }
+
+        /* ===== Theme Switcher ===== */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1.5px solid var(--border);
+            box-shadow: 0 2px 12px var(--shadow);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            transition: transform .3s;
+        }
+        .theme-toggle:hover { transform: scale(1.1); }
+        .theme-panel {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            z-index: 999;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px;
+            box-shadow: 0 8px 32px var(--shadow);
+            display: none;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            width: 220px;
+        }
+        .theme-panel.open { display: grid; }
+        .theme-option {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: .78rem;
+            border: 1.5px solid transparent;
+            transition: all .2s;
+        }
+        .theme-option:hover { background: var(--border); }
+        .theme-option.active { border-color: var(--primary); background: var(--border); }
+        .theme-dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+
+        /* ===== Chapters ===== */
+        .chapter {
+            padding: 70px 0;
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity .8s ease, transform .8s ease;
+        }
+        .chapter.visible { opacity: 1; transform: translateY(0); }
+        .chapter-label {
+            font-size: .75rem;
+            color: var(--primary);
+            letter-spacing: .35em;
+            margin-bottom: 10px;
+        }
+        .chapter h3 {
+            font-family: 'ZCOOL XiaoWei', 'Noto Serif SC', serif;
+            font-size: clamp(1.5rem, 4.5vw, 2rem);
+            font-weight: 400;
+            color: var(--primary-dark);
+            margin-bottom: 28px;
+            line-height: 1.6;
+            letter-spacing: .06em;
+        }
+        .lead {
+            font-size: 1.05rem;
+            color: var(--text-light);
+            margin-bottom: 26px;
+        }
+        .chapter p { margin-bottom: 20px; text-align: justify; }
+
+        /* ===== Components ===== */
+        .quote-block {
+            border-left: 3px solid var(--primary);
+            padding: 22px 26px;
+            margin: 32px 0;
+            background: linear-gradient(135deg, var(--border), transparent);
+            border-radius: 0 14px 14px 0;
+            font-style: italic;
+            color: var(--text-light);
+        }
+        .quote-src { display: block; margin-top: 12px; font-size: .85rem; color: var(--primary); font-style: normal; }
+
+        .scene-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            margin: 32px 0;
+            box-shadow: 0 4px 24px var(--shadow);
+        }
+        .scene-card h4 { color: var(--primary); margin-bottom: 14px; font-size: 1.05rem; letter-spacing: .05em; }
+
+        .key-list { margin: 28px 0; }
+        .key-item {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        .key-num {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .78rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+        .key-item strong { color: var(--primary-dark); }
+
+        .insight-card {
+            background: linear-gradient(135deg, var(--water), transparent);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            margin: 32px 0;
+        }
+        .insight-card h4 { color: var(--primary); margin-bottom: 12px; letter-spacing: .05em; }
+
+        /* 莲花分隔符 */
+        .divider-lotus {
+            text-align: center;
+            margin: 50px 0;
+            opacity: .45;
+        }
+        .divider-lotus svg { width: 40px; height: 40px; fill: var(--primary); }
+
+        /* 求道之路（旅程时间线） */
+        .journey {
+            position: relative;
+            margin: 36px 0;
+            padding-left: 32px;
+        }
+        .journey::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary), var(--water));
+            border-radius: 2px;
+        }
+        .journey-step {
+            position: relative;
+            margin-bottom: 26px;
+            padding: 16px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+        .journey-step::before {
+            content: '';
+            position: absolute;
+            left: -27px;
+            top: 22px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 2px solid var(--bg);
+        }
+        .journey-step h5 { color: var(--primary); font-size: .95rem; margin-bottom: 6px; }
+        .journey-step p { font-size: .9rem; color: var(--text-light); margin: 0; line-height: 1.8; }
+
+        /* ===== Mindmap ===== */
+        .mindmap-section { padding: 70px 0; }
+        .mindmap-section h3 { text-align: center; }
+        .markmap {
+            width: 100%;
+            height: 520px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+        }
+        .markmap svg { filter: var(--mm-filter); }
+
+        /* ===== Epilogue ===== */
+        .epilogue {
+            padding: 90px 0 70px;
+            text-align: center;
+            position: relative;
+        }
+        .epilogue::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 50px;
+            background: linear-gradient(to bottom, transparent, var(--primary));
+        }
+        .epilogue-inner { max-width: 580px; margin: 0 auto; }
+        .final-quote {
+            font-size: 1.08rem;
+            line-height: 2.4;
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 50px;
+        }
+        .goodnight {
+            font-family: 'ZCOOL XiaoWei', 'Noto Serif SC', serif;
+            font-size: 2.4rem;
+            font-weight: 400;
+            color: var(--primary);
+            letter-spacing: .5em;
+            text-align: center;
+        }
+
+        /* 页脚莲花 */
+        .footer-lotus {
+            text-align: center;
+            padding: 30px 0 60px;
+            opacity: .3;
+        }
+        .footer-lotus svg { width: 28px; height: 28px; fill: var(--primary); margin: 0 10px; }
+
+        @media (max-width: 600px) {
+            .hero { min-height: 85vh; padding: 60px 20px 120px; }
+            .chapter { padding: 50px 0; }
+            .theme-panel { width: 190px; right: 12px; }
+            .markmap { height: 400px; }
+            .journey { padding-left: 26px; }
+        }
+    </style>
+</head>
+<body class="theme-amber">
+<script>
+    (function () {
+        var themes = ['sky','moon','haze','indigo','teal','bamboo','vermilion','sakura','lotus','rose','purple','amber','caramel','wood','ink'];
+        document.body.className = 'theme-' + themes[Math.floor(Math.random() * themes.length)];
+    })();
+</script>
+
+<!-- Theme Switcher -->
+<button class="theme-toggle" id="themeToggle">🪷</button>
+<div class="theme-panel" id="themePanel">
+    <div class="theme-option" data-theme="sky"><span class="theme-dot" style="background:#4A9FD4"></span>天青蓝</div>
+    <div class="theme-option" data-theme="moon"><span class="theme-dot" style="background:#46759B"></span>月海蓝</div>
+    <div class="theme-option" data-theme="haze"><span class="theme-dot" style="background:#7D99AE"></span>雾霾蓝</div>
+    <div class="theme-option" data-theme="indigo"><span class="theme-dot" style="background:#4A6FA5"></span>靛青蓝</div>
+    <div class="theme-option" data-theme="teal"><span class="theme-dot" style="background:#4E9B8F"></span>松石绿</div>
+    <div class="theme-option" data-theme="bamboo"><span class="theme-dot" style="background:#7A9B76"></span>竹青色</div>
+    <div class="theme-option" data-theme="vermilion"><span class="theme-dot" style="background:#C0564F"></span>朱砂红</div>
+    <div class="theme-option" data-theme="sakura"><span class="theme-dot" style="background:#D19090"></span>绯樱色</div>
+    <div class="theme-option" data-theme="lotus"><span class="theme-dot" style="background:#C48F9B"></span>藕荷色</div>
+    <div class="theme-option" data-theme="rose"><span class="theme-dot" style="background:#A78B8B"></span>玫瑰灰</div>
+    <div class="theme-option" data-theme="purple"><span class="theme-dot" style="background:#9B87B5"></span>暮山紫</div>
+    <div class="theme-option" data-theme="amber"><span class="theme-dot" style="background:#C08A3E"></span>琥珀色</div>
+    <div class="theme-option" data-theme="caramel"><span class="theme-dot" style="background:#A06B3F"></span>焦糖色</div>
+    <div class="theme-option" data-theme="wood"><span class="theme-dot" style="background:#B08D57"></span>木头色</div>
+    <div class="theme-option" data-theme="ink"><span class="theme-dot" style="background:#5A6670"></span>墨玉色</div>
+</div>
+
+<!-- Hero -->
+<header class="hero">
+    <div class="hero-content">
+        <h1>悉达多</h1>
+        <p class="hero-sub">那条渡你的船，从来不在远方，而在你的心里</p>
+        <p class="hero-author">赫尔曼·黑塞 著</p>
+    </div>
+    <!-- 小舟 -->
+    <svg class="hero-boat" width="80" height="40" viewBox="0 0 80 40" fill="none">
+        <path d="M10 28 Q40 38 70 28 L65 22 Q40 30 15 22 Z" fill="rgba(255,255,255,.7)"/>
+        <line x1="40" y1="8" x2="40" y2="26" stroke="rgba(255,255,255,.6)" stroke-width="1.5"/>
+        <path d="M40 8 Q55 14 42 22" fill="rgba(255,255,255,.4)"/>
+    </svg>
+    <!-- 河面波浪 -->
+    <div class="river-waves">
+        <svg class="wave" viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path d="M0,60 C240,120 480,0 720,60 C960,120 1200,0 1440,60 L1440,120 L0,120 Z" fill="var(--bg)"/>
+        </svg>
+        <svg class="wave" viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path d="M0,80 C240,20 480,100 720,50 C960,0 1200,90 1440,40 L1440,120 L0,120 Z" fill="var(--bg)"/>
+        </svg>
+        <svg class="wave" viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path d="M0,40 C360,100 720,20 1080,80 C1260,110 1380,50 1440,70 L1440,120 L0,120 Z" fill="var(--bg)"/>
+        </svg>
+    </div>
+</header>
+
+<main class="container">
+
+    <!-- 序 -->
+    <section class="chapter">
+        <div class="chapter-label">序</div>
+        <h3>一个在废墟上写下河流的人</h3>
+        <p class="lead">你有没有这样的感觉——明明听了很多道理，却依然过不好这一生？读了很多成功学，内心却更加空虚和焦虑？我们像上紧了发条的陀螺，在别人的期待和社会的标准里疯狂旋转，却忘了问问自己：这真的是我想要的吗？</p>
+        <p>赫尔曼·黑塞的这本经典最颠覆的地方在于，他用一个古印度贵族青年求道的故事，戳穿了我们现代人最深的困境：我们总在向外寻找答案，却忘了答案早已藏在内心。</p>
+        <p>创作《悉达多》时，黑塞正经历人生的至暗时刻——孩子的重病、婚姻的破裂、挚友的疏远、挥之不去的抑郁与焦虑。更重要的是，他身处一战后欧洲的精神废墟，亲眼目睹物质繁荣如何带来精神荒芜。他写下悉达多，不是要给出标准答案，而是要记录一条真实的、充满试错与顿悟的寻道之路。</p>
+    </section>
+
+    <!-- 莲花分隔 -->
+    <div class="divider-lotus">
+        <svg viewBox="0 0 512 512"><path d="M256 48c-12 40-40 80-80 104 24 8 48 24 64 48-40-8-80 0-112 24 32 8 56 24 72 48-32 0-64 16-88 40 40 8 72 32 96 64 8-32 24-56 48-72-8 40 0 80 24 112 8-32 24-56 48-72 0 32 16 64 40 88 8-40 32-72 64-96-32-8-56-24-72-48 40 8 80 0 112-24-32-8-56-24-72-48 32 0 64-16 88-40-40-8-72-32-96-64-8 32-24 56-48 72 8-40 0-80-24-112-8 32-24 56-48 72 0-32-16-64-40-88-8 40-32 72-64 96 32 8 56 24 72 48-40-8-80 0-112 24 32 8 56 24 72 48-32 0-64 16-88 40z"/></svg>
+    </div>
+
+    <!-- 第一章 -->
+    <section class="chapter">
+        <div class="chapter-label">第一章</div>
+        <h3>婆罗门之子：知识可以传授，智慧不能</h3>
+        <p class="lead">悉达多本是古印度的婆罗门之子，英俊聪慧，备受尊敬，却深感不安。"我熟读圣典，精通礼仪，可那个真正的我在哪里？这些知识真的能让我触及生命的核心吗？"</p>
+        <p>这种内心的拷问让他做出了第一次决绝的转身——抛弃一切，成为苦行的沙门。在森林里，他用最严酷的方式修行，忍受饥饿，对抗寒冷，试图通过折磨肉体来杀死自我。几年过去，他成了苦行的高手，内心却陷入更深的困惑："当我连饥饿都能轻易战胜时，那个被战胜的我又是谁？"</p>
+        <p>他以为通过禁欲苦行就能找到真理，但最终发现，这只是在用另一种形式的"我执"去对抗原来的"我执"。</p>
+        <p>就在这时，他听闻了佛陀乔达摩的事迹。悉达多与好友乔文达前去听法。佛陀的教义完美无瑕，乔文达立刻皈依——但悉达多却在敬仰中选择了再次离开。这里藏着全书第一个思想飞跃：</p>
+        <div class="quote-block">
+            您的教义清晰完美，但我看到了无法跨越的裂隙。知识可以传授，但智慧不能。您所体悟的圆满，是您在独一无二的生命历程中获得的，那是我无法通过背诵教条而拥有的。
+            <span class="quote-src">—— 悉达多对佛陀说</span>
+        </div>
+        <p>于是悉达多做出了石破天惊的决定：不再绕过生活，而要潜入生活本身。他对自己说——意义或许不在生活的对岸，而就在这奔腾的河水之中。</p>
+    </section>
+
+    <div class="divider-lotus">
+        <svg viewBox="0 0 512 512"><path d="M256 48c-12 40-40 80-80 104 24 8 48 24 64 48-40-8-80 0-112 24 32 8 56 24 72 48-32 0-64 16-88 40 40 8 72 32 96 64 8-32 24-56 48-72-8 40 0 80 24 112 8-32 24-56 48-72 0 32 16 64 40 88 8-40 32-72 64-96-32-8-56-24-72-48 40 8 80 0 112-24-32-8-56-24-72-48 32 0 64-16 88-40-40-8-72-32-96-64-8 32-24 56-48 72 8-40 0-80-24-112-8 32-24 56-48 72 0-32-16-64-40-88-8 40-32 72-64 96 32 8 56 24 72 48-40-8-80 0-112 24 32 8 56 24 72 48-32 0-64 16-88 40z"/></svg>
+    </div>
+
+    <!-- 第二章 -->
+    <section class="chapter">
+        <div class="chapter-label">第二章</div>
+        <h3>尘世沉沦：清醒的自我毁灭比无知的堕落更可怕</h3>
+        <p class="lead">他遇到了美丽的名妓迦摩罗，她教会他爱情；他结识了富商迦摩施瓦弥，他教会他经商的智慧。悉达多开始追逐金钱、情欲、名誉，并且凭借聪明才智获得了巨大成功。</p>
+        <p>这不是无知的沉沦，而是清醒的体验——"我要彻底地成为俗人，才有资格说超越了他。"</p>
+        <p>然而代价是巨大的。多年后，他在华丽的府邸中醒来，感到的只有厌恶与空虚。他在赌博中麻痹自己，眼神变得黯淡，心灵变得迟钝。他终于明白：</p>
+        <div class="quote-block">
+            清醒的自我毁灭比无知的堕落更可怕。
+        </div>
+        <p>他再次逃离，来到一条河边，准备结束生命。</p>
+    </section>
+
+    <div class="divider-lotus">
+        <svg viewBox="0 0 512 512"><path d="M256 48c-12 40-40 80-80 104 24 8 48 24 64 48-40-8-80 0-112 24 32 8 56 24 72 48-32 0-64 16-88 40 40 8 72 32 96 64 8-32 24-56 48-72-8 40 0 80 24 112 8-32 24-56 48-72 0 32 16 64 40 88 8-40 32-72 64-96-32-8-56-24-72-48 40 8 80 0 112-24-32-8-56-24-72-48 32 0 64-16 88-40-40-8-72-32-96-64-8 32-24 56-48 72 8-40 0-80-24-112-8 32-24 56-48 72 0-32-16-64-40-88-8 40-32 72-64 96 32 8 56 24 72 48-40-8-80 0-112 24 32 8 56 24 72 48-32 0-64 16-88 40z"/></svg>
+    </div>
+
+    <!-- 第三章 -->
+    <section class="chapter">
+        <div class="chapter-label">第三章</div>
+        <h3>河边：倾听千万种声音的交响</h3>
+        <p class="lead">在河边，他遇到了生命中最重要的导师——船夫瓦苏迪瓦。这位沉默的圣者，教会他倾听河水。悉达多留了下来，成为摆渡人。</p>
+        <p>日复一日，他倾听河水千万种声音的交响——国王的、战士的、母亲的、恋人的——它们不再彼此对立。在这里，他重逢了已成为佛陀弟子的乔文达，重逢了为他生下儿子的迦摩罗，也经历了与叛逆儿子的痛苦别离。</p>
+        <div class="scene-card">
+            <h4>最后也是最沉重的一击</h4>
+            <p>他倾尽所有温柔，儿子却毫不领情，最终逃离。当他因儿子的离去而痛苦不堪时，瓦苏迪瓦带他来到河边。在河水的永恒之声中，悉达多终于开悟了——每个人都有一条属于自己的河，必须亲自去渡，谁也替代不了。</p>
+            <p>他理解了父亲的悲伤，也接纳了儿子的选择。他放过儿子，也最终放过了自己。这一刻，他与世界、与自我达成了真正的和解。</p>
+        </div>
+        <div class="quote-block">
+            我不再将这个世界与我所期待的、塑造的圆满世界比照，而是接受这个世界，爱它，属于它。
+            <span class="quote-src">—— 悉达多</span>
+        </div>
+    </section>
+
+    <div class="divider-lotus">
+        <svg viewBox="0 0 512 512"><path d="M256 48c-12 40-40 80-80 104 24 8 48 24 64 48-40-8-80 0-112 24 32 8 56 24 72 48-32 0-64 16-88 40 40 8 72 32 96 64 8-32 24-56 48-72-8 40 0 80 24 112 8-32 24-56 48-72 0 32 16 64 40 88 8-40 32-72 64-96-32-8-56-24-72-48 40 8 80 0 112-24-32-8-56-24-72-48 32 0 64-16 88-40-40-8-72-32-96-64-8 32-24 56-48 72 8-40 0-80-24-112-8 32-24 56-48 72 0-32-16-64-40-88-8 40-32 72-64 96 32 8 56 24 72 48-40-8-80 0-112 24 32 8 56 24 72 48-32 0-64 16-88 40z"/></svg>
+    </div>
+
+    <!-- 第四章 -->
+    <section class="chapter">
+        <div class="chapter-label">第四章</div>
+        <h3>求道之路：每一步都是道路本身</h3>
+        <p class="lead">悉达多的一生，就是我们每个人寻找自我的缩影。他试过了所有"标准答案"，却没有一个能让他获得内心的平静。</p>
+        <div class="journey">
+            <div class="journey-step">
+                <h5>婆罗门教义</h5>
+                <p>熟读圣典，精通礼仪——却发现知识无法触及生命的核心。</p>
+            </div>
+            <div class="journey-step">
+                <h5>沙门苦行</h5>
+                <p>折磨肉体，试图杀死自我——却发现只是用新的"我执"替代旧的。</p>
+            </div>
+            <div class="journey-step">
+                <h5>佛陀法义</h5>
+                <p>教义完美无瑕——但智慧无法通过背诵教条而拥有。</p>
+            </div>
+            <div class="journey-step">
+                <h5>尘世享乐</h5>
+                <p>追逐金钱、情欲、名誉——清醒的沉沦带来更深的空虚。</p>
+            </div>
+            <div class="journey-step">
+                <h5>河边倾听</h5>
+                <p>不再寻找答案，而是倾听——在河水的永恒之声中，与万物和解。</p>
+            </div>
+        </div>
+        <div class="key-list">
+            <div class="key-item">
+                <span class="key-num">一</span>
+                <div><strong>别把别人的地图当成自己的路。</strong>真正的答案必须用自己的生命去体验和验证。</div>
+            </div>
+            <div class="key-item">
+                <span class="key-num">二</span>
+                <div><strong>接纳寻找本身。</strong>人生不是解题，它是一条河流。焦虑、迷茫、渴望不是你的敌人，它们是你生命里的一部分。与它们和平共处，倾听它们，而不是急着消灭它们。</div>
+            </div>
+            <div class="key-item">
+                <span class="key-num">三</span>
+                <div><strong>活在当下的每一刻。</strong>真理不在遥远的彼岸，它就藏在摆渡的每一次摇桨中，在倾听河水的每一次呼吸里。当我们停止为未来过度焦虑、停止为过去反复懊悔，全情投入眼前的这一刻，内心的平静和力量会自然浮现。</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider-lotus">
+        <svg viewBox="0 0 512 512"><path d="M256 48c-12 40-40 80-80 104 24 8 48 24 64 48-40-8-80 0-112 24 32 8 56 24 72 48-32 0-64 16-88 40 40 8 72 32 96 64 8-32 24-56 48-72-8 40 0 80 24 112 8-32 24-56 48-72 0 32 16 64 40 88 8-40 32-72 64-96-32-8-56-24-72-48 40 8 80 0 112-24-32-8-56-24-72-48 32 0 64-16 88-40-40-8-72-32-96-64-8 32-24 56-48 72 8-40 0-80-24-112-8 32-24 56-48 72 0-32-16-64-40-88-8 40-32 72-64 96 32 8 56 24 72 48-40-8-80 0-112 24 32 8 56 24 72 48-32 0-64 16-88 40z"/></svg>
+    </div>
+
+    <!-- 全书思维导图 -->
+    <section class="chapter mindmap-section">
+        <h3>全书思维导图</h3>
+        <div class="markmap">
+<script type="text/template">
+---
+markmap:
+  colorFreezeLevel: 2
+---
+# 悉达多
+## 序：废墟上的河流
+### 黑塞的至暗时刻
+### 向外寻找→答案在内心
+## 婆罗门之子
+### 圣典无法触及核心
+### 沙门苦行：我执的我执
+### 佛陀：知识可传授，智慧不能
+### 决定：潜入生活本身
+## 尘世沉沦
+### 迦摩罗：爱情
+### 迦摩施瓦弥：经商
+### 清醒的自我毁灭
+### 河边：准备结束生命
+## 河边开悟
+### 船夫瓦苏迪瓦
+### 倾听河水的交响
+### 儿子的离去：最后的执着
+### 放过儿子，放过自己
+### 接受世界，爱它，属于它
+## 三重启示
+### 别把别人的地图当自己的路
+### 接纳寻找本身
+### 活在当下的每一刻
+## 渡你的船在心里
+</script>
+        </div>
+    </section>
+
+    <!-- 尾声 -->
+    <section class="chapter epilogue">
+        <div class="epilogue-inner">
+            <p class="final-quote">
+                也许我们都需要一次属于自己的觉醒。它不是要你抛弃生活上山修行，而是在现有的生活里，多一份对自己的观察。<br><br>
+                下次当你又因为焦虑而疯狂内卷，或因为迷茫而彻底躺平时，不妨像悉达多一样停下来问问自己：我是在活别人的期待，还是在活自己的生命？<br><br>
+                请记住，你的迷茫、试错、沉沦与觉醒，都不是在浪费时间。它们本身就是道路。你不需要成为完美的别人，只需要成为完整的自己。<br><br>
+                愿悉达多的故事，陪你度过生命中每一条需要渡过的河流。
+            </p>
+            <p class="goodnight">晚安</p>
+        </div>
+    </section>
+
+    <!-- 页脚莲花 -->
+    <div class="footer-lotus">
+        <svg viewBox="0 0 512 512"><path d="M256 48c-12 40-40 80-80 104 24 8 48 24 64 48-40-8-80 0-112 24 32 8 56 24 72 48-32 0-64 16-88 40 40 8 72 32 96 64 8-32 24-56 48-72-8 40 0 80 24 112 8-32 24-56 48-72 0 32 16 64 40 88 8-40 32-72 64-96-32-8-56-24-72-48 40 8 80 0 112-24-32-8-56-24-72-48 32 0 64-16 88-40-40-8-72-32-96-64-8 32-24 56-48 72 8-40 0-80-24-112-8 32-24 56-48 72 0-32-16-64-40-88-8 40-32 72-64 96 32 8 56 24 72 48-40-8-80 0-112 24 32 8 56 24 72 48-32 0-64 16-88 40z"/></svg>
+        <svg viewBox="0 0 512 512"><path d="M256 48c-12 40-40 80-80 104 24 8 48 24 64 48-40-8-80 0-112 24 32 8 56 24 72 48-32 0-64 16-88 40 40 8 72 32 96 64 8-32 24-56 48-72-8 40 0 80 24 112 8-32 24-56 48-72 0 32 16 64 40 88 8-40 32-72 64-96-32-8-56-24-72-48 40 8 80 0 112-24-32-8-56-24-72-48 32 0 64-16 88-40-40-8-72-32-96-64-8 32-24 56-48 72 8-40 0-80-24-112-8 32-24 56-48 72 0-32-16-64-40-88-8 40-32 72-64 96 32 8 56 24 72 48-40-8-80 0-112 24 32 8 56 24 72 48-32 0-64 16-88 40z"/></svg>
+        <svg viewBox="0 0 512 512"><path d="M256 48c-12 40-40 80-80 104 24 8 48 24 64 48-40-8-80 0-112 24 32 8 56 24 72 48-32 0-64 16-88 40 40 8 72 32 96 64 8-32 24-56 48-72-8 40 0 80 24 112 8-32 24-56 48-72 0 32 16 64 40 88 8-40 32-72 64-96-32-8-56-24-72-48 40 8 80 0 112-24-32-8-56-24-72-48 32 0 64-16 88-40-40-8-72-32-96-64-8 32-24 56-48 72 8-40 0-80-24-112-8 32-24 56-48 72 0-32-16-64-40-88-8 40-32 72-64 96 32 8 56 24 72 48-40-8-80 0-112 24 32 8 56 24 72 48-32 0-64 16-88 40z"/></svg>
+    </div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+<script>
+    const toggle = document.getElementById('themeToggle');
+    const panel = document.getElementById('themePanel');
+    const options = document.querySelectorAll('.theme-option');
+    const currentTheme = document.body.className.replace('theme-', '');
+    options.forEach(o => o.classList.toggle('active', o.dataset.theme === currentTheme));
+    toggle.addEventListener('click', (e) => { e.stopPropagation(); panel.classList.toggle('open'); });
+    document.addEventListener('click', (e) => { if (!panel.contains(e.target)) panel.classList.remove('open'); });
+    options.forEach(opt => {
+        opt.addEventListener('click', () => {
+            document.body.className = 'theme-' + opt.dataset.theme;
+            options.forEach(o => o.classList.toggle('active', o === opt));
+            panel.classList.remove('open');
+        });
+    });
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+        });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.chapter').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

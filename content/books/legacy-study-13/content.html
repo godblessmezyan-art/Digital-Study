@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>《丰盛》——揭秘心想事成的至简原理</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+    /* ========== 配色方案（默认：天青蓝） ========== */
+    :root, body.theme-sky {
+        --primary: #4A9FD4; --primary-light: #A6D3EE; --primary-dark: #2C7AB0; --primary-deep: #1E5A85;
+        --bg: #F0F7FB; --bg-cool: #E1EFF8; --text: #1F3447; --text-light: #54718A; --accent: #3589BE; --divider: #BFDCEC;
+        --hero-grad: linear-gradient(160deg, #12283A 0%, #1D4258 35%, #2A6285 72%, #143049 100%);
+        --mm-filter: grayscale(1) sepia(.9) hue-rotate(169deg) saturate(1.15) brightness(.98);
+    }
+    body.theme-haze {
+        --primary: #7D99AE; --primary-light: #AEC3D2; --primary-dark: #52708A; --primary-deep: #3E5A72;
+        --bg: #F3F6F8; --bg-cool: #E8EEF2; --text: #2C3A45; --text-light: #5A6B78; --accent: #5F7D93; --divider: #C5D2DC;
+        --hero-grad: linear-gradient(160deg, #16212B 0%, #243441 35%, #33495C 72%, #1A2833 100%);
+        --mm-filter: grayscale(1) sepia(.9) hue-rotate(170deg) saturate(.5) brightness(1);
+    }
+    body.theme-moon {
+        --primary: #46759B; --primary-light: #8FB3CE; --primary-dark: #2B5876; --primary-deep: #1D4258;
+        --bg: #EEF3F6; --bg-cool: #DFE9EF; --text: #1C2E3D; --text-light: #4E6B80; --accent: #35678C; --divider: #B9CFDD;
+        --hero-grad: linear-gradient(160deg, #0E1D2A 0%, #1B3A4F 35%, #27587A 72%, #0F2434 100%);
+        --mm-filter: grayscale(1) sepia(.9) hue-rotate(172deg) saturate(1) brightness(.82);
+    }
+    body.theme-indigo {
+        --primary: #4A6FA5; --primary-light: #9DB4D6; --primary-dark: #33517F; --primary-deep: #243C61;
+        --bg: #F1F4F9; --bg-cool: #E3E9F2; --text: #222E40; --text-light: #55647C; --accent: #3D5F92; --divider: #C3CFE0;
+        --hero-grad: linear-gradient(160deg, #131B2E 0%, #223350 35%, #31497A 72%, #16213A 100%);
+        --mm-filter: grayscale(1) sepia(.9) hue-rotate(182deg) saturate(.9) brightness(.85);
+    }
+    body.theme-teal {
+        --primary: #4E9B8F; --primary-light: #A3CFC7; --primary-dark: #357A6F; --primary-deep: #265D55;
+        --bg: #F0F7F5; --bg-cool: #E0EFEB; --text: #1E3531; --text-light: #4F6E68; --accent: #3C877B; --divider: #BFDAD4;
+        --hero-grad: linear-gradient(160deg, #0F2420 0%, #1B4038 35%, #276156 72%, #122B26 100%);
+        --mm-filter: grayscale(1) sepia(.9) hue-rotate(136deg) saturate(.9) brightness(.92);
+    }
+    body.theme-bamboo {
+        --primary: #7A9B76; --primary-light: #B8CDB4; --primary-dark: #5C7D58; --primary-deep: #456142;
+        --bg: #F3F7F1; --bg-cool: #E6EFE2; --text: #2A3527; --text-light: #5C6E56; --accent: #68895F; --divider: #CBDAC5;
+        --hero-grad: linear-gradient(160deg, #1A2418 0%, #2E4029 35%, #43603C 72%, #1E2B1B 100%);
+        --mm-filter: grayscale(1) sepia(.9) hue-rotate(80deg) saturate(.6) brightness(.95);
+    }
+    body.theme-vermilion {
+        --primary: #C0564F; --primary-light: #E3A9A4; --primary-dark: #9C3F39; --primary-deep: #7A2E29;
+        --bg: #FAF3F2; --bg-cool: #F4E5E3; --text: #3A2422; --text-light: #7A5A56; --accent: #AC4840; --divider: #E7C9C5;
+        --hero-grad: linear-gradient(160deg, #2A1514 0%, #4A2320 35%, #6E3530 72%, #301816 100%);
+        --mm-filter: grayscale(1) sepia(.9) hue-rotate(-31deg) saturate(1) brightness(.95);
+    }
+    body.theme-sakura {
+        --primary: #D19090; --primary-light: #EFC7C7; --primary-dark: #B06E6E; --primary-deep: #8F5252;
+        --bg: #FBF5F5; --bg-cool: #F6EAEA; --text: #3A2A2A; --text-light: #7C6262; --accent: #C07E7E; --divider: #EAD3D3;
+        --hero-grad: linear-gradient(160deg, #2B1B1D 0%, #4C2F33 35%, #70474D 72%, #301F22 100%);
+        --mm-filter: grayscale(1) sepia(.9) hue-rotate(-35deg) saturate(.7) brightness(1.05);
+    }
+    body.theme-lotus {
+        --primary: #C48F9B; --primary-light: #E6C3CB; --primary-dark: #A26D7A; --primary-deep: #82525F;
+        --bg: #FAF4F6; --bg-cool: #F5E8EC; --text: #38282D; --text-light: #7A6068; --accent: #B07C89; --divider: #E9CFD6;
+        --hero-grad: linear-gradient(160deg, #2A1A20 0%, #4A2E38 35%, #6D4553 72%, #2E1D23 100%);
+        --mm-filter: grayscale(1) sepia(.9) hue-rotate(310deg) saturate(.55) brightness(1.02);
+    }
+    body.theme-rose {
+        --primary: #A78B8B; --primary-light: #D0BCBC; --primary-dark: #856A6A; --primary-deep: #675050;
+        --bg: #F8F5F5; --bg-cool: #F0EAEA; --text: #352C2C; --text-light: #6E6060; --accent: #957979; --divider: #DFD2D2;
+        --hero-grad: linear-gradient(160deg, #251D1D 0%, #403232 35%, #5E4A4A 72%, #292020 100%);
+        --mm-filter: grayscale(1) sepia(.9) hue-rotate(-35deg) saturate(.4) brightness(.95);
+    }
+    body.theme-purple {
+        --primary: #9B87B5; --primary-light: #C9BBDD; --primary-dark: #75609A; --primary-deep: #5A4A85;
+        --bg: #F6F4F9; --bg-cool: #ECE7F3; --text: #332C42; --text-light: #685E7D; --accent: #8471A6; --divider: #D3C9E2;
+        --hero-grad: linear-gradient(160deg, #1E1830 0%, #322A4E 35%, #4A3F70 72%, #221C38 100%);
+        --mm-filter: grayscale(1) sepia(.9) hue-rotate(232deg) saturate(.95) brightness(1);
+    }
+    body.theme-amber {
+        --primary: #C08A3E; --primary-light: #E4C08A; --primary-dark: #9A6B2B; --primary-deep: #785220;
+        --bg: #FAF6EF; --bg-cool: #F4ECDC; --text: #3A2F1E; --text-light: #7A6A4E; --accent: #AC7A32; --divider: #E7D6B8;
+        --hero-grad: linear-gradient(160deg, #2A2010 0%, #4A3A1C 35%, #6E5628 72%, #2E2312 100%);
+        --mm-filter: grayscale(1) sepia(.9) hue-rotate(0deg) saturate(1.1) brightness(1);
+    }
+    body.theme-caramel {
+        --primary: #A06B3F; --primary-light: #CDA983; --primary-dark: #7E502C; --primary-deep: #613D21;
+        --bg: #F9F4EE; --bg-cool: #F2E8DC; --text: #362A1E; --text-light: #74604A; --accent: #8F5D34; --divider: #E2D0BC;
+        --hero-grad: linear-gradient(160deg, #261A10 0%, #42301C 35%, #604628 72%, #2A1D11 100%);
+        --mm-filter: grayscale(1) sepia(.9) hue-rotate(-7deg) saturate(.95) brightness(.9);
+    }
+    body.theme-wood {
+        --primary: #B08D57; --primary-light: #D9C39A; --primary-dark: #8A6B3F; --primary-deep: #6B5230;
+        --bg: #FAF6EF; --bg-cool: #F1E9DB; --text: #3D3226; --text-light: #75654F; --accent: #9A7B45; --divider: #E0D2B8;
+        --hero-grad: linear-gradient(160deg, #241C12 0%, #3D3020 35%, #5C4830 72%, #2A2116 100%);
+        --mm-filter: grayscale(1) sepia(.95) hue-rotate(0deg) saturate(1) brightness(1);
+    }
+    body.theme-ink {
+        --primary: #5A6670; --primary-light: #A2ADB5; --primary-dark: #414C55; --primary-deep: #2E373E;
+        --bg: #F4F5F6; --bg-cool: #E9EBED; --text: #23292E; --text-light: #57626B; --accent: #4C5861; --divider: #CDD3D8;
+        --hero-grad: linear-gradient(160deg, #14181C 0%, #232A30 35%, #343E46 72%, #171C21 100%);
+        --mm-filter: grayscale(1) sepia(.9) hue-rotate(175deg) saturate(.25) brightness(.75);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: 'Noto Serif SC', 'Songti SC', serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 2;
+        transition: background-color .4s ease, color .4s ease;
+    }
+
+    /* ========== 右上角换肤按钮 ========== */
+    .theme-switcher { position: fixed; top: 22px; right: 22px; z-index: 1000; }
+    .theme-toggle {
+        width: 46px; height: 46px; border-radius: 50%;
+        background: rgba(255,255,255,0.94);
+        border: 1px solid rgba(0,0,0,0.06);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer; color: #5A6B78;
+        transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .theme-toggle:hover { transform: scale(1.08); box-shadow: 0 6px 20px rgba(0,0,0,0.24); }
+    .theme-panel {
+        position: absolute; top: 56px; right: 0;
+        background: #fff; border-radius: 16px;
+        box-shadow: 0 10px 34px rgba(0,0,0,0.18);
+        padding: 12px;
+        width: 248px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4px;
+        opacity: 0; visibility: hidden; transform: translateY(-8px);
+        transition: opacity .22s ease, transform .22s ease, visibility .22s;
+    }
+    .theme-panel.open { opacity: 1; visibility: visible; transform: translateY(0); }
+    .theme-option {
+        display: flex; align-items: center; gap: 9px;
+        padding: 8px 11px; border-radius: 9px; cursor: pointer;
+        font-size: 0.82rem; color: #4A5560; font-family: inherit;
+        letter-spacing: 0.05em;
+        transition: background .15s ease;
+    }
+    .theme-option:hover { background: #F2F4F6; }
+    .theme-option.active { background: #EDF1F4; font-weight: 600; color: #2C3A45; }
+    .swatch {
+        width: 17px; height: 17px; border-radius: 50%; flex-shrink: 0;
+        box-shadow: inset 0 0 0 1px rgba(0,0,0,0.10);
+    }
+
+    /* ========== 头部 ========== */
+    .hero {
+        min-height: 92vh;
+        background: var(--hero-grad);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 60px 24px;
+        position: relative;
+        overflow: hidden;
+    }
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: -30%; left: -20%;
+        width: 140%; height: 160%;
+        background: radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.07) 0%, transparent 55%),
+                    radial-gradient(ellipse at 75% 80%, rgba(255,255,255,0.04) 0%, transparent 50%);
+        pointer-events: none;
+    }
+    .hero h1 {
+        font-size: clamp(3rem, 9vw, 5.2rem);
+        font-weight: 900;
+        color: #F5F7F9;
+        letter-spacing: 0.28em;
+        margin-bottom: 26px;
+        position: relative;
+    }
+    .hero-sub {
+        font-size: 1.05rem;
+        color: var(--primary-light);
+        letter-spacing: 0.18em;
+        margin-bottom: 14px;
+        position: relative;
+    }
+    .hero-author {
+        font-size: 0.9rem;
+        color: rgba(255,255,255,0.6);
+        letter-spacing: 0.14em;
+        position: relative;
+    }
+    .hero-line {
+        width: 1px; height: 70px;
+        background: linear-gradient(to bottom, transparent, var(--primary-light));
+        margin-top: 52px;
+        position: relative;
+    }
+
+    /* ========== 正文 ========== */
+    .container { max-width: 780px; margin: 0 auto; padding: 70px 26px 40px; }
+    .chapter {
+        margin-bottom: 78px;
+        opacity: 0; transform: translateY(26px);
+        transition: opacity .8s ease, transform .8s ease;
+    }
+    .chapter.visible { opacity: 1; transform: translateY(0); }
+    .chapter-label {
+        display: inline-block;
+        font-size: 0.78rem;
+        letter-spacing: 0.4em;
+        color: var(--primary-dark);
+        border: 1px solid var(--divider);
+        padding: 5px 16px 5px 20px;
+        border-radius: 20px;
+        background: #fff;
+        margin-bottom: 20px;
+        transition: color .4s ease, border-color .4s ease;
+    }
+    .chapter h2 {
+        font-size: 1.65rem;
+        font-weight: 700;
+        color: var(--primary-dark);
+        letter-spacing: 0.08em;
+        margin-bottom: 30px;
+        line-height: 1.6;
+        transition: color .4s ease;
+    }
+    .chapter p {
+        font-size: 1.02rem;
+        color: var(--text);
+        margin-bottom: 22px;
+        text-align: justify;
+        transition: color .4s ease;
+    }
+    .lead {
+        font-size: 1.05rem;
+        color: var(--accent);
+        border-left: 3px solid var(--primary-light);
+        padding-left: 18px;
+        margin-bottom: 26px;
+        transition: color .4s ease, border-color .4s ease;
+    }
+    .quote-block {
+        background: #fff;
+        border-left: 4px solid var(--primary);
+        border-radius: 0 14px 14px 0;
+        padding: 26px 30px;
+        margin: 30px 0;
+        box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+        transition: border-color .4s ease;
+    }
+    .quote-block p { color: var(--primary-dark); font-size: 1rem; margin-bottom: 0; line-height: 2.1; transition: color .4s ease; }
+    .quote-block .quote-src { display: block; margin-top: 12px; font-size: 0.82rem; color: var(--text-light); letter-spacing: 0.1em; }
+    .scene-card {
+        background: linear-gradient(150deg, #ffffff 0%, var(--bg-cool) 100%);
+        border-radius: 16px;
+        padding: 28px 30px;
+        margin: 26px 0;
+        border: 1px solid var(--divider);
+        transition: border-color .4s ease;
+    }
+    .scene-card h4 { font-size: 1.02rem; color: var(--primary-dark); margin-bottom: 12px; letter-spacing: 0.08em; transition: color .4s ease; }
+    .scene-card p { margin-bottom: 0; font-size: 0.98rem; }
+    .key-list { margin: 30px 0; }
+    .key-item {
+        display: flex; gap: 18px;
+        background: #fff;
+        border-radius: 14px;
+        padding: 22px 24px;
+        margin-bottom: 16px;
+        border: 1px solid var(--divider);
+        box-shadow: 0 3px 14px rgba(0,0,0,0.05);
+        align-items: flex-start;
+        transition: border-color .4s ease;
+    }
+    .key-num {
+        flex-shrink: 0;
+        width: 40px; height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(140deg, var(--primary), var(--primary-dark));
+        color: #fff;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1rem; font-weight: 700;
+        margin-top: 4px;
+    }
+    .key-item h4 { font-size: 1.02rem; color: var(--primary-dark); margin-bottom: 6px; letter-spacing: 0.06em; transition: color .4s ease; }
+    .key-item p { margin-bottom: 0; font-size: 0.96rem; color: var(--text-light); }
+    .insight-card {
+        background: linear-gradient(150deg, var(--primary-dark), var(--primary-deep));
+        border-radius: 18px;
+        padding: 34px 32px;
+        margin: 34px 0;
+        color: #fff;
+        box-shadow: 0 8px 26px rgba(0,0,0,0.18);
+    }
+    .insight-card h4 { font-size: 0.82rem; letter-spacing: 0.4em; color: var(--primary-light); margin-bottom: 16px; }
+    .insight-card p { color: rgba(255,255,255,0.94); font-size: 1.02rem; margin-bottom: 0; line-height: 2.1; }
+    .divider-orn { text-align: center; margin: 60px 0; color: var(--divider); letter-spacing: 1.2em; font-size: 0.8rem; }
+
+    /* ========== 思维导图 ========== */
+    .mindmap-section {
+        background: #fff;
+        border-radius: 20px;
+        border: 1px solid var(--divider);
+        padding: 36px 26px;
+        margin: 40px 0 70px;
+        box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+        transition: border-color .4s ease;
+    }
+    .mindmap-section h3 { text-align: center; color: var(--primary-dark); font-size: 1.3rem; letter-spacing: 0.2em; margin-bottom: 26px; transition: color .4s ease; }
+    .markmap { width: 100%; height: 560px; }
+    .markmap svg { width: 100%; height: 100%; filter: var(--mm-filter); transition: filter .4s ease; }
+
+    /* ========== 尾声 ========== */
+    .epilogue { background: var(--hero-grad); padding: 90px 26px 100px; text-align: center; }
+    .epilogue-inner { max-width: 680px; margin: 0 auto; }
+    .epilogue h3 { color: var(--primary-light); font-size: 0.85rem; letter-spacing: 0.5em; margin-bottom: 40px; }
+    .epilogue p { color: rgba(255,255,255,0.88); font-size: 1.02rem; line-height: 2.2; margin-bottom: 24px; text-align: center; }
+    .epilogue .final-quote {
+        color: var(--primary-light);
+        font-size: 1.08rem;
+        border-top: 1px solid rgba(255,255,255,0.22);
+        border-bottom: 1px solid rgba(255,255,255,0.22);
+        padding: 26px 10px;
+        margin: 38px 0;
+        line-height: 2.3;
+    }
+    .goodnight { margin-top: 66px; font-size: 1.5rem; letter-spacing: 0.6em; color: var(--primary-light); font-weight: 600; }
+
+    @media (max-width: 600px) {
+        .container { padding: 52px 20px 30px; }
+        .chapter h2 { font-size: 1.4rem; }
+        .quote-block { padding: 22px 20px; }
+        .key-item { padding: 18px; }
+        .markmap { height: 480px; }
+        .theme-switcher { top: 16px; right: 16px; }
+        .theme-panel { width: 216px; }
+    }
+</style>
+</head>
+<body class="theme-sky">
+
+<!-- 右上角换肤按钮 -->
+<div class="theme-switcher">
+    <button class="theme-toggle" id="themeToggle" aria-label="切换配色">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c1.1 0 2-.9 2-2 0-.5-.2-1-.5-1.3-.3-.4-.5-.8-.5-1.3 0-1.1.9-2 2-2h2.4c3 0 5.6-2.5 5.6-5.5C23 6 18 2 12 2z"/>
+            <circle cx="7" cy="10" r="1.3" fill="currentColor" stroke="none"/>
+            <circle cx="12" cy="7" r="1.3" fill="currentColor" stroke="none"/>
+            <circle cx="17" cy="10" r="1.3" fill="currentColor" stroke="none"/>
+        </svg>
+    </button>
+    <div class="theme-panel" id="themePanel">
+        <div class="theme-option active" data-theme="sky"><span class="swatch" style="background:#4A9FD4"></span>天青蓝</div>
+        <div class="theme-option" data-theme="moon"><span class="swatch" style="background:#46759B"></span>月海蓝</div>
+        <div class="theme-option" data-theme="haze"><span class="swatch" style="background:#7D99AE"></span>雾霾蓝</div>
+        <div class="theme-option" data-theme="indigo"><span class="swatch" style="background:#4A6FA5"></span>靛青蓝</div>
+        <div class="theme-option" data-theme="teal"><span class="swatch" style="background:#4E9B8F"></span>松石绿</div>
+        <div class="theme-option" data-theme="bamboo"><span class="swatch" style="background:#7A9B76"></span>竹青色</div>
+        <div class="theme-option" data-theme="vermilion"><span class="swatch" style="background:#C0564F"></span>朱砂红</div>
+        <div class="theme-option" data-theme="sakura"><span class="swatch" style="background:#D19090"></span>绯樱色</div>
+        <div class="theme-option" data-theme="lotus"><span class="swatch" style="background:#C48F9B"></span>藕荷色</div>
+        <div class="theme-option" data-theme="rose"><span class="swatch" style="background:#A78B8B"></span>玫瑰灰</div>
+        <div class="theme-option" data-theme="purple"><span class="swatch" style="background:#9B87B5"></span>暮山紫</div>
+        <div class="theme-option" data-theme="amber"><span class="swatch" style="background:#C08A3E"></span>琥珀色</div>
+        <div class="theme-option" data-theme="caramel"><span class="swatch" style="background:#A06B3F"></span>焦糖色</div>
+        <div class="theme-option" data-theme="wood"><span class="swatch" style="background:#B08D57"></span>木头色</div>
+        <div class="theme-option" data-theme="ink"><span class="swatch" style="background:#5A6670"></span>墨玉色</div>
+    </div>
+</div>
+
+<div class="hero">
+    <h1>丰盛</h1>
+    <div class="hero-sub">揭秘心想事成的至简原理</div>
+    <div class="hero-author">杨定一 著</div>
+    <div class="hero-line"></div>
+</div>
+
+<div class="container">
+
+    <!-- 序 -->
+    <div class="chapter">
+        <span class="chapter-label">序</span>
+        <h2>你生来完整，本就丰盛</h2>
+        <p class="lead">夜深了，一天的喧嚣终于退去，世界和你都缓缓安静了下来。我们总在追赶着什么——更好的工作、更多的认可、更完美的生活，仿佛只要跑得再快一点，就能触碰到那个名为"丰盛"的彼岸。</p>
+        <p>如果我说，我们都走反了呢？如果我说，丰盛不在远方——它就在你此刻呼吸的间隙里。它不是你需要奋力追逐的未来，而是你早已拥有的当下本质。</p>
+        <p>这听起来是不是有些不可思议，甚至像一句安慰人的空话？今晚，我想邀请你暂时放下所有判断，只是怀着一点好奇，和我一起走进这本特别的书。它可能会轻轻震动你一直以来看待自己、看待世界的目光。</p>
+        <p>这本书来自一位很特别的作者——杨定一博士。他是一位科学家：1958年出生于台湾，七岁移民巴西，13岁获耶鲁大学入学许可，21岁拿下生化与医学的双博士。但他写的这本书，探讨的却不是一个实验室里的课题，而是我们每个人都可能感到困惑的生命课题：为什么我们努力追求幸福成功，却常常感到一种更深的匮乏？真正的丰盛，究竟是什么？</p>
+        <p>也许你会想：这又是一本讲吸引力法则、教人如何心想事成的成功学书籍吧？不，恰恰相反。杨定一博士写这本书，并不是为了鼓励我们追求更多的财富和地位，而是为了那些在生活中经历了挫折、失落、痛苦，感觉被卡住的朋友而写的。他说：即使落在这样充满烦恼的人间，我们一样可以瞥见生命本身的完美、宁静和欢喜。</p>
+        <p>今晚，就让我们跟随这位科学家的哲思，一起探索那个本自具足的生命真相。你会发现——你生来完整，本就丰盛；你苦苦追寻的，早已在你之内。</p>
+    </div>
+
+    <div class="divider-orn">· · ·</div>
+
+    <!-- 第一章 -->
+    <div class="chapter">
+        <span class="chapter-label">第一章</span>
+        <h2>我们走反了：追逐的悖论与"萎缩"</h2>
+        <p class="lead">让我们就从你最熟悉的那种感觉开始吧。</p>
+        <p>你有没有过这样的时刻——发了工资，买了心心念念的东西，开心了没几天，那份满足感就消失了；拼尽全力完成了一个目标，得到了想要的认可，可转头又开始焦虑下一个目标。</p>
+        <p>那种"想要更多、想要更好"的驱动力，推动着我们早起奋斗、规划未来。它是社会进步的动力，似乎也是个人成长的引擎。但不知道你有没有在这种追逐中，偶尔感到一种精疲力竭的孤独——就像踩在一个永不停歇的跑步机上，目标在前方晃动，我们拼命奔跑，却永远无法真正抵达那个叫"满足"的终点站。</p>
+        <p>杨定一博士在书的一开始，就直面了我们这个时代最流行的丰盛方案——吸引力法则。保持积极、视觉化你的目标、向宇宙下订单，这些方法本身没有错，它们像一剂及时的鼓励。但博士引导我们看得更深一层：我们运用吸引力法则时，那个最核心的出发点是什么？是不是仍然是——"我缺乏某个东西，所以我需要把它吸引过来"？</p>
+        <p>你看，这里隐藏着一个根本的假设：<strong>丰盛在我之外，我是一个空杯子，需要去盛装来自外界的活水。</strong>这个假设，就是我们所有焦虑和疲惫的源头。因为在这个逻辑里，我们与自己生命的本源切断了连接，把自己活成了一个永恒的祈求者或追逐者——我们的价值，完全建立在外界是否给予我们那杯水之上。</p>
+        <p>这种状态，杨博士称之为<strong>萎缩</strong>。不是身体的萎缩，是生命状态的萎缩——我们收缩了自己的感知，把全部的注意力都聚焦在"我没有"的那个缺憾上，并因此感到恐惧、不安、紧绷。</p>
+        <div class="scene-card">
+            <h4>一棵树与整片森林</h4>
+            <p>想象一下：你在一片广袤的森林里，却因为紧紧盯着一棵你认为属于你的树，焦虑它是否会枯萎、被夺走。你为这一棵树，错过了整片森林的阳光、鸟鸣、清风与生机。你紧缩在"我的树"这个概念周围——这就是萎缩。而丰盛，是那片完整的森林，它一直都在。</p>
+        </div>
+    </div>
+
+    <div class="divider-orn">· · ·</div>
+
+    <!-- 第二章 -->
+    <div class="chapter">
+        <span class="chapter-label">第二章</span>
+        <h2>心智转向：从"吸引丰盛"到"成为丰盛"</h2>
+        <p class="lead">所以这本书给出的第一个、也是最重要的心智转向是：从"吸引丰盛"，转向"成为丰盛"。</p>
+        <p>它不是要你停止行动，而是要你先校准存在的状态。他写道：</p>
+        <div class="quote-block">
+            <p>丰盛只是一种从整体自然流露出来的特质。你不需要再去刻意追求，你只要老老实实把真正的自己找回来，也就自然活出最高的丰盛。</p>
+            <span class="quote-src">——《丰盛》</span>
+        </div>
+        <p>这就像一棵苹果树。它不会焦虑地每天祈祷："请让苹果掉到我身上吧。"它只是深深地扎根泥土，尽情舒展枝叶，迎接阳光雨露——它活出自己作为一棵苹果树的全部本性。到了时节，开花结果，是再自然不过的事。它的丰盛，不是吸引来的战利品，而是其生命本质的自然流露。</p>
+        <div class="insight-card">
+            <h4>核心启示</h4>
+            <p>我们人生的所有痛苦，几乎都源于——我们忘记了自己是一棵什么树，却拼命想去模仿另一棵树的果实。找回自己，活出自己，丰盛会像呼吸一样自然到来。</p>
+        </div>
+    </div>
+
+    <div class="divider-orn">· · ·</div>
+
+    <!-- 第三章 -->
+    <div class="chapter">
+        <span class="chapter-label">第三章</span>
+        <h2>五把钥匙：感恩 · 给予 · 正向 · 臣服 · 回归自然</h2>
+        <p class="lead">道理或许令人向往，但如何在具体而微、充满烦恼的生活中实践呢？当账单要付，当关系出现裂痕，当自我怀疑来袭时，那个"本自具足"的感觉简直像天方夜谭。</p>
+        <p>别急。杨定一博士没有让我们停在理论的高地。他给了我们几把可以即刻使用的、极其简单的钥匙。它们看似简单，却需要你像打磨玉石一样，反复在生活中实践、体会。</p>
+        <div class="key-list">
+            <div class="key-item">
+                <div class="key-num">一</div>
+                <div>
+                    <h4>感恩——触摸当下的奇迹</h4>
+                    <p>感恩可能是被谈论得最多、也被误解得最深的一个词。书中的感恩完全不同——它不是对着你渴望但尚未得到的东西说谢谢（那依然是匮乏），而是对你当下真实拥有的一切发自内心地说："是的，我看到了，我收到了，这很好。"此刻你能安全地、温暖地坐在这里，本身就是一个不可思议的奇迹。感恩，就是有意识地去触摸这个奇迹——它是最高频的丰盛能量。</p>
+                </div>
+            </div>
+            <div class="key-item">
+                <div class="key-num">二</div>
+                <div>
+                    <h4>给予——成为丰盛的通道</h4>
+                    <p>这是最违背本能、却最强大的丰盛法则。我们根深蒂固的逻辑是"等我有了多余的，我才能给"。但丰盛揭示了一个相反的宇宙原理：在能量的层面，愈给愈多。一个紧紧攥住拳头的人，无法接住任何新来的礼物；当你敢于打开手掌，分享你所拥有的，你就在向宇宙宣告——我是丰盛的源头。</p>
+                </div>
+            </div>
+            <div class="key-item">
+                <div class="key-num">三</div>
+                <div>
+                    <h4>正向——不费力的接纳</h4>
+                    <p>博士区分了"费力的正向"和"不费力的正向"：前者源于恐惧，用理智的口号去对抗真实的感受；后者源于觉察与容纳，像广阔的天空，允许乌云飘过、允许雷电发生，但它知道自己不是那片云，也不是那阵雷。仅仅是看着那半杯水，看到它在此时此刻的珍贵——这份平静的接纳与细微的发现，才是真正的正向。</p>
+                </div>
+            </div>
+            <div class="key-item">
+                <div class="key-num">四</div>
+                <div>
+                    <h4>臣服——接受生命的因果</h4>
+                    <p>臣服不是认命，不是躺平，而是承认生命有其自身的规律，接受已经发生的一切，不与现实对抗。它不是让你放弃努力，而是让你接受"努力了未必有结果"这个事实，不因结果的不如意而否定自己的付出，更不陷入无尽的内耗。生活里的很多烦恼都源于我们的不接受——而接受，就是解开烦恼的钥匙。</p>
+                </div>
+            </div>
+            <div class="key-item">
+                <div class="key-num">五</div>
+                <div>
+                    <h4>回归自然——以大自然为老师</h4>
+                    <p>四季更迭、花开花落、草木荣枯，都遵循着自然的规律——没有强求，没有焦虑。大自然不会因为一朵花的凋零而悲伤，也不会因为一棵树的成长而欣喜，它只是平静地接纳一切。去公园走一走，感受微风，听听鸟鸣，在与自然的连接中，你会慢慢放下内心的执念，明白——一切都好，一切都刚刚好。</p>
+                </div>
+            </div>
+        </div>
+        <p>当我们开始用臣服、感恩、给予、回归自然来重新调整内心的频率，我们其实就是在为真正想要的丰盛，清理内在的空间。</p>
+    </div>
+
+    <div class="divider-orn">· · ·</div>
+
+    <!-- 第四章 -->
+    <div class="chapter">
+        <span class="chapter-label">第四章</span>
+        <h2>少才是多：生命的简化与清理</h2>
+        <p class="lead">在我们探讨如何"得到"之前，或许我们需要先学会"放手"。</p>
+        <p>杨定一博士提出了一个与主流消费社会完全背道而驰的观念：<strong>Less is more——少，才是多。</strong>这个"少"，不仅仅是物质上的断舍离，更是一种生命全方位的简化。</p>
+        <p>想一想：我们的生存空间和精神世界，是不是常常像一个不断膨胀的、沉重的壳？我们积累财富，也积累焦虑；积累物品，也积累杂乱；积累经验，也积累创伤。我们被太多不再需要的东西填满了——可能是一堆永远不会再穿的衣服，一段早已结束却仍在消耗你的感情，一份食之无味、弃之可惜的工作，一个充满攀比和负能量的社交圈子，甚至是一个基于恐惧的、对未来的庞大规划。</p>
+        <p>杨博士邀请我们去做一次充满感恩的清理。当你清理一件旧衣物时，不要带着怨气，而是可以试着对它说："谢谢你过去曾带给我快乐和满足，现在我让你去别人那里，带去美好的能量。"这个过程本身，就是一种能量的释放和转换。你会发现，当你放手，负担就不见了，整个人会变得轻盈，充满活力与平安。</p>
+        <p>这个法则同样适用于我们的情绪和心态：清理你说话时总爱带刺的习惯，清理你对某个人的怨恨与不舍，清理你内心深处的某种恐惧和萎缩。你可以温柔地对自己说："我知道我过去需要这种防备，现在我可以放手，让它离开。"</p>
+        <div class="quote-block">
+            <p>丰盛不是一种固定的存量，而是一种流动的能量、一种均衡的状态。就像呼吸——有吸入，也必须有呼出，才能保持鲜活。我们紧紧抓住旧能量不放，新的能量就无法流进来。</p>
+        </div>
+    </div>
+
+    <div class="divider-orn">· · ·</div>
+
+    <!-- 第五章 -->
+    <div class="chapter">
+        <span class="chapter-label">第五章</span>
+        <h2>参：面对恐惧的终极武器</h2>
+        <p class="lead">拥有了感恩、断舍离这些美好的工具，我们似乎可以乘风破浪了。但很快，我们会撞上生命中那堵最厚、最暗的墙——恐惧。</p>
+        <p>对失败的恐惧、对孤独的恐惧、对疾病的恐惧、对死亡的恐惧——它是最强大的萎缩力量。当恐惧袭来时，所有的感恩练习都可能暂时失效，我们被打回原形，蜷缩在黑暗里。</p>
+        <p>面对这股看似无敌的力量，《丰盛》给出了全书最核心、最究竟的一把武器：<strong>参</strong>（self inquiry，自我探询）。这不是哲学讨论，而是一把锋利而温柔的心灵手术刀，用于在恐惧袭来的当下，进行瞬间的反切。</p>
+        <p>方法是如此简单，简单到让人怀疑其威力：当你被任何负面情绪——恐惧、焦虑、愤怒、悲伤——淹没时，不要跟着情绪编织的故事跑（"我要是生病了怎么办？""他肯定看不起我"），而是立刻做一个"回转身"的动作——把注意力从外在的故事拉回内在的感受，轻轻地、诚恳地问自己：</p>
+        <div class="quote-block">
+            <p>谁在感到恐惧？这个"我"，是谁？</p>
+        </div>
+        <p>注意，这不是要你在头脑里找到一个理论答案（比如"我是张三"或"我是一个灵魂"）。这是一个指向体验的发问。这个追问的目的，是让你注意到：那个正在被恐惧折磨的"我"、那个正在思考问题的"我"，好像并不是全部。在"我感到恐惧"这个念头升起之前，那个"我"是否存在？在恐惧的浪潮退去之后，那个"我"是否依然还在？那个更根本的、观看着恐惧的"我"——那个觉察本身，是什么？</p>
+        <div class="scene-card">
+            <h4>潜入海底</h4>
+            <p>这个练习会将你从情绪的洪流中，暂时拉到一个观察点——就像从惊涛骇浪的海面，潜入平静深邃的海底。海底并不关心海面的风暴，它只是安然存在。</p>
+        </div>
+        <p>杨定一博士说，这个"参"的练习，是直接指向丰盛源头——那个无形无相、永恒宁静的真正的你——最直接的道路。每当你认同于匮乏的"我"、恐惧的"我"，就用这个问题把自己勾回来。一次次地，你会熟悉那片海底的宁静与坚实。</p>
+        <p>你会发现：真正的安全感，不来自于外在拥有多少，而来自于内心能否安住于这片存在的深度。恐惧依然会来，但它无法再像以前那样彻底地定义你、摧毁你。因为你知道了——<strong>你不是那场风暴，你是知晓风暴的空间。</strong></p>
+    </div>
+
+    <div class="divider-orn">· · ·</div>
+
+    <!-- 第六章 -->
+    <div class="chapter">
+        <span class="chapter-label">第六章</span>
+        <h2>回归本性：让自己轻轻松松存在</h2>
+        <p class="lead">当我们走过了前面的旅程——通过感恩连接了当下的圆满，通过给予体验了能量的流动，通过正向接纳了生命的起伏，通过"参"触碰了内在的宁静——我们终于来到了最核心的一扇门前：回归本性。</p>
+        <p>或许在某个你很平静的时刻，你曾有过这样的感觉：抛开所有的身份、头衔、拥有物，那个最核心的"我"，好像本来就存在，本来就完整，本来就安宁。杨博士告诉我们——这个感觉，就是真相。那个真正的自己，就是本自具足的存在。它在你拥有任何东西之前，就在；在你经历所有悲欢之后，依然在。</p>
+        <p>书的最后一部分，标题极其动人：<strong>让自己轻轻松松存在。</strong>我们总以为必须很努力、很优秀、很正确，才配得上一个好的人生——我们把自己活成了一场永无止境的考试。"轻轻松松存在"这六个字，是整本书修炼的最终指向。它不是懒惰，不是消极，而是一种彻底的放松和信任——信任生命本身的智慧，信任那个更大的整体的运作。</p>
+        <p>当你能够这样存在，你会对自己有全然不同的态度：你可以接受自己、理解自己、原谅自己、放过自己。因为你知道，在一切的纷扰之下——你已经是刚刚好。</p>
+        <div class="insight-card">
+            <h4>真正的心想事成</h4>
+            <p>它不是用头脑发愿去强求某样东西，而是当你的意识状态回归圆满，你所需要的一切，生命自然会以最恰当的方式提供给你。你不再是一个卑微的乞求者，你成了一个从容的接收者。</p>
+        </div>
+        <p>活在这种状态里，行动依然会发生，但行动的驱动力不再是恐惧和匮乏，而是内在宁静、满意后自然流露的灵感与热情。你依然会追求目标，但不再被目标所捆绑——成功了，很好；失败了，也没关系。因为你知道，那都不是你生命的全部定义。你生命的底蕴，是那份轻轻松松的安然与喜悦。</p>
+    </div>
+
+    <div class="divider-orn">· · ·</div>
+
+    <!-- 思维导图 -->
+    <div class="chapter">
+        <div class="mindmap-section">
+            <h3>全书思维导图</h3>
+            <div class="markmap">
+# 《丰盛》揭秘心想事成的至简原理
+## 作者：杨定一博士
+### 科学家 · 生化医学双博士
+### 为感到被卡住的人而写
+## 起点：我们走反了
+### 追逐的悖论：得到即失去
+### 吸引力法则的隐藏假设：我缺乏
+### 萎缩：聚焦"我没有"的缺憾
+### 为一棵树错过整片森林
+## 转向：从吸引到成为
+### 丰盛是整体的自然流露
+### 苹果树：活出自己的本性
+### 找回自己 → 丰盛如呼吸般自然
+## 五把钥匙
+### 感恩：触摸当下的奇迹
+### 给予：愈给愈多 · 成为通道
+### 正向：不费力的接纳与容纳
+### 臣服：接受因果 · 不与现实对抗
+### 回归自然：一切都刚刚好
+## 简化与清理
+### Less is more · 少才是多
+### 带着感恩放手
+### 丰盛是流动的能量 · 如呼吸
+## 参：面对恐惧
+### 谁在恐惧？这个我是谁？
+### 从情绪洪流潜入海底的宁静
+### 你不是风暴 · 是知晓风暴的空间
+## 归宿：轻轻松松存在
+### 本自具足 · 你已是刚刚好
+### 从乞求者到从容的接收者
+### 一切已完成 · 一切都是最好的安排
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- 尾声 -->
+<div class="epilogue">
+    <div class="epilogue-inner">
+        <h3>尾声 · 一切都是刚刚好</h3>
+        <p>亲爱的朋友，这本书读到这里，就要接近尾声了。这本书不是教我们变得更强大去征服世界，而是教我们彻底柔软下来，去信任生命本身——让生命带着你走。</p>
+        <p>当你找回了内在的丰盛，你会发现：生活不再是一场拼命的追逐，而是一场温柔的旅程。你会学着顺其自然，学着随遇而安，学着在平凡的日子里，开出属于自己的花。</p>
+        <p>丰盛从来都不在外面，而在我们的心里。你不需要去吸引任何东西，因为你本身就是丰盛的源头。你无需在外在的世界里不断追加筹码来证明自己——你是一点也追加不了、也减少不了的。</p>
+        <p class="final-quote">相信一切已经完成，而一切都是最好的安排。最后，一切是刚刚好——你，也是刚刚好。</p>
+        <p>现在，请关掉灯，带着这份"刚刚好"的感觉，放松地躺好，闭上眼睛。把你的手轻轻地放在你的心口，感受手掌下你的心跳、你的呼吸——它们无需你的指挥，一直在完美地运作，供养着你的生命。在这个夜晚，你被生命本身稳稳地承托着。你就是丰盛，丰盛就是你。</p>
+        <p>愿你往后的日子，内心丰盈，温暖向阳。</p>
+        <div class="goodnight">晚安</div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+<script>
+    // 滚动渐入
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.chapter').forEach(ch => observer.observe(ch));
+
+    // 换肤
+    const toggle = document.getElementById('themeToggle');
+    const panel = document.getElementById('themePanel');
+    const options = document.querySelectorAll('.theme-option');
+
+    toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        panel.classList.toggle('open');
+    });
+    document.addEventListener('click', (e) => {
+        if (!panel.contains(e.target)) panel.classList.remove('open');
+    });
+    options.forEach(opt => {
+        opt.addEventListener('click', () => {
+            document.body.className = 'theme-' + opt.dataset.theme;
+            options.forEach(o => o.classList.toggle('active', o === opt));
+            panel.classList.remove('open');
+        });
+    });
+</script>
+</body>
+</html>

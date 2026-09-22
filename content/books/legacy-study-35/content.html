@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>反脆弱 · 杀不死我的，终将使我更强大</title>
+<link href="https://fonts.loli.net/css2?family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* === 16 Themes === */
+body.theme-forge{--bg:#0e0c0a;--text:#e8e0d8;--card:#1a1614;--accent:#ff6a00;--accent2:#ffb347;--border:#2e2620;--shadow:0 8px 32px rgba(255,106,0,.08);--hero-bg:linear-gradient(180deg,#0e0c0a 0%,#1a1008 40%,#2a1a0a 100%);--muted:#9a8a7a}
+body.theme-ink{--bg:#faf8f5;--text:#2c2c2c;--card:#fff;--accent:#333;--accent2:#666;--border:#e0dcd6;--shadow:0 4px 20px rgba(0,0,0,.05);--hero-bg:linear-gradient(180deg,#1a1a1a,#3a3a3a);--muted:#888}
+body.theme-forest{--bg:#f4f8f4;--text:#1a3320;--card:#fff;--accent:#2d8a4e;--accent2:#5cb87a;--border:#d4e8d8;--shadow:0 4px 20px rgba(45,138,78,.07);--hero-bg:linear-gradient(180deg,#0a2a1a,#1a4a2a);--muted:#5a7a62}
+body.theme-wine{--bg:#faf5f6;--text:#3d1a24;--card:#fff;--accent:#a03050;--accent2:#d4607a;--border:#f0d8de;--shadow:0 4px 20px rgba(160,48,80,.07);--hero-bg:linear-gradient(180deg,#2a0a1a,#5a1a2a);--muted:#9a6a76}
+body.theme-ocean{--bg:#f2f8fc;--text:#1a2e3d;--card:#fff;--accent:#1a7ab5;--accent2:#4aa8d8;--border:#d0e8f4;--shadow:0 4px 20px rgba(26,122,181,.07);--hero-bg:linear-gradient(180deg,#0a1a2e,#1a3a5a);--muted:#5a8a9e}
+body.theme-sand{--bg:#faf7f0;--text:#3d3020;--card:#fff;--accent:#b8862a;--accent2:#d4a84a;--border:#ede0cc;--shadow:0 4px 20px rgba(184,134,42,.07);--hero-bg:linear-gradient(180deg,#2a2010,#5a4020);--muted:#9a8a6a}
+body.theme-plum{--bg:#f8f4fa;--text:#2e1a3d;--card:#fff;--accent:#7a3aa0;--accent2:#a86ad0;--border:#e8d8f2;--shadow:0 4px 20px rgba(122,58,160,.07);--hero-bg:linear-gradient(180deg,#1a0a2a,#3a1a5a);--muted:#8a6a9e}
+body.theme-slate{--bg:#f5f6f8;--text:#2a2e35;--card:#fff;--accent:#4a6a8a;--accent2:#6a9aba;--border:#dde2e8;--shadow:0 4px 20px rgba(74,106,138,.07);--hero-bg:linear-gradient(180deg,#1a2028,#2a3a4a);--muted:#7a8a9a}
+body.theme-coral{--bg:#fef6f4;--text:#3d2420;--card:#fff;--accent:#d05a3a;--accent2:#f08a5a;--border:#f8ddd6;--shadow:0 4px 20px rgba(208,90,58,.07);--hero-bg:linear-gradient(180deg,#2a1210,#5a2a1a);--muted:#9a7a6a}
+body.theme-teal{--bg:#f2faf8;--text:#1a3330;--card:#fff;--accent:#0a8a7a;--accent2:#3abaa8;--border:#d0ece8;--shadow:0 4px 20px rgba(10,138,122,.07);--hero-bg:linear-gradient(180deg,#0a2a28,#1a4a40);--muted:#5a8a80}
+body.theme-midnight{--bg:#0d1117;--text:#c9d1d9;--card:#161b22;--accent:#58a6ff;--accent2:#a371f7;--border:#21262d;--shadow:0 8px 32px rgba(88,166,255,.05);--hero-bg:linear-gradient(180deg,#0d1117,#161b22);--muted:#8b949e}
+body.theme-charcoal{--bg:#1a1a1e;--text:#e0ddd8;--card:#242428;--accent:#e8b840;--accent2:#d08030;--border:#333338;--shadow:0 8px 32px rgba(232,184,64,.05);--hero-bg:linear-gradient(180deg,#1a1a1e,#2a2420);--muted:#8a8a8e}
+body.theme-abyss{--bg:#080c14;--text:#b8c8e0;--card:#0f1520;--accent:#00b4d8;--accent2:#0077b6;--border:#1a2535;--shadow:0 8px 32px rgba(0,180,216,.05);--hero-bg:linear-gradient(180deg,#080c14,#0a1a2a);--muted:#5a7a9a}
+body.theme-moss{--bg:#f6f8f2;--text:#2a3320;--card:#fff;--accent:#5a8a2a;--accent2:#8ab84a;--border:#dde8cc;--shadow:0 4px 20px rgba(90,138,42,.07);--hero-bg:linear-gradient(180deg,#1a2a10,#3a4a20);--muted:#7a8a5a}
+body.theme-ember{--bg:#14100e;--text:#e8ddd4;--card:#1e1814;--accent:#ff4500;--accent2:#ff8c00;--border:#2e2420;--shadow:0 8px 32px rgba(255,69,0,.06);--hero-bg:linear-gradient(180deg,#14100e,#2a1208);--muted:#9a8070}
+body.theme-orchid{--bg:#faf4fc;--text:#301a3d;--card:#fff;--accent:#b040d0;--accent2:#d870f0;--border:#eedaf6;--shadow:0 4px 20px rgba(176,64,208,.07);--hero-bg:linear-gradient(180deg,#1a0a2a,#3a1a4a);--muted:#8a5a9e}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Serif SC',serif;background:var(--bg);color:var(--text);line-height:2;overflow-x:hidden;transition:background .5s,color .5s}
+
+/* Theme select */
+.theme-select{position:fixed;top:20px;right:20px;z-index:999;padding:8px 14px;border-radius:10px;border:2px solid var(--border);background:var(--card);color:var(--text);font-size:.85rem;font-family:'Noto Serif SC',serif;cursor:pointer;box-shadow:var(--shadow);transition:all .3s;appearance:auto}
+.theme-select:hover{border-color:var(--accent)}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:var(--hero-bg);position:relative;overflow:hidden;padding:80px 24px}
+.embers{position:absolute;inset:0;pointer-events:none}
+.ember{position:absolute;bottom:-10px;width:3px;height:3px;border-radius:50%;background:var(--accent);opacity:0;animation:rise 4s infinite ease-out}
+@keyframes rise{0%{transform:translateY(0) scale(1);opacity:0}10%{opacity:.8}100%{transform:translateY(-100vh) scale(0);opacity:0}}
+.hero-subtitle{font-size:.85rem;color:var(--accent);letter-spacing:.4em;text-transform:uppercase;margin-bottom:20px}
+.hero h1{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(2.2rem,7vw,3.8rem);color:#fff;line-height:1.3;margin-bottom:16px;text-shadow:0 0 60px rgba(255,106,0,.3)}
+.hero-author{font-size:.9rem;color:rgba(255,255,255,.5);margin-bottom:30px}
+.hero-tagline{max-width:540px;font-size:1rem;color:rgba(255,255,255,.75);line-height:2}
+
+/* Spectrum */
+.spectrum{display:flex;align-items:center;justify-content:center;gap:0;margin:50px auto 0;max-width:500px;width:90%}
+.spec-item{flex:1;text-align:center;padding:18px 10px;position:relative}
+.spec-item::after{content:'→';position:absolute;right:-8px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.3);font-size:1.2rem}
+.spec-item:last-child::after{display:none}
+.spec-icon{font-size:1.8rem;margin-bottom:8px}
+.spec-name{font-size:.8rem;color:rgba(255,255,255,.6)}
+.spec-item.active .spec-name{color:var(--accent);font-weight:700}
+
+/* Chapter */
+.chapter{max-width:720px;margin:0 auto;padding:90px 24px;opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
+.chapter.visible{opacity:1;transform:translateY(0)}
+.chapter-label{display:inline-block;font-size:.72rem;letter-spacing:.3em;color:var(--accent);border:1px solid var(--accent);padding:4px 14px;border-radius:4px;margin-bottom:20px;text-transform:uppercase}
+.chapter h2{font-family:'ZCOOL XiaoWei',serif;font-size:clamp(1.5rem,4vw,2rem);margin-bottom:28px;color:var(--text);line-height:1.5}
+.chapter p{margin-bottom:1.6em;font-size:1.02rem;color:var(--text)}
+
+/* Quote */
+.quote{border-left:3px solid var(--accent);padding:22px 26px;margin:36px 0;background:var(--card);border-radius:0 12px 12px 0;box-shadow:var(--shadow)}
+.quote p{margin:0;font-style:italic;color:var(--muted);font-size:.97rem}
+
+/* Fire divider */
+.fire-divider{display:flex;align-items:center;justify-content:center;gap:14px;margin:60px auto;max-width:720px;padding:0 24px}
+.fire-divider::before,.fire-divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent)}
+.fire-dot{width:8px;height:8px;background:var(--accent);border-radius:50%;box-shadow:0 0 12px var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.4);opacity:1}}
+
+/* Barbell */
+.barbell{display:flex;align-items:center;justify-content:center;margin:40px 0;gap:0}
+.barbell-weight{width:100px;height:100px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--card);border:2px solid var(--border);box-shadow:var(--shadow)}
+.barbell-weight.left{border-color:var(--accent)}
+.barbell-weight.right{border-color:var(--accent2)}
+.barbell-weight .pct{font-size:1.6rem;font-weight:700;color:var(--accent);font-family:'ZCOOL XiaoWei',serif}
+.barbell-weight .lbl{font-size:.72rem;color:var(--muted);margin-top:4px}
+.barbell-bar{width:80px;height:4px;background:var(--border);position:relative}
+.barbell-bar::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:20px;height:20px;border-radius:50%;background:var(--card);border:2px solid var(--border)}
+
+/* Insight */
+.insight{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px;margin:32px 0;box-shadow:var(--shadow)}
+.insight-title{font-family:'ZCOOL XiaoWei',serif;font-size:1rem;color:var(--accent);margin-bottom:12px}
+.insight p{font-size:.95rem;color:var(--text);margin-bottom:.8em}
+.insight p:last-child{margin-bottom:0}
+
+/* Triad */
+.triad{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:36px 0}
+.triad-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px 16px;text-align:center;box-shadow:var(--shadow)}
+.triad-card .icon{font-size:1.6rem;margin-bottom:10px}
+.triad-card .name{font-family:'ZCOOL XiaoWei',serif;font-size:.95rem;margin-bottom:8px;color:var(--text)}
+.triad-card .desc{font-size:.8rem;color:var(--muted);line-height:1.7}
+
+/* Markmap */
+.markmap-section{max-width:900px;margin:80px auto;padding:0 24px}
+.markmap-section h2{font-family:'ZCOOL XiaoWei',serif;text-align:center;font-size:1.4rem;margin-bottom:30px;color:var(--text)}
+.markmap{width:100%;height:520px;border-radius:14px;border:1px solid var(--border);background:var(--card);box-shadow:var(--shadow)}
+.markmap svg{background:transparent!important}
+.markmap-foreign{color:var(--text)!important;font-size:14px!important}
+
+/* Goodnight */
+.goodnight{text-align:center;padding:100px 24px 120px}
+.goodnight p{font-family:'ZCOOL XiaoWei',serif;font-size:1.6rem;letter-spacing:.5em;color:var(--muted)}
+
+@media(max-width:600px){
+  .triad{grid-template-columns:1fr}
+  .barbell-weight{width:80px;height:80px}
+  .barbell-bar{width:50px}
+  .spectrum{flex-direction:column;gap:12px}
+  .spec-item::after{content:'↓';right:auto;bottom:-14px;top:auto;transform:none}
+  .chapter{padding:60px 20px}
+}
+</style>
+</head>
+<body class="theme-forge">
+<script>!function(){var t=['theme-forge','theme-ink','theme-forest','theme-wine','theme-ocean','theme-sand','theme-plum','theme-slate','theme-coral','theme-teal','theme-midnight','theme-charcoal','theme-abyss','theme-moss','theme-ember','theme-orchid'];document.body.className=t[Math.floor(Math.random()*t.length)]}()</script>
+
+<select class="theme-select" onchange="document.body.className=this.value">
+  <option value="theme-forge">🔥 熔炉</option>
+  <option value="theme-ink">🖋 水墨</option>
+  <option value="theme-forest">🌲 松林</option>
+  <option value="theme-wine">🍷 酒红</option>
+  <option value="theme-ocean">🌊 海洋</option>
+  <option value="theme-sand">🏜 沙丘</option>
+  <option value="theme-plum">🌸 梅紫</option>
+  <option value="theme-slate">🪨 石灰</option>
+  <option value="theme-coral">🪸 珊瑚</option>
+  <option value="theme-teal">🍃 青瓷</option>
+  <option value="theme-midnight">🌌 午夜</option>
+  <option value="theme-charcoal">⚡ 炭金</option>
+  <option value="theme-abyss">🐋 深渊</option>
+  <option value="theme-moss">🌿 苔藓</option>
+  <option value="theme-ember">🌋 余烬</option>
+  <option value="theme-orchid">🦋 兰紫</option>
+</select>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="embers" id="embers"></div>
+  <p class="hero-subtitle">Antifragile</p>
+  <h1>反脆弱</h1>
+  <p class="hero-author">纳西姆·尼古拉斯·塔勒布</p>
+  <p class="hero-tagline">风会熄灭蜡烛，却会使火越燃越旺。对随机性、不确定性和混沌，你选择做蜡烛，还是做火？</p>
+  <div class="spectrum">
+    <div class="spec-item"><div class="spec-icon">🕯</div><div class="spec-name">脆弱</div></div>
+    <div class="spec-item"><div class="spec-icon">🪨</div><div class="spec-name">强韧</div></div>
+    <div class="spec-item active"><div class="spec-icon">🔥</div><div class="spec-name">反脆弱</div></div>
+  </div>
+</header>
+
+<!-- 序 -->
+<section class="chapter">
+  <span class="chapter-label">序</span>
+  <h2>火鸡的第1001天</h2>
+  <p>有一只火鸡被圈养在一个农场里。每天上午十点，主人都会准时端着食物出现在它面前。火鸡啄食着美味的谷物，吃饱了就在阳光下散步。日复一日，生活规律而安逸。它甚至开始总结规律：只要栅栏门一响，就是开饭的信号。</p>
+  <p>它看着栅栏外那些在田野里辛苦刨食的野鸟，心里充满了优越感。它们真可怜，每天要面对风雨和饥饿。而我呢，有遮风挡雨的棚子，有定时供应的美食。这就是天堂。</p>
+  <p>就这样过了1000天。第1001天，感恩节到了。主人准时来了，栅栏门响了。火鸡迎上前去。但这次主人手里没有食物，只有一把刀。</p>
+  <div class="quote">
+    <p>这只火鸡犯了一个致命错误：它用过去1000天的经验推断第1001天会发生什么。前1000天都安全，所以第1001天也一定安全。我们和那只火鸡的区别，可能只是我们还没到感恩节。</p>
+  </div>
+  <p>塔勒布把这种极小概率、但一旦发生就会产生颠覆性影响的事件，叫做"黑天鹅事件"。在发现澳大利亚之前，所有欧洲人都认为天鹅一定是白色的。直到有一天，他们踏上澳洲大陆，看到了一只黑色的天鹅。刹那间，所有基于白天鹅建立的认知大厦轰然倒塌。</p>
+  <p>那么，有没有一种存在方式，不仅不怕黑天鹅，甚至还能从中获益？这就是这本书要回答的问题。</p>
+</section>
+
+<div class="fire-divider"><div class="fire-dot"></div></div>
+
+<!-- 壹 -->
+<section class="chapter">
+  <span class="chapter-label">壹</span>
+  <h2>蜡烛、石头与篝火</h2>
+  <p>脆弱的反面是什么？你可能会脱口而出：坚强、坚韧、稳固。但塔勒布说，不对。脆弱的反面不是坚强，是反脆弱。</p>
+  <p>你面前有一根蜡烛，风一吹，火苗就灭了——蜡烛是脆弱的。你面前有一块石头，风吹不动它——石头是坚韧的。但你面前如果是一团篝火呢？风越吹，火越旺。篝火能从风的吹拂中获得力量。这就是反脆弱。</p>
+  <div class="triad">
+    <div class="triad-card">
+      <div class="icon">⚔️</div>
+      <div class="name">达摩克利斯之剑</div>
+      <div class="desc">表面祥和，一根马鬃系着利剑。一阵风就能万劫不复。这是脆弱。</div>
+    </div>
+    <div class="triad-card">
+      <div class="icon">🦅</div>
+      <div class="name">凤凰</div>
+      <div class="desc">烈火中一次次重生，每次以同样姿态出现。能扛住打击，恢复原状。这是强韧。</div>
+    </div>
+    <div class="triad-card">
+      <div class="icon">🐍</div>
+      <div class="name">九头蛇</div>
+      <div class="desc">砍掉一个头，长出两个。每一次打击都让它变得更强大。这是反脆弱。</div>
+    </div>
+  </div>
+  <p>核心机制叫做"过度补偿"。你举过哑铃吧？当你举重的时候，肌肉纤维会轻微撕裂。身体在修复这些撕裂的时候，不会仅仅恢复到原来的水平，它会让你长出更多的肌肉，比你之前更强壮。你的免疫系统也一样——感冒痊愈后，下次同样的病毒就奈何不了你了。</p>
+  <div class="quote">
+    <p>传说有位国王担心被人下毒，就每天服用小剂量的毒药。日积月累，身体产生了耐受力，再大的剂量也毒不死他了。小剂量的毒药，反而成了他的解药。</p>
+  </div>
+  <p>但这里有一个重要的前提：如果压力太大，如果你被一辆卡车正面撞上，你的骨骼不会变得更结实，只会粉碎。反脆弱性需要的是适度的波动和冲击，不是毁灭性的打击。你需要让生活保持一定程度的随机性和挑战性，而不是把所有不确定性都清扫干净。</p>
+</section>
+
+<div class="fire-divider"><div class="fire-dot"></div></div>
+
+<!-- 贰 -->
+<section class="chapter">
+  <span class="chapter-label">贰</span>
+  <h2>过度保护是一种慢性伤害</h2>
+  <p>现代社会的很多问题，恰恰源于我们对舒适和稳定的过度追求。我们消除了小的波动，却制造了大的灾难。</p>
+  <p>塔勒布提出了"医源性损伤"这个概念——医生出于好意进行干预，结果却造成了比疾病本身更大的伤害。有些病本来可以自愈，但医生开了药、做了手术，病人反而承受了额外的风险。益处很小且清晰可见，成本却很大且滞后而隐蔽。</p>
+  <div class="quote">
+    <p>如果病人已经濒死，那么任何投机性的治疗方法都可以尝试。但如果病人本来就健康，那么大自然是更好的医生。很多时候，不做什么比做什么更重要。</p>
+  </div>
+  <p>你有没有发现，那些从小到大一帆风顺、从未经历过挫折的孩子，长大后往往特别脆弱？一次考试失败、一次求职被拒，就能让他们崩溃。过度保护是一种慢性伤害——你以为在帮他规避风险，实际在剥夺他成长的机会。</p>
+  <div class="insight">
+    <p class="insight-title">一个从来没有摔过跤的孩子</p>
+    <p>永远不会学会怎么爬起来。一个从来没有失败过的人，永远不知道怎么面对失败。消除所有小波动，就是在为一次大崩溃积蓄能量。</p>
+  </div>
+</section>
+
+<div class="fire-divider"><div class="fire-dot"></div></div>
+
+<!-- 叁 -->
+<section class="chapter">
+  <span class="chapter-label">叁</span>
+  <h2>杠铃策略</h2>
+  <p>怎么才能让自己变得反脆弱？塔勒布给出了一个非常具体的方法：杠铃策略。把你的资源配置在两个极端——一头极度保守，一头极度激进，完全避开中间地带。想象一个杠铃，两头重，中间细。</p>
+  <div class="barbell">
+    <div class="barbell-weight left"><div class="pct">90%</div><div class="lbl">极度安全</div></div>
+    <div class="barbell-bar"></div>
+    <div class="barbell-weight right"><div class="pct">10%</div><div class="lbl">极度激进</div></div>
+  </div>
+  <p>塔勒布自己在金融市场上就是这样操作的。他把90%以上的资金投入极度安全的资产，比如国债；只用不到10%的资金买入极度虚值的看跌期权。这些期权平时像废纸一样不断亏损小钱，但一旦市场出现剧烈崩盘——比如1987年股灾、2008年金融危机——它们的价值会瞬间暴涨几百甚至上千倍。</p>
+  <div class="quote">
+    <p>他不需要预测危机什么时候来，他只需要知道危机一定会来。平时的小亏损是他为反脆弱性支付的保费，危机来临时的大收益是他从不确定性中获得的回报。</p>
+  </div>
+  <p>杠铃策略不只适用于投资。在职业上，你可以有一份稳定的工作提供基本收入，同时花少量时间做自己真正热爱的事情——写作、创业、做副业。即使副业失败了，你还有稳定的收入；而一旦副业成功了，你的收益是没有上限的。</p>
+  <p>在阅读上，你可以读那些有用的书，但也一定要读那些"没用"的书。塔勒布说，学校是一个阴谋——它通过把知识压缩到少数几本教材里，剥夺了人们博览群书的权利。真正的智慧往往来自那些你随机遇到的知识。</p>
+  <div class="insight">
+    <p class="insight-title">双栖生活</p>
+    <p>你可以做一个悲观主义者和乐观主义者的混合体：在大的层面，你悲观地认为世界充满了不可预测的灾难，所以拼命做好防护、留足冗余；但在小的层面，你乐观地相信每一次挫折都藏着机会，所以勇敢地去试错、去探索、去拥抱随机性。</p>
+  </div>
+</section>
+
+<div class="fire-divider"><div class="fire-dot"></div></div>
+
+<!-- 肆 -->
+<section class="chapter">
+  <span class="chapter-label">肆</span>
+  <h2>斯多葛与否定法</h2>
+  <p>斯多葛学派的核心思想是：区分你能控制的和不能控制的，然后专注于前者。你不能控制外部世界会发生什么，但你可以控制自己如何回应。斯多葛主义的主旨是情绪的驯化，而不是情绪的消除——不是要把人变成没有感情的植物，而是要把对情绪的被动反应转变为对情绪根源的主动掌控。</p>
+  <p>塞涅卡是斯多葛学派的重要代表。他拥有巨大的财富，却时刻准备着失去一切。他把每一种可能的不幸都提前在脑海里演练一遍。当不幸真的来临时，他不会惊慌失措，因为他早就准备好了。这就是从混乱中获益的心理版本。</p>
+  <div class="quote">
+    <p>教皇问米开朗琪罗：你是怎么雕刻出大卫雕像的？他回答说：很简单，我只是把所有不属于大卫的部分去掉了。</p>
+  </div>
+  <p>这就是否定法的精髓。与其不停地追求更多好东西，不如先排除那些确定有害的因素。我们无法定义什么是对的，但我们可以相对容易地知道什么是错的。我们无法预测成功，但可以避免失败。我们不知道什么能让我们幸福，但我们知道什么能让我们痛苦。</p>
+  <p>在健康上，与其疯狂追求各种养生方法，不如先戒掉那些明确有害的习惯——抽烟、熬夜、久坐。在投资上，与其拼命寻找下一个暴涨的股票，不如先避开那些会让你血本无归的陷阱。在人生上，与其不断问自己"我到底想要什么"，不如先问"我到底不想要什么"。减法比加法更强大。</p>
+</section>
+
+<div class="fire-divider"><div class="fire-dot"></div></div>
+
+<!-- 伍 -->
+<section class="chapter">
+  <span class="chapter-label">伍</span>
+  <h2>林迪效应与漫步人生</h2>
+  <p>林迪效应说的是：对于不会自然消亡的事物，生命每增加一天，就意味着更长的预期剩余寿命。已经存在了很久的事物，更有可能继续存在很久。</p>
+  <p>一本书出版了2000年还在被人阅读——比如《论语》、比如《沉思录》——它大概率还能再存在2000年。一本畅销书排行榜上的新书，可能明年就没人记得了。轮子存在了几千年，它还会继续存在几千年；某种最新的App，可能3年后就消失了。</p>
+  <div class="quote">
+    <p>我们对新事物的狂热往往是一种病。新的不一定更好，老的不一定更差。在不确定的世界里，经过时间检验的东西，往往比最新潮的东西更可靠。</p>
+  </div>
+  <p>塔勒布把现代人的生活称为"观光化"——按照一份详细的用户手册来生活，按部就班，追求高度的可预测性和舒适性。就像跟团旅游一样，所有的行程都提前规划好了，没有任何意外，当然也没有任何惊喜。</p>
+  <p>与此相对的是一种"漫步型"的生活——对未来没有太多预设，欢迎生活里的随机事件，善于挖掘随机事件背后的价值。</p>
+  <div class="insight">
+    <p class="insight-title">如果你还活着</p>
+    <p>塔勒布说：如果你不是一个洗衣机或者一座布谷鸟钟，换句话说，如果你还活着，你的内心深处就会喜欢一定程度的随机性和混乱。当你寻求秩序，你得到的不过是表面的秩序；而当你拥抱随机性，你却能把握秩序，掌控局面。</p>
+  </div>
+</section>
+
+<div class="fire-divider"><div class="fire-dot"></div></div>
+
+<!-- 尾声 -->
+<section class="chapter">
+  <span class="chapter-label">尾声</span>
+  <h2>做火，不做蜡烛</h2>
+  <p>世界是不确定的，混乱是不可避免的。你不可能预测到下一只黑天鹅会从哪个方向飞来，以什么样的面貌出现。但你可以选择如何面对它——你可以被它摧毁，你也可以从它身上获得力量。</p>
+  <p>与其试图预测不可预测的，不如让自己具备从任何结果中获益的能力。弄清楚什么是脆弱的，拥抱试错，利用不对称性——损失有限，收益无限。你不必知道未来会发生什么，你只需要确保无论发生什么，你都不会被摧毁，甚至还能从中获益。</p>
+  <div class="quote">
+    <p>风会熄灭蜡烛，却会使火越燃越旺。在这个充满不确定性的世界里，你选择做蜡烛，还是做火？</p>
+  </div>
+  <p>尼采说：杀不死我的，终将使我更强大。愿你在这个不确定的世界里，成为那簇不会被吹灭的火。</p>
+</section>
+
+<!-- Markmap -->
+<section class="markmap-section">
+  <h2>全书脉络</h2>
+  <div class="markmap">
+    <script type="text/template">
+---
+markmap:
+  colorFreezeLevel: 3
+---
+# 反脆弱
+## 黑天鹅与火鸡
+### 归纳法的致命缺陷
+### 第1001天·感恩节
+### 极小概率·颠覆性影响
+## 三元结构
+### 脆弱（蜡烛/达摩克利斯）
+### 强韧（石头/凤凰）
+### 反脆弱（篝火/九头蛇）
+## 过度补偿
+### 肌肉撕裂→更强壮
+### 免疫系统→抗体
+### 米特拉达梯式解毒
+### 前提：适度而非毁灭
+## 医源性损伤
+### 过度医疗
+### 过度保护=慢性伤害
+### 不做什么>做什么
+## 杠铃策略
+### 90%极度安全+10%极度激进
+### 避开中间地带
+### 职业/时间/阅读皆适用
+### 悲观防护+乐观试错
+## 斯多葛学派
+### 区分可控与不可控
+### 情绪驯化而非消除
+### 塞涅卡·预演不幸
+## 否定法
+### 米开朗琪罗的大卫
+### 减法>加法
+### 先排除确定有害的
+## 林迪效应
+### 存在越久→预期寿命越长
+### 经典>新潮
+### 时间是最好的过滤器
+## 漫步型生活
+### 反对观光化
+### 拥抱随机性
+### 在混乱中把握秩序
+    </script>
+  </div>
+</section>
+
+<!-- 晚安 -->
+<footer class="goodnight">
+  <p>晚安</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+<script>
+document.querySelector('.theme-select').value=document.body.className;
+
+// Embers
+(function(){
+  var c=document.getElementById('embers');
+  for(var i=0;i<35;i++){
+    var e=document.createElement('div');
+    e.className='ember';
+    e.style.left=Math.random()*100+'%';
+    e.style.animationDelay=Math.random()*4+'s';
+    e.style.animationDuration=(3+Math.random()*3)+'s';
+    e.style.width=e.style.height=(2+Math.random()*3)+'px';
+    c.appendChild(e);
+  }
+})();
+
+// Scroll animation
+var obs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})
+},{threshold:0.1});
+document.querySelectorAll('.chapter').forEach(function(el){obs.observe(el)});
+</script>
+</body>
+</html>
