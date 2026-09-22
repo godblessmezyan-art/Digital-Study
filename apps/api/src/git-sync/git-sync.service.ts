@@ -85,9 +85,9 @@ export class GitSyncService implements OnApplicationBootstrap {
           '-c', `user.email=${process.env.GIT_AUTHOR_EMAIL ?? 'digital-study@localhost'}`,
           'commit', '-m', `${verb} book: ${slug}`, '--', ...paths,
         ], { cwd: repositoryRoot });
-        if (process.env.GIT_PUSH_ENABLED !== 'false') {
-          await exec('git', ['push', 'origin', `HEAD:${branch}`], { cwd: repositoryRoot });
-        }
+      }
+      if (process.env.GIT_PUSH_ENABLED !== 'false') {
+        await exec('git', ['push', 'origin', `HEAD:${branch}`], { cwd: repositoryRoot });
       }
       const { stdout } = await exec('git', ['rev-parse', 'HEAD'], { cwd: repositoryRoot });
       const commitSha = stdout.trim();
