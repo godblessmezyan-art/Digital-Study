@@ -56,6 +56,11 @@ export interface AiTemplateDto {
   modules: AiTemplateModuleDto[];
 }
 
+export interface CompletedBookMetadataDto {
+  author: string;
+  slug: string;
+}
+
 export interface GeneratedSectionDto {
   key: string;
   title: string;

@@ -44,6 +44,7 @@ export const updateAiModel = (id, input) => request(`/ai/models/${id}`, { method
 export const activateAiModel = (id) => request(`/ai/models/${id}/activate`, { method: 'POST' });
 export const testAiModel = (id) => request(`/ai/models/${id}/test`, { method: 'POST' });
 export const deleteAiModel = (id) => request(`/ai/models/${id}`, { method: 'DELETE' });
+export const completeBookMetadata = (title) => request('/ai/book-metadata', { method: 'POST', body: JSON.stringify({ title }) });
 export const getGenerations = () => request('/ai/generations');
 export const getGeneration = (id) => request(`/ai/generations/${id}`);
 export const createGeneration = (input) => request('/ai/generations', { method: 'POST', body: JSON.stringify(input) });

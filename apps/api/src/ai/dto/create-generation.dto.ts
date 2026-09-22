@@ -54,7 +54,6 @@ export class CreateGenerationRequest implements GenerationInput {
 
   @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsString()
-  @IsNotEmpty()
   @MaxLength(100000)
   sourceText: string;
 

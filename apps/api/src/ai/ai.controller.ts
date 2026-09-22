@@ -8,6 +8,7 @@ import { SaveModelConfigRequest } from './dto/save-model-config.dto';
 import { GenerationsService } from './generations.service';
 import { TemplatesService } from './templates.service';
 import { UpdateTemplateRequest } from './dto/update-template.dto';
+import { CompleteBookMetadataRequest } from './dto/complete-book-metadata.dto';
 
 @Controller('ai')
 export class AiController {
@@ -84,6 +85,12 @@ export class AiController {
   @HttpCode(202)
   create(@Body() input: CreateGenerationRequest) {
     return this.generations.create(input);
+  }
+
+  @Post('book-metadata')
+  @UseGuards(StudyAdminGuard)
+  completeBookMetadata(@Body() input: CompleteBookMetadataRequest) {
+    return this.provider.completeBookMetadata(input.title);
   }
 
   @Get('generations')
