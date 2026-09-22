@@ -36,8 +36,12 @@ async function request(path, options = {}) {
 export const getAiConfig = () => request('/ai/config');
 export const getAiTemplates = () => request('/ai/templates');
 export const getAiTemplate = (id) => request(`/ai/templates/${id}`);
+export const createAiTemplate = (input) => request('/ai/templates', { method: 'POST', body: JSON.stringify(input) });
 export const updateAiTemplate = (id, input) => request(`/ai/templates/${id}`, { method: 'PATCH', body: JSON.stringify(input) });
 export const getCategories = () => request('/categories');
+export const createCategory = (input) => request('/categories', { method: 'POST', body: JSON.stringify(input) });
+export const updateCategory = (slug, input) => request(`/categories/${slug}`, { method: 'PATCH', body: JSON.stringify(input) });
+export const deleteCategory = (slug) => request(`/categories/${slug}`, { method: 'DELETE' });
 export const getAiModels = () => request('/ai/models');
 export const createAiModel = (input) => request('/ai/models', { method: 'POST', body: JSON.stringify(input) });
 export const updateAiModel = (id, input) => request(`/ai/models/${id}`, { method: 'PATCH', body: JSON.stringify(input) });

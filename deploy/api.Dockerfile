@@ -8,6 +8,7 @@ RUN corepack enable && pnpm install --frozen-lockfile
 COPY apps/api apps/api
 COPY packages/shared packages/shared
 COPY database database
+COPY content/templates content/templates
 ENV DATABASE_URL=mysql://build:build@localhost:3306/build
 RUN pnpm prisma:generate && pnpm build:shared && pnpm build:api
 
@@ -24,5 +25,6 @@ COPY --from=build /workspace/apps/api/src apps/api/src
 COPY --from=build /workspace/packages/shared/package.json packages/shared/package.json
 COPY --from=build /workspace/packages/shared/dist packages/shared/dist
 COPY --from=build /workspace/database database
+COPY --from=build /workspace/content/templates content/templates
 COPY scripts scripts
 CMD ["node", "apps/api/dist/main.js"]

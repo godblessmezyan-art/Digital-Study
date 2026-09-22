@@ -23,5 +23,9 @@ export function getGitRepositoryRoot(): string | null {
 }
 
 export function getTemplatesRoot(): string {
+  return resolve(WORKSPACE_ROOT, process.env.TEMPLATES_ROOT ?? 'runtime-data/templates');
+}
+
+export function getBundledTemplatesRoot(): string {
   return resolve(WORKSPACE_ROOT, 'content/templates');
 }

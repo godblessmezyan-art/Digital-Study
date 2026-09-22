@@ -7,7 +7,7 @@ import { RegenerateSectionRequest } from './dto/regenerate-section.dto';
 import { SaveModelConfigRequest } from './dto/save-model-config.dto';
 import { GenerationsService } from './generations.service';
 import { TemplatesService } from './templates.service';
-import { UpdateTemplateRequest } from './dto/update-template.dto';
+import { CreateTemplateRequest, UpdateTemplateRequest } from './dto/update-template.dto';
 import { CompleteBookMetadataRequest } from './dto/complete-book-metadata.dto';
 import { PublishOptionsRequest } from '../books/dto/publish-book.dto';
 
@@ -73,6 +73,12 @@ export class AiController {
   @UseGuards(StudyAdminGuard)
   getTemplate(@Param('id') id: string) {
     return this.templates.get(id);
+  }
+
+  @Post('templates')
+  @UseGuards(StudyAdminGuard)
+  createTemplate(@Body() input: CreateTemplateRequest) {
+    return this.templates.create(input);
   }
 
   @Patch('templates/:id')

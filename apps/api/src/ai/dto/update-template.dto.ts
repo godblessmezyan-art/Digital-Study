@@ -1,4 +1,6 @@
-import { ArrayMinSize, IsArray, IsString, MaxLength, MinLength } from 'class-validator';
+import { ArrayMinSize, IsArray, IsString, Matches, MaxLength, MinLength } from 'class-validator';
+
+const TEMPLATE_ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 export interface EditableTemplateModule {
   key: string;
@@ -33,4 +35,11 @@ export class UpdateTemplateRequest {
   @IsArray()
   @ArrayMinSize(1)
   modules!: EditableTemplateModule[];
+}
+
+export class CreateTemplateRequest extends UpdateTemplateRequest {
+  @IsString()
+  @Matches(TEMPLATE_ID)
+  @MaxLength(100)
+  id!: string;
 }

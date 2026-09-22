@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "ten-minute-reading",
-  "name": "十分钟读一本书",
+  "name": "十分钟读完一本书",
   "description": "面向大众读者，快速理解一本书的主题、核心观点与行动建议。",
   "contentType": "book-guide",
   "systemPrompt": "你是一名严谨的中文阅读编辑。只能依据用户提供的资料写作；资料不足时要明确标注，不得编造引文、页码、人物或事实。输出必须符合指定 JSON 结构。",

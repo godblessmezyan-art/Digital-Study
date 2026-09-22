@@ -11,6 +11,7 @@ services:
       API_PORT: 3000
       CONTENT_ROOT: /data/books
       CONTENT_TRASH_ROOT: /data/trash/books
+      TEMPLATES_ROOT: /data/templates
       GIT_REPOSITORY_ROOT: /git-repository
       GIT_CONTENT_ROOT: /git-repository/content/books
       GIT_CONTENT_BRANCH: ${GIT_CONTENT_BRANCH:-content}
@@ -20,6 +21,7 @@ services:
     volumes:
       - ../runtime-data/books:/data/books
       - ../runtime-data/trash:/data/trash
+      - ../runtime-data/templates:/data/templates
       - ../git-mirror:/git-repository
     networks:
       - default
