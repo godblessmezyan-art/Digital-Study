@@ -50,8 +50,10 @@ export const testAiModel = (id) => request(`/ai/models/${id}/test`, { method: 'P
 export const deleteAiModel = (id) => request(`/ai/models/${id}`, { method: 'DELETE' });
 export const completeBookMetadata = (title) => request('/ai/book-metadata', { method: 'POST', body: JSON.stringify({ title }) });
 export const getGenerations = () => request('/ai/generations');
+export const recoverGeneration = () => request('/ai/generations-recovery');
 export const getGeneration = (id) => request(`/ai/generations/${id}`);
-export const createGeneration = (input) => request('/ai/generations', { method: 'POST', body: JSON.stringify(input) });
+export const createGeneration = (input) => request('/ai/generations', { method: 'POST', body: JSON.stringify({ ...input, clientRequestId: input.clientRequestId || crypto.randomUUID() }) });
+export const retryGeneration = (id, clientRequestId) => request(`/ai/generations/${id}/retry`, { method: 'POST', body: JSON.stringify({ clientRequestId }) });
 export const cancelGeneration = (id) => request(`/ai/generations/${id}/cancel`, { method: 'POST' });
 export const regenerateSection = (id, key, instruction) => request(`/ai/generations/${id}/sections/${key}/regenerate`, { method: 'POST', body: JSON.stringify({ instruction }) });
 export const saveGenerationDraft = (id) => request(`/ai/generations/${id}/save-draft`, { method: 'POST' });

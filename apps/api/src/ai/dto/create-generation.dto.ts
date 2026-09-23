@@ -74,4 +74,10 @@ export class CreateGenerationRequest implements GenerationInput {
   @IsOptional()
   @IsBoolean()
   allowBackgroundKnowledge?: boolean;
+
+  @IsOptional()
+  @IsString()
+  @Matches(/^[a-zA-Z0-9-]{16,64}$/)
+  @MaxLength(64)
+  clientRequestId?: string;
 }

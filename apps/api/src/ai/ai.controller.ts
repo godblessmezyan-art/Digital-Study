@@ -1,4 +1,5 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import type { Request } from 'express';
 import { AiModelConfigsService } from './ai-model-configs.service';
 import { AiProviderService } from './ai-provider.service';
 import { StudyAdminGuard } from '../auth/study-auth.guard';
@@ -10,6 +11,9 @@ import { TemplatesService } from './templates.service';
 import { CreateTemplateRequest, UpdateTemplateRequest } from './dto/update-template.dto';
 import { CompleteBookMetadataRequest } from './dto/complete-book-metadata.dto';
 import { PublishOptionsRequest } from '../books/dto/publish-book.dto';
+import { RetryGenerationRequest } from './dto/retry-generation.dto';
+
+type AdminRequest = Request & { user: { username: string } };
 
 @Controller('ai')
 export class AiController {
@@ -90,8 +94,8 @@ export class AiController {
   @Post('generations')
   @UseGuards(StudyAdminGuard)
   @HttpCode(202)
-  create(@Body() input: CreateGenerationRequest) {
-    return this.generations.create(input);
+  create(@Body() input: CreateGenerationRequest, @Req() request: AdminRequest) {
+    return this.generations.createForOwner(input, request.user.username);
   }
 
   @Post('book-metadata')
@@ -102,20 +106,33 @@ export class AiController {
 
   @Get('generations')
   @UseGuards(StudyAdminGuard)
-  list() {
-    return this.generations.list();
+  list(@Req() request: AdminRequest) {
+    return this.generations.list(request.user.username);
+  }
+
+  @Get('generations-recovery')
+  @UseGuards(StudyAdminGuard)
+  recover(@Req() request: AdminRequest) {
+    return this.generations.recover(request.user.username);
   }
 
   @Get('generations/:id')
   @UseGuards(StudyAdminGuard)
-  get(@Param('id') id: string) {
-    return this.generations.get(id);
+  get(@Param('id') id: string, @Req() request: AdminRequest) {
+    return this.generations.get(id, request.user.username);
   }
 
   @Post('generations/:id/cancel')
   @UseGuards(StudyAdminGuard)
-  cancel(@Param('id') id: string) {
-    return this.generations.cancel(id);
+  cancel(@Param('id') id: string, @Req() request: AdminRequest) {
+    return this.generations.cancel(id, request.user.username);
+  }
+
+  @Post('generations/:id/retry')
+  @UseGuards(StudyAdminGuard)
+  @HttpCode(202)
+  retry(@Param('id') id: string, @Body() input: RetryGenerationRequest, @Req() request: AdminRequest) {
+    return this.generations.retry(id, request.user.username, input.clientRequestId);
   }
 
   @Post('generations/:id/sections/:key/regenerate')
@@ -124,19 +141,20 @@ export class AiController {
     @Param('id') id: string,
     @Param('key') key: string,
     @Body() input: RegenerateSectionRequest,
+    @Req() request: AdminRequest,
   ) {
-    return this.generations.regenerateSection(id, key, input.instruction);
+    return this.generations.regenerateSection(id, key, input.instruction, request.user.username);
   }
 
   @Post('generations/:id/save-draft')
   @UseGuards(StudyAdminGuard)
-  saveDraft(@Param('id') id: string) {
-    return this.generations.saveDraft(id);
+  saveDraft(@Param('id') id: string, @Req() request: AdminRequest) {
+    return this.generations.saveDraft(id, request.user.username);
   }
 
   @Post('generations/:id/publish')
   @UseGuards(StudyAdminGuard)
-  publish(@Param('id') id: string, @Body() input: PublishOptionsRequest) {
-    return this.generations.publish(id, Boolean(input?.syncToGit));
+  publish(@Param('id') id: string, @Body() input: PublishOptionsRequest, @Req() request: AdminRequest) {
+    return this.generations.publish(id, Boolean(input?.syncToGit), request.user.username);
   }
 }

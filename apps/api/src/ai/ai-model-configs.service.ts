@@ -145,7 +145,7 @@ export class AiModelConfigsService {
       method: 'POST',
       headers: { Authorization: `Bearer ${runtime.apiKey}`, 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
-      signal: AbortSignal.timeout(Number(process.env.AI_TIMEOUT_MS ?? 120000)),
+      signal: AbortSignal.timeout(Number(process.env.AI_TIMEOUT_MS ?? 300000)),
     });
     if (!response.ok) {
       const detail = (await response.text()).slice(0, 500);

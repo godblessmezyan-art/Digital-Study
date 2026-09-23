@@ -51,7 +51,7 @@ AI_BASE_URL=https://api.openai.com/v1
 AI_API_KEY=replace-me
 AI_MODEL=replace-me
 AI_MAX_CONCURRENCY=1
-AI_TIMEOUT_MS=120000
+AI_TIMEOUT_MS=300000
 STUDY_AUTH_BASE_URL=https://wxhappylife.top/study/api/auth
 ```
 

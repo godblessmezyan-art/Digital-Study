@@ -18,6 +18,7 @@ services:
       GIT_PUSH_ENABLED: ${GIT_PUSH_ENABLED:-true}
       GIT_AUTHOR_NAME: ${GIT_AUTHOR_NAME:-Digital Study}
       GIT_AUTHOR_EMAIL: ${GIT_AUTHOR_EMAIL:-digital-study@localhost}
+      AI_TIMEOUT_MS: ${AI_TIMEOUT_MS:-300000}
     volumes:
       - ../runtime-data/books:/data/books
       - ../runtime-data/trash:/data/trash
