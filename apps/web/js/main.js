@@ -72,7 +72,7 @@ const syncWorldScene = scene => {
   world.setScene(outdoor ? 'terrace' : 'study');
 };
 
-const statHTML = stats.map((s) => `<a class="stat-card" href="${s.target}"><span class="stat-card__watermark" aria-hidden="true">${icons[s.icon]}</span><span class="stat-card__icon">${icons[s.icon]}</span><span class="stat-card__copy"><strong>${s.label}</strong><small>${s.detail}</small></span><span class="stat-card__arrow">›</span></a>`).join('');
+const statHTML = stats.map((s, index) => `<a class="stat-card" href="${s.target}" data-stat-index="${index}"><span class="stat-card__watermark" aria-hidden="true">${icons[s.icon]}</span><span class="stat-card__icon">${icons[s.icon]}</span><span class="stat-card__copy"><strong>${s.label}</strong><small>${s.detail}</small></span><span class="stat-card__arrow">›</span></a>`).join('');
 const noteHTML = '<p class="home-data-loading">正在读取你的笔记…</p>';
 const quoteHTML = '<p class="home-data-loading">正在读取你的书摘…</p>';
 const categoryHTML = popularCategories.map((item) => `<a class="category-card" href="index.html#categories?category=${encodeURIComponent(item.category)}" style="--category-art:url('${item.image}')"><span><strong>${item.title}</strong><small>${item.subtitle}</small></span><i>→</i></a>`).join('');
@@ -94,15 +94,13 @@ app.innerHTML = `
       <em>轻触翻阅下一则</em>
     </button>
     <aside class="world-presence" data-world-presence aria-label="云天幻境当前状态"></aside>
+    <a class="hero-scroll" href="#home-content"><span>继续探索</span><i aria-hidden="true">↓</i></a>
   </section>
-  <div class="dashboard">
-    <section class="stat-grid" aria-label="书房概览">${statHTML}</section>
-    <section class="content-grid">
-      <article class="panel reading" id="continue-reading"><div class="reading__art" aria-hidden="true"></div><div class="reading__cover" data-title=""></div><div class="reading__body"><span class="reading__label">正在读取书架…</span><h2>我的阅读</h2><p class="reading__author">登录后同步最近进度</p><div class="reading__meta"><span>上次阅读 <time>—</time></span><span>剩余进度 <time>—</time></span></div><div class="progress-line" style="--reading-progress:0%"><i><b aria-hidden="true">✦</b></i><span>已读 0%</span></div><button class="primary-btn" data-action="read">打开我的书架 →</button></div></article>
-      <section class="panel notes-panel" id="notes"><div class="panel__head"><h2 class="panel__title">最近写下的想法</h2><button class="panel__more" data-home-reading="notes">查看全部 →</button></div><div class="notes" id="homeNotes">${noteHTML}</div></section>
-      <section class="panel quotes-panel" id="quotes"><div class="panel__head"><h2 class="panel__title">最近珍藏的片段</h2><button class="panel__more" data-home-reading="quotes">查看全部 →</button></div><div class="quotes" id="homeQuotes">${quoteHTML}</div></section>
-    </section>
-    <section class="category-section" id="categories"><div class="section-head"><div><span>漫游云端藏书世界</span><h2>热门分类</h2></div><a href="#shelf">查看全部分类 →</a></div><div class="category-grid">${categoryHTML}</div></section>
+  <div class="dashboard" id="home-content">
+    <section class="home-section quick-entries" aria-labelledby="quick-entries-title"><div class="home-section__head home-section__head--compact"><div><span>MY STUDY</span><h2 id="quick-entries-title">我的书房</h2></div></div><div class="stat-grid" aria-label="书房快捷入口">${statHTML}</div></section>
+    <section class="home-section continue-section" aria-labelledby="continue-title"><div class="home-section__head"><div><span>CONTINUE THE JOURNEY</span><h2 id="continue-title">继续阅读</h2></div><p>回到上次停留的文字之间</p></div><article class="panel reading" id="continue-reading"><div class="reading__art" aria-hidden="true"></div><div class="reading__cover" data-title=""></div><div class="reading__body"><span class="reading__label">正在读取书架…</span><h2>我的阅读</h2><p class="reading__author">登录后同步最近进度</p><div class="reading__meta"><span>上次阅读 <time>—</time></span><span>最近章节 <time>正文</time></span></div><div class="progress-line" style="--reading-progress:0%"><i><b aria-hidden="true">✦</b></i><span>已读 0%</span></div><button class="primary-btn" data-action="read">打开我的书架 →</button></div></article></section>
+    <section class="home-section recent-section" aria-labelledby="recent-title"><div class="home-section__head"><div><span>RECENT TRACES</span><h2 id="recent-title">最近留下的痕迹</h2></div><p>想法与句子，都是旅途的坐标</p></div><div class="recent-grid"><section class="panel notes-panel" id="notes"><div class="panel__head"><h3 class="panel__title">最近写下的想法</h3><button class="panel__more" data-home-reading="notes">查看全部 →</button></div><div class="notes" id="homeNotes">${noteHTML}</div></section><section class="panel quotes-panel" id="quotes"><div class="panel__head"><h3 class="panel__title">最近收藏的片段</h3><button class="panel__more" data-home-reading="quotes">查看全部 →</button></div><div class="quotes" id="homeQuotes">${quoteHTML}</div></section></div></section>
+    <section class="home-section category-section" id="categories"><div class="section-head"><div><span>EXPLORE THE LIBRARY</span><h2>探索藏书</h2><p>沿着兴趣，寻找下一段阅读旅程</p></div><a href="#shelf">查看全部分类 →</a></div><div class="category-grid">${categoryHTML}</div></section>
     <section class="panel shelf" id="shelf"><div class="shelf__head"><h2>我的书架</h2><div class="tabs" id="shelfTabs"><button class="tab is-active" data-category="all">最近加入</button></div><a class="shelf__more" id="shelfCount" href="index.html#shelf">正在读取…</a></div><div class="books" id="books"></div></section>
   </div>
   <aside class="world-map-modal" id="world-map-modal" role="dialog" aria-modal="true" aria-labelledby="world-map-title" aria-hidden="true">
@@ -193,8 +191,8 @@ function showToast(text) {
 function renderHomeReadingData() {
   const notes = readingEntries.filter(item => item.type === 'note').slice(0, 3);
   const quotes = readingEntries.filter(item => item.type === 'quote').slice(0, 3);
-  document.querySelector('#homeNotes').innerHTML = notes.length ? notes.map(item => `<article class="note-item" role="link" tabindex="0" data-home-entry="${esc(item.id)}" data-entry-tab="notes"><span class="note-thumb"></span><span><strong>${esc(item.title)}</strong><small>${esc(item.book?.title || item.source || new Date(item.updatedAt).toLocaleDateString('zh-CN'))}</small></span></article>`).join('') : '<p class="home-data-empty">还没有笔记，去阅读空间记录第一条吧。</p>';
-  document.querySelector('#homeQuotes').innerHTML = quotes.length ? quotes.map(item => `<blockquote class="quote" role="link" tabindex="0" data-home-entry="${esc(item.id)}" data-entry-tab="quotes">${esc(item.content)}<cite>—— ${esc(item.book?.title || item.source || '我的书摘')}</cite></blockquote>`).join('') : '<p class="home-data-empty">还没有书摘，去收藏触动你的文字吧。</p>';
+  document.querySelector('#homeNotes').innerHTML = notes.length ? notes.map(item => `<article class="note-item" role="link" tabindex="0" data-home-entry="${esc(item.id)}" data-entry-tab="notes"><span class="note-thumb"></span><span><strong>${esc(item.title)}</strong><small>${esc(item.book?.title || item.source || new Date(item.updatedAt).toLocaleDateString('zh-CN'))}</small></span></article>`).join('') : '<div class="home-data-empty"><strong>这里还没有留下想法</strong><span>阅读时选中文字即可快速记录</span></div>';
+  document.querySelector('#homeQuotes').innerHTML = quotes.length ? quotes.map(item => `<blockquote class="quote" role="link" tabindex="0" data-home-entry="${esc(item.id)}" data-entry-tab="quotes">${esc(item.content)}<cite>—— ${esc(item.book?.title || item.source || '我的书摘')}</cite></blockquote>`).join('') : '<div class="home-data-empty"><strong>这里还没有收藏片段</strong><span>遇见喜欢的句子，就把它留在书房</span></div>';
 }
 
 function renderContinueReading() {
@@ -216,7 +214,7 @@ function renderContinueReading() {
   card.querySelector('.reading__author').textContent = book.author || '佚名';
   const last = book.shelf?.lastReadAt ? new Date(book.shelf.lastReadAt).toLocaleString('zh-CN', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '尚未开始';
   card.querySelectorAll('.reading__meta time')[0].textContent = last;
-  card.querySelectorAll('.reading__meta time')[1].textContent = `${Math.max(0, 100 - progress)}%`;
+  card.querySelectorAll('.reading__meta time')[1].textContent = '正文';
   card.querySelector('.progress-line').style.setProperty('--reading-progress', `${progress}%`);
   card.querySelector('.progress-line span').textContent = `已读 ${progress}%`;
   card.querySelector('[data-action="read"]').textContent = `${progress ? '继续阅读' : '打开阅读'} →`;
@@ -236,6 +234,13 @@ async function hydratePersonalHome() {
   const categories = [...new Set(shelfBooks.map(book => book.category?.name || '未分类'))];
   document.querySelector('#shelfTabs').innerHTML = `<button class="tab is-active" data-category="all">最近加入</button>${categories.slice(0, 5).map(name => `<button class="tab" data-category="${esc(name)}">${esc(name)}</button>`).join('')}`;
   document.querySelector('#shelfCount').textContent = getStoredUser() ? `共 ${shelfBooks.length} 本藏书 →` : '登录查看 →';
+  const statDetails = [
+    getStoredUser() ? `${shelfBooks.length} 本藏书` : '登录查看藏书',
+    '探索知识领域',
+    `${readingEntries.filter(item => item.type === 'note').length} 条记录`,
+    `${readingEntries.filter(item => item.type === 'quote').length} 条收藏`,
+  ];
+  document.querySelectorAll('[data-stat-index]').forEach(item => { item.querySelector('small').textContent = statDetails[Number(item.dataset.statIndex)]; });
   document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => selectCategory(tab.dataset.category)));
   renderBooks();
   renderContinueReading();
