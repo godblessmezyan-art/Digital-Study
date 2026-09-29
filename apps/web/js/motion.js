@@ -93,7 +93,7 @@ class MotionSystem {
     };
     document.addEventListener('visibilitychange', this.visibility);
     this.routeChange = () => {
-      if (this.reduced) return;
+      if (this.reduced || this.coarse || innerWidth < 820) return;
       document.body.classList.add('motion-route-changing');
       setTimeout(() => document.body.classList.remove('motion-route-changing'), 280);
     };

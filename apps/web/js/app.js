@@ -29,7 +29,14 @@ const books=[
  {title:'乌合之众',author:'古斯塔夫·勒庞',desc:'群体心理如何影响个体判断，揭示社会行为的深层逻辑。',main:'社会科学',tags:['群体心理','社会','大众行为'],status:'待完善',date:'2025/08/15',time:'13:25',cover:'linear-gradient(145deg,#51483d,#11100f)'}
 ];
 const sidebar=document.querySelector('#sidebar'),app=document.querySelector('#app'),toast=document.querySelector('#toast');
-renderSidebar(sidebar,{variant:'app',brandIcon:archiveIcons.astrolabe});
+const initialNavId=()=>{
+ const path=location.pathname;
+ if(/\/plans(?:\/|$)/.test(path))return'plans';
+ if(/\/journal(?:\/|$)/.test(path))return'journal';
+ const page=location.hash.slice(1).split('?')[0];
+ return page==='library'?'content':page;
+};
+renderSidebar(sidebar,{variant:'app',activeId:initialNavId(),brandIcon:archiveIcons.astrolabe});
 
 const appScenes=[
  {name:'云端书斋',region:'晨光穿过拱窗，照亮等待书写的篇章。',image:'assets/cloud-realm-study-v2.png',position:'center 45%'},
@@ -243,7 +250,6 @@ function renderChronicles(){
 }
 
 function bindGlobal(){document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{setAppScenic(false);if(b.dataset.page==='home')window.location.href='home.html';else if(b.dataset.page==='library'||b.dataset.page==='content')location.hash='#content';else if(b.dataset.page==='studio')location.hash='#studio';else if(b.dataset.page==='categories')location.hash='#categories';else showToast(`${b.textContent.trim()}功能即将开放`)});document.querySelectorAll('[data-toast]').forEach(b=>b.onclick=()=>showToast(b.dataset.toast))}
-sidebar.addEventListener('click',()=>sidebar.classList.remove('open'));document.querySelector('#menuButton').addEventListener('click',()=>sidebar.classList.toggle('open'));
 const route=()=>{if(/\/plans(?:\/[^/?#]+)?\/?$/.test(location.pathname)){chronicles.setContext('plans');void chronicles.check('plans');return renderPlans()}if(/\/chronicles\/?$/.test(location.pathname)){chronicles.setContext('chronicles');void chronicles.check('chronicles');return renderChronicles()}if(/\/journal(?:\/[^/?#]+){0,2}\/?$/.test(location.pathname)){chronicles.setContext('journal');void chronicles.check('journal');return renderJournal()}const page=location.hash.slice(1).split('?')[0];const storyPage=page==='library'?'content':page||'study';chronicles.setContext(storyPage);void chronicles.check(storyPage);world.setScene(storyPage);if(page==='studio')return renderStudioV3();if(page==='curator')return renderCurator();if(page==='shelf')return renderShelf();if(page==='categories')return renderCategories();if(page==='reading')return renderReadingSpace();if(page==='content'||page==='library')return renderLibrary();window.location.replace('home.html')};route();
 window.addEventListener('hashchange',route);
 window.addEventListener('study-auth-changed',()=>{void chronicles.refresh();if(location.pathname.includes('/journal')||location.pathname.includes('/chronicles')||location.pathname.includes('/plans')||location.hash.startsWith('#curator'))route()});

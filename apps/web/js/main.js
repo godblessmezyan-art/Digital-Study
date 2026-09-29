@@ -41,16 +41,22 @@ else worldArt?.addEventListener('load', revealWorldArt, { once: true });
 const homeNavId = () => location.hash === '#shelf' ? 'shelf' : location.hash === '#settings' ? 'settings' : 'home';
 renderSidebar(sidebar, { variant: 'home', activeId: homeNavId(), brandName: theme.name, brandEnglish: theme.englishName, brandIcon: icons[theme.logo] });
 
-topbar.innerHTML = `<div class="topbar__inner">
-  <button class="scene-status" id="scene-status" type="button" aria-label="打开天空城航行图"><span class="scene-status__astrolabe" aria-hidden="true">${icons.astrolabe}</span><span><small>当前窗景</small><strong id="scene-status-name"></strong></span></button>
-  <button class="world-map-button" id="world-map-toggle" type="button" aria-label="世界地图" aria-haspopup="dialog" aria-controls="world-map-modal">${icons.astrolabe}<span>世界地图</span></button>
-  <span data-world-entry></span>
-  <span data-footprint-entry></span>
-  <button class="chronicle-home-signal" type="button" data-chronicle-signal hidden><i aria-hidden="true"></i><span data-chronicle-signal-label>新的世界记录</span></button>
-  <button class="circle-btn scenic-toggle" id="scenic-toggle" aria-label="进入观景模式" title="进入观景模式">${icons.telescope}</button>
-  <button class="circle-btn" aria-label="通知">${icons.bell}</button>
-  <button class="circle-btn" id="theme-button" aria-label="主题设置">${icons.settings}</button>
-  <button class="circle-btn avatar" aria-label="个人中心">旅</button>
+topbar.innerHTML = `<div class="topbar__inner world-hud">
+  <div class="hud-anchor hud-anchor--status">
+    <button class="hud-status" id="hud-world-status" type="button" data-hud-toggle="status" aria-expanded="false" aria-controls="hud-status-popover"><span class="hud-status__mark" aria-hidden="true">◉</span><span class="hud-status__copy"><strong id="hud-status-place">云天幻境</strong><small><span id="hud-status-weather">晴朗</span><i aria-hidden="true">·</i><time id="hud-status-time">--:--</time></small></span></button>
+    <section class="hud-popover hud-status-popover" id="hud-status-popover" data-hud-popover="status" aria-label="世界状态详情" hidden><header><small>WORLD STATUS</small><strong>世界状态</strong></header><div class="hud-status-detail"><span>当前窗景</span><b id="scene-status-name"></b><span>天气与时间</span><b><i id="hud-detail-weather">晴朗</i> · <time id="hud-detail-time">--:--</time> · <em id="hud-detail-period">白昼</em></b></div><footer><button id="scene-status" type="button">查看当前窗景 <span>→</span></button><button type="button" data-hud-action="world">调整世界氛围 <span>→</span></button></footer></section>
+  </div>
+  <button class="world-map-button hud-map" id="world-map-toggle" type="button" aria-label="世界地图" aria-haspopup="dialog" aria-controls="world-map-modal">${icons.astrolabe}<span>世界地图</span></button>
+  <div class="hud-anchor hud-anchor--notice">
+    <button class="hud-circle hud-notice" type="button" data-hud-toggle="notice" aria-label="通知" aria-expanded="false" aria-controls="hud-notice-popover">${icons.bell}<b class="hud-badge" data-hud-badge hidden></b></button>
+    <section class="hud-popover hud-menu" id="hud-notice-popover" data-hud-popover="notice" aria-label="通知" hidden><header><small>WORLD MESSAGES</small><strong>通知</strong></header><button type="button" data-hud-action="chronicle"><span><i>✦</i><b>世界记录</b><small data-hud-chronicle-text>暂无新的世界记录</small></span><em>→</em></button><button type="button" data-hud-action="footprints"><span><i>◌</i><b>足迹更新</b><small>查看最近的阅读与珍藏</small></span><em>→</em></button><p><i aria-hidden="true">◉</i><span>世界天气会随当前设置自然变化</span></p></section>
+  </div>
+  <div class="hud-anchor hud-anchor--console">
+    <button class="hud-circle hud-console-toggle" type="button" data-hud-toggle="console" aria-label="世界控制台" title="世界控制台" aria-expanded="false" aria-controls="hud-console-popover"><span aria-hidden="true">◈</span></button>
+    <section class="hud-popover hud-menu hud-console" id="hud-console-popover" data-hud-popover="console" aria-label="世界控制台" hidden><header><small>NAVIGATION CONSOLE</small><strong>世界控制台</strong></header><button type="button" data-hud-action="world"><span><i>☁</i><b>环境与天气</b><small>天气、时间与氛围强度</small></span><em>→</em></button><button type="button" data-hud-action="world"><span><i>♫</i><b>环境音效</b><small>风声、雨声与总音量</small></span><em>→</em></button><button type="button" data-hud-action="footprints"><span><i>◌</i><b>世界足迹</b><small>最近阅读与探索记录</small></span><em>→</em></button><button class="hud-source-action" id="scenic-toggle" type="button"><span><i>${icons.telescope}</i><b>观景模式</b><small>隐藏界面，欣赏当前风景</small></span><em>→</em></button><button class="hud-source-action" id="theme-button" type="button"><span><i>${icons.settings}</i><b>界面设置</b><small>窗景航行与昼夜校准</small></span><em>→</em></button></section>
+  </div>
+  <button class="hud-circle hud-avatar" aria-label="旅者入口" title="旅者入口">旅</button>
+  <span class="hud-source" data-world-entry hidden></span><span class="hud-source" data-footprint-entry hidden></span><button class="chronicle-home-signal hud-source" type="button" data-chronicle-signal hidden><i aria-hidden="true"></i><span data-chronicle-signal-label>新的世界记录</span></button>
 </div>`;
 const world = initWorld({ mount: document.querySelector('[data-world-entry]'), scene: 'home' });
 const chronicles = initChronicles({ world, page: 'home' });
@@ -65,7 +71,8 @@ window.addEventListener('worldchange', event => {
   globeController?.setAtmosphere({ weather: event.detail.weather, period: event.detail.effectivePeriod });
 });
 window.addEventListener('chroniclearchivechange', event => globeController?.setChronicles(event.detail?.entries || []));
-initFootprints({ mount: document.querySelector('[data-footprint-entry]') });
+const footprints = initFootprints({ mount: document.querySelector('[data-footprint-entry]') });
+setupWorldHud();
 const syncWorldScene = scene => {
   const outdoor = ['city-overview', 'white-stone-courtyard', 'sea-of-clouds-terrace'].includes(scene.id)
     || (scene.id === 'hidden-sanctuary' && scene.activeView?.id !== 'hall');
@@ -186,6 +193,75 @@ function showToast(text) {
   toast.classList.add('is-visible');
   clearTimeout(showToast.timer);
   showToast.timer = setTimeout(() => toast.classList.remove('is-visible'), 1800);
+}
+
+function setupWorldHud() {
+  const weatherText = { clear: '晴朗', cloudy: '多云', rain: '雨', snow: '雪' };
+  const periodText = { dawn: '晨曦', day: '白昼', dusk: '黄昏', night: '夜晚' };
+  const popovers = [...topbar.querySelectorAll('[data-hud-popover]')];
+  const toggles = [...topbar.querySelectorAll('[data-hud-toggle]')];
+  const closeAll = except => {
+    popovers.forEach(popover => {
+      if (popover.dataset.hudPopover === except) return;
+      popover.hidden = true;
+      topbar.querySelector(`[data-hud-toggle="${popover.dataset.hudPopover}"]`)?.setAttribute('aria-expanded', 'false');
+    });
+  };
+  const togglePopover = button => {
+    const id = button.dataset.hudToggle;
+    const popover = topbar.querySelector(`[data-hud-popover="${id}"]`);
+    const opening = popover.hidden;
+    closeAll(opening ? id : null);
+    popover.hidden = !opening;
+    button.setAttribute('aria-expanded', String(opening));
+    if (opening) popover.querySelector('button:not([disabled])')?.focus({ preventScroll: true });
+  };
+  const clockText = () => new Intl.DateTimeFormat('zh-CN', { hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date());
+  const syncStatus = (snapshot = world.snapshot()) => {
+    const weather = snapshot.enabled === false ? '氛围关闭' : (weatherText[snapshot.weather] || '晴朗');
+    const period = periodText[snapshot.effectivePeriod || snapshot.period] || '白昼';
+    const time = clockText();
+    const scene = document.querySelector('#scene-status-name')?.textContent || theme.name;
+    document.querySelector('#hud-status-place').textContent = scene;
+    document.querySelector('#hud-status-weather').textContent = weather;
+    document.querySelector('#hud-status-time').textContent = time;
+    document.querySelector('#hud-detail-weather').textContent = weather;
+    document.querySelector('#hud-detail-time').textContent = time;
+    document.querySelector('#hud-detail-period').textContent = period;
+  };
+  const sourceSignal = topbar.querySelector('[data-chronicle-signal]');
+  const syncNotice = () => {
+    const unread = sourceSignal.hidden ? 0 : (Number(sourceSignal.querySelector('[data-chronicle-signal-label]')?.textContent.match(/\d+/)?.[0]) || 1);
+    const badge = topbar.querySelector('[data-hud-badge]');
+    const text = topbar.querySelector('[data-hud-chronicle-text]');
+    const action = topbar.querySelector('[data-hud-action="chronicle"]');
+    badge.hidden = unread === 0;
+    badge.textContent = unread > 9 ? '9+' : String(unread);
+    text.textContent = unread ? `${unread} 条新的世界记录` : '暂无新的世界记录';
+    action.disabled = unread === 0;
+  };
+  toggles.forEach(button => button.addEventListener('click', event => { event.stopPropagation(); togglePopover(button); }));
+  topbar.addEventListener('click', event => {
+    const action = event.target.closest('[data-hud-action]');
+    if (action) {
+      closeAll();
+      if (action.dataset.hudAction === 'world') world.open();
+      if (action.dataset.hudAction === 'footprints') footprints.open();
+      if (action.dataset.hudAction === 'chronicle' && !sourceSignal.hidden) sourceSignal.click();
+    }
+    if (event.target.closest('#scene-status,#scenic-toggle,#theme-button')) closeAll();
+  });
+  document.addEventListener('click', event => { if (!event.target.closest('.hud-anchor')) closeAll(); });
+  document.addEventListener('keydown', event => {
+    if (event.key !== 'Escape' || !popovers.some(popover => !popover.hidden)) return;
+    event.preventDefault();
+    closeAll();
+  });
+  window.addEventListener('worldchange', event => syncStatus({ ...event.detail, enabled: world.snapshot().enabled }));
+  new MutationObserver(syncNotice).observe(sourceSignal, { attributes: true, childList: true, subtree: true, characterData: true });
+  window.setInterval(() => syncStatus(), 30_000);
+  syncStatus();
+  syncNotice();
 }
 
 function renderHomeReadingData() {
@@ -315,6 +391,7 @@ function closeWorldMap({ restoreFocus = true } = {}) {
 
 function updateSceneUI(scene) {
   document.querySelector('#scene-status-name').textContent = scene.name;
+  document.querySelector('#hud-status-place').textContent = scene.name;
   const visual = scene.activeView || scene;
   sceneCaption.innerHTML = `<span class="scene-caption__top">${scene.code} · ${visual.region}</span><h2>${scene.name}${scene.activeView ? ` · ${scene.activeView.name}` : ''}</h2><p>${visual.description}</p>`;
   document.querySelectorAll('.map-pin').forEach((pin) => pin.classList.toggle('is-active', pin.dataset.scene === scene.id));
