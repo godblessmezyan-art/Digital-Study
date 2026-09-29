@@ -8,6 +8,9 @@ import { AiModule } from './ai/ai.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { GitSyncModule } from './git-sync/git-sync.module';
+import { ReadingModule } from './reading/reading.module';
+import { JournalModule } from './journal/journal.module';
+import { ChroniclesModule } from './chronicles/chronicles.module';
 
 @Module({
   imports: [
@@ -21,6 +24,9 @@ import { GitSyncModule } from './git-sync/git-sync.module';
     AiModule,
     BooksModule,
     CategoriesModule,
+    ReadingModule,
+    JournalModule,
+    ChroniclesModule,
   ],
 })
 export class AppModule {}

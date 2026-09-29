@@ -16,6 +16,7 @@ export interface BookSummaryDto {
   status: BookStatus;
   publishedAt: string | null;
   category: CategoryDto | null;
+  tags: string[];
   createdAt?: string;
   updatedAt?: string;
   deletedAt?: string | null;
@@ -30,6 +31,95 @@ export interface BookSummaryDto {
 
 export interface BookDetailDto extends BookSummaryDto {
   contentHtml: string;
+}
+
+export interface ShelfBookDto extends BookSummaryDto {
+  shelf: {
+    status: 'want_to_read' | 'reading' | 'completed';
+    progress: number;
+    lastReadAt: string | null;
+    addedAt: string;
+    updatedAt: string;
+  };
+}
+
+export interface ReadingEntryDto {
+  id: string;
+  type: 'note' | 'quote';
+  title: string | null;
+  content: string;
+  source: string | null;
+  pageLabel: string | null;
+  chapterId: string | null;
+  chapterTitle: string | null;
+  quote: string | null;
+  anchor: ReadingAnchorDto | null;
+  tags: string[];
+  readingProgress: number | null;
+  book: Pick<BookSummaryDto, 'slug' | 'title' | 'author' | 'cover'> | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ReadingAnchorDto {
+  blockId?: string;
+  startBlockId?: string;
+  endBlockId?: string;
+  exactText: string;
+  prefix?: string;
+  suffix?: string;
+  startOffset?: number;
+  endOffset?: number;
+}
+
+export interface JournalEntryDto {
+  id: string;
+  title: string;
+  content: string;
+  entryDate: string;
+  tags: string[];
+  mood: string | null;
+  weather: string | null;
+  worldPeriod: string | null;
+  location: string | null;
+  coverImage: string | null;
+  relatedBooks: string[];
+  relatedNotes: string[];
+  isPrivate: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type ChronicleStatus = 'locked' | 'discovered' | 'read';
+export type ChronicleType = 'voyage_log' | 'adventure_log' | 'lost_letter' | 'ancient_fragment' | 'map_annotation' | 'observation' | 'archive_record';
+
+export interface ChronicleEntryDto {
+  id: string;
+  seasonId: string;
+  seasonTitle: string;
+  chapterId: string;
+  chapterTitle: string;
+  recordNumber: number;
+  status: ChronicleStatus;
+  type?: ChronicleType;
+  title?: string;
+  subtitle?: string | null;
+  content?: string;
+  excerpt?: string;
+  author?: string | null;
+  recordDate?: string | null;
+  discoverLocation?: string | null;
+  coordinates?: unknown;
+  regionId?: string | null;
+  discoveredAt?: string;
+  readAt?: string | null;
+}
+
+export interface ChronicleArchiveDto {
+  entries: ChronicleEntryDto[];
+  discovered: number;
+  read: number;
+  total: number;
 }
 
 export interface CreateBookDto {

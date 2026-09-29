@@ -21,6 +21,7 @@ export interface GenerationInput {
   author?: string;
   categorySlug?: string;
   categoryName?: string;
+  tags?: string[];
   templateId: string;
   modules: string[];
   sourceText: string;

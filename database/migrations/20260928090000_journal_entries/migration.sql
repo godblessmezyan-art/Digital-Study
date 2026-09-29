@@ -1,0 +1,20 @@
+CREATE TABLE `journal_entries` (
+  `id` VARCHAR(36) NOT NULL,
+  `ownerId` VARCHAR(160) NOT NULL,
+  `title` VARCHAR(255) NOT NULL,
+  `content` TEXT NOT NULL,
+  `entryDate` DATE NOT NULL,
+  `tags` JSON NOT NULL,
+  `mood` VARCHAR(80) NULL,
+  `weather` VARCHAR(80) NULL,
+  `location` VARCHAR(255) NULL,
+  `coverImage` VARCHAR(500) NULL,
+  `relatedBooks` JSON NULL,
+  `relatedNotes` JSON NULL,
+  `isPrivate` BOOLEAN NOT NULL DEFAULT true,
+  `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  `updatedAt` DATETIME(3) NOT NULL,
+  INDEX `journal_entries_ownerId_entryDate_idx`(`ownerId`, `entryDate`),
+  INDEX `journal_entries_ownerId_updatedAt_idx`(`ownerId`, `updatedAt`),
+  PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

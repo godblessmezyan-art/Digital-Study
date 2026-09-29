@@ -21,3 +21,11 @@
 ## Required checks
 
 After relevant changes, run `pnpm build`. For schema/content work also run Prisma generation, migrations against a disposable database, and `pnpm sync-content`. Do not commit `.env`, generated build output, or database volumes.
+
+## Default production deployment
+
+- After requested code changes pass the relevant checks, deploy them to the production server by default unless the user explicitly asks not to deploy.
+- Use the existing `/opt/digital-study` deployment and `deploy/wxhappylife.compose.yml`; deploy only the affected services and files.
+- Before overwriting production files, create a timestamped backup. Preserve `.env.production`, `runtime-data/books`, the production database, and server-only content.
+- After deployment, verify the public site, API when relevant, container health, and browser console. Keep rollback information in the handoff.
+- Default deployment authorization does not authorize Git commit, push, or content Git synchronization; those still require an explicit user request.

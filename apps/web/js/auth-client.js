@@ -24,6 +24,7 @@ export function authHeaders() {
 export function clearAuth() {
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(USER_KEY);
+  window.dispatchEvent(new CustomEvent('study-auth-changed', { detail: { user: null } }));
 }
 
 async function authRequest(path, options = {}) {
@@ -35,6 +36,7 @@ async function authRequest(path, options = {}) {
       : payload?.message || '登录请求失败';
     throw new Error(message);
   }
+  if (!payload || typeof payload !== 'object') throw new Error('登录服务返回了无效响应，请稍后重试');
   return payload;
 }
 
@@ -44,13 +46,16 @@ export async function login(username, password) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ username, password }),
   });
+  if (typeof result.token !== 'string' || !result.token) throw new Error('登录成功响应中缺少凭证，请稍后重试');
   localStorage.setItem(TOKEN_KEY, result.token);
   localStorage.setItem(USER_KEY, JSON.stringify({
     username: result.username,
     display_name: result.display_name,
     role: result.role,
   }));
-  return getStoredUser();
+  const user = getStoredUser();
+  window.dispatchEvent(new CustomEvent('study-auth-changed', { detail: { user } }));
+  return user;
 }
 
 export async function validateAuth() {
@@ -60,6 +65,7 @@ export async function validateAuth() {
     const stored = getStoredUser() || {};
     const user = { ...stored, ...current };
     localStorage.setItem(USER_KEY, JSON.stringify(user));
+    window.dispatchEvent(new CustomEvent('study-auth-changed', { detail: { user } }));
     return user;
   } catch {
     clearAuth();

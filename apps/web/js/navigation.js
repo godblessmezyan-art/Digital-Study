@@ -1,11 +1,14 @@
 import { icons } from './icons.js?v=cloud-realm-study-29';
 
 export const navigationGroups = [
-  { label: '探索', items: [
+  { label: '书房', items: [
     { id: 'home', label: '首页', icon: 'tower', href: 'home.html#top' },
     { id: 'shelf', label: '我的书架', icon: 'tome', href: 'index.html#shelf' },
     { id: 'categories', label: '书籍分类', icon: 'astrolabe', href: 'index.html#categories' },
-    { id: 'reading', label: '阅读空间', icon: 'quill', href: 'index.html#reading' },
+  ] },
+  { label: '记录', items: [
+    { id: 'reading', label: '阅读空间', icon: 'hourglass', href: 'index.html#reading' },
+    { id: 'journal', label: '旅者手记', icon: 'journal', href: 'journal' },
   ] },
   { label: '创作', items: [
     { id: 'studio', label: 'AI 工坊', icon: 'scroll', href: 'index.html#studio' },

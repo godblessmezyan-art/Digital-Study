@@ -1,4 +1,5 @@
 import { withAppBase } from './runtime-paths.js';
+import { authHeaders, getStoredUser } from './auth-client.js';
 
 const isLocalStaticPreview = ['localhost', '127.0.0.1'].includes(window.location.hostname)
   && window.location.port === '5175';
@@ -21,10 +22,11 @@ function normalizeBook(book) {
     category,
     coverUrl: withAppBase(book.coverUrl || book.cover || ''),
     contentUrl: withAppBase(book.contentUrl || `/content/books/${book.slug}/content.html`),
+    shelf: book.shelf || null,
   };
 }
 
-async function fetchJson(url, timeoutMs = 3000) {
+async function fetchJson(url, timeoutMs = 3000, options = {}) {
   const controller = new AbortController();
   const timeoutId = window.setTimeout(() => controller.abort(), timeoutMs);
 
@@ -32,6 +34,7 @@ async function fetchJson(url, timeoutMs = 3000) {
     const response = await fetch(url, {
       cache: 'no-store',
       signal: controller.signal,
+      ...options,
     });
     if (!response.ok) throw new Error(`${url} returned ${response.status}`);
     return response.json();
@@ -41,6 +44,8 @@ async function fetchJson(url, timeoutMs = 3000) {
 }
 
 const CACHE_KEY = 'digital-study-catalog-cache-v1';
+const SHELF_CACHE_PREFIX = 'digital-study-shelf-cache-v2';
+const shelfCacheKey = () => `${SHELF_CACHE_PREFIX}:${getStoredUser()?.username || 'signed-out'}`;
 
 function mergeBooks(indexSource, apiSource = []) {
   const indexBooks = indexSource.map(normalizeBook);
@@ -53,9 +58,9 @@ function mergeBooks(indexSource, apiSource = []) {
   });
 }
 
-function readCache() {
+function readCache(key = CACHE_KEY) {
   try {
-    const cached = JSON.parse(sessionStorage.getItem(CACHE_KEY) || 'null');
+    const cached = JSON.parse(sessionStorage.getItem(key) || 'null');
     return Array.isArray(cached?.books) ? cached : null;
   } catch {
     return null;
@@ -73,4 +78,36 @@ export async function loadCatalogBooks({ fresh = false } = {}) {
   const cached = readCache();
   const snapshot = mergeBooks([], cached?.books || []);
   return refreshCatalogBooks().catch(() => snapshot);
+}
+
+export async function refreshShelfBooks() {
+  if (!getStoredUser()) throw new Error('请先登录后查看我的书架');
+  const apiBooks=await fetchJson(`${apiBase}/shelf`,3000,{headers:authHeaders()});
+  const books=mergeBooks([],Array.isArray(apiBooks)?apiBooks:[]);
+  try { sessionStorage.setItem(shelfCacheKey(),JSON.stringify({savedAt:Date.now(),books})) } catch { /* 缓存不可用时仍返回服务器数据。 */ }
+  return books;
+}
+
+export async function loadShelfBooks() {
+  const cached=readCache(shelfCacheKey());
+  const snapshot=mergeBooks([],cached?.books||[]);
+  return refreshShelfBooks().catch(error=>{if(snapshot.length)return snapshot;throw error});
+}
+
+async function shelfMutation(slug,{method='POST',body}={}){
+  if(!getStoredUser()){window.dispatchEvent(new CustomEvent('study-auth-required'));throw new Error('请先登录后操作我的书架')}
+  const response=await fetch(`${apiBase}/shelf/${encodeURIComponent(slug)}`,{method,headers:{...authHeaders(),...(body?{'Content-Type':'application/json'}:{})},...(body?{body:JSON.stringify(body)}:{})});
+  const payload=await response.json().catch(()=>null);
+  if(response.status===401)window.dispatchEvent(new CustomEvent('study-auth-required'));
+  if(!response.ok)throw new Error(payload?.message||`书架操作失败（${response.status}）`);
+  try{sessionStorage.removeItem(shelfCacheKey())}catch{/* 无可用存储时无需处理。 */}
+  return payload;
+}
+
+export const addShelfBook=slug=>shelfMutation(slug);
+export const updateShelfBook=(slug,input)=>shelfMutation(slug,{method:'PATCH',body:input});
+export const removeShelfBook=slug=>shelfMutation(slug,{method:'DELETE'});
+
+export function invalidateBookCaches(){
+  try { sessionStorage.removeItem(CACHE_KEY);sessionStorage.removeItem(shelfCacheKey()) } catch { /* 无可用存储时无需处理。 */ }
 }

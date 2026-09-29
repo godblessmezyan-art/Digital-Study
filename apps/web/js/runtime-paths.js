@@ -11,6 +11,10 @@ function detectBasePath() {
   const pathname = window.location.pathname;
   const documentMatch = pathname.match(/\/(?:index|home)\.html$/i);
   if (documentMatch) return normalizeBasePath(pathname.slice(0, documentMatch.index));
+  const journalMatch = pathname.match(/\/journal(?:\/[^/?#]+){0,2}\/?$/i);
+  if (journalMatch) return normalizeBasePath(pathname.slice(0, journalMatch.index));
+  const chroniclesMatch = pathname.match(/\/chronicles(?:\/[^/?#]+)?\/?$/i);
+  if (chroniclesMatch) return normalizeBasePath(pathname.slice(0, chroniclesMatch.index));
   if (pathname.endsWith('/')) return normalizeBasePath(pathname.slice(0, -1));
   return '';
 }

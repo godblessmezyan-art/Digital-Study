@@ -1,10 +1,19 @@
 import { icons } from './icons.js?v=cloud-realm-study-29';
 import {
-  books, categories, dailyBookmarks, notes, popularCategories, quotes, stats,
+  dailyBookmarks, popularCategories, stats,
 } from './data.js?v=cloud-realm-study-29';
-import { applyScene, initTheme } from './theme.js?v=cloud-realm-study-35';
-import { createCelestialGlobe } from './celestial-globe.js?v=1';
+import { applyScene, applyWorldBackground, initTheme } from './theme.js?v=cloud-realm-study-36';
+import { createCelestialGlobe } from './celestial-globe.js?v=2';
+import { initChronicles } from './chronicles.js?v=1';
+import { initMotionSystem } from './motion.js?v=1';
 import { renderSidebar } from './navigation.js?v=1';
+import { getStoredUser } from './auth-client.js';
+import { loadShelfBooks } from './book-catalog.js?v=3';
+import { listReadingEntries } from './reading-client.js?v=1';
+import { initWorld } from './world.js?v=1';
+import { initFootprints, seedFootprints } from './footprints.js?v=1';
+import { recordWorldFeedback } from './world-feedback.js';
+import { createSceneTransitionManager } from './scene-transition.js?v=1';
 
 const theme = initTheme();
 const app = document.querySelector('#app');
@@ -19,6 +28,10 @@ let atlasSceneId = document.documentElement.dataset.scene;
 let atlasViewId = document.documentElement.dataset.sceneView || 'default';
 let globeController = null;
 let worldMapReturnFocus = null;
+let shelfBooks = [];
+let readingEntries = [];
+
+const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
 
 const worldArt = document.querySelector('.world__art');
 const revealWorldArt = () => worldArt?.classList.add('is-loaded');
@@ -31,15 +44,37 @@ renderSidebar(sidebar, { variant: 'home', activeId: homeNavId(), brandName: them
 topbar.innerHTML = `<div class="topbar__inner">
   <button class="scene-status" id="scene-status" type="button" aria-label="打开天空城航行图"><span class="scene-status__astrolabe" aria-hidden="true">${icons.astrolabe}</span><span><small>当前窗景</small><strong id="scene-status-name"></strong></span></button>
   <button class="world-map-button" id="world-map-toggle" type="button" aria-label="世界地图" aria-haspopup="dialog" aria-controls="world-map-modal">${icons.astrolabe}<span>世界地图</span></button>
+  <span data-world-entry></span>
+  <span data-footprint-entry></span>
+  <button class="chronicle-home-signal" type="button" data-chronicle-signal hidden><i aria-hidden="true"></i><span data-chronicle-signal-label>新的世界记录</span></button>
   <button class="circle-btn scenic-toggle" id="scenic-toggle" aria-label="进入观景模式" title="进入观景模式">${icons.telescope}</button>
   <button class="circle-btn" aria-label="通知">${icons.bell}</button>
   <button class="circle-btn" id="theme-button" aria-label="主题设置">${icons.settings}</button>
   <button class="circle-btn avatar" aria-label="个人中心">旅</button>
 </div>`;
+const world = initWorld({ mount: document.querySelector('[data-world-entry]'), scene: 'home' });
+const chronicles = initChronicles({ world, page: 'home' });
+const sceneTransitions = createSceneTransitionManager();
+applyWorldBackground(theme, world.snapshot());
+window.addEventListener('worldchange', event => applyWorldBackground(theme, {
+  weather: event.detail.weather,
+  period: event.detail.effectivePeriod,
+}));
+window.addEventListener('worldchange', event => {
+  void chronicles.check('home');
+  globeController?.setAtmosphere({ weather: event.detail.weather, period: event.detail.effectivePeriod });
+});
+window.addEventListener('chroniclearchivechange', event => globeController?.setChronicles(event.detail?.entries || []));
+initFootprints({ mount: document.querySelector('[data-footprint-entry]') });
+const syncWorldScene = scene => {
+  const outdoor = ['city-overview', 'white-stone-courtyard', 'sea-of-clouds-terrace'].includes(scene.id)
+    || (scene.id === 'hidden-sanctuary' && scene.activeView?.id !== 'hall');
+  world.setScene(outdoor ? 'terrace' : 'study');
+};
 
 const statHTML = stats.map((s) => `<a class="stat-card" href="${s.target}"><span class="stat-card__watermark" aria-hidden="true">${icons[s.icon]}</span><span class="stat-card__icon">${icons[s.icon]}</span><span class="stat-card__copy"><strong>${s.label}</strong><small>${s.detail}</small></span><span class="stat-card__arrow">›</span></a>`).join('');
-const noteHTML = notes.map((n) => `<article class="note-item"><span class="note-thumb"></span><span><strong>${n.title}</strong><small>${n.meta}</small></span></article>`).join('');
-const quoteHTML = quotes.map((q) => `<blockquote class="quote">${q.text}<cite>—— ${q.source}</cite></blockquote>`).join('');
+const noteHTML = '<p class="home-data-loading">正在读取你的笔记…</p>';
+const quoteHTML = '<p class="home-data-loading">正在读取你的书摘…</p>';
 const categoryHTML = popularCategories.map((item) => `<a class="category-card" href="index.html#categories?category=${encodeURIComponent(item.category)}" style="--category-art:url('${item.image}')"><span><strong>${item.title}</strong><small>${item.subtitle}</small></span><i>→</i></a>`).join('');
 const mapPinHTML = theme.scenes.filter((scene) => scene.map).map((scene) => `<button class="map-pin ${document.documentElement.dataset.scene === scene.id ? 'is-active is-selected' : ''}" type="button" data-scene="${scene.id}" style="--pin-x:${scene.map.x}%;--pin-y:${scene.map.y}%" aria-label="选择${scene.name}"><span class="map-pin__orbit" aria-hidden="true"></span><b>${scene.map.marker}</b><span class="map-pin__label">${scene.name}</span></button>`).join('');
 
@@ -58,16 +93,17 @@ app.innerHTML = `
       <cite id="bookmark-source">—— ${dailyBookmarks[0].source}</cite>
       <em>轻触翻阅下一则</em>
     </button>
+    <aside class="world-presence" data-world-presence aria-label="云天幻境当前状态"></aside>
   </section>
   <div class="dashboard">
     <section class="stat-grid" aria-label="书房概览">${statHTML}</section>
     <section class="content-grid">
-      <article class="panel reading" id="continue-reading"><div class="reading__art" aria-hidden="true"></div><div class="reading__cover"></div><div class="reading__body"><span class="reading__label">继续阅读 · 第十二章</span><h2>三体</h2><p class="reading__author">刘慈欣</p><div class="reading__meta"><span>上次阅读 <time datetime="2026-09-07T22:36">昨晚 22:36</time></span><span>预计剩余 <time datetime="PT4H20M">4 小时 20 分</time></span></div><div class="progress-line"><i><b aria-hidden="true">✦</b></i><span>已读 42%</span></div><button class="primary-btn" data-action="read">继续阅读 →</button></div></article>
-      <section class="panel notes-panel" id="notes"><div class="panel__head"><h2 class="panel__title">最近笔记</h2><button class="panel__more">查看全部 →</button></div><div class="notes">${noteHTML}</div></section>
-      <section class="panel quotes-panel" id="quotes"><div class="panel__head"><h2 class="panel__title">精选书摘</h2><button class="panel__more">查看全部 →</button></div><div class="quotes">${quoteHTML}</div></section>
+      <article class="panel reading" id="continue-reading"><div class="reading__art" aria-hidden="true"></div><div class="reading__cover" data-title=""></div><div class="reading__body"><span class="reading__label">正在读取书架…</span><h2>我的阅读</h2><p class="reading__author">登录后同步最近进度</p><div class="reading__meta"><span>上次阅读 <time>—</time></span><span>剩余进度 <time>—</time></span></div><div class="progress-line" style="--reading-progress:0%"><i><b aria-hidden="true">✦</b></i><span>已读 0%</span></div><button class="primary-btn" data-action="read">打开我的书架 →</button></div></article>
+      <section class="panel notes-panel" id="notes"><div class="panel__head"><h2 class="panel__title">最近写下的想法</h2><button class="panel__more" data-home-reading="notes">查看全部 →</button></div><div class="notes" id="homeNotes">${noteHTML}</div></section>
+      <section class="panel quotes-panel" id="quotes"><div class="panel__head"><h2 class="panel__title">最近珍藏的片段</h2><button class="panel__more" data-home-reading="quotes">查看全部 →</button></div><div class="quotes" id="homeQuotes">${quoteHTML}</div></section>
     </section>
     <section class="category-section" id="categories"><div class="section-head"><div><span>漫游云端藏书世界</span><h2>热门分类</h2></div><a href="#shelf">查看全部分类 →</a></div><div class="category-grid">${categoryHTML}</div></section>
-    <section class="panel shelf" id="shelf"><div class="shelf__head"><h2>我的书架</h2><div class="tabs">${categories.map((c, i) => `<button class="tab ${i === 0 ? 'is-active' : ''}" data-category="${c.id}">${c.label}</button>`).join('')}</div><span class="shelf__more">共 24 本藏书</span></div><div class="books" id="books"></div></section>
+    <section class="panel shelf" id="shelf"><div class="shelf__head"><h2>我的书架</h2><div class="tabs" id="shelfTabs"><button class="tab is-active" data-category="all">最近加入</button></div><a class="shelf__more" id="shelfCount" href="index.html#shelf">正在读取…</a></div><div class="books" id="books"></div></section>
   </div>
   <aside class="world-map-modal" id="world-map-modal" role="dialog" aria-modal="true" aria-labelledby="world-map-title" aria-hidden="true">
     <div class="world-map-modal__backdrop" data-world-map-close aria-hidden="true"></div>
@@ -83,6 +119,7 @@ app.innerHTML = `
         <div class="celestial-globe" id="celestial-globe"></div>
       </div>
       <footer class="world-map-modal__foot">
+        <span class="chronicle-map-entry"><button type="button" data-open-chronicles><small>WORLD CHRONICLES</small><strong>世界纪事 · <b data-chronicle-count>0 / 12</b></strong></button></span>
         <span><i aria-hidden="true"></i> 已发现坐标：天空之城</span>
         <button type="button" id="globe-map">查看天空城地图 →</button>
       </footer>
@@ -125,18 +162,19 @@ app.innerHTML = `
 // The atlas is rendered with the page template, then moved to the viewport root
 // so its modal layer is not constrained by the main content stacking context.
 document.body.append(document.querySelector('#world-map-modal'), document.querySelector('#settings'));
+const motion = initMotionSystem({ surface: 'home' });
 
 document.querySelector('#scenic-prev').innerHTML = `${icons.return}<span>上一处</span>`;
 document.querySelector('#scenic-next').innerHTML = `${icons.astrolabe}<span>下一处</span>`;
 document.querySelector('#scenic-return').innerHTML = `${icons.return}<span>返回书房</span>`;
 
 function renderBooks() {
-  const filtered = books.filter((book) => (activeCategory === 'all' || book.category === activeCategory)
+  const filtered = shelfBooks.filter((book) => (activeCategory === 'all' || (book.category?.name || '未分类') === activeCategory)
     && `${book.title}${book.author}`.toLowerCase().includes(query.toLowerCase()));
-  const addBook = activeCategory === 'all' && !query ? `<button class="book-add" type="button" data-action="add-book">${icons.tome}<span>添加书籍</span></button>` : '';
+  const addBook = activeCategory === 'all' && !query ? `<button class="book-add" type="button" data-action="add-book">${icons.tome}<span>浏览书籍分类</span></button>` : '';
   document.querySelector('#books').innerHTML = filtered.length
-    ? filtered.map((book) => `<button class="book" data-title="${book.title}"><span class="book__cover" style="--cover:${book.cover};--cover-accent:${book.accent || '#e3c17d'}"><span>${book.title}</span></span><strong>${book.title}</strong><small>${book.author}</small></button>`).join('') + addBook
-    : '<p class="empty">云海里暂时没有找到这本书</p>';
+    ? filtered.slice(0, 8).map((book) => `<button class="book" data-title="${esc(book.title)}" data-home-book="${esc(book.slug)}"><span class="book__cover" style="--cover:${book.coverUrl ? `linear-gradient(rgba(6,20,31,.12),rgba(6,20,31,.55)),url('${esc(book.coverUrl)}') center/cover` : 'linear-gradient(145deg,#17344a,#486a79)'}"><span>${esc(book.title)}</span></span><strong>${esc(book.title)}</strong><small>${esc(book.author || '佚名')}</small></button>`).join('') + addBook
+    : `<p class="empty">${getStoredUser() ? '你的书架里暂时没有匹配的书' : '登录后查看你的真实书架'}</p>${addBook}`;
 }
 
 function selectCategory(id) {
@@ -150,6 +188,58 @@ function showToast(text) {
   toast.classList.add('is-visible');
   clearTimeout(showToast.timer);
   showToast.timer = setTimeout(() => toast.classList.remove('is-visible'), 1800);
+}
+
+function renderHomeReadingData() {
+  const notes = readingEntries.filter(item => item.type === 'note').slice(0, 3);
+  const quotes = readingEntries.filter(item => item.type === 'quote').slice(0, 3);
+  document.querySelector('#homeNotes').innerHTML = notes.length ? notes.map(item => `<article class="note-item" role="link" tabindex="0" data-home-entry="${esc(item.id)}" data-entry-tab="notes"><span class="note-thumb"></span><span><strong>${esc(item.title)}</strong><small>${esc(item.book?.title || item.source || new Date(item.updatedAt).toLocaleDateString('zh-CN'))}</small></span></article>`).join('') : '<p class="home-data-empty">还没有笔记，去阅读空间记录第一条吧。</p>';
+  document.querySelector('#homeQuotes').innerHTML = quotes.length ? quotes.map(item => `<blockquote class="quote" role="link" tabindex="0" data-home-entry="${esc(item.id)}" data-entry-tab="quotes">${esc(item.content)}<cite>—— ${esc(item.book?.title || item.source || '我的书摘')}</cite></blockquote>`).join('') : '<p class="home-data-empty">还没有书摘，去收藏触动你的文字吧。</p>';
+}
+
+function renderContinueReading() {
+  const book = shelfBooks.find(item => item.status === 'published' && item.shelf?.lastReadAt)
+    || shelfBooks.find(item => item.status === 'published' && item.shelf?.status === 'reading')
+    || shelfBooks.find(item => item.status === 'published');
+  const card = document.querySelector('#continue-reading');
+  if (!book) {
+    card.querySelector('.reading__label').textContent = getStoredUser() ? '我的书架还是空的' : '登录后同步阅读进度';
+    card.querySelector('h2').textContent = getStoredUser() ? '去发现一本好书' : '我的阅读';
+    card.querySelector('.reading__author').textContent = getStoredUser() ? '从书籍分类加入书架' : '你的书架、笔记与书摘会显示在这里';
+    return;
+  }
+  const progress = Number(book.shelf?.progress || 0);
+  card.querySelector('.reading__cover').dataset.title = book.title;
+  if (book.coverUrl) card.querySelector('.reading__cover').style.backgroundImage = `linear-gradient(rgba(7,22,36,.12),rgba(7,22,36,.5)),url('${book.coverUrl}')`;
+  card.querySelector('.reading__label').textContent = '上次翻开的书';
+  card.querySelector('h2').textContent = book.title;
+  card.querySelector('.reading__author').textContent = book.author || '佚名';
+  const last = book.shelf?.lastReadAt ? new Date(book.shelf.lastReadAt).toLocaleString('zh-CN', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '尚未开始';
+  card.querySelectorAll('.reading__meta time')[0].textContent = last;
+  card.querySelectorAll('.reading__meta time')[1].textContent = `${Math.max(0, 100 - progress)}%`;
+  card.querySelector('.progress-line').style.setProperty('--reading-progress', `${progress}%`);
+  card.querySelector('.progress-line span').textContent = `已读 ${progress}%`;
+  card.querySelector('[data-action="read"]').textContent = `${progress ? '继续阅读' : '打开阅读'} →`;
+}
+
+async function hydratePersonalHome() {
+  if (!getStoredUser()) {
+    shelfBooks = [];
+    readingEntries = [];
+  } else {
+    [shelfBooks, readingEntries] = await Promise.all([loadShelfBooks({ fresh: true }), listReadingEntries()]).catch(() => [[], []]);
+    seedFootprints([
+      ...shelfBooks.filter(book => book.shelf?.lastReadAt || book.shelf?.addedAt).map(book => ({ kind: 'book', targetId: book.slug, activity: book.shelf?.lastReadAt ? 'progress' : 'collected', timestamp: book.shelf?.lastReadAt || book.shelf?.addedAt, title: book.title, detail: book.author || book.category?.name, href: `index.html#shelf?book=${encodeURIComponent(book.slug)}`, coverUrl: book.coverUrl, progress: book.shelf?.progress || 0 })),
+      ...readingEntries.map(entry => ({ kind: entry.type, targetId: entry.id, activity: 'edited', timestamp: entry.updatedAt, title: entry.type === 'note' ? entry.title : entry.content.slice(0, 48), detail: entry.book?.title || entry.source, href: `index.html#reading?tab=${entry.type === 'note' ? 'notes' : 'quotes'}&entry=${encodeURIComponent(entry.id)}` })),
+    ]);
+  }
+  const categories = [...new Set(shelfBooks.map(book => book.category?.name || '未分类'))];
+  document.querySelector('#shelfTabs').innerHTML = `<button class="tab is-active" data-category="all">最近加入</button>${categories.slice(0, 5).map(name => `<button class="tab" data-category="${esc(name)}">${esc(name)}</button>`).join('')}`;
+  document.querySelector('#shelfCount').textContent = getStoredUser() ? `共 ${shelfBooks.length} 本藏书 →` : '登录查看 →';
+  document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => selectCategory(tab.dataset.category)));
+  renderBooks();
+  renderContinueReading();
+  renderHomeReadingData();
 }
 
 function getDialogControls(dialog) {
@@ -177,22 +267,34 @@ function ensureGlobe() {
   globeController = createCelestialGlobe(document.querySelector('#celestial-globe'), {
     locations: theme.scenes.filter((scene) => scene.globe),
     activeId: document.documentElement.dataset.scene,
+    chronicles: chronicles.getEntries(),
     textureUrl: 'assets/fantasy-world-map-v1.webp',
     onSelect(id) {
       closeWorldMap({ restoreFocus: false });
       openAtlas(id);
     },
+    onChronicleSelect(id) {
+      closeWorldMap({ restoreFocus: false });
+      void chronicles.openReader(id);
+    },
   });
+  const atmosphere = world.snapshot();
+  globeController.setAtmosphere({ weather: atmosphere.weather, period: atmosphere.effectivePeriod });
   return globeController;
 }
 
 function openWorldMap() {
   const modal = document.querySelector('#world-map-modal');
   worldMapReturnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : document.querySelector('#world-map-toggle');
-  ensureGlobe().start();
+  const globe = ensureGlobe();
+  globe.setChronicles(chronicles.getEntries());
+  const atmosphere = world.snapshot();
+  globe.setAtmosphere({ weather: atmosphere.weather, period: atmosphere.effectivePeriod });
+  globe.start();
   modal.classList.add('is-open');
   modal.setAttribute('aria-hidden', 'false');
   document.body.classList.add('is-world-map-open');
+  void chronicles.check('world');
   window.setTimeout(() => document.querySelector('#world-map-close').focus(), 80);
 }
 
@@ -265,16 +367,19 @@ function changeAtlasSelection(offset) {
   destination?.focus({ preventScroll: true });
 }
 
-function selectScene(id, announce = true, viewId = null) {
+async function selectScene(id, announce = true, viewId = null) {
   const nextScene = theme.scenes.find((item) => item.id === id) || theme.scenes[0];
-  document.body.classList.add('is-scene-changing');
-  window.setTimeout(() => {
+  const type = ['city-overview', 'sea-of-clouds-terrace', 'white-stone-courtyard'].includes(nextScene.id) ? 'cloud'
+    : ['sky-study', 'cloud-library-tower', 'forgotten-archive'].includes(nextScene.id) ? 'interior' : 'default';
+  await sceneTransitions.transition({ type, targetName: nextScene.name, swap: () => {
     const scene = applyScene(theme, nextScene.id, viewId);
+    syncWorldScene(scene);
     updateSceneUI(scene);
     updateAtlasSelection(scene.id, scene.activeView?.id);
     preloadSceneNeighbors(scene.id);
-    window.setTimeout(() => document.body.classList.remove('is-scene-changing'), 300);
-  }, 170);
+    recordWorldFeedback('scene_visited', { sceneId: scene.id, title: scene.name, viewId: scene.activeView?.id || '' });
+    window.dispatchEvent(new CustomEvent('scenechange', { detail: scene }));
+  } });
   if (announce) showToast(`已抵达：${nextScene.name}`);
   return nextScene;
 }
@@ -287,11 +392,14 @@ function changeScene(offset) {
 
 function preloadSceneNeighbors(id) {
   const current = theme.scenes.findIndex((scene) => scene.id === id);
-  [-1, 1].forEach((offset) => {
+  [0, -1, 1].forEach((offset) => {
     const scene = theme.scenes[(current + offset + theme.scenes.length) % theme.scenes.length];
     (scene.views?.length ? scene.views : [scene]).forEach((visual) => {
-      const image = new Image();
-      image.src = visual.image;
+      const collect = value => typeof value === 'string' ? [value] : Object.values(value || {}).flatMap(collect);
+      [...new Set([visual.image, ...collect(visual.backgrounds || scene.backgrounds)])].filter(Boolean).forEach(source => {
+        const image = new Image();
+        image.src = source;
+      });
     });
   });
 }
@@ -307,7 +415,10 @@ function setScenicMode(enabled) {
 }
 
 renderBooks();
+hydratePersonalHome();
+void chronicles.check('home');
 const initialScene = applyScene(theme, document.documentElement.dataset.scene, document.documentElement.dataset.sceneView);
+syncWorldScene(initialScene);
 updateSceneUI(initialScene);
 updateAtlasSelection(initialScene.id, initialScene.activeView?.id);
 const preloadScenes = () => preloadSceneNeighbors(initialScene.id);
@@ -339,6 +450,7 @@ const syncHomeNavigation = () => {
   if (activeId === 'home' && document.documentElement.dataset.scene !== theme.defaultScene) selectScene(theme.defaultScene, false);
 };
 window.addEventListener('hashchange', syncHomeNavigation);
+window.addEventListener('study-auth-changed', () => { void chronicles.refresh().then(() => chronicles.check('home')); });
 document.querySelector('.brand').addEventListener('click', () => {
   if (document.documentElement.dataset.scene !== theme.defaultScene) selectScene(theme.defaultScene, false);
 });
@@ -415,13 +527,21 @@ document.querySelector('#atmosphere').addEventListener('click', () => {
   localStorage.setItem('library-atmosphere', root.dataset.atmosphere);
   showToast(root.dataset.atmosphere === 'dusk' ? '暮色已降临天空城' : '天空城迎来晨光');
 });
-document.querySelector('[data-action="read"]').addEventListener('click', () => showToast('正在打开《三体》第十二章…'));
+document.querySelector('[data-action="read"]').addEventListener('click', () => { window.location.href = 'index.html#shelf'; });
+document.querySelectorAll('[data-home-reading]').forEach(button => button.addEventListener('click', () => { window.location.href = `index.html#reading?tab=${button.dataset.homeReading}`; }));
+const openHomeEntry = target => { window.location.href = `index.html#reading?tab=${target.dataset.entryTab}&entry=${encodeURIComponent(target.dataset.homeEntry)}`; };
+['#homeNotes', '#homeQuotes'].forEach(selector => {
+  document.querySelector(selector).addEventListener('click', event => { const target = event.target.closest('[data-home-entry]'); if (target) openHomeEntry(target); });
+  document.querySelector(selector).addEventListener('keydown', event => { const target = event.target.closest('[data-home-entry]'); if (target && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); openHomeEntry(target); } });
+});
 document.querySelector('#books').addEventListener('click', (event) => {
   const book = event.target.closest('.book');
-  if (book) showToast(`已选中《${book.dataset.title}》`);
-  if (event.target.closest('[data-action="add-book"]')) showToast('添加书籍入口已打开');
+  if (book) window.location.href = `index.html#shelf?book=${encodeURIComponent(book.dataset.homeBook)}`;
+  if (event.target.closest('[data-action="add-book"]')) window.location.href = 'index.html#categories';
 });
 window.addEventListener('pagehide', () => {
   globeController?.destroy();
   globeController = null;
+  motion.destroy();
+  sceneTransitions.destroy();
 }, { once: true });

@@ -1,10 +1,17 @@
-import { createAiWorkshopPage } from './studio-page.js?v=5';
+import { createAiWorkshopPage } from './studio-page.js?v=6';
 import { createLibraryPage } from './library-page.js?v=1';
-import { loadCatalogBooks } from './book-catalog.js?v=1';
+import { addShelfBook, loadCatalogBooks } from './book-catalog.js?v=2';
 import { icons as archiveIcons } from './icons.js?v=cloud-realm-study-29';
 import { renderSidebar } from './navigation.js?v=1';
-import { createReadingSpacePage } from './reading-space.js?v=1';
+import { createReadingSpacePage } from './reading-space.js?v=3';
+import { createShelfPage } from './shelf-page.js?v=3';
 import { clearAuth, getStoredUser, login, validateAuth } from './auth-client.js';
+import { initWorld } from './world.js?v=1';
+import { initFootprints, recordFootprint, seedFootprints } from './footprints.js?v=1';
+import { createJournalPage } from './journal-page.js?v=1';
+import { createChroniclesPage } from './chronicles-page.js?v=1';
+import { initChronicles } from './chronicles.js?v=1';
+import { initMotionSystem } from './motion.js?v=1';
 
 const icon = (name) => {
   const paths = {home:'<path d="M3 11 12 3l9 8v9a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',book:'<path d="M4 5a3 3 0 0 1 3-3h13v17H7a3 3 0 0 0-3 3z"/><path d="M4 5v17"/>',grid:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',pen:'<path d="m4 20 4-1 11-11-3-3L5 16z"/><path d="m14 6 3 3"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',star:'<path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',spark:'<path d="m12 3 1.4 4.1L17 9l-3.6 1.9L12 15l-1.4-4.1L7 9l3.6-1.9z"/><path d="m19 14 .8 2.2L22 17l-2.2.8L19 20l-.8-2.2L16 17l2.2-.8z"/>',tag:'<path d="M20 13 13 20l-9-9V4h7z"/><circle cx="8.5" cy="8.5" r="1.5"/>',settings:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3A1.7 1.7 0 0 0 10 3V2.8h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1z"/>',upload:'<path d="M12 16V3m0 0L7 8m5-5 5 5"/><path d="M5 13v7h14v-7"/>'};
@@ -30,7 +37,12 @@ const appScenes=[
 ];
 let appSceneIndex=0;
 const appTopbar=document.querySelector('#appTopbar'),appSceneCaption=document.querySelector('#appSceneCaption');
-appTopbar.innerHTML=`<div class="app-topbar-inner"><button class="app-scene-status" id="appSceneStatus"><span>${archiveIcons.astrolabe}</span><span><small>当前窗景</small><strong id="appSceneName"></strong></span></button><button class="app-circle-btn" id="appScenicToggle" title="进入观景模式" aria-label="进入观景模式">${archiveIcons.telescope}</button><button class="app-circle-btn" data-top-action="通知" aria-label="通知">${archiveIcons.bell}</button><button class="app-circle-btn" id="appAtmosphere" title="切换氛围" aria-label="切换氛围">${archiveIcons.alchemy}</button><button class="app-circle-btn app-avatar" id="appAuthButton" aria-label="账号登录">登录</button></div>`;
+appTopbar.innerHTML=`<div class="app-topbar-inner"><button class="app-scene-status" id="appSceneStatus"><span>${archiveIcons.astrolabe}</span><span><small>当前窗景</small><strong id="appSceneName"></strong></span></button><span data-world-entry></span><span data-footprint-entry></span><button class="app-circle-btn" id="appScenicToggle" title="进入观景模式" aria-label="进入观景模式">${archiveIcons.telescope}</button><button class="app-circle-btn" data-top-action="通知" aria-label="通知">${archiveIcons.bell}</button><button class="app-circle-btn" id="appAtmosphere" title="切换氛围" aria-label="切换氛围">${archiveIcons.alchemy}</button><button class="app-circle-btn app-avatar" id="appAuthButton" aria-label="账号登录">登录</button></div>`;
+const world=initWorld({mount:document.querySelector('[data-world-entry]'),scene:'study'});
+const chronicles=initChronicles({world,page:'study'});
+initMotionSystem({surface:'app'});
+window.addEventListener('worldchange',()=>{void chronicles.check()});
+initFootprints({mount:document.querySelector('[data-footprint-entry]')});
 document.querySelector('#appScenePrev').innerHTML=`${archiveIcons.return}<span>上一处</span>`;
 document.querySelector('#appSceneNext').innerHTML=`${archiveIcons.astrolabe}<span>下一处</span>`;
 document.querySelector('#appSceneReturn').innerHTML=`${archiveIcons.return}<span>返回工作区</span>`;
@@ -43,7 +55,7 @@ document.querySelector('#appScenicToggle').addEventListener('click',()=>setAppSc
 document.querySelector('#appScenePrev').addEventListener('click',()=>applyAppScene(appSceneIndex-1));
 document.querySelector('#appSceneNext').addEventListener('click',()=>applyAppScene(appSceneIndex+1));
 document.querySelector('#appSceneReturn').addEventListener('click',()=>setAppScenic(false));
-document.querySelector('#appAtmosphere').addEventListener('click',()=>document.body.classList.toggle('app-dimmed'));
+document.querySelector('#appAtmosphere').addEventListener('click',()=>world.open());
 document.querySelectorAll('[data-top-action]').forEach(button=>button.addEventListener('click',()=>showToast(`${button.dataset.topAction}功能开发中`)));
 document.addEventListener('keydown',event=>{if(event.key==='Escape'&&document.body.classList.contains('is-app-scenic'))setAppScenic(false)});
 
@@ -71,7 +83,7 @@ function renderAuthDialog(){
 
 function openAuthDialog(){renderAuthDialog();if(!authDialog.open)authDialog.showModal()}
 authButton.addEventListener('click',openAuthDialog);
-window.addEventListener('study-auth-required',()=>{openAuthDialog();showToast('请先登录管理员账号')});
+window.addEventListener('study-auth-required',()=>{openAuthDialog();showToast('请先登录账号')});
 updateAuthButton();
 void validateAuth().then(()=>updateAuthButton());
 
@@ -129,33 +141,37 @@ async function renderCategories(){
  const catalogBooks=await loadCatalogBooks();
  const categoryCounts=new Map();catalogBooks.forEach(book=>{const name=book.category?.name||'其他';categoryCounts.set(name,(categoryCounts.get(name)||0)+1)});
  const categoryTabs=[['全部',catalogBooks.length],...[...categoryCounts.entries()].sort((a,b)=>a[0].localeCompare(b[0],'zh-CN'))];
- app.innerHTML=`<section class="category-page"><header class="category-hero">${topActions(false)}<h1>书籍分类</h1><p>探索不同领域的知识与故事</p><label class="category-search">${icon('search')}<input id="categorySearch" placeholder="搜索书名、作者、分类或标签..."></label><div class="category-tabs">${categoryTabs.map(x=>`<button class="category-tab" data-category-name="${x[0]}"><strong>${x[0]}</strong><small>${x[1]}</small></button>`).join('')}</div></header><section class="category-library"><div class="category-heading"><div><h2 id="categoryTitle">全部 <span>${catalogBooks.length} 本书</span></h2><p>内容来自 Git 仓库，数据库可用时会自动合并最新索引。</p></div><div class="category-controls"><select class="category-sort" id="categorySort" aria-label="排序"><option value="updated">最近更新</option><option value="title">书名</option><option value="author">作者</option></select><button class="category-view active" data-view="grid">▦</button><button class="category-view" data-view="list">☷</button></div></div><div class="category-books" id="categoryBooks"></div></section></section>`;
+ app.innerHTML=`<section class="category-page"><header class="category-hero">${topActions(false)}<h1>书籍分类</h1><p>探索不同领域的知识与故事</p><label class="category-search">${icon('search')}<input id="categorySearch" placeholder="搜索书名、作者、分类或标签..."></label><div class="category-tabs">${categoryTabs.map(x=>`<button class="category-tab" data-category-name="${x[0]}"><strong>${x[0]}</strong><small>${x[1]}</small></button>`).join('')}</div></header><section class="category-library"><div class="category-heading"><div><h2 id="categoryTitle">全部 <span>${catalogBooks.length} 本书</span></h2><p id="categoryContext">点击书籍标签，可查看同标签的全部资源。</p></div><div class="category-controls"><select class="category-sort" id="categorySort" aria-label="排序"><option value="updated">最近更新</option><option value="title">书名</option><option value="author">作者</option></select><button class="category-view active" data-view="grid">▦</button><button class="category-view" data-view="list">☷</button></div></div><div class="category-books" id="categoryBooks"></div></section></section>`;
  const list=document.querySelector('#categoryBooks');
  const params=new URLSearchParams(location.hash.split('?')[1]||'');
- let activeCategory=params.get('category')||'全部',query='',sort='updated';
+ let activeCategory=params.get('category')||'全部',activeTag=params.get('tag')||'',query='',sort='updated';
  if(activeCategory!=='全部'&&!categoryCounts.has(activeCategory))activeCategory='全部';
  const escapeValue=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
- const filtered=()=>catalogBooks.filter(book=>(activeCategory==='全部'||(book.category?.name||'其他')===activeCategory)&&`${book.title}${book.author}${book.summary}${book.category?.name||''}${book.tags.join('')}`.toLowerCase().includes(query)).sort((a,b)=>sort==='title'?a.title.localeCompare(b.title,'zh-CN'):sort==='author'?a.author.localeCompare(b.author,'zh-CN'):String(b.updatedAt||b.publishedAt||'').localeCompare(String(a.updatedAt||a.publishedAt||'')));
- const paint=()=>{const items=filtered();list.innerHTML=items.length?items.map(book=>`<article class="category-book" data-title="${escapeValue(book.title)}" data-content-url="${escapeValue(book.contentUrl)}"><div class="category-cover" style="--book-art:url('${escapeValue(book.coverUrl||'assets/cloud-realm-study-v2.png')}')"><div class="cover-shade"></div><strong>${escapeValue(book.title)}</strong><small>${escapeValue(book.author)}</small></div><div class="category-book-meta"><h3>${escapeValue(book.title)}</h3><p>${escapeValue(book.author)}</p><span class="reading-status ${book.status==='draft'?'unread':''}">${book.status==='published'?'已发布':'草稿'}</span></div></article>`).join(''):'<div class="category-empty">Git 内容目录中暂未找到相关书籍</div>';document.querySelector('#categoryTitle').innerHTML=`${escapeValue(activeCategory)} <span>${items.length} 本书</span>`;document.querySelectorAll('.category-book').forEach(card=>card.addEventListener('click',()=>{const url=card.dataset.contentUrl;if(url)window.open(url,'_blank','noopener')}))};
+ const filtered=()=>catalogBooks.filter(book=>(activeCategory==='全部'||(book.category?.name||'其他')===activeCategory)&&(!activeTag||book.tags.includes(activeTag))&&`${book.title}${book.author}${book.summary}${book.category?.name||''}${book.tags.join('')}`.toLowerCase().includes(query)).sort((a,b)=>sort==='title'?a.title.localeCompare(b.title,'zh-CN'):sort==='author'?a.author.localeCompare(b.author,'zh-CN'):String(b.updatedAt||b.publishedAt||'').localeCompare(String(a.updatedAt||a.publishedAt||'')));
+ const paint=()=>{
+  const items=filtered();
+  list.innerHTML=items.length?items.map(book=>`<article class="category-book" data-title="${escapeValue(book.title)}" data-content-url="${escapeValue(book.contentUrl)}"><div class="category-cover" style="--book-art:url('${escapeValue(book.coverUrl||'assets/cloud-realm-study-v2.png')}')"><div class="cover-shade"></div><strong>${escapeValue(book.title)}</strong><small>${escapeValue(book.author)}</small></div><div class="category-book-meta"><h3>${escapeValue(book.title)}</h3><p>${escapeValue(book.author)}</p>${book.tags.length?`<div class="category-book-tags">${book.tags.slice(0,4).map(tag=>`<button type="button" data-book-tag="${escapeValue(tag)}"># ${escapeValue(tag)}</button>`).join('')}</div>`:''}<span class="reading-status">网站资源</span><button type="button" class="category-add-shelf" data-add-shelf="${escapeValue(book.slug)}">＋ 加入我的书架</button></div></article>`).join(''):'<div class="category-empty">网站资源库中暂未找到相关书籍</div>';
+  const title=activeTag?`标签：${activeTag}`:activeCategory;
+  document.querySelector('#categoryTitle').innerHTML=`${escapeValue(title)} <span>${items.length} 本书</span>`;
+  document.querySelector('#categoryContext').innerHTML=activeTag?`正在查看标签 <b># ${escapeValue(activeTag)}</b> 下的全部书籍　<button type="button" data-clear-tag>清除标签</button>`:'点击书籍标签，可查看同标签的全部资源。';
+  document.querySelectorAll('.category-book').forEach(card=>card.addEventListener('click',event=>{if(event.target.closest('[data-add-shelf],[data-book-tag]'))return;const url=card.dataset.contentUrl;if(!url)return;const book=catalogBooks.find(item=>item.contentUrl===url);if(book&&getStoredUser())recordFootprint({kind:'book',targetId:book.slug,activity:'opened',title:book.title,detail:book.author||book.category?.name,href:url,coverUrl:book.coverUrl});window.open(url,'_blank','noopener')}));
+  document.querySelectorAll('[data-book-tag]').forEach(button=>button.addEventListener('click',event=>{event.stopPropagation();activeTag=button.dataset.bookTag;activeCategory='全部';document.querySelectorAll('.category-tab').forEach(tab=>tab.classList.toggle('active',tab.dataset.categoryName==='全部'));history.replaceState(null,'',`#categories?tag=${encodeURIComponent(activeTag)}`);paint();document.querySelector('.category-library').scrollIntoView({behavior:'smooth'})}));
+  document.querySelector('[data-clear-tag]')?.addEventListener('click',()=>{activeTag='';history.replaceState(null,'','#categories');paint()});
+  document.querySelectorAll('[data-add-shelf]').forEach(button=>button.addEventListener('click',async event=>{event.stopPropagation();button.disabled=true;try{await addShelfBook(button.dataset.addShelf);const book=catalogBooks.find(item=>item.slug===button.dataset.addShelf);if(book)recordFootprint({kind:'book',targetId:book.slug,activity:'collected',title:book.title,detail:book.author||book.category?.name,href:`index.html#shelf?book=${encodeURIComponent(book.slug)}`,coverUrl:book.coverUrl});button.textContent='✓ 已加入书架';showToast('已加入我的书架')}catch(error){button.disabled=false;showToast(error.message||'加入书架失败')}}));
+ };
  paint();
- document.querySelectorAll('.category-tab').forEach(tab=>tab.classList.toggle('active',tab.dataset.categoryName===activeCategory));
+ document.querySelectorAll('.category-tab').forEach(tab=>tab.classList.toggle('active',!activeTag&&tab.dataset.categoryName===activeCategory));
  document.querySelector('#categorySearch').addEventListener('input',event=>{query=event.target.value.trim().toLowerCase();paint()});
  document.querySelector('#categorySort').addEventListener('change',event=>{sort=event.target.value;paint()});
- document.querySelectorAll('.category-tab').forEach(tab=>tab.addEventListener('click',()=>{document.querySelectorAll('.category-tab').forEach(x=>x.classList.remove('active'));tab.classList.add('active');activeCategory=tab.dataset.categoryName;history.replaceState(null,'',activeCategory==='全部'?'#categories':`#categories?category=${encodeURIComponent(activeCategory)}`);paint();showToast(`已切换至${activeCategory}`)}));
+ document.querySelectorAll('.category-tab').forEach(tab=>tab.addEventListener('click',()=>{document.querySelectorAll('.category-tab').forEach(x=>x.classList.remove('active'));tab.classList.add('active');activeCategory=tab.dataset.categoryName;activeTag='';history.replaceState(null,'',activeCategory==='全部'?'#categories':`#categories?category=${encodeURIComponent(activeCategory)}`);paint();showToast(`已切换至${activeCategory}`)}));
  document.querySelectorAll('.category-view').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.category-view').forEach(x=>x.classList.remove('active'));btn.classList.add('active');list.classList.toggle('list-view',btn.dataset.view==='list')}));
  bindGlobal();
 }
 
 async function renderShelf(){
- setActive('shelf');document.title='我的书架 · 云天幻境';document.body.classList.remove('studio-v2-mode','studio-workshop-mode','library-management-mode');document.body.classList.add('category-mode');
- const catalogBooks=await loadCatalogBooks();
- app.innerHTML=`<section class="category-page shelf-page"><header class="category-hero">${topActions(false)}<h1>我的书架</h1><p>浏览已经收藏和发布的书籍</p><label class="category-search">${icon('search')}<input id="shelfSearch" placeholder="搜索书名、作者、分类或标签..."></label><div class="category-tabs shelf-status-tabs"><button class="category-tab active" data-shelf-status="all"><strong>全部</strong><small>${catalogBooks.length}</small></button><button class="category-tab" data-shelf-status="published"><strong>已发布</strong><small>${catalogBooks.filter(book=>book.status==='published').length}</small></button><button class="category-tab" data-shelf-status="draft"><strong>草稿</strong><small>${catalogBooks.filter(book=>book.status==='draft').length}</small></button></div></header><section class="category-library"><div class="category-heading"><div><h2 id="shelfTitle">全部藏书 <span>${catalogBooks.length} 本书</span></h2><p>书籍内容来自 Git 仓库，打开后进入沉浸阅读页面。</p></div><div class="category-controls"><select class="category-sort" id="shelfSort" aria-label="排序"><option value="updated">最近更新</option><option value="title">书名</option><option value="author">作者</option></select><button class="category-view active" data-view="grid">▦</button><button class="category-view" data-view="list">☷</button></div></div><div class="category-books" id="shelfBooks"></div></section></section>`;
- const list=document.querySelector('#shelfBooks');let status='all',query='',sort='updated';
- const escapeValue=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
- const filtered=()=>catalogBooks.filter(book=>(status==='all'||book.status===status)&&`${book.title}${book.author}${book.summary}${book.category?.name||''}${book.tags.join('')}`.toLowerCase().includes(query)).sort((a,b)=>sort==='title'?a.title.localeCompare(b.title,'zh-CN'):sort==='author'?a.author.localeCompare(b.author,'zh-CN'):String(b.updatedAt||b.publishedAt||'').localeCompare(String(a.updatedAt||a.publishedAt||'')));
- const paint=()=>{const items=filtered();list.innerHTML=items.length?items.map(book=>`<article class="category-book" data-content-url="${escapeValue(book.contentUrl)}"><div class="category-cover" style="--book-art:url('${escapeValue(book.coverUrl||'assets/cloud-realm-study-v2.webp')}')"><div class="cover-shade"></div><strong>${escapeValue(book.title)}</strong><small>${escapeValue(book.author)}</small></div><div class="category-book-meta"><h3>${escapeValue(book.title)}</h3><p>${escapeValue(book.author)}</p><span class="reading-status ${book.status==='draft'?'unread':''}">${book.status==='published'?'已发布':'草稿'}</span></div></article>`).join(''):'<div class="category-empty">书架中暂未找到相关书籍</div>';document.querySelector('#shelfTitle').innerHTML=`${status==='all'?'全部藏书':status==='published'?'已发布':'草稿'} <span>${items.length} 本书</span>`;document.querySelectorAll('.category-book').forEach(card=>card.addEventListener('click',()=>{if(card.dataset.contentUrl)window.open(card.dataset.contentUrl,'_blank','noopener')}))};
- paint();
- document.querySelector('#shelfSearch').addEventListener('input',event=>{query=event.target.value.trim().toLowerCase();paint()});document.querySelector('#shelfSort').addEventListener('change',event=>{sort=event.target.value;paint()});document.querySelectorAll('[data-shelf-status]').forEach(tab=>tab.addEventListener('click',()=>{document.querySelectorAll('[data-shelf-status]').forEach(item=>item.classList.remove('active'));tab.classList.add('active');status=tab.dataset.shelfStatus;paint()}));document.querySelectorAll('.category-view').forEach(button=>button.addEventListener('click',()=>{document.querySelectorAll('.category-view').forEach(item=>item.classList.remove('active'));button.classList.add('active');list.classList.toggle('list-view',button.dataset.view==='list')}));
+ setActive('shelf');document.title='我的书架 · 云天幻境';document.body.classList.remove('category-mode','studio-v2-mode','studio-workshop-mode','library-management-mode');
+ const params=new URLSearchParams(location.hash.split('?')[1]||'');
+ await createShelfPage(app,{showToast,initialBookSlug:params.get('book')||'',navigateToStudio:book=>{if(book)sessionStorage.setItem('digital-study-edit-book',JSON.stringify(book));location.hash='#studio'},navigateToCategories:()=>{location.hash='#categories'}});
 }
 
 function renderStudio(){
@@ -194,10 +210,26 @@ function renderReadingSpace(){
   setActive('reading');document.title='阅读空间 · 云天幻境';
   document.body.classList.remove('category-mode','studio-v2-mode','studio-workshop-mode','library-management-mode');
   const params=new URLSearchParams(location.hash.split('?')[1]||'');
-  createReadingSpacePage(app,params.get('tab')||'notes');
+  createReadingSpacePage(app,params.get('tab')||'notes',{showToast,focusEntryId:params.get('entry')||''});
+}
+
+function renderJournal(){
+  setActive('journal');document.title="旅者手记 · Traveler's Journal";
+  document.body.classList.remove('category-mode','studio-v2-mode','studio-workshop-mode','library-management-mode');
+  world.setScene('journal');
+  return createJournalPage(app,{showToast,openLogin:openAuthDialog,worldSnapshot:()=>world.snapshot()});
+}
+
+function renderChronicles(){
+  setActive('');document.title='世界纪事 · World Chronicles';
+  document.body.classList.remove('category-mode','studio-v2-mode','studio-workshop-mode','library-management-mode');
+  world.setScene('content');
+  return createChroniclesPage(app,{openLogin:openAuthDialog});
 }
 
 function bindGlobal(){document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{setAppScenic(false);if(b.dataset.page==='home')window.location.href='home.html';else if(b.dataset.page==='library'||b.dataset.page==='content')location.hash='#content';else if(b.dataset.page==='studio')location.hash='#studio';else if(b.dataset.page==='categories')location.hash='#categories';else showToast(`${b.textContent.trim()}功能即将开放`)});document.querySelectorAll('[data-toast]').forEach(b=>b.onclick=()=>showToast(b.dataset.toast))}
 sidebar.addEventListener('click',()=>sidebar.classList.remove('open'));document.querySelector('#menuButton').addEventListener('click',()=>sidebar.classList.toggle('open'));
-const route=()=>{const page=location.hash.slice(1).split('?')[0];if(page==='studio')return renderStudioV3();if(page==='shelf')return renderShelf();if(page==='categories')return renderCategories();if(page==='reading')return renderReadingSpace();if(page==='content'||page==='library')return renderLibrary();window.location.replace('home.html')};route();
+const route=()=>{if(/\/chronicles\/?$/.test(location.pathname)){chronicles.setContext('chronicles');void chronicles.check('chronicles');return renderChronicles()}if(/\/journal(?:\/[^/?#]+){0,2}\/?$/.test(location.pathname)){chronicles.setContext('journal');void chronicles.check('journal');return renderJournal()}const page=location.hash.slice(1).split('?')[0];const storyPage=page==='library'?'content':page||'study';chronicles.setContext(storyPage);void chronicles.check(storyPage);world.setScene(storyPage);if(page==='studio')return renderStudioV3();if(page==='shelf')return renderShelf();if(page==='categories')return renderCategories();if(page==='reading')return renderReadingSpace();if(page==='content'||page==='library')return renderLibrary();window.location.replace('home.html')};route();
 window.addEventListener('hashchange',route);
+window.addEventListener('study-auth-changed',()=>{void chronicles.refresh();if(location.pathname.includes('/journal')||location.pathname.includes('/chronicles'))route()});
+window.addEventListener('study-toast',event=>showToast(event.detail));

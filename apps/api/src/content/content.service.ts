@@ -74,6 +74,16 @@ export class ContentService {
       create: { slug, ...data },
       include: { category: true },
     });
+    const tags = [...new Set((metadata.tags ?? []).map((tag) => tag.trim()).filter(Boolean))].slice(0, 30);
+    await this.prisma.$transaction(async (tx) => {
+      await tx.bookTag.deleteMany({ where: { bookId: book.id } });
+      for (const name of tags) {
+        const digest = createHash('sha256').update(name).digest('hex').slice(0, 8);
+        const base = name.normalize('NFKD').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 100) || 'tag';
+        const tag = await tx.tag.upsert({ where: { name }, update: {}, create: { name, slug: `${base}-${digest}` } });
+        await tx.bookTag.create({ data: { bookId: book.id, tagId: tag.id } });
+      }
+    });
     const currentSync = await this.prisma.bookGitSync.findUnique({ where: { bookId: book.id } });
     await this.prisma.bookGitSync.upsert({
       where: { bookId: book.id },
@@ -225,12 +235,23 @@ export class ContentService {
     await stat(source);
     await mkdir(this.trashRoot, { recursive: true });
     const destination = join(this.trashRoot, `${slug}-${new Date().toISOString().replace(/[:.]/g, '-')}`);
-    await rename(source, destination);
+    let copiedAcrossDevices = false;
+    try {
+      await rename(source, destination);
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== 'EXDEV') throw error;
+      await cp(source, destination, { recursive: true, errorOnExist: true });
+      await rm(source, { recursive: true });
+      copiedAcrossDevices = true;
+    }
     try {
       await this.prisma.book.update({ where: { id: book.id }, data: { deletedAt: new Date() } });
       await this.rebuildContentIndex();
     } catch (error) {
-      await rename(destination, source);
+      if (copiedAcrossDevices) {
+        await cp(destination, source, { recursive: true, errorOnExist: true });
+        await rm(destination, { recursive: true });
+      } else await rename(destination, source);
       throw error;
     }
   }

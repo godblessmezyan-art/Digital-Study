@@ -16,7 +16,7 @@ function rotatePoint(latitude, longitude, rotationX, rotationY) {
 }
 
 export function createCelestialGlobe(root, {
-  locations, activeId, onSelect, textureUrl,
+  locations, activeId, onSelect, textureUrl, chronicles = [], onChronicleSelect = () => {},
 }) {
   if (!root) return () => {};
   const events = new AbortController();
@@ -40,14 +40,15 @@ export function createCelestialGlobe(root, {
     button.className = `globe-marker${location.id === activeId ? ' is-active' : ''}`;
     button.dataset.scene = location.id;
     button.setAttribute('aria-label', `打开${label}地图`);
-    button.innerHTML = `<span>✦</span><b>${label}</b>`;
-    button.addEventListener('click', () => onSelect(location.id), { signal: events.signal });
+    button.innerHTML = `<span>✦</span><b><small>CELESTIAL-01 · 已发现区域</small>${label}</b>`;
+    button.addEventListener('click', () => focusLocation(location), { signal: events.signal });
     markerLayer.append(button);
     return { location, button };
   });
 
   const context = canvas.getContext('2d');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const inertiaFactor = window.matchMedia('(pointer: coarse)').matches ? .55 : 1;
   let textureData = null;
   let rotationX = -8;
   let rotationY = -58;
@@ -64,6 +65,14 @@ export function createCelestialGlobe(root, {
   let lastTime = performance.now();
   let running = false;
   let destroyed = false;
+  let velocityX = 0;
+  let velocityY = 0;
+  let targetRotation = null;
+  let selectionTimer = 0;
+  let resizeFrame = 0;
+  let routeStartedAt = 0;
+  let routeTarget = locations.find(item => item.id === activeId) || locations[0] || null;
+  let chronicleMarkers = [];
 
   function prepareTexture() {
     const targetWidth = 1024;
@@ -190,11 +199,42 @@ export function createCelestialGlobe(root, {
     context.stroke();
   }
 
-  function draw() {
+  function drawRoute(time = performance.now()) {
+    if (!routeTarget) return;
+    const targetLatitude = routeTarget.globe?.latitude ?? routeTarget.latitude ?? 32;
+    const targetLongitude = routeTarget.globe?.longitude ?? routeTarget.longitude ?? 42;
+    const points = Array.from({ length: 32 }, (_, index) => {
+      const progress = index / 31;
+      return project(-18 + progress * (targetLatitude + 18) + Math.sin(progress * Math.PI) * 9, -112 + progress * (targetLongitude + 112));
+    });
+    const activeProgress = routeStartedAt
+      ? (reducedMotion ? 1 : Math.min(1, (time - routeStartedAt) / 1200))
+      : 0;
+    context.save();
+    context.lineCap = 'round';
+    for (let index = 1; index < points.length; index += 1) {
+      const from = points[index - 1];
+      const to = points[index];
+      if (from.z <= .02 || to.z <= .02) continue;
+      context.beginPath();
+      context.moveTo(from.x, from.y);
+      context.lineTo(to.x, to.y);
+      const reached = index / (points.length - 1) <= activeProgress;
+      context.strokeStyle = reached ? 'rgba(239, 204, 137, .78)' : 'rgba(198, 225, 235, .16)';
+      context.lineWidth = reached ? 1.55 : .75;
+      context.shadowColor = reached ? 'rgba(231, 191, 111, .55)' : 'transparent';
+      context.shadowBlur = reached ? 6 : 0;
+      context.stroke();
+    }
+    context.restore();
+  }
+
+  function draw(time = performance.now()) {
     if (!width || !height) return;
     context.clearRect(0, 0, width, height);
     drawSphere();
-    markers.forEach(({ location, button }) => {
+    drawRoute(time);
+    [...markers, ...chronicleMarkers].forEach(({ location, button }) => {
       const point = project(location.globe.latitude, location.globe.longitude);
       const visible = point.z > .02;
       button.hidden = !visible;
@@ -209,13 +249,29 @@ export function createCelestialGlobe(root, {
     if (!running || destroyed) return;
     const delta = Math.min(40, time - lastTime);
     lastTime = time;
-    if (!reducedMotion && !dragging && !hovering) rotationY = (rotationY + delta * .001) % 360;
-    draw();
+    if (!reducedMotion && !dragging) {
+      if (targetRotation) {
+        let distanceY = ((targetRotation.y - rotationY + 540) % 360) - 180;
+        rotationX += (targetRotation.x - rotationX) * Math.min(1, delta * .012);
+        rotationY += distanceY * Math.min(1, delta * .012);
+        if (Math.abs(distanceY) < .15 && Math.abs(targetRotation.x - rotationX) < .15) targetRotation = null;
+      } else if (Math.abs(velocityX) + Math.abs(velocityY) > .006) {
+        rotationY += velocityX;
+        rotationX = Math.max(-55, Math.min(55, rotationX + velocityY));
+        const friction = Math.pow(.91, delta / 16.67);
+        velocityX *= friction;
+        velocityY *= friction;
+      } else if (!hovering) rotationY = (rotationY + delta * .001) % 360;
+    }
+    draw(time);
     frame = requestAnimationFrame(animate);
   }
 
   canvas.addEventListener('pointerdown', (event) => {
     dragging = true;
+    targetRotation = null;
+    velocityX = 0;
+    velocityY = 0;
     previousX = event.clientX;
     previousY = event.clientY;
     canvas.setPointerCapture(event.pointerId);
@@ -223,8 +279,16 @@ export function createCelestialGlobe(root, {
   }, { signal: events.signal });
   canvas.addEventListener('pointermove', (event) => {
     if (!dragging) return;
-    rotationY += (event.clientX - previousX) * .45;
-    rotationX = Math.max(-55, Math.min(55, rotationX - (event.clientY - previousY) * .25));
+    const deltaX = event.clientX - previousX;
+    const deltaY = event.clientY - previousY;
+    // The globe behaves like a surface held under the pointer: dragging right
+    // moves the visible map right, and dragging down moves it down. The old
+    // vertical subtraction inverted only that axis and made diagonal drags arc
+    // in an unexpected direction.
+    velocityX = deltaX * .42 * inertiaFactor;
+    velocityY = deltaY * .32 * inertiaFactor;
+    rotationY += velocityX;
+    rotationX = Math.max(-55, Math.min(55, rotationX + velocityY));
     previousX = event.clientX;
     previousY = event.clientY;
   }, { signal: events.signal });
@@ -236,7 +300,10 @@ export function createCelestialGlobe(root, {
   root.addEventListener('focusin', () => { hovering = true; }, { signal: events.signal });
   root.addEventListener('focusout', () => { hovering = false; }, { signal: events.signal });
 
-  const observer = new ResizeObserver(resize);
+  const observer = new ResizeObserver(() => {
+    cancelAnimationFrame(resizeFrame);
+    resizeFrame = requestAnimationFrame(resize);
+  });
   observer.observe(root);
   resize();
   root.dataset.rendering = 'false';
@@ -262,6 +329,8 @@ export function createCelestialGlobe(root, {
     if (destroyed) return;
     pause();
     destroyed = true;
+    clearTimeout(selectionTimer);
+    cancelAnimationFrame(resizeFrame);
     events.abort();
     observer.disconnect();
     texture.src = '';
@@ -270,5 +339,66 @@ export function createCelestialGlobe(root, {
     delete root.dataset.rendering;
   }
 
-  return { start, pause, destroy, get running() { return running; } };
+  function focusLocation(location) {
+    markers.forEach(({ location: item, button }) => button.classList.toggle('is-selected', item.id === location.id));
+    if (reducedMotion) {
+      onSelect(location.id);
+      return;
+    }
+    targetRotation = {
+      x: Math.max(-55, Math.min(55, -location.globe.latitude * .48)),
+      y: -location.globe.longitude,
+    };
+    velocityX = 0;
+    velocityY = 0;
+    routeTarget = location;
+    routeStartedAt = performance.now();
+    root.classList.add('is-focusing');
+    clearTimeout(selectionTimer);
+    selectionTimer = window.setTimeout(() => { root.classList.remove('is-focusing'); onSelect(location.id); }, 720);
+  }
+
+  function chronicleCoordinates(entry) {
+    const x = Number(entry.coordinates?.x);
+    const y = Number(entry.coordinates?.y);
+    if (!Number.isFinite(x) || !Number.isFinite(y)) return null;
+    return { latitude: Math.max(-68, Math.min(68, 72 - y * 1.42)), longitude: x * 3.6 - 180 };
+  }
+
+  function renderChronicles(entries = []) {
+    chronicleMarkers.forEach(({ button }) => button.remove());
+    chronicleMarkers = entries.filter(entry => entry.status !== 'locked').map(entry => {
+      const globe = chronicleCoordinates(entry);
+      if (!globe) return null;
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = `globe-chronicle-marker${entry.status === 'discovered' ? ' is-unread' : ''}`;
+      button.dataset.chronicleId = entry.id;
+      button.setAttribute('aria-label', `打开航行记录 ${String(entry.recordNumber).padStart(4, '0')}：${entry.title}`);
+      button.innerHTML = `<span aria-hidden="true">◇</span><b><small>VOYAGE RECORD · ${String(entry.recordNumber).padStart(4, '0')}</small>${entry.title}</b>`;
+      button.addEventListener('click', () => {
+        routeTarget = globe;
+        routeStartedAt = performance.now();
+        targetRotation = { x: Math.max(-55, Math.min(55, -globe.latitude * .48)), y: -globe.longitude };
+        root.classList.add('is-focusing');
+        clearTimeout(selectionTimer);
+        selectionTimer = window.setTimeout(() => { root.classList.remove('is-focusing'); onChronicleSelect(entry.id); }, 720);
+      }, { signal: events.signal });
+      markerLayer.append(button);
+      return { location: { ...entry, globe }, button };
+    }).filter(Boolean);
+    draw();
+  }
+
+  renderChronicles(chronicles);
+
+  return {
+    start,
+    pause,
+    destroy,
+    setChronicles: renderChronicles,
+    setAtmosphere({ weather = 'clear', period = 'day' } = {}) { root.dataset.weather = weather; root.dataset.period = period; },
+    get running() { return running; },
+    get rotation() { return { x: rotationX, y: rotationY }; },
+  };
 }

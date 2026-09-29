@@ -104,6 +104,7 @@ export class AiProviderService {
       `作者：${input.author || '未知'}`,
       `目标读者：${input.audience || '普通读者'}`,
       `风格：${input.style || '清晰、克制、准确'}`,
+      `指定标签：${input.tags?.length ? input.tags.join('、') : '未指定，请根据内容生成 3—6 个准确标签'}`,
       `篇幅：${input.length || 'medium'}`,
       `知识边界：${knowledgePolicy}`,
       `内容密度：${lengthGuide}。观点必须展开解释，并给出关系、例子或应用；不要用空泛口号凑字数。`,
@@ -179,7 +180,9 @@ export class AiProviderService {
     return {
       title: String(book.title || input.title).slice(0, 255),
       summary: String(book.summary || '').slice(0, 5000),
-      tags: Array.isArray(book.tags) ? book.tags.map(String).slice(0, 12) : [],
+      tags: input.tags?.length
+        ? [...new Set(input.tags.map((tag) => tag.trim()).filter(Boolean))].slice(0, 30)
+        : Array.isArray(book.tags) ? [...new Set(book.tags.map(String).map((tag) => tag.trim()).filter(Boolean))].slice(0, 12) : [],
       design: this.validateDesign(book.design),
       sections,
     };
@@ -265,7 +268,7 @@ export class AiProviderService {
     return {
       title: input.title,
       summary: `根据所提供资料整理的《${input.title}》内容草稿。`,
-      tags: [template.name, input.categoryName ?? input.categorySlug ?? '未分类'],
+      tags: input.tags?.length ? input.tags : [template.name, input.categoryName ?? input.categorySlug ?? '未分类'],
       design: { theme: 'literary', motif: 'library', eyebrow: template.name, subtitle: '一份清晰、可靠的主题阅读', heroQuote: '从理解开始，把阅读转化为行动。' },
       sections: modules.map((module) => ({
         key: module.key,

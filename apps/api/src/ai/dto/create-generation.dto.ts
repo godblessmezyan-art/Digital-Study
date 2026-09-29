@@ -42,6 +42,13 @@ export class CreateGenerationRequest implements GenerationInput {
   @MaxLength(120)
   categoryName?: string;
 
+  @IsOptional()
+  @IsArray()
+  @ArrayMaxSize(30)
+  @IsString({ each: true })
+  @MaxLength(80, { each: true })
+  tags?: string[];
+
   @IsString()
   @Matches(SLUG_PATTERN)
   templateId: string;

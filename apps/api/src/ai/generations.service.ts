@@ -127,6 +127,24 @@ export class GenerationsService implements OnApplicationBootstrap {
     );
   }
 
+  async removeActive(id: string, ownerId: string) {
+    const task = await this.requireOwnedTask(id, ownerId);
+    const activeStatuses: GenerationStatus[] = [
+      GenerationStatus.QUEUED,
+      GenerationStatus.GENERATING,
+      GenerationStatus.REVIEWING,
+    ];
+    if (!activeStatuses.includes(task.status)) {
+      throw new ConflictException('Only active generation tasks can be deleted');
+    }
+    const deleted = await this.prisma.generationTask.deleteMany({
+      where: { id, ...this.ownerWhere(ownerId), status: { in: activeStatuses } },
+    });
+    if (!deleted.count) throw new ConflictException('Generation task is no longer active');
+    this.kick();
+    return { id, deleted: true };
+  }
+
   async retry(id: string, ownerId: string, clientRequestId?: string) {
     const source = await this.requireOwnedTask(id, ownerId);
     if (source.status !== GenerationStatus.FAILED && source.status !== GenerationStatus.CANCELLED) {
@@ -225,6 +243,7 @@ export class GenerationsService implements OnApplicationBootstrap {
         title: result.title || input.title,
         author: input.author,
         summary: result.summary,
+        tags: input.tags?.length ? input.tags : result.tags,
         categorySlug: input.categorySlug,
         categoryName: input.categoryName,
         contentHtml: result.renderedHtml,
@@ -307,6 +326,34 @@ export class GenerationsService implements OnApplicationBootstrap {
         ...generated,
         renderedHtml: this.renderer.render(generated, input),
       };
+      let bookSlug: string | null = null;
+      try {
+        await this.content.saveGeneratedDraft(
+          {
+            slug: input.slug,
+            title: result.title || input.title,
+            author: input.author,
+            summary: result.summary,
+            tags: input.tags?.length ? input.tags : result.tags,
+            categorySlug: input.categorySlug,
+            categoryName: input.categoryName,
+            contentHtml: result.renderedHtml,
+          },
+          false,
+        );
+        await this.content.syncBook(input.slug, true);
+        bookSlug = input.slug;
+        if (task.ownerId) {
+          const book = await this.prisma.book.findUniqueOrThrow({ where: { slug: input.slug } });
+          await this.prisma.userShelfBook.upsert({
+            where: { ownerId_bookId: { ownerId: task.ownerId, bookId: book.id } },
+            create: { ownerId: task.ownerId, bookId: book.id },
+            update: {},
+          });
+        }
+      } catch (error) {
+        if (!(error instanceof ConflictException)) throw error;
+      }
       await this.prisma.generationTask.update({
         where: { id },
         data: {
@@ -314,6 +361,7 @@ export class GenerationsService implements OnApplicationBootstrap {
           progress: 100,
           currentStep: '生成完成',
           resultJson: result as unknown as Prisma.InputJsonValue,
+          bookSlug,
           completedAt: new Date(),
         },
       });

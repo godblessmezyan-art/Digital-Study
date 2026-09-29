@@ -36,6 +36,17 @@ enum GitSyncOperation {
   DELETE
 }
 
+enum ShelfReadingStatus {
+  WANT_TO_READ
+  READING
+  COMPLETED
+}
+
+enum ReadingEntryType {
+  NOTE
+  QUOTE
+}
+
 model Category {
   id          Int      @id @default(autoincrement())
   slug        String   @unique @db.VarChar(100)
@@ -64,6 +75,9 @@ model Book {
   deletedAt    DateTime?
   gitSync      BookGitSync?
   gitSyncJobs  GitSyncJob[]
+  shelfEntries UserShelfBook[]
+  readingEntries ReadingEntry[]
+  tagLinks     BookTag[]
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
 
@@ -71,6 +85,137 @@ model Book {
   @@index([categoryId])
   @@index([deletedAt])
   @@map("books")
+}
+
+model Tag {
+  id        Int       @id @default(autoincrement())
+  slug      String    @unique @db.VarChar(120)
+  name      String    @unique @db.VarChar(80)
+  books     BookTag[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("tags")
+}
+
+model BookTag {
+  bookId Int
+  tagId  Int
+  book   Book @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  tag    Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([bookId, tagId])
+  @@index([tagId])
+  @@map("book_tags")
+}
+
+model UserShelfBook {
+  id         Int                @id @default(autoincrement())
+  ownerId    String             @db.VarChar(160)
+  bookId     Int
+  book       Book               @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  status     ShelfReadingStatus @default(WANT_TO_READ)
+  progress   Int                @default(0)
+  lastReadAt DateTime?
+  addedAt    DateTime           @default(now())
+  updatedAt  DateTime           @updatedAt
+
+  @@unique([ownerId, bookId])
+  @@index([ownerId, lastReadAt])
+  @@map("user_shelf_books")
+}
+
+model ReadingEntry {
+  id        String           @id @default(uuid()) @db.VarChar(36)
+  ownerId   String           @db.VarChar(160)
+  type      ReadingEntryType
+  title     String?          @db.VarChar(255)
+  content   String           @db.Text
+  source    String?          @db.VarChar(255)
+  pageLabel String?          @db.VarChar(80)
+  chapterId String?          @db.VarChar(191)
+  chapterTitle String?       @db.VarChar(255)
+  quote     String?          @db.Text
+  anchor    Json?
+  tags      Json?
+  readingProgress Int?
+  bookId    Int?
+  book      Book?            @relation(fields: [bookId], references: [id], onDelete: SetNull)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  @@index([ownerId, type, updatedAt])
+  @@index([bookId])
+  @@index([ownerId, bookId, chapterId])
+  @@map("reading_entries")
+}
+
+model JournalEntry {
+  id           String   @id @default(uuid()) @db.VarChar(36)
+  ownerId      String   @db.VarChar(160)
+  title        String   @db.VarChar(255)
+  content      String   @db.Text
+  entryDate    DateTime @db.Date
+  tags         Json
+  mood         String?  @db.VarChar(80)
+  weather      String?  @db.VarChar(80)
+  worldPeriod  String?  @db.VarChar(40)
+  location     String?  @db.VarChar(255)
+  coverImage   String?  @db.VarChar(500)
+  relatedBooks Json?
+  relatedNotes Json?
+  isPrivate    Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([ownerId, entryDate])
+  @@index([ownerId, updatedAt])
+  @@map("journal_entries")
+}
+
+model ChronicleEntry {
+  id               String               @id @db.VarChar(64)
+  seasonId         String               @db.VarChar(40)
+  seasonTitle      String               @db.VarChar(160)
+  chapterId        String               @db.VarChar(40)
+  chapterTitle     String               @db.VarChar(160)
+  recordNumber     Int
+  type             String               @db.VarChar(40)
+  title            String               @db.VarChar(255)
+  subtitle         String?              @db.VarChar(255)
+  content          String               @db.Text
+  excerpt          String               @db.Text
+  author           String?              @db.VarChar(160)
+  recordDate       String?              @db.VarChar(80)
+  discoverLocation String?              @db.VarChar(255)
+  triggerType      String               @db.VarChar(40)
+  triggerConfig    Json
+  coordinates      Json?
+  regionId         String?              @db.VarChar(100)
+  soundId          String?              @db.VarChar(40)
+  isHidden         Boolean              @default(false)
+  discoveries      ChronicleDiscovery[]
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
+
+  @@unique([seasonId, recordNumber])
+  @@index([seasonId, chapterId, recordNumber])
+  @@map("chronicle_entries")
+}
+
+model ChronicleDiscovery {
+  id               String         @id @default(uuid()) @db.VarChar(36)
+  ownerId          String         @db.VarChar(160)
+  chronicleId      String         @db.VarChar(64)
+  chronicle        ChronicleEntry @relation(fields: [chronicleId], references: [id], onDelete: Cascade)
+  discoveredAt     DateTime       @default(now())
+  discoveryContext Json?
+  readAt           DateTime?
+  isRead           Boolean        @default(false)
+
+  @@unique([ownerId, chronicleId])
+  @@index([ownerId, discoveredAt])
+  @@map("chronicle_discoveries")
 }
 
 model BookGitSync {

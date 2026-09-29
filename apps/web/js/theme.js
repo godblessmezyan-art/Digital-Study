@@ -10,7 +10,7 @@ export const THEMES = {
     welcomeEyebrow: '欢迎来到',
     welcomeTitle: '云天幻境',
     subtitle: '在云海之上，遇见更大的世界',
-    background: 'assets/sky-city-panorama-forbidden-archive.webp',
+    background: 'assets/scenes/home-world/clear-day.webp',
     defaultScene: 'city-overview',
     navigator: {
       type: 'map',
@@ -25,7 +25,18 @@ export const THEMES = {
         name: '天空城远景',
         region: '外环航港 · 观景书房',
         description: '从外环航港眺望天空主城、远方浮岛与往返云海的飞空艇。',
-        image: 'assets/sky-city-panorama-forbidden-archive.webp',
+        image: 'assets/scenes/home-world/clear-day.webp',
+        backgrounds: {
+          clear: {
+            dawn: 'assets/scenes/home-world/clear-dawn.webp',
+            day: 'assets/scenes/home-world/clear-day.webp',
+            dusk: 'assets/scenes/home-world/clear-dusk.webp',
+            night: 'assets/scenes/home-world/clear-night.webp',
+          },
+          cloudy: 'assets/scenes/home-world/cloudy.webp',
+          rain: 'assets/scenes/home-world/rain.webp',
+          snow: 'assets/scenes/home-world/snow.webp',
+        },
         focus: { desktop: '50% 48%', tablet: '54% 48%', mobile: '62% 48%' },
         globe: { latitude: 52, longitude: 58, label: '天空之城' },
       },
@@ -155,6 +166,53 @@ const KEY = 'library-theme';
 const SCENE_KEY = 'library-scene-v2';
 const SCENE_VIEW_KEY = 'library-scene-view-v2';
 const ATMOSPHERE_KEY = 'library-atmosphere';
+let sceneArtworkRequest = 0;
+
+function backgroundFromSpec(spec, period) {
+  if (typeof spec === 'string') return spec;
+  return spec?.[period] || spec?.default || '';
+}
+
+export function resolveSceneBackground(theme, sceneId, viewId = null, { weather = 'clear', period = 'day' } = {}) {
+  const scenes = theme.scenes?.length ? theme.scenes : [{ id: 'default', image: theme.background, focus: theme.backgroundFocus }];
+  const scene = scenes.find(item => item.id === sceneId) || scenes.find(item => item.id === theme.defaultScene) || scenes[0];
+  const view = scene.views?.find(item => item.id === viewId) || null;
+  const visual = view || scene;
+  const backgrounds = visual.backgrounds || scene.backgrounds;
+  return backgroundFromSpec(backgrounds?.[weather], period) || visual.image || scene.image || theme.background;
+}
+
+function setSceneArtwork(image) {
+  const artwork = document.querySelector('.world__art');
+  if (!artwork || !image || artwork.getAttribute('src') === image) return;
+  const request = ++sceneArtworkRequest;
+  const preload = new Image();
+  preload.onload = () => {
+    if (request !== sceneArtworkRequest) return;
+    const outgoing = artwork.cloneNode(false);
+    outgoing.removeAttribute('fetchpriority');
+    outgoing.classList.add('world__art--outgoing', 'is-loaded');
+    artwork.parentElement.insertBefore(outgoing, artwork);
+    artwork.classList.remove('is-loaded');
+    artwork.addEventListener('load', () => {
+      requestAnimationFrame(() => {
+        artwork.classList.add('is-loaded');
+        outgoing.classList.add('is-fading');
+      });
+      const duration = document.documentElement.dataset.worldAutoWeather === 'true' ? 12_500 : 2_700;
+      setTimeout(() => outgoing.remove(), duration);
+    }, { once: true });
+    artwork.setAttribute('src', image);
+  };
+  preload.src = image;
+}
+
+export function applyWorldBackground(theme, conditions = {}) {
+  const root = document.documentElement;
+  const image = resolveSceneBackground(theme, root.dataset.scene, root.dataset.sceneView, conditions);
+  setSceneArtwork(image);
+  return image;
+}
 
 export function applyScene(theme, id, viewId = null) {
   const scenes = theme.scenes?.length ? theme.scenes : [{ id: 'default', image: theme.background, focus: theme.backgroundFocus }];
@@ -168,10 +226,14 @@ export function applyScene(theme, id, viewId = null) {
   root.style.setProperty('--scene-position', visual.focus?.desktop || theme.backgroundFocus.desktop);
   root.style.setProperty('--scene-position-mobile', visual.focus?.mobile || theme.backgroundFocus.mobile);
   root.style.setProperty('--scene-position-tablet', visual.focus?.tablet || visual.focus?.desktop || theme.backgroundFocus.tablet || theme.backgroundFocus.desktop);
-  document.querySelector('.world__art')?.setAttribute('src', visual.image);
+  const image = resolveSceneBackground(theme, scene.id, view?.id, {
+    weather: root.dataset.worldWeather || 'clear',
+    period: root.dataset.worldTime || 'day',
+  });
+  setSceneArtwork(image);
   localStorage.setItem(SCENE_KEY, scene.id);
   if (view) localStorage.setItem(SCENE_VIEW_KEY, view.id); else localStorage.removeItem(SCENE_VIEW_KEY);
-  return { ...scene, activeView: view, image: visual.image, focus: visual.focus };
+  return { ...scene, activeView: view, image, focus: visual.focus };
 }
 
 export function applyTheme(id = 'cloud-realm') {

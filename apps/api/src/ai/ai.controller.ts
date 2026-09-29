@@ -128,6 +128,12 @@ export class AiController {
     return this.generations.cancel(id, request.user.username);
   }
 
+  @Delete('generations/:id')
+  @UseGuards(StudyAdminGuard)
+  removeActive(@Param('id') id: string, @Req() request: AdminRequest) {
+    return this.generations.removeActive(id, request.user.username);
+  }
+
   @Post('generations/:id/retry')
   @UseGuards(StudyAdminGuard)
   @HttpCode(202)
