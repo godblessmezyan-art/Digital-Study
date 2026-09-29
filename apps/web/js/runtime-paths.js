@@ -15,6 +15,8 @@ function detectBasePath() {
   if (journalMatch) return normalizeBasePath(pathname.slice(0, journalMatch.index));
   const chroniclesMatch = pathname.match(/\/chronicles(?:\/[^/?#]+)?\/?$/i);
   if (chroniclesMatch) return normalizeBasePath(pathname.slice(0, chroniclesMatch.index));
+  const plansMatch = pathname.match(/\/plans(?:\/[^/?#]+)?\/?$/i);
+  if (plansMatch) return normalizeBasePath(pathname.slice(0, plansMatch.index));
   if (pathname.endsWith('/')) return normalizeBasePath(pathname.slice(0, -1));
   return '';
 }

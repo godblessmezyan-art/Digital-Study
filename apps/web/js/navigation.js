@@ -9,6 +9,7 @@ export const navigationGroups = [
   { label: '记录', items: [
     { id: 'reading', label: '阅读空间', icon: 'hourglass', href: 'index.html#reading' },
     { id: 'journal', label: '旅者手记', icon: 'journal', href: 'journal' },
+    { id: 'plans', label: '计划', icon: 'compass', href: 'plans' },
   ] },
   { label: '创作', items: [
     { id: 'studio', label: 'AI 工坊', icon: 'scroll', href: 'index.html#studio' },

@@ -32,3 +32,12 @@ export const getJournalEntry = id => request(`/${encodeURIComponent(id)}`);
 export const createJournalEntry = input => request('', { method: 'POST', body: JSON.stringify(input) });
 export const updateJournalEntry = (id, input) => request(`/${encodeURIComponent(id)}`, { method: 'PUT', body: JSON.stringify(input) });
 export const deleteJournalEntry = id => request(`/${encodeURIComponent(id)}`, { method: 'DELETE' });
+
+// ===== Journal Templates =====
+export const listJournalTemplates = ({ activeOnly = false } = {}) => request(`/templates${activeOnly ? '?activeOnly=1' : ''}`);
+export const createJournalTemplate = input => request('/templates', { method: 'POST', body: JSON.stringify(input) });
+export const updateJournalTemplate = (id, input) => request(`/templates/${encodeURIComponent(id)}`, { method: 'PUT', body: JSON.stringify(input) });
+export const duplicateJournalTemplate = id => request(`/templates/${encodeURIComponent(id)}/duplicate`, { method: 'POST' });
+export const setDefaultJournalTemplate = id => request(`/templates/${encodeURIComponent(id)}/default`, { method: 'POST' });
+export const toggleJournalTemplateActive = (id, isActive) => request(`/templates/${encodeURIComponent(id)}/active`, { method: 'POST', body: JSON.stringify({ isActive }) });
+export const deleteJournalTemplate = id => request(`/templates/${encodeURIComponent(id)}`, { method: 'DELETE' });

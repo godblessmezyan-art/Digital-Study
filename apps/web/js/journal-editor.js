@@ -1,4 +1,4 @@
-import { createJournalEntry, deleteJournalEntry, getJournalEntry, listJournalEntries, updateJournalEntry } from './journal-client.js';
+import { createJournalEntry, deleteJournalEntry, getJournalEntry, listJournalEntries, listJournalTemplates, updateJournalEntry } from './journal-client.js';
 import { escapeJournalHtml, journalDateLabel, JournalSkeleton, MOODS, PERIODS, todayValue, WEATHER } from './journal-components.js';
 import { JournalTagInput } from './journal-tag-input.js';
 import { recordWorldFeedback } from './world-feedback.js';
@@ -15,7 +15,11 @@ function editorUrl(id) {
 export async function JournalEditor(root, { id = '', showToast, renderError, worldSnapshot }) {
   root.innerHTML = JournalSkeleton();
   try {
-    const [entry, allEntries] = await Promise.all([id ? getJournalEntry(id) : null, listJournalEntries()]);
+    const [entry, allEntries, templates] = await Promise.all([
+      id ? getJournalEntry(id) : null,
+      listJournalEntries(),
+      id ? Promise.resolve([]) : listJournalTemplates({ activeOnly: true }).catch(() => []),
+    ]);
     const queryDate = new URLSearchParams(location.search).get('date');
     const world = !entry ? worldSnapshot?.() : null;
     const initial = entry || {
@@ -24,10 +28,13 @@ export async function JournalEditor(root, { id = '', showToast, renderError, wor
       weather: world ? weatherFromWorld(world.weather) : null,
       worldPeriod: world?.effectivePeriod || null,
     };
+    const defaultTemplate = !entry ? templates.find(item => item.isDefault) : null;
+    if (defaultTemplate && !initial.content) initial.content = defaultTemplate.content || '';
     const suggestions = [...new Set(allEntries.flatMap(item => item.tags || []))].sort((a, b) => a.localeCompare(b, 'zh-CN'));
     root.innerHTML = `<section class="journal-page journal-editor-page">
       <header class="journal-editor-head"><a href="journal" data-editor-back>← 旅者手记</a><div class="journal-save-state" role="status" aria-live="polite">${entry ? '已保存' : '有未保存修改'}</div><button type="button" class="journal-save">保存</button></header>
       <form class="journal-editor">
+        ${entry ? '' : `<div class="journal-template-row"><label><span>选择模板</span><select data-template-picker><option value="">空白开始</option>${templates.map(template => `<option value="${escapeJournalHtml(template.id)}"${template.isDefault ? ' selected' : ''}>${escapeJournalHtml(template.name)}${template.isDefault ? ' · 默认' : ''}</option>`).join('')}</select></label><a class="journal-template-manage" href="journal/templates">管理模板 →</a></div>`}
         <div class="journal-editor-meta">
           <label class="journal-date"><span>记录日期</span><input name="entryDate" type="date" value="${escapeJournalHtml(initial.entryDate)}" required><small data-date-label>${journalDateLabel(initial.entryDate)}</small></label>
           <label><span>心境</span><select name="mood">${Object.entries(MOODS).map(([value, item]) => `<option value="${value}"${initial.mood === value ? ' selected' : ''}>${item.icon} ${item.label}</option>`).join('')}</select></label>
@@ -42,6 +49,20 @@ export async function JournalEditor(root, { id = '', showToast, renderError, wor
     const form = root.querySelector('form'), state = root.querySelector('.journal-save-state'), saveButton = root.querySelector('.journal-save');
     let entryId = entry?.id || '', dirty = false, revision = 0, saving = false, queued = false, saveTimer, feedbackSent = false;
     const tags = JournalTagInput(root.querySelector('.journal-tag-editor'), initial.tags, suggestions, () => markDirty());
+    const templatePicker = form.querySelector('[data-template-picker]');
+    if (templatePicker) {
+      let lastTemplateId = defaultTemplate?.id || '';
+      templatePicker.addEventListener('change', () => {
+        const content = form.elements.content;
+        if (content.value.trim() && !window.confirm('切换模板会覆盖当前正文，确定继续吗？')) {
+          templatePicker.value = lastTemplateId;
+          return;
+        }
+        const template = templates.find(item => item.id === templatePicker.value);
+        if (template) { content.value = template.content || ''; markDirty(); }
+        lastTemplateId = templatePicker.value;
+      });
+    }
     const payload = () => ({
       title: form.elements.title.value.trim(), content: form.elements.content.value.trim(), entryDate: form.elements.entryDate.value,
       tags: tags.value(), mood: form.elements.mood.value || undefined, weather: form.elements.weather.value || undefined,

@@ -3,6 +3,7 @@ import { listJournalEntries } from './journal-client.js';
 import { JournalCalendar } from './journal-calendar.js';
 import { escapeJournalHtml, JournalEmptyState, JournalHeader, JournalSearch, JournalSkeleton, JournalTimeline, JournalTodayCard } from './journal-components.js';
 import { JournalEditor } from './journal-editor.js';
+import { JournalTemplatesPage } from './journal-templates-page.js';
 import { JournalReader } from './journal-reader.js';
 
 function journalRoute() {
@@ -73,6 +74,7 @@ export function createJournalPage(root, options) {
   if (!getStoredUser()) return JournalPage(root, options);
   const route = journalRoute();
   const shared = { ...options, renderError: renderJournalError };
+  if (route.first === 'templates') return JournalTemplatesPage(root, shared);
   if (route.first === 'new') return JournalEditor(root, shared);
   if (route.first && route.second === 'edit') return JournalEditor(root, { ...shared, id: route.first });
   if (route.first) return JournalReader(root, { ...shared, id: route.first });

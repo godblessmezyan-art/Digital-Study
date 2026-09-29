@@ -47,6 +47,26 @@ enum ReadingEntryType {
   QUOTE
 }
 
+enum PlanStatus {
+  DRAFT
+  ACTIVE
+  COMPLETED
+  ARCHIVED
+}
+
+enum PlanTaskStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum PlanTaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
 model Category {
   id          Int      @id @default(autoincrement())
   slug        String   @unique @db.VarChar(100)
@@ -171,6 +191,65 @@ model JournalEntry {
   @@index([ownerId, entryDate])
   @@index([ownerId, updatedAt])
   @@map("journal_entries")
+}
+
+model JournalTemplate {
+  id          String   @id @default(uuid()) @db.VarChar(36)
+  ownerId     String   @db.VarChar(160)
+  name        String   @db.VarChar(120)
+  description String?  @db.VarChar(500)
+  content     String   @db.Text
+  tags        Json
+  isDefault   Boolean  @default(false)
+  isActive    Boolean  @default(true)
+  isBuiltin   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([ownerId, isActive, updatedAt])
+  @@map("journal_templates")
+}
+
+model Plan {
+  id          String     @id @default(uuid()) @db.VarChar(36)
+  ownerId     String     @db.VarChar(160)
+  title       String     @db.VarChar(255)
+  description String?    @db.Text
+  status      PlanStatus @default(DRAFT)
+  startDate   DateTime?  @db.Date
+  dueDate     DateTime?  @db.Date
+  progress    Int        @default(0)
+  tasks       PlanTask[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([ownerId, status])
+  @@index([ownerId, updatedAt])
+  @@map("plans")
+}
+
+model PlanTask {
+  id                 String           @id @default(uuid()) @db.VarChar(36)
+  planId             String
+  plan               Plan             @relation(fields: [planId], references: [id], onDelete: Cascade)
+  parentId           String?          @db.VarChar(36)
+  parent             PlanTask?        @relation("PlanTaskTree", fields: [parentId], references: [id], onDelete: Cascade)
+  children           PlanTask[]       @relation("PlanTaskTree")
+  title              String           @db.VarChar(255)
+  description        String?          @db.Text
+  status             PlanTaskStatus   @default(PENDING)
+  priority           PlanTaskPriority @default(MEDIUM)
+  estimatedMinutes   Int?
+  dueDate            DateTime?        @db.Date
+  order              Int              @default(0)
+  acceptanceCriteria String?          @db.Text
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+
+  @@index([planId, order])
+  @@index([parentId])
+  @@index([status, dueDate])
+  @@map("plan_tasks")
 }
 
 model ChronicleEntry {

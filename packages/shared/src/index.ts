@@ -202,3 +202,92 @@ export interface GeneratedBookDto {
   sections: GeneratedSectionDto[];
   renderedHtml: string;
 }
+
+// ===== Journal Templates =====
+
+export interface JournalTemplateDto {
+  id: string;
+  name: string;
+  description: string | null;
+  content: string;
+  tags: string[];
+  isDefault: boolean;
+  isActive: boolean;
+  isBuiltin: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// ===== Plans =====
+
+export type PlanStatus = 'draft' | 'active' | 'completed' | 'archived';
+export type PlanTaskStatus = 'pending' | 'in_progress' | 'completed' | 'cancelled';
+export type PlanTaskPriority = 'low' | 'medium' | 'high';
+
+export interface PlanTaskDto {
+  id: string;
+  planId: string;
+  parentId: string | null;
+  title: string;
+  description: string | null;
+  status: PlanTaskStatus;
+  priority: PlanTaskPriority;
+  estimatedMinutes: number | null;
+  dueDate: string | null;
+  order: number;
+  acceptanceCriteria: string | null;
+  depth: number;
+  children?: PlanTaskDto[];
+  childCount?: number;
+  completedChildCount?: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface PlanNextTaskDto {
+  id: string;
+  title: string;
+  dueDate: string | null;
+}
+
+export interface PlanSummaryDto {
+  id: string;
+  title: string;
+  description: string | null;
+  status: PlanStatus;
+  startDate: string | null;
+  dueDate: string | null;
+  progress: number;
+  totalTasks: number;
+  completedTasks: number;
+  nextTask: PlanNextTaskDto | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface PlanDetailDto extends PlanSummaryDto {
+  tasks: PlanTaskDto[];
+}
+
+// ===== AI Plan Breakdown =====
+
+export interface AiPlanTaskDraft {
+  title: string;
+  description?: string;
+  estimatedMinutes?: number | null;
+  priority?: PlanTaskPriority;
+  acceptanceCriteria?: string;
+  dueDate?: string | null;
+}
+
+export interface AiPlanMilestoneDraft {
+  title: string;
+  description?: string;
+  tasks: AiPlanTaskDraft[];
+}
+
+export interface AiPlanBreakdownDto {
+  summary: string;
+  milestones: AiPlanMilestoneDraft[];
+  warnings: string[];
+}
