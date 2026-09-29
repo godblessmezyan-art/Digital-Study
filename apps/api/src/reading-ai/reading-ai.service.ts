@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import type { Response } from 'express';
-import { AiModelConfigsService } from '../ai/ai-model-configs.service';
+import { AiStreamingService } from '../ai/ai-streaming.service';
 import { AiContextService, type ReadingAiContext } from './ai-context.service';
 import type { ReadingAiRequest } from './dto/reading-ai-request.dto';
 
@@ -10,33 +10,20 @@ type ConversationMessage = { role: 'user' | 'assistant'; content: string };
 export class ReadingAiService {
   constructor(
     private readonly contexts: AiContextService,
-    private readonly models: AiModelConfigsService,
+    private readonly streaming: AiStreamingService,
   ) {}
 
   async stream(ownerId: string, input: ReadingAiRequest, response: Response, signal: AbortSignal) {
     const context = await this.contexts.build(ownerId, input);
     const messages = this.messages(input.messages);
     this.send(response, { type: 'sources', sources: this.sources(context) });
-    const runtime = await this.models.resolveRuntimeConfig();
-    if (runtime.provider === 'mock') {
-      const text = `这段文字的核心是在当前章节语境中强调“${context.selectedText.slice(0, 80)}”。\n\n这是 AI 分析示例，请结合原文与自己的阅读判断继续追问。`;
-      for (const piece of text.match(/.{1,12}/gs) || []) {
-        if (signal.aborted) return;
-        this.send(response, { type: 'delta', text: piece });
-      }
-      this.send(response, { type: 'done' });
-      return;
-    }
-    const upstream = await this.models.sendChat(runtime, {
-      model: runtime.model,
-      temperature: 0.25,
-      stream: true,
-      messages: [
-        { role: 'system', content: this.systemPrompt(context) },
-        ...messages,
-      ],
-    }, signal);
-    await this.relay(upstream, response, signal);
+    await this.streaming.stream(
+      this.systemPrompt(context),
+      messages,
+      response,
+      signal,
+      `这段文字的核心是在当前章节语境中强调“${context.selectedText.slice(0, 80)}”。\n\n这是 AI 分析示例，请结合原文与自己的阅读判断继续追问。`,
+    );
   }
 
   private systemPrompt(context: ReadingAiContext): string {
@@ -73,39 +60,6 @@ export class ReadingAiService {
       noteCount: context.relatedNotes.length,
       excerptCount: context.relatedExcerpts.length,
     };
-  }
-
-  private async relay(upstream: globalThis.Response, response: Response, signal: AbortSignal) {
-    const contentType = upstream.headers.get('content-type') || '';
-    if (contentType.includes('application/json')) {
-      const payload = await upstream.json() as { choices?: Array<{ message?: { content?: string } }> };
-      const text = payload.choices?.[0]?.message?.content || '';
-      if (text) this.send(response, { type: 'delta', text });
-      this.send(response, { type: 'done' });
-      return;
-    }
-    const reader = upstream.body?.getReader();
-    if (!reader) throw new Error('AI provider did not return a readable stream');
-    const decoder = new TextDecoder();
-    let buffer = '';
-    while (!signal.aborted) {
-      const { value, done } = await reader.read();
-      if (done) break;
-      buffer += decoder.decode(value, { stream: true });
-      const lines = buffer.split(/\r?\n/);
-      buffer = lines.pop() || '';
-      for (const line of lines) {
-        if (!line.startsWith('data:')) continue;
-        const data = line.slice(5).trim();
-        if (!data || data === '[DONE]') continue;
-        try {
-          const chunk = JSON.parse(data) as { choices?: Array<{ delta?: { content?: string }; text?: string }> };
-          const text = chunk.choices?.[0]?.delta?.content || chunk.choices?.[0]?.text || '';
-          if (text) this.send(response, { type: 'delta', text });
-        } catch { /* Ignore provider keep-alive frames. */ }
-      }
-    }
-    if (!signal.aborted) this.send(response, { type: 'done' });
   }
 
   private send(response: Response, value: Record<string, unknown>) {

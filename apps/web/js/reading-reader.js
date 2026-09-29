@@ -112,7 +112,7 @@ export async function attachReadingRecorder({ container, iframe, book, showToast
   const doc = iframe.contentDocument;
   const blocks = prepareBlocks(doc, book.slug);
   const style = doc.createElement('style');
-  style.textContent = `.reading-mark{padding:.04em 0;background:rgba(190,151,87,.18);color:inherit;border-bottom:1px solid rgba(151,108,48,.42);border-radius:2px}.reading-mark.note{background:rgba(190,151,87,.14);border-bottom-style:dashed}.reading-mark.is-target{animation:reading-pulse 1.5s ease}@keyframes reading-pulse{50%{background:rgba(190,151,87,.38)}}`;
+  style.textContent = `.reading-mark{padding:.04em 0;background:rgba(190,151,87,.18);color:inherit;border-bottom:1px solid rgba(151,108,48,.42);border-radius:2px}.reading-mark.note{background:rgba(190,151,87,.14);border-bottom-style:dashed}.reading-mark.is-target,.reading-curator-target{animation:reading-pulse 1.5s ease}@keyframes reading-pulse{50%{background:rgba(190,151,87,.38)}}`;
   doc.head.append(style);
   let entries = await listReadingEntries({ bookSlug: book.slug }).catch(error => { showToast(error.message || '本书记录加载失败'); return []; });
   const progress = () => Math.max(0, Math.min(100, Math.round(win.scrollY / Math.max(1, doc.documentElement.scrollHeight - win.innerHeight) * 100)));
@@ -201,6 +201,21 @@ export async function attachReadingRecorder({ container, iframe, book, showToast
   win.addEventListener('scroll', () => { clearTimeout(chapterTimer); chapterTimer = setTimeout(() => assistant.chapterChanged(contextBuilder.visibleChapter()), 180); }, { passive: true });
   doc.addEventListener('keydown', event => { if (!(event.ctrlKey || event.metaKey) || !event.shiftKey) return; if (event.key.toLowerCase() === 'e') { event.preventDefault(); selected(); if (active) save('quote'); } if (event.key.toLowerCase() === 'n') { event.preventDefault(); selected(); openDrawer('note'); } });
   restore(); paintList(); onProgress?.(entries.length);
-  const requested = new URLSearchParams(location.hash.split('?')[1] || '').get('entry');
+  const requestParams = new URLSearchParams(location.hash.split('?')[1] || '');
+  const requested = requestParams.get('entry');
+  const requestedChapter = requestParams.get('chapter');
+  const requestedText = normalizeText(requestParams.get('text'));
   if (requested) setTimeout(() => focusEntry(entries.find(item => item.id === requested)), 200);
+  else if (requestedChapter || requestedText) setTimeout(() => {
+    const matchedChapterBlocks = requestedChapter
+      ? blocks.filter(block => block.dataset.chapterId === requestedChapter)
+      : blocks;
+    const chapterBlocks = matchedChapterBlocks.length ? matchedChapterBlocks : blocks;
+    const needle = requestedText.slice(0, 64);
+    const target = (needle && chapterBlocks.find(block => normalizeText(block.textContent).includes(needle))) || chapterBlocks[0];
+    if (!target) return;
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    target.classList.add('reading-curator-target');
+    setTimeout(() => target.classList.remove('reading-curator-target'), 1900);
+  }, 240);
 }

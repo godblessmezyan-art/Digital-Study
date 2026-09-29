@@ -12,6 +12,7 @@ export const navigationGroups = [
   ] },
   { label: '创作', items: [
     { id: 'studio', label: 'AI 工坊', icon: 'scroll', href: 'index.html#studio' },
+    { id: 'curator', label: 'AI 馆长', icon: 'search', href: 'index.html#curator' },
   ] },
   { label: '管理', items: [
     { id: 'content', label: '内容管理', icon: 'tome', href: 'index.html#content' },

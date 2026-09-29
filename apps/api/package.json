@@ -12,7 +12,8 @@
     "prisma:migrate:dev": "dotenv -e ../../.env -- prisma migrate dev --schema ../../database/schema.prisma",
     "prisma:seed": "dotenv -e ../../.env -- ts-node -r tsconfig-paths/register ../../database/seed.ts",
     "verify:rich-renderer": "ts-node -r tsconfig-paths/register src/scripts/verify-rich-renderer.ts",
-    "verify:chronicles": "ts-node -r tsconfig-paths/register src/scripts/verify-chronicles.ts"
+    "verify:chronicles": "ts-node -r tsconfig-paths/register src/scripts/verify-chronicles.ts",
+    "rebuild-ai-index": "ts-node -r tsconfig-paths/register src/scripts/rebuild-ai-index.ts"
   },
   "dependencies": {
     "@digital-study/shared": "workspace:*",

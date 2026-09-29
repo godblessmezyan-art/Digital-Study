@@ -7,6 +7,7 @@ import { AiProviderService } from './ai-provider.service';
 import { GenerationsService } from './generations.service';
 import { HtmlRendererService } from './html-renderer.service';
 import { TemplatesService } from './templates.service';
+import { AiStreamingService } from './ai-streaming.service';
 
 @Module({
   imports: [ContentModule, AuthModule],
@@ -17,7 +18,8 @@ import { TemplatesService } from './templates.service';
     GenerationsService,
     HtmlRendererService,
     TemplatesService,
+    AiStreamingService,
   ],
-  exports: [AiModelConfigsService],
+  exports: [AiModelConfigsService, AiStreamingService],
 })
 export class AiModule {}

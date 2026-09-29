@@ -3,10 +3,11 @@ import { Prisma, ReadingEntryType } from '@prisma/client';
 import type { ReadingEntryDto } from '@digital-study/shared';
 import { PrismaService } from '../prisma/prisma.service';
 import type { SaveReadingEntryRequest } from './dto/save-reading-entry.dto';
+import { AiIndexService } from '../semantic/ai-index.service';
 
 @Injectable()
 export class ReadingService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService, private readonly index: AiIndexService) {}
 
   async list(ownerId: string, type?: 'note' | 'quote', bookSlug?: string, chapterId?: string): Promise<ReadingEntryDto[]> {
     const entries = await this.prisma.readingEntry.findMany({
@@ -42,6 +43,7 @@ export class ReadingService {
       },
       include: { book: true },
     });
+    void this.index.indexReadingEntry(entry.id).catch(() => undefined);
     return this.toDto(entry);
   }
 
@@ -67,12 +69,14 @@ export class ReadingService {
       },
       include: { book: true },
     });
+    void this.index.indexReadingEntry(entry.id).catch(() => undefined);
     return this.toDto(entry);
   }
 
   async remove(ownerId: string, id: string) {
-    await this.requireOwned(id, ownerId);
+    const entry = await this.requireOwned(id, ownerId);
     await this.prisma.readingEntry.delete({ where: { id } });
+    void this.index.removeReadingEntry(entry.type === ReadingEntryType.NOTE ? 'note' : 'quote', id, ownerId).catch(() => undefined);
     return { id, deleted: true };
   }
 

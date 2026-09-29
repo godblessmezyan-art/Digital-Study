@@ -1,0 +1,23 @@
+CREATE TABLE `ai_vector_entries` (
+  `id` VARCHAR(36) NOT NULL,
+  `key` VARCHAR(255) NOT NULL,
+  `ownerId` VARCHAR(160) NULL,
+  `type` VARCHAR(24) NOT NULL,
+  `sourceId` VARCHAR(191) NOT NULL,
+  `bookId` INTEGER NULL,
+  `bookSlug` VARCHAR(160) NULL,
+  `chapterId` VARCHAR(191) NULL,
+  `chunkIndex` INTEGER NOT NULL DEFAULT 0,
+  `title` VARCHAR(255) NOT NULL,
+  `source` VARCHAR(500) NULL,
+  `content` TEXT NOT NULL,
+  `embedding` JSON NOT NULL,
+  `embeddingModel` VARCHAR(160) NOT NULL,
+  `sourceCreatedAt` DATETIME(3) NULL,
+  `indexedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  UNIQUE INDEX `ai_vector_entries_key_key`(`key`),
+  INDEX `ai_vector_entries_ownerId_type_idx`(`ownerId`, `type`),
+  INDEX `ai_vector_entries_bookId_chapterId_idx`(`bookId`, `chapterId`),
+  INDEX `ai_vector_entries_type_sourceId_idx`(`type`, `sourceId`),
+  PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

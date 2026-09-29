@@ -319,3 +319,27 @@ model AiModelConfig {
   @@index([isActive, updatedAt])
   @@map("ai_model_configs")
 }
+
+model AiVectorEntry {
+  id             String   @id @default(uuid()) @db.VarChar(36)
+  key            String   @unique @db.VarChar(255)
+  ownerId        String?  @db.VarChar(160)
+  type           String   @db.VarChar(24)
+  sourceId       String   @db.VarChar(191)
+  bookId         Int?
+  bookSlug       String?  @db.VarChar(160)
+  chapterId      String?  @db.VarChar(191)
+  chunkIndex     Int      @default(0)
+  title          String   @db.VarChar(255)
+  source         String?  @db.VarChar(500)
+  content        String   @db.Text
+  embedding      Json
+  embeddingModel String   @db.VarChar(160)
+  sourceCreatedAt DateTime?
+  indexedAt      DateTime @default(now()) @updatedAt
+
+  @@index([ownerId, type])
+  @@index([bookId, chapterId])
+  @@index([type, sourceId])
+  @@map("ai_vector_entries")
+}

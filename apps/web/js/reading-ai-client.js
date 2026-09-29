@@ -4,12 +4,12 @@ import { withAppBase } from './runtime-paths.js';
 const isLocalStaticPreview = ['localhost', '127.0.0.1'].includes(location.hostname) && location.port === '5175';
 const apiBase = globalThis.DIGITAL_STUDY_API_BASE || (isLocalStaticPreview ? `http://${location.hostname}:3000/api` : withAppBase('/api'));
 
-export async function streamReadingAI(input, { signal, onEvent }) {
+export async function streamNdjson(path, input, { signal, onEvent }) {
   if (!getStoredUser()) {
     window.dispatchEvent(new CustomEvent('study-auth-required'));
     throw new Error('请先登录后使用 AI 阅读助手');
   }
-  const response = await fetch(`${apiBase}/reading/ai/stream`, {
+  const response = await fetch(`${apiBase}${path}`, {
     method: 'POST',
     headers: { ...authHeaders(), 'Content-Type': 'application/json' },
     body: JSON.stringify(input),
@@ -32,10 +32,16 @@ export async function streamReadingAI(input, { signal, onEvent }) {
     buffer = lines.pop() || '';
     for (const line of lines) {
       if (!line.trim()) continue;
-      try { onEvent(JSON.parse(line)); } catch { /* Ignore incomplete provider frames. */ }
+      let event;
+      try { event = JSON.parse(line); } catch { continue; }
+      onEvent(event);
     }
   }
   if (buffer.trim()) {
-    try { onEvent(JSON.parse(buffer)); } catch { /* The stream ended with an incomplete frame. */ }
+    let event;
+    try { event = JSON.parse(buffer); } catch { return; }
+    onEvent(event);
   }
 }
+
+export const streamReadingAI = (input, options) => streamNdjson('/reading/ai/stream', input, options);

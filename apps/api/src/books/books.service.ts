@@ -7,6 +7,7 @@ import { GitSyncService } from '../git-sync/git-sync.service';
 import type { CreateBookRequest } from './dto/create-book.dto';
 import type { PublishBookRequest } from './dto/publish-book.dto';
 import type { UpdateShelfBookRequest } from './dto/update-shelf-book.dto';
+import { AiIndexService } from '../semantic/ai-index.service';
 
 @Injectable()
 export class BooksService {
@@ -14,6 +15,7 @@ export class BooksService {
     private readonly prisma: PrismaService,
     private readonly content: ContentService,
     private readonly gitSync: GitSyncService,
+    private readonly index: AiIndexService,
   ) {}
 
   async findAll(): Promise<BookSummaryDto[]> {
@@ -47,6 +49,7 @@ export class BooksService {
       catch (error) { gitSyncJob = { status: 'error', error: error instanceof Error ? error.message : 'Git sync failed' }; }
     }
     await this.addToShelf(input.slug, ownerId);
+    void this.index.indexBook(input.slug).catch(() => undefined);
     return { ...(await this.findOne(input.slug)), gitSyncJob };
   }
 
@@ -55,6 +58,7 @@ export class BooksService {
     await this.content.syncBook(input.slug, true);
     const book = await this.prisma.book.findUniqueOrThrow({ where: { slug: input.slug }, include: { category: true, gitSync: true, tagLinks: { include: { tag: true } } } });
     await this.upsertShelfEntry(book.id, ownerId);
+    void this.index.indexBook(input.slug).catch(() => undefined);
     return this.toSummary(book);
   }
 
@@ -76,6 +80,7 @@ export class BooksService {
     }
     const book = await this.prisma.book.findUniqueOrThrow({ where: { slug }, include: { category: true, gitSync: true, tagLinks: { include: { tag: true } } } });
     if (ownerId) await this.upsertShelfEntry(book.id, ownerId);
+    void this.index.indexBook(slug).catch(() => undefined);
     return { ...this.toSummary(book), gitSyncJob: gitSync };
   }
 
@@ -128,7 +133,9 @@ export class BooksService {
   }
 
   async remove(slug: string, deleteFromGit = false) {
+    const existing = await this.prisma.book.findUnique({ where: { slug }, select: { id: true } });
     await this.content.removeBook(slug);
+    if (existing) void this.index.removeBook(existing.id).catch(() => undefined);
     let gitSync = null;
     if (deleteFromGit) {
       try { gitSync = await this.gitSync.enqueue(slug, GitSyncOperation.DELETE); }

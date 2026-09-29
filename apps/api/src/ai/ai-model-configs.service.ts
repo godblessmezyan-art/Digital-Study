@@ -156,6 +156,25 @@ export class AiModelConfigsService {
     return response;
   }
 
+  async sendEmbedding(runtime: AiRuntimeConfig, input: string[], signal?: AbortSignal): Promise<{ model: string; vectors: number[][] }> {
+    if (!runtime.configured || !runtime.apiKey) throw new ServiceUnavailableException('AI provider is not configured');
+    const model = process.env.AI_EMBEDDING_MODEL || (runtime.model.startsWith('glm-') ? 'embedding-3' : 'text-embedding-3-small');
+    const url = process.env.AI_EMBEDDING_URL || runtime.requestUrl.replace(/\/chat\/completions\/?$/i, '/embeddings');
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${runtime.apiKey}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model, input }),
+      signal: signal
+        ? AbortSignal.any([signal, AbortSignal.timeout(Number(process.env.AI_TIMEOUT_MS ?? 300000))])
+        : AbortSignal.timeout(Number(process.env.AI_TIMEOUT_MS ?? 300000)),
+    });
+    if (!response.ok) throw new BadGatewayException(`Embedding provider returned ${response.status}: ${(await response.text()).slice(0, 300)}`);
+    const payload = await response.json() as { data?: Array<{ index: number; embedding: number[] }> };
+    const ordered = [...(payload.data || [])].sort((left, right) => left.index - right.index).map(item => item.embedding);
+    if (ordered.length !== input.length || ordered.some(vector => !Array.isArray(vector) || !vector.length)) throw new BadGatewayException('Embedding provider returned invalid vectors');
+    return { model, vectors: ordered };
+  }
+
   private async request(runtime: AiRuntimeConfig): Promise<Response> {
     return this.sendChat(runtime, {
       model: runtime.model,
