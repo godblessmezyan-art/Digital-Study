@@ -1,4 +1,6 @@
 import { createReadingEntry, listReadingEntries } from './reading-client.js?v=2';
+import { AIContextBuilder } from './reading-ai-context.js?v=1';
+import { ReadingAIAssistant } from './reading-ai-assistant.js?v=1';
 
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
 const blockSelector = 'p,blockquote,li,h1,h2,h3,h4,h5,h6';
@@ -119,6 +121,7 @@ export async function attachReadingRecorder({ container, iframe, book, showToast
   const list = container.querySelector('[data-reader-records]');
   const count = container.querySelector('[data-reader-record-count]');
   let active = null;
+  const contextBuilder = new AIContextBuilder(book, blocks);
 
   const paintList = (filter = 'all') => {
     const visible = entries.filter(item => filter === 'all' || item.type === filter);
@@ -146,6 +149,19 @@ export async function attachReadingRecorder({ container, iframe, book, showToast
       setTimeout(() => drawer.querySelector('[data-note-content]').focus(), 50);
     }
   };
+  const openNoteDraft = (selection, initialContent = '') => {
+    active = selection || null;
+    openDrawer('note');
+    const textarea = drawer.querySelector('[data-note-content]');
+    textarea.value = initialContent;
+    setTimeout(() => textarea.focus(), 50);
+  };
+  const assistant = new ReadingAIAssistant({
+    container,
+    book,
+    showToast,
+    onSaveNote: (selection, content) => { assistant.close(); openNoteDraft(selection, content); },
+  });
   const save = async (type, content = '') => {
     const payload = active || { quote: null, chapterId: blocks.find(block => block.getBoundingClientRect().top >= 0)?.dataset.chapterId, chapterTitle: blocks.find(block => block.getBoundingClientRect().top >= 0)?.dataset.chapterTitle, readingProgress: progress(), anchor: null };
     const saved = await createReadingEntry({ type, title: type === 'note' ? (payload.quote ? '划词笔记' : '阅读随想') : undefined, content: type === 'quote' ? payload.quote : content, quote: payload.quote || undefined, bookSlug: book.slug, chapterId: payload.chapterId, chapterTitle: payload.chapterTitle, pageLabel: payload.chapterTitle, anchor: payload.anchor || undefined, tags: [], readingProgress: payload.readingProgress });
@@ -161,7 +177,7 @@ export async function attachReadingRecorder({ container, iframe, book, showToast
     if (!active) return closeToolbar();
     const rect = win.getSelection().getRangeAt(0).getBoundingClientRect();
     const frame = iframe.getBoundingClientRect();
-    toolbar.style.left = `${Math.max(12, Math.min(innerWidth - 230, frame.left + rect.left + rect.width / 2 - 110))}px`;
+    toolbar.style.left = `${Math.max(12, Math.min(innerWidth - 320, frame.left + rect.left + rect.width / 2 - 150))}px`;
     toolbar.style.top = `${Math.max(66, frame.top + rect.top - 50)}px`;
     toolbar.hidden = false;
   };
@@ -169,12 +185,20 @@ export async function attachReadingRecorder({ container, iframe, book, showToast
   doc.addEventListener('touchend', () => setTimeout(selected, 120));
   win.addEventListener('scroll', closeToolbar, { passive: true });
   container.querySelector('[data-save-quote]').onclick = () => save('quote').catch(error => showToast(error.message || '书摘保存失败'));
-  container.querySelector('[data-write-note]').onclick = () => openDrawer('note');
+  container.querySelector('[data-write-note]').onclick = () => openNoteDraft(active);
+  container.querySelector('[data-ask-ai]').onclick = () => {
+    if (!active) return;
+    drawer.hidden = true;
+    assistant.open(contextBuilder.fromSelection(active));
+    closeToolbar();
+  };
   container.querySelector('[data-quick-note]').onclick = () => { active = null; openDrawer('note'); };
   container.querySelector('[data-toggle-records]').onclick = () => openDrawer('records');
   container.querySelectorAll('[data-drawer-close]').forEach(button => button.onclick = () => { drawer.hidden = true; });
   container.querySelector('[data-note-form]').onsubmit = event => { event.preventDefault(); const value = container.querySelector('[data-note-content]').value.trim(); if (!value) return; save('note', value).then(() => { container.querySelector('[data-note-content]').value = ''; drawer.hidden = true; }).catch(error => showToast(error.message || '笔记保存失败')); };
   container.querySelectorAll('[data-record-filter]').forEach(button => button.onclick = () => { container.querySelectorAll('[data-record-filter]').forEach(item => item.classList.toggle('active', item === button)); paintList(button.dataset.recordFilter); });
+  let chapterTimer = null;
+  win.addEventListener('scroll', () => { clearTimeout(chapterTimer); chapterTimer = setTimeout(() => assistant.chapterChanged(contextBuilder.visibleChapter()), 180); }, { passive: true });
   doc.addEventListener('keydown', event => { if (!(event.ctrlKey || event.metaKey) || !event.shiftKey) return; if (event.key.toLowerCase() === 'e') { event.preventDefault(); selected(); if (active) save('quote'); } if (event.key.toLowerCase() === 'n') { event.preventDefault(); selected(); openDrawer('note'); } });
   restore(); paintList(); onProgress?.(entries.length);
   const requested = new URLSearchParams(location.hash.split('?')[1] || '').get('entry');

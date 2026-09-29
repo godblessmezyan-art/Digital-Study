@@ -11,6 +11,7 @@ import { GitSyncModule } from './git-sync/git-sync.module';
 import { ReadingModule } from './reading/reading.module';
 import { JournalModule } from './journal/journal.module';
 import { ChroniclesModule } from './chronicles/chronicles.module';
+import { ReadingAiModule } from './reading-ai/reading-ai.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { ChroniclesModule } from './chronicles/chronicles.module';
     ReadingModule,
     JournalModule,
     ChroniclesModule,
+    ReadingAiModule,
   ],
 })
 export class AppModule {}

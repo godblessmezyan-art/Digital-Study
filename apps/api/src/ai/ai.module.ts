@@ -18,5 +18,6 @@ import { TemplatesService } from './templates.service';
     HtmlRendererService,
     TemplatesService,
   ],
+  exports: [AiModelConfigsService],
 })
 export class AiModule {}

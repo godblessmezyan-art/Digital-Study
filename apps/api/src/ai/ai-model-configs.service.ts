@@ -137,7 +137,7 @@ export class AiModelConfigsService {
     };
   }
 
-  async sendChat(runtime: AiRuntimeConfig, body: Record<string, unknown>): Promise<Response> {
+  async sendChat(runtime: AiRuntimeConfig, body: Record<string, unknown>, signal?: AbortSignal): Promise<Response> {
     if (!runtime.configured || !runtime.apiKey) {
       throw new ServiceUnavailableException('AI provider is not configured');
     }
@@ -145,7 +145,9 @@ export class AiModelConfigsService {
       method: 'POST',
       headers: { Authorization: `Bearer ${runtime.apiKey}`, 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
-      signal: AbortSignal.timeout(Number(process.env.AI_TIMEOUT_MS ?? 300000)),
+      signal: signal
+        ? AbortSignal.any([signal, AbortSignal.timeout(Number(process.env.AI_TIMEOUT_MS ?? 300000))])
+        : AbortSignal.timeout(Number(process.env.AI_TIMEOUT_MS ?? 300000)),
     });
     if (!response.ok) {
       const detail = (await response.text()).slice(0, 500);
