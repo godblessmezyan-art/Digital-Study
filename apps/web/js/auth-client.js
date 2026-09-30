@@ -58,6 +58,15 @@ export async function login(username, password) {
   return user;
 }
 
+export function updateStoredUser(patch) {
+  const current = getStoredUser();
+  if (!current) return null;
+  const next = { ...current, ...patch };
+  localStorage.setItem(USER_KEY, JSON.stringify(next));
+  window.dispatchEvent(new CustomEvent('study-auth-changed', { detail: { user: next } }));
+  return next;
+}
+
 export async function validateAuth() {
   if (!getAuthToken()) return null;
   try {

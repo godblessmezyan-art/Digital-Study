@@ -322,3 +322,13 @@ export interface CuratorIndexStatusDto {
   byType: Record<string, number>;
   lastIndexedAt: string | null;
 }
+
+// ===== Traveler Profile =====
+
+export interface UserProfileDto {
+  username: string;
+  displayName: string | null;
+  signature: string | null;
+  avatarUrl: string | null;
+  avatarVersion: number;
+}

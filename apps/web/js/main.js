@@ -8,6 +8,7 @@ import { initChronicles } from './chronicles.js?v=1';
 import { initMotionSystem } from './motion.js?v=1';
 import { renderSidebar } from './navigation.js?v=1';
 import { getStoredUser } from './auth-client.js';
+import { withAppBase } from './runtime-paths.js';
 import { loadShelfBooks } from './book-catalog.js?v=3';
 import { listReadingEntries } from './reading-client.js?v=1';
 import { initWorld } from './world.js?v=1';
@@ -55,7 +56,7 @@ topbar.innerHTML = `<div class="topbar__inner world-hud">
     <button class="hud-circle hud-console-toggle" type="button" data-hud-toggle="console" aria-label="世界控制台" title="世界控制台" aria-expanded="false" aria-controls="hud-console-popover"><span aria-hidden="true">◈</span></button>
     <section class="hud-popover hud-menu hud-console" id="hud-console-popover" data-hud-popover="console" aria-label="世界控制台" hidden><header><small>NAVIGATION CONSOLE</small><strong>世界控制台</strong></header><button type="button" data-hud-action="world"><span><i>☁</i><b>环境与天气</b><small>天气、时间与氛围强度</small></span><em>→</em></button><button type="button" data-hud-action="world"><span><i>♫</i><b>环境音效</b><small>风声、雨声与总音量</small></span><em>→</em></button><button type="button" data-hud-action="footprints"><span><i>◌</i><b>世界足迹</b><small>最近阅读与探索记录</small></span><em>→</em></button><button class="hud-source-action" id="scenic-toggle" type="button"><span><i>${icons.telescope}</i><b>观景模式</b><small>隐藏界面，欣赏当前风景</small></span><em>→</em></button><button class="hud-source-action" id="theme-button" type="button"><span><i>${icons.settings}</i><b>界面设置</b><small>窗景航行与昼夜校准</small></span><em>→</em></button></section>
   </div>
-  <button class="hud-circle hud-avatar" aria-label="旅者入口" title="旅者入口">旅</button>
+  <button class="hud-circle hud-avatar" id="homeAvatar" aria-label="旅者入口" title="旅者入口">旅</button>
   <span class="hud-source" data-world-entry hidden></span><span class="hud-source" data-footprint-entry hidden></span><button class="chronicle-home-signal hud-source" type="button" data-chronicle-signal hidden><i aria-hidden="true"></i><span data-chronicle-signal-label>新的世界记录</span></button>
 </div>`;
 const world = initWorld({ mount: document.querySelector('[data-world-entry]'), scene: 'home' });
@@ -520,6 +521,18 @@ if (window.matchMedia('(pointer:fine) and (prefers-reduced-motion:no-preference)
     readingCard.style.setProperty('--parallax-y', '0px');
   });
 }
+
+const homeAvatar = document.querySelector('#homeAvatar');
+const syncHomeAvatar = () => {
+  const user = getStoredUser();
+  if (user && user.avatarUrl) homeAvatar.innerHTML = `<img src="${withAppBase(user.avatarUrl)}" alt="">`;
+  else homeAvatar.textContent = '旅';
+  homeAvatar.setAttribute('aria-label', user ? `账号：${user.displayName || user.display_name || user.username}` : '旅者档案');
+  homeAvatar.title = user ? '旅者档案' : '登录';
+};
+syncHomeAvatar();
+window.addEventListener('study-auth-changed', syncHomeAvatar);
+homeAvatar.addEventListener('click', () => { window.location.href = 'index.html#profile'; });
 
 const syncHomeNavigation = () => {
   const activeId = homeNavId();

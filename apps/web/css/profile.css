@@ -1,0 +1,83 @@
+/* ============================================================
+   旅者档案 · Traveler Profile + 用户菜单 Popover
+   古老天空圣所中的个人档案纸页（Chronicle / Paper 体系）
+   ============================================================ */
+
+.profile-page{min-height:100vh}
+.profile-container{display:block}
+.profile-surface{padding:clamp(24px,3.4vw,44px)}
+.profile-grid{display:grid;grid-template-columns:minmax(240px,340px) minmax(0,1fr);gap:clamp(28px,4vw,56px);align-items:start}
+.profile-identity-block,.profile-edit-block{border:0;padding:0;background:none}
+
+/* ===== 左：旅者形象 ===== */
+.profile-identity{display:grid;justify-items:center;gap:12px;text-align:center;padding:clamp(18px,2.6vw,34px) 18px;background:linear-gradient(180deg,var(--color-paper-bg-soft),transparent);border:1px solid var(--color-paper-border);border-radius:var(--radius-md);position:relative}
+.profile-identity:before{content:"";position:absolute;inset:8px;border:1px solid var(--color-gold-soft);border-radius:calc(var(--radius-md) - 4px);pointer-events:none}
+.profile-avatar{position:relative;width:112px;height:112px;padding:0;border:0;background:none;border-radius:50%;cursor:pointer;overflow:hidden;box-shadow:0 0 0 2px var(--color-gold),0 0 0 6px var(--color-gold-soft);transition:box-shadow .2s ease}
+.profile-avatar:hover{box-shadow:0 0 0 2px var(--color-gold),0 0 0 8px var(--color-gold-soft)}
+.profile-avatar img{width:100%;height:100%;aspect-ratio:1/1;object-fit:cover;display:block;border-radius:50%}
+.profile-avatar__fallback{display:grid;place-items:center;width:100%;height:100%;aspect-ratio:1/1;border-radius:50%;background:linear-gradient(150deg,#1d3a52,#12283a);color:var(--color-gold);font:500 34px/1 var(--display,serif);letter-spacing:.06em}
+.profile-avatar__veil{position:absolute;inset:0;display:grid;place-items:center;background:rgba(10,26,40,.55);color:#f3e9d4;font:11px var(--serif,serif);letter-spacing:.14em;opacity:0;transition:opacity .18s ease}
+.profile-avatar:hover .profile-avatar__veil,.profile-avatar:focus-visible .profile-avatar__veil{opacity:1}
+.profile-name{margin:4px 0 0;color:var(--color-ink);font:600 clamp(20px,2.4vw,26px)/1.4 var(--display,serif);letter-spacing:.06em}
+.profile-signature{margin:0;max-width:30ch;color:var(--color-ink-soft);font:13px/1.9 var(--serif,serif);letter-spacing:.03em}
+.profile-handle{color:var(--color-paper-text-muted);font:10px var(--sans,sans-serif);letter-spacing:.12em}
+
+/* ===== 右：基本档案 ===== */
+.profile-form{display:grid;gap:22px}
+.profile-form>label{display:grid;gap:8px}
+.profile-form>label>span{color:var(--color-gold);font:600 10px var(--sans,sans-serif);letter-spacing:.2em}
+.profile-form input,.profile-form textarea{width:100%;padding:11px 14px;color:var(--color-ink);background:var(--color-paper-bg-soft);border:1px solid var(--color-paper-border);border-radius:var(--radius-control,9px);outline:none;font:14px/1.8 var(--serif,serif);transition:border-color .18s,box-shadow .18s}
+.profile-form textarea{resize:vertical;min-height:88px}
+.profile-form input:focus,.profile-form textarea:focus{border-color:var(--color-gold);box-shadow:0 0 0 3px var(--color-gold-soft)}
+.profile-hint,.profile-count{color:var(--color-paper-text-muted);font:10px var(--sans,sans-serif);letter-spacing:.06em}
+.profile-count{justify-self:end}
+.profile-form footer{display:flex;align-items:center;justify-content:flex-end;gap:16px;padding-top:6px;border-top:1px solid var(--color-paper-border)}
+.profile-save-state{color:var(--color-paper-text-muted);font:11px var(--serif,serif)}
+.profile-save{height:42px;padding:0 26px;color:#fffdf7;background:var(--sidebar-bg,#132a43);border:1px solid var(--border-gold,rgba(207,169,102,.36));border-radius:999px;font:500 13px var(--serif,serif);letter-spacing:.08em;cursor:pointer;transition:background .2s,opacity .2s}
+.profile-save:hover:not(:disabled){background:#1c3b5a}
+.profile-save:disabled{opacity:.5;cursor:default}
+
+/* ===== 状态 ===== */
+.profile-skeleton{max-width:960px;margin:70px auto;display:grid;gap:18px;padding:0 20px}
+.profile-skeleton i{display:block;height:26px;background:linear-gradient(90deg,rgba(19,42,67,.05),rgba(185,139,77,.13),rgba(19,42,67,.05));background-size:220% 100%;border-radius:6px;animation:profile-shimmer 1.4s ease infinite}
+.profile-skeleton i:first-child{width:42%;height:56px}
+.profile-skeleton i:nth-child(3){height:180px}
+@keyframes profile-shimmer{to{background-position:-220% 0}}
+.profile-signed-out,.profile-error{max-width:720px;margin:80px auto;padding:60px 30px;text-align:center;background:var(--surface-realm,rgba(8,29,44,.94));border:1px solid var(--border-gold,rgba(206,169,106,.23));border-radius:13px;color:var(--text-secondary-dark,#93a8b2)}
+.profile-signed-out small{color:var(--accent-gold,#c49b5c);font:600 9px var(--sans,sans-serif);letter-spacing:.24em}
+.profile-signed-out h1{margin:12px 0 10px;color:var(--text-primary-dark,#e8eef1);font:500 32px var(--serif,serif);letter-spacing:.1em}
+.profile-signed-out p{font:13.5px/2 var(--serif,serif)}
+.profile-signed-out button{height:40px;margin-top:18px;padding:0 22px;color:#172a35;background:#d0ad70;border:0;border-radius:7px;font:13px var(--serif,serif);cursor:pointer}
+.profile-error span{display:block;color:var(--color-ink);font:500 20px var(--serif,serif)}
+.profile-error button{margin-top:14px;padding:9px 20px;color:#fffdf7;background:var(--sidebar-bg,#132a43);border:1px solid var(--border-gold,rgba(207,169,102,.36));border-radius:8px;font:12px var(--serif,serif);cursor:pointer}
+
+/* ===== 用户菜单 Popover ===== */
+.user-menu{position:fixed;z-index:120;width:240px;padding:14px 12px 10px;display:grid;gap:2px;background:linear-gradient(165deg,rgba(10,30,47,.98),rgba(14,38,58,.97));border:1px solid var(--sidebar-border,rgba(231,201,146,.27));border-radius:12px;box-shadow:0 22px 54px rgba(4,14,24,.5);backdrop-filter:blur(8px);animation:user-menu-in .16s ease}
+@keyframes user-menu-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.user-menu__identity{display:flex;align-items:center;gap:12px;padding:4px 8px 10px}
+.user-menu__avatar{flex:none;border-radius:50%;object-fit:cover;aspect-ratio:1/1;box-shadow:0 0 0 1px var(--accent-gold,#bc9253)}
+.user-menu__avatar--fallback{display:grid;place-items:center;background:linear-gradient(150deg,#28506e,#16344c);color:var(--gold-light,#e7c992);font:500 15px var(--serif,serif)}
+.user-menu__identity b{display:block;color:var(--text-primary-dark,#f1eadb);font:600 14px var(--serif,serif);letter-spacing:.04em}
+.user-menu__identity small{display:block;color:var(--text-secondary-dark,#aebdca);font:10px var(--sans,sans-serif)}
+.user-menu__signature{margin:4px 0 0;color:var(--accent-gold,#c9a86a);font:11px/1.6 var(--serif,serif);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.user-menu__rule{height:1px;margin:4px 6px;background:var(--sidebar-border,rgba(231,201,146,.2))}
+.user-menu button{display:block;width:100%;padding:9px 12px;text-align:left;color:var(--sidebar-text,#dce6ec);background:none;border:0;border-radius:8px;font:13px var(--serif,serif);letter-spacing:.05em;cursor:pointer;transition:background .15s,color .15s}
+.user-menu button:hover,.user-menu button:focus-visible{color:var(--gold-light,#e7c992);background:var(--sidebar-active,rgba(231,201,146,.14))}
+.user-menu__logout{color:#d8a49a !important}
+.user-menu__logout:hover{background:rgba(154,78,66,.18) !important;color:#e8b7ac !important}
+
+/* ===== 顶部 HUD 头像（app + home 共用） ===== */
+.app-avatar-img,.hud-avatar img{width:100%;height:100%;aspect-ratio:1/1;object-fit:cover;border-radius:50%;display:block}
+#appAuthButton{overflow:hidden;font:500 13px var(--serif,serif)}
+#appAuthButton.signed-in{box-shadow:0 0 0 1px var(--border-gold,rgba(207,169,102,.4))}
+
+/* ===== 响应式 ===== */
+@media(max-width:900px){
+  .profile-grid{grid-template-columns:1fr;gap:26px}
+  .profile-identity{padding:22px 14px}
+  .profile-surface{padding:20px 16px}
+}
+@media(prefers-reduced-motion:reduce){
+  .user-menu{animation:none}
+  .profile-skeleton i{animation:none}
+}

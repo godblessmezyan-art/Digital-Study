@@ -6,6 +6,9 @@ import { renderSidebar } from './navigation.js?v=1';
 import { createReadingSpacePage } from './reading-space.js?v=5';
 import { createShelfPage } from './shelf-page.js?v=5';
 import { clearAuth, getStoredUser, login, validateAuth } from './auth-client.js';
+import { withAppBase } from './runtime-paths.js';
+import { openUserMenu } from './user-menu.js?v=1';
+import { createProfilePage } from './profile-page.js?v=1';
 import { initWorld } from './world.js?v=1';
 import { initFootprints, recordFootprint, seedFootprints } from './footprints.js?v=1';
 import { createJournalPage } from './journal-page.js?v=3';
@@ -77,8 +80,10 @@ const escapeAuthText=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&a
 
 function updateAuthButton(){
  const user=getStoredUser();
- authButton.textContent=user?(user.display_name||user.username||'我').slice(0,2):'登录';
- authButton.setAttribute('aria-label',user?`账号：${user.display_name||user.username}`:'账号登录');
+ const name=user?(user.displayName||user.display_name||user.username||'我'):'登录';
+ if(user&&user.avatarUrl){authButton.innerHTML=`<img class="app-avatar-img" src="${withAppBase(user.avatarUrl)}" alt="">`;}
+ else{authButton.textContent=user?name.slice(0,2):'登录';}
+ authButton.setAttribute('aria-label',user?`账号：${name}`:'账号登录');
  authButton.classList.toggle('signed-in',Boolean(user));
 }
 
@@ -92,7 +97,14 @@ function renderAuthDialog(){
 }
 
 function openAuthDialog(){renderAuthDialog();if(!authDialog.open)authDialog.showModal()}
-authButton.addEventListener('click',openAuthDialog);
+authButton.addEventListener('click',()=>{
+ if(!getStoredUser()){openAuthDialog();return;}
+ openUserMenu(authButton,{
+  onProfile:()=>{location.hash='#profile';},
+  onSettings:()=>{window.location.href='home.html#settings';},
+  onLogout:()=>{updateAuthButton();showToast('已退出登录');if(location.hash==='#profile')route();},
+ });
+});
 window.addEventListener('study-auth-required',()=>{openAuthDialog();showToast('请先登录账号')});
 updateAuthButton();
 void validateAuth().then(()=>updateAuthButton());
@@ -222,6 +234,12 @@ function renderReadingSpace(){
   createReadingSpacePage(app,params.get('tab')||'notes',{showToast,focusEntryId:params.get('entry')||''});
 }
 
+function renderProfile(){
+ setActive('');document.title='旅者档案 · 云天幻境';
+ document.body.classList.remove('category-mode','studio-v2-mode','studio-workshop-mode','library-management-mode');
+ return createProfilePage(app,{showToast,openLogin:openAuthDialog});
+}
+
 function renderCurator(){
   setActive('curator');document.title='秘典回响 · 云天幻境';
   document.body.classList.remove('category-mode','studio-v2-mode','studio-workshop-mode','library-management-mode');
@@ -250,7 +268,7 @@ function renderChronicles(){
 }
 
 function bindGlobal(){document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{setAppScenic(false);if(b.dataset.page==='home')window.location.href='home.html';else if(b.dataset.page==='library'||b.dataset.page==='content')location.hash='#content';else if(b.dataset.page==='studio')location.hash='#studio';else if(b.dataset.page==='categories')location.hash='#categories';else showToast(`${b.textContent.trim()}功能即将开放`)});document.querySelectorAll('[data-toast]').forEach(b=>b.onclick=()=>showToast(b.dataset.toast))}
-const route=()=>{if(/\/plans(?:\/[^/?#]+)?\/?$/.test(location.pathname)){chronicles.setContext('plans');void chronicles.check('plans');return renderPlans()}if(/\/chronicles\/?$/.test(location.pathname)){chronicles.setContext('chronicles');void chronicles.check('chronicles');return renderChronicles()}if(/\/journal(?:\/[^/?#]+){0,2}\/?$/.test(location.pathname)){chronicles.setContext('journal');void chronicles.check('journal');return renderJournal()}const page=location.hash.slice(1).split('?')[0];const storyPage=page==='library'?'content':page||'study';chronicles.setContext(storyPage);void chronicles.check(storyPage);world.setScene(storyPage);if(page==='studio')return renderStudioV3();if(page==='curator')return renderCurator();if(page==='shelf')return renderShelf();if(page==='categories')return renderCategories();if(page==='reading')return renderReadingSpace();if(page==='content'||page==='library')return renderLibrary();window.location.replace('home.html')};route();
+const route=()=>{if(/\/plans(?:\/[^/?#]+)?\/?$/.test(location.pathname)){chronicles.setContext('plans');void chronicles.check('plans');return renderPlans()}if(/\/chronicles\/?$/.test(location.pathname)){chronicles.setContext('chronicles');void chronicles.check('chronicles');return renderChronicles()}if(/\/journal(?:\/[^/?#]+){0,2}\/?$/.test(location.pathname)){chronicles.setContext('journal');void chronicles.check('journal');return renderJournal()}const page=location.hash.slice(1).split('?')[0];const storyPage=page==='library'?'content':page||'study';chronicles.setContext(storyPage);void chronicles.check(storyPage);world.setScene(storyPage);if(page==='studio')return renderStudioV3();if(page==='profile')return renderProfile();if(page==='curator')return renderCurator();if(page==='shelf')return renderShelf();if(page==='categories')return renderCategories();if(page==='reading')return renderReadingSpace();if(page==='content'||page==='library')return renderLibrary();window.location.replace('home.html')};route();
 window.addEventListener('hashchange',route);
-window.addEventListener('study-auth-changed',()=>{void chronicles.refresh();if(location.pathname.includes('/journal')||location.pathname.includes('/chronicles')||location.pathname.includes('/plans')||location.hash.startsWith('#curator'))route()});
+window.addEventListener('study-auth-changed',()=>{updateAuthButton();void chronicles.refresh();if(location.pathname.includes('/journal')||location.pathname.includes('/chronicles')||location.pathname.includes('/plans')||location.hash.startsWith('#curator')||location.hash.startsWith('#profile'))route()});
 window.addEventListener('study-toast',event=>showToast(event.detail));

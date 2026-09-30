@@ -252,6 +252,18 @@ model PlanTask {
   @@map("plan_tasks")
 }
 
+model UserProfile {
+  ownerId       String   @id @db.VarChar(160)
+  displayName   String?  @db.VarChar(60)
+  signature     String?  @db.VarChar(150)
+  avatarExt     String?  @db.VarChar(10)
+  avatarVersion Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("user_profiles")
+}
+
 model ChronicleEntry {
   id               String               @id @db.VarChar(64)
   seasonId         String               @db.VarChar(40)

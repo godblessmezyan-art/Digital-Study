@@ -26,6 +26,10 @@ export function getTemplatesRoot(): string {
   return resolve(WORKSPACE_ROOT, process.env.TEMPLATES_ROOT ?? 'runtime-data/templates');
 }
 
+export function getAvatarRoot(): string {
+  return resolve(WORKSPACE_ROOT, process.env.AVATAR_ROOT ?? 'runtime-data/avatars');
+}
+
 export function getBundledTemplatesRoot(): string {
   return resolve(WORKSPACE_ROOT, 'content/templates');
 }
