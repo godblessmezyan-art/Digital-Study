@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import type { UserProfile } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { AvatarStoreService } from './avatar-store.service';
@@ -35,6 +35,12 @@ export class ProfilesService {
   }
 
   async update(ownerId: string, input: UpdateProfileRequest): Promise<ProfileDto> {
+    if (input.displayName !== undefined) {
+      const name = input.displayName.trim();
+      if (name && (name.length < 2 || name.length > 30)) {
+        throw new BadRequestException('用户名需为 2-30 个字符');
+      }
+    }
     const displayName = input.displayName !== undefined ? input.displayName.trim() || null : undefined;
     const signature = input.signature !== undefined ? input.signature.trim() || null : undefined;
     const profile = await this.prisma.userProfile.upsert({
