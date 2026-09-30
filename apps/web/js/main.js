@@ -1,4 +1,4 @@
-import { icons } from './icons.js?v=cloud-realm-study-29';
+import { icons } from './icons.js?v=cloud-realm-study-30';
 import {
   dailyBookmarks, popularCategories, stats,
 } from './data.js?v=cloud-realm-study-29';
@@ -6,7 +6,7 @@ import { applyScene, applyWorldBackground, initTheme } from './theme.js?v=cloud-
 import { createCelestialGlobe } from './celestial-globe.js?v=2';
 import { initChronicles } from './chronicles.js?v=1';
 import { initMotionSystem } from './motion.js?v=1';
-import { renderSidebar } from './navigation.js?v=1';
+import { renderSidebar } from './navigation.js?v=2';
 import { getStoredUser } from './auth-client.js';
 import { withAppBase } from './runtime-paths.js';
 import { loadShelfBooks } from './book-catalog.js?v=3';

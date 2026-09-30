@@ -1,8 +1,8 @@
 import { createAiWorkshopPage } from './studio-page.js?v=8';
 import { createLibraryPage } from './library-page.js?v=3';
 import { addShelfBook, loadCatalogBooks } from './book-catalog.js?v=2';
-import { icons as archiveIcons } from './icons.js?v=cloud-realm-study-29';
-import { renderSidebar } from './navigation.js?v=1';
+import { icons as archiveIcons } from './icons.js?v=cloud-realm-study-30';
+import { renderSidebar } from './navigation.js?v=2';
 import { createReadingSpacePage } from './reading-space.js?v=5';
 import { createShelfPage } from './shelf-page.js?v=5';
 import { clearAuth, getStoredUser, login, validateAuth } from './auth-client.js';
