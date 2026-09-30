@@ -1,3 +1,5 @@
+import { EmptyState, PageHero } from './page-system.js';
+
 const monthNames = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
 export const MOODS = {
@@ -41,11 +43,14 @@ export function JournalTags(tags = [], { interactive = false } = {}) {
 export function JournalHeader(entries) {
   const today = todayValue();
   const year = today.slice(0, 4), month = today.slice(0, 7);
-  return `<header class="journal-hero">
-    <div class="journal-title-block"><small>TRAVELER'S JOURNAL</small><h1>旅者手记</h1><p>“记录留在云天幻境中的日子”</p></div>
-    <div class="journal-stats" aria-label="手记统计"><span><b>${entries.filter(item => item.entryDate.startsWith(year)).length}</b><small>今年手记</small></span><span><b>${entries.filter(item => item.entryDate.startsWith(month)).length}</b><small>本月</small></span><span><b>${entries.length}</b><small>累计</small></span></div>
-    <a class="journal-write" href="journal/new">＋ 写下今天</a>
-  </header>`;
+  return PageHero({
+    eyebrow: "TRAVELER'S JOURNAL", title: '旅者手记', description: '记录留在云天幻境中的日子',
+    stats: [
+      { value: entries.filter(item => item.entryDate.startsWith(year)).length, label: '今年手记' },
+      { value: entries.filter(item => item.entryDate.startsWith(month)).length, label: '本月' },
+      { value: entries.length, label: '累计' },
+    ], action: '<a class="journal-write" href="journal/new">＋ 写下今天</a>', className: 'journal-hero',
+  });
 }
 
 export function JournalTodayCard(entries) {
@@ -104,7 +109,7 @@ export function JournalSearch({ years, tags }) {
 }
 
 export function JournalEmptyState({ authenticated = true, filtered = false } = {}) {
-  return `<section class="journal-empty"><span aria-hidden="true">✦</span><h2>${!authenticated ? '登录后翻开你的手记' : filtered ? '没有找到这段记忆' : '尚未留下手记'}</h2><p>${!authenticated ? '每位旅者的文字只属于自己的云端书页。' : filtered ? '试着换一个关键词，或收起筛选重新翻阅。' : '旅途中的微光、念头与天气，都可以从今天开始写下。'}</p><a href="${authenticated ? 'journal/new' : '#'}" ${authenticated ? '' : 'data-journal-login'}>${authenticated ? '写下第一篇' : '登录账号'}</a></section>`;
+  return EmptyState({ title: !authenticated ? '登录后翻开你的手记' : filtered ? '没有找到这段记忆' : '尚未留下手记', description: !authenticated ? '每位旅者的文字只属于自己的云端书页。' : filtered ? '试着换一个关键词，或收起筛选重新翻阅。' : '旅途中的微光、念头与天气，都可以从今天开始写下。', action: `<a href="${authenticated ? 'journal/new' : '#'}" ${authenticated ? '' : 'data-journal-login'}>${authenticated ? '写下第一篇' : '登录账号'}</a>`, className: 'journal-empty' });
 }
 
 export function JournalSkeleton() {

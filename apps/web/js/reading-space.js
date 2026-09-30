@@ -2,6 +2,7 @@ import { getStoredUser } from './auth-client.js';
 import { loadShelfBooks } from './book-catalog.js?v=3';
 import { createReadingEntry, deleteReadingEntry, listReadingEntries, updateReadingEntry } from './reading-client.js?v=1';
 import { markFootprintUnavailable, recordFootprint, seedFootprints } from './footprints.js?v=1';
+import { EmptyState, PageHero, PageToolbar } from './page-system.js';
 
 const tabs = [['notes', '笔记'], ['quotes', '书摘']];
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
@@ -48,11 +49,9 @@ export async function createReadingSpacePage(root, initialTab = 'notes', { showT
 
   const counts = type => entries.filter(item => item.type === type).length;
   root.innerHTML = `<section class="reading-space-page">
-    <header class="reading-space-header"><div><span>PRIVATE READING ARCHIVE</span><h1>阅读空间</h1><p>把阅读中的想法与触动，整理成只属于你的知识档案。</p></div><div class="reading-space-metrics"><span><strong data-note-count>${counts('note')}</strong>篇笔记</span><span><strong data-quote-count>${counts('quote')}</strong>条书摘</span></div>
-      <nav class="reading-space-tabs" aria-label="阅读空间内容">${tabs.map(([id, label]) => `<button data-reading-tab="${id}">${label}</button>`).join('')}</nav>
-    </header>
+    ${PageHero({ eyebrow: 'PRIVATE READING ARCHIVE', title: '阅读空间', description: '把阅读中的想法与触动，整理成只属于你的知识档案。', className: 'reading-space-header', stats: [{ valueHtml: `<span data-note-count>${counts('note')}</span>`, label: '篇笔记' }, { valueHtml: `<span data-quote-count>${counts('quote')}</span>`, label: '条书摘' }], tabs: `<nav class="reading-space-tabs" aria-label="阅读空间内容">${tabs.map(([id, label]) => `<button data-reading-tab="${id}">${label}</button>`).join('')}</nav>` })}
     <section class="reading-space-content">
-      <div class="reading-space-toolbar"><label><span>⌕</span><input data-reading-search placeholder="搜索标题、内容或书名…"></label><select data-reading-book-filter aria-label="按书籍筛选"><option value="">全部书籍</option>${shelf.map(book => `<option value="${esc(book.slug)}">${esc(book.title)}</option>`).join('')}</select><button type="button" class="reading-add" data-entry-new>＋ 新建笔记</button></div>
+      ${PageToolbar({ className: 'reading-space-toolbar', search: '<label><span>⌕</span><input data-reading-search placeholder="搜索标题、内容或书名…"></label>', controls: `<select data-reading-book-filter aria-label="按书籍筛选"><option value="">全部书籍</option>${shelf.map(book => `<option value="${esc(book.slug)}">${esc(book.title)}</option>`).join('')}</select>`, action: '<button type="button" class="reading-add" data-entry-new>＋ 新建笔记</button>' })}
       <div class="reading-entry-grid" id="readingEntryGrid"></div>
     </section>
     <div class="reading-editor" data-reading-editor hidden>
@@ -111,7 +110,7 @@ export async function createReadingSpacePage(root, initialTab = 'notes', { showT
     const items = filtered();
     const label = currentType() === 'note' ? '笔记' : '书摘';
     root.querySelector('[data-entry-new]').textContent = `＋ 新建${label}`;
-    root.querySelector('#readingEntryGrid').innerHTML = items.length ? items.map(entryCard).join('') : `<div class="reading-space-empty"><span>✦</span><h2>${query ? `没有找到匹配的${label}` : `还没有${label}`}</h2><p>${query ? '换个关键词试试。' : `点击“新建${label}”，保存第一条阅读记录。`}</p><button type="button" data-entry-new-empty>新建${label}</button></div>`;
+    root.querySelector('#readingEntryGrid').innerHTML = items.length ? items.map(entryCard).join('') : EmptyState({ title: query ? `没有找到匹配的${label}` : `还没有${label}`, description: query ? '换个关键词试试。' : '留下第一条阅读记录，让这间私人档案室从此刻开始。', action: `<button type="button" data-entry-new-empty>新建${label}</button>`, className: 'reading-space-empty' });
     root.querySelectorAll('[data-entry-edit]').forEach(button => button.onclick = () => openEditor(entries.find(item => item.id === button.dataset.entryEdit)));
     root.querySelectorAll('[data-entry-source]').forEach(button => button.onclick = () => {
       const entry = entries.find(item => item.id === button.dataset.entrySource);

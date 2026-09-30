@@ -1,3 +1,5 @@
+import { PageHero } from './page-system.js';
+
 // AI 馆长 · 展示组件库（纯 HTML 字符串组件，遵循 journal-components 模式）
 
 export const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({
@@ -68,14 +70,7 @@ export function IndexStatusPanel(status, { isAdmin = false } = {}) {
 }
 
 export function CuratorHero(indexChipHtml, indexPanelHtml) {
-  return `<header class="curator-hero">
-    <div class="curator-hero-copy">
-      <small>AI CURATOR · KNOWLEDGE SANCTUM</small>
-      <h1>AI 馆长</h1>
-      <p>“他记得你读过什么，也知道你的想法曾经如何改变。”</p>
-    </div>
-    <div class="curator-index">${indexChipHtml}${indexPanelHtml}</div>
-  </header>`;
+  return PageHero({ eyebrow: 'AI CURATOR · KNOWLEDGE SANCTUM', title: 'AI 馆长', description: '他记得你读过什么，也知道你的想法曾经如何改变。', action: `<div class="curator-index">${indexChipHtml}${indexPanelHtml}</div>`, className: 'curator-hero' });
 }
 
 /* ===== 搜索与快捷入口 ===== */

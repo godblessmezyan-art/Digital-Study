@@ -1,3 +1,5 @@
+import { EmptyState, PageHero } from './page-system.js';
+
 export const escapePlanHtml = value => String(value ?? '').replace(/[&<>"']/g, char => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
 }[char]));
@@ -38,11 +40,7 @@ export function dueLabel(dueDate) {
 export function PlanHero(plans) {
   const active = plans.filter(plan => plan.status === 'active');
   const completed = plans.filter(plan => plan.status === 'completed');
-  return `<header class="plans-hero">
-    <div class="plans-title-block"><small>EXPEDITION PLANS</small><h1>计划</h1><p>“把遥远的目标，拆成今天可以出发的一步。”</p></div>
-    <div class="plans-stats" aria-label="计划统计"><span><b>${active.length}</b><small>进行中</small></span><span><b>${plans.length}</b><small>全部</small></span><span><b>${completed.length}</b><small>已完成</small></span></div>
-    <a class="plans-new" href="plans/new">＋ 新计划</a>
-  </header>`;
+  return PageHero({ eyebrow: 'EXPEDITION PLANS', title: '计划', description: '把遥远的目标，拆成今天可以出发的一步。', stats: [{ value: active.length, label: '进行中' }, { value: plans.length, label: '全部' }, { value: completed.length, label: '已完成' }], action: '<a class="plans-new" href="plans/new">＋ 新计划</a>', className: 'plans-hero' });
 }
 
 export function PlanTodayCard(tasks) {
@@ -78,7 +76,7 @@ export function PlanCard(plan) {
 }
 
 export function PlanEmptyState({ authenticated = true } = {}) {
-  return `<section class="plans-empty"><span aria-hidden="true">✦</span><h2>${authenticated ? '还没有任何计划' : '登录后开始你的远征'}</h2><p>${authenticated ? '一个目标、一次拆解、一小步执行——计划从这里开始。' : '计划、任务与 AI 拆解都保存在你的账号之下。'}</p>${authenticated ? '<a href="plans/new">创建第一个计划</a>' : '<a href="#" data-plans-login>登录账号</a>'}</section>`;
+  return EmptyState({ title: authenticated ? '还没有任何计划' : '登录后开始你的远征', description: authenticated ? '一个目标、一次拆解、一小步执行——计划从这里开始。' : '计划、任务与 AI 拆解都保存在你的账号之下。', action: authenticated ? '<a href="plans/new">创建第一个计划</a>' : '<a href="#" data-plans-login>登录账号</a>', className: 'plans-empty' });
 }
 
 export function PlanSkeleton() {

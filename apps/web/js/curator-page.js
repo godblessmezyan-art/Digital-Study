@@ -1,11 +1,12 @@
 import { getStoredUser } from './auth-client.js';
 import { getCuratorIndexStatus, getCuratorInsights, rebuildCuratorIndex, streamCurator } from './curator-client.js?v=2';
+import { PaperSurface } from './page-system.js';
 import {
   AnswerBlock, CuratorHero, CuratorQuickActions, CuratorSearchBox, CuratorSkeleton, CuratorInsightsBlock,
   ErrorBlock, esc, extractConcepts, FollowupActions, IndexStatusChip, IndexStatusPanel,
   NoResultsBlock, QuestionBlock, QUICK_ACTIONS, RecentExplorations, RecentSession,
   RelatedConcepts, SignedOutBlock, SourceCard, SourcesBlock,
-} from './curator-components.js?v=1';
+} from './curator-components.js?v=2';
 
 const HISTORY_KEY = 'curator-history';
 const SESSION_KEY = 'curator-last-session';
@@ -43,7 +44,7 @@ export function createCuratorPage(root, { showToast, openLogin }) {
   function paintHome() {
     root.innerHTML = `<section class="curator-page curator-home">
       ${CuratorHero(IndexStatusChip(state.indexStatus), IndexStatusPanel(state.indexStatus, { isAdmin }))}
-      <main class="curator-surface">
+      ${PaperSurface(`
         ${CuratorSearchBox(state.scope)}
         ${CuratorQuickActions()}
         <div class="curator-columns">
@@ -51,7 +52,7 @@ export function createCuratorPage(root, { showToast, openLogin }) {
           ${CuratorInsightsBlock(state.insights)}
           ${RecentSession(state.session)}
         </div>
-      </main>
+      `, 'curator-surface', 'main')}
     </section>`;
     bindIndexStatus();
     bindSearch();
@@ -145,7 +146,7 @@ export function createCuratorPage(root, { showToast, openLogin }) {
 
   function paintAnswerView(query, { resume = false } = {}) {
     root.innerHTML = `<section class="curator-page curator-answer-view">
-      <main class="curator-surface">
+      ${PaperSurface(`
         <div class="curator-answer-toolbar">
           <button type="button" class="curator-back" data-curator-back>← 返回馆长首页</button>
           ${resume ? '<small class="curator-resume-flag">继续上次探索</small>' : ''}
@@ -156,7 +157,7 @@ export function createCuratorPage(root, { showToast, openLogin }) {
         ${SourcesBlock()}
         <div data-curator-concepts></div>
         <div data-curator-followup></div>
-      </main>
+      `, 'curator-surface', 'main')}
     </section>`;
     bindSearch();
     root.querySelector('[data-curator-back]').onclick = () => { abortStream(); bootHome(); };

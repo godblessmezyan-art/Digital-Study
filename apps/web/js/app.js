@@ -1,19 +1,20 @@
-import { createAiWorkshopPage } from './studio-page.js?v=6';
-import { createLibraryPage } from './library-page.js?v=1';
+import { createAiWorkshopPage } from './studio-page.js?v=8';
+import { createLibraryPage } from './library-page.js?v=3';
 import { addShelfBook, loadCatalogBooks } from './book-catalog.js?v=2';
 import { icons as archiveIcons } from './icons.js?v=cloud-realm-study-29';
 import { renderSidebar } from './navigation.js?v=1';
-import { createReadingSpacePage } from './reading-space.js?v=3';
-import { createShelfPage } from './shelf-page.js?v=3';
+import { createReadingSpacePage } from './reading-space.js?v=5';
+import { createShelfPage } from './shelf-page.js?v=5';
 import { clearAuth, getStoredUser, login, validateAuth } from './auth-client.js';
 import { initWorld } from './world.js?v=1';
 import { initFootprints, recordFootprint, seedFootprints } from './footprints.js?v=1';
-import { createJournalPage } from './journal-page.js?v=1';
-import { createPlansPage } from './plans-page.js?v=1';
+import { createJournalPage } from './journal-page.js?v=3';
+import { createPlansPage } from './plans-page.js?v=3';
 import { createChroniclesPage } from './chronicles-page.js?v=1';
 import { initChronicles } from './chronicles.js?v=1';
 import { initMotionSystem } from './motion.js?v=1';
-import { createCuratorPage } from './curator-page.js?v=2';
+import { createCuratorPage } from './curator-page.js?v=3';
+import { PageHero, PageToolbar } from './page-system.js';
 
 const icon = (name) => {
   const paths = {home:'<path d="M3 11 12 3l9 8v9a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',book:'<path d="M4 5a3 3 0 0 1 3-3h13v17H7a3 3 0 0 0-3 3z"/><path d="M4 5v17"/>',grid:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',pen:'<path d="m4 20 4-1 11-11-3-3L5 16z"/><path d="m14 6 3 3"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',star:'<path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',spark:'<path d="m12 3 1.4 4.1L17 9l-3.6 1.9L12 15l-1.4-4.1L7 9l3.6-1.9z"/><path d="m19 14 .8 2.2L22 17l-2.2.8L19 20l-.8-2.2L16 17l2.2-.8z"/>',tag:'<path d="M20 13 13 20l-9-9V4h7z"/><circle cx="8.5" cy="8.5" r="1.5"/>',settings:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3A1.7 1.7 0 0 0 10 3V2.8h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1z"/>',upload:'<path d="M12 16V3m0 0L7 8m5-5 5 5"/><path d="M5 13v7h14v-7"/>'};
@@ -150,7 +151,7 @@ async function renderCategories(){
  const catalogBooks=await loadCatalogBooks();
  const categoryCounts=new Map();catalogBooks.forEach(book=>{const name=book.category?.name||'其他';categoryCounts.set(name,(categoryCounts.get(name)||0)+1)});
  const categoryTabs=[['全部',catalogBooks.length],...[...categoryCounts.entries()].sort((a,b)=>a[0].localeCompare(b[0],'zh-CN'))];
- app.innerHTML=`<section class="category-page"><header class="category-hero">${topActions(false)}<h1>书籍分类</h1><p>探索不同领域的知识与故事</p><label class="category-search">${icon('search')}<input id="categorySearch" placeholder="搜索书名、作者、分类或标签..."></label><div class="category-tabs">${categoryTabs.map(x=>`<button class="category-tab" data-category-name="${x[0]}"><strong>${x[0]}</strong><small>${x[1]}</small></button>`).join('')}</div></header><section class="category-library"><div class="category-heading"><div><h2 id="categoryTitle">全部 <span>${catalogBooks.length} 本书</span></h2><p id="categoryContext">点击书籍标签，可查看同标签的全部资源。</p></div><div class="category-controls"><select class="category-sort" id="categorySort" aria-label="排序"><option value="updated">最近更新</option><option value="title">书名</option><option value="author">作者</option></select><button class="category-view active" data-view="grid">▦</button><button class="category-view" data-view="list">☷</button></div></div><div class="category-books" id="categoryBooks"></div></section></section>`;
+ app.innerHTML=`<section class="category-page paper-workspace">${PageHero({eyebrow:'LIBRARY CATALOG',title:'书籍分类',description:'沿着知识的索引，探索不同领域的书籍与故事。',className:'category-hero',tabs:`<div class="category-tabs">${categoryTabs.map(x=>`<button class="category-tab" data-category-name="${x[0]}"><strong>${x[0]}</strong><small>${x[1]}</small></button>`).join('')}</div>`})}<section class="category-library paper-surface">${PageToolbar({className:'category-toolbar',search:`<label class="category-search">${icon('search')}<input id="categorySearch" placeholder="搜索书名、作者、分类或标签..."></label>`,controls:`<select class="category-sort" id="categorySort" aria-label="排序"><option value="updated">最近更新</option><option value="title">书名</option><option value="author">作者</option></select><button class="category-view active" data-view="grid">▦</button><button class="category-view" data-view="list">☷</button>`})}<div class="category-heading"><div><h2 id="categoryTitle">全部 <span>${catalogBooks.length} 本书</span></h2><p id="categoryContext">点击书籍标签，可查看同标签的全部资源。</p></div></div><div class="category-books" id="categoryBooks"></div></section></section>`;
  const list=document.querySelector('#categoryBooks');
  const params=new URLSearchParams(location.hash.split('?')[1]||'');
  let activeCategory=params.get('category')||'全部',activeTag=params.get('tag')||'',query='',sort='updated';

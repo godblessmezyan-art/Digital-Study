@@ -1,3 +1,5 @@
+import { PageHero } from './page-system.js';
+
 import {
   cancelGeneration,
   activateAiModel,
@@ -65,7 +67,7 @@ function parseHtml(html,{apply=true}={}){
   return found;
 }
 
-function WorkshopHeader(){return `<header class="workshop-header"><div><span class="workshop-kicker">CONTENT CREATION DESK</span><h1>AI 工坊</h1><p>创建、生成并导入你的书籍内容</p></div><blockquote>所有伟大的故事，<br>都从一个念头开始。</blockquote></header>`}
+function WorkshopHeader(){return PageHero({eyebrow:'CONTENT CREATION DESK',title:'AI 工坊',description:'在云天幻境的内容创作桌上，创建、生成并导入你的书籍内容。',className:'workshop-header',action:'<blockquote>所有伟大的故事，<br>都从一个念头开始。</blockquote>'})}
 function relativeTaskTime(value){if(!value)return '暂无';const seconds=Math.max(1,Math.floor((Date.now()-new Date(value).getTime())/1000));if(seconds<60)return '刚刚';if(seconds<3600)return `${Math.floor(seconds/60)} 分钟前`;if(seconds<86400)return `${Math.floor(seconds/3600)} 小时前`;return `${Math.floor(seconds/86400)} 天前`}
 function WorkshopStats(){const active=state.history.filter(item=>activeGenerationStatuses.has(item.status)).length;const completed=state.history.filter(item=>item.status==='completed').length;const latest=state.history[0],latestAt=latest?.updatedAt||latest?.createdAt||'';return `<section class="workshop-statusbar" id="workshopStats" aria-label="工作台概览"><button type="button" data-stat-view="templates">模板 <b>${state.templates.length||'—'}</b></button><i>·</i><button type="button" data-stat-view="active">进行中 <b>${active}</b></button><i>·</i><button type="button" data-stat-view="completed">已完成 <b>${completed}</b></button><i>·</i><button type="button" data-stat-view="latest" data-latest-at="${esc(latestAt)}" ${latest?'':'disabled'}>最近任务 <span data-relative-task>${relativeTaskTime(latestAt)}</span></button></section>`}
 function CreationModeTabs(){const tabs=[['ai','✦','AI 生成'],['manual','▤','手动创建'],['import','⇧','导入 HTML'],['history','▧','任务记录']];return `<nav class="creation-tabs" aria-label="AI 工坊功能">${tabs.map(([id,ic,label])=>`<button data-creation-mode="${id}" class="${state.mode===id?'active':''}"><i>${ic}</i><span>${label}</span></button>`).join('')}</nav>`}
