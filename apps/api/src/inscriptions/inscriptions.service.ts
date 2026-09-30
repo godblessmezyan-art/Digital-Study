@@ -52,6 +52,7 @@ export class InscriptionsService implements OnApplicationBootstrap {
   // ===== query =====
 
   async list(filters: InscriptionFilters) {
+    await this.ensureDefaults().catch(() => undefined);
     const where: Prisma.InscriptionWhereInput = {};
     if (filters.type) where.type = filters.type === 'TEMPLATE' ? 'TEMPLATE' : 'PROMPT';
     if (filters.categoryId) where.categoryId = Number(filters.categoryId);
@@ -140,7 +141,10 @@ export class InscriptionsService implements OnApplicationBootstrap {
       await tx.inscriptionVersion.create({
         data: { inscriptionId: inscription.id, version: 1, content: inscription.content, systemPrompt: inscription.systemPrompt, changeNote: input.changeNote?.trim() || '初始版本' },
       });
-      return this.get(inscription.id);
+      return tx.inscription.findUnique({
+        where: { id: inscription.id },
+        include: { category: true, bindings: true, variables: true, versions: { orderBy: { version: 'desc' }, take: 20 } },
+      });
     });
   }
 
@@ -181,7 +185,10 @@ export class InscriptionsService implements OnApplicationBootstrap {
           defaultValue: variable.defaultValue ?? null, required: variable.required ?? false, placeholder: variable.placeholder ?? null,
         })),
       });
-      return this.get(id);
+      return tx.inscription.findUnique({
+        where: { id },
+        include: { category: true, bindings: true, variables: true, versions: { orderBy: { version: 'desc' }, take: 20 } },
+      });
     });
   }
 
