@@ -86,6 +86,25 @@ export class AiProviderService {
     runtime: AiRuntimeConfig,
   ): Promise<GeneratedBook> {
     const modules = template.modules.filter((item) => input.modules.includes(item.key));
+    if (input.length === 'long' && modules.length > 2) {
+      const parts: GeneratedBook[] = [];
+      for (let index = 0; index < modules.length; index += 2) {
+        const batch = modules.slice(index, index + 2);
+        parts.push(await this.callCompatibleApi(
+          { ...input, modules: batch.map((item) => item.key) },
+          template,
+          runtime,
+        ));
+      }
+      const first = parts[0];
+      return this.validateBook({
+        title: first.title || input.title,
+        summary: first.summary,
+        tags: [...new Set(parts.flatMap((part) => part.tags))],
+        design: first.design,
+        sections: parts.flatMap((part) => part.sections),
+      }, input, template);
+    }
     const sectionHint = modules.map((item) => ({ key: item.key, title: item.title }));
     const blockExamples = [
       { type: 'lead', content: '本章导语' },
