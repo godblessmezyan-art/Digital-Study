@@ -1,5 +1,5 @@
-export type SemanticType = 'book' | 'note' | 'excerpt';
-export type SemanticScope = 'all' | 'books' | 'notes' | 'excerpts';
+export type SemanticType = 'book' | 'note' | 'excerpt' | 'journal' | 'plan';
+export type SemanticScope = 'all' | 'books' | 'notes' | 'excerpts' | 'journals' | 'plans';
 
 export type VectorDocument = {
   key: string;

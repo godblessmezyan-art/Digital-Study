@@ -8,7 +8,7 @@ export class CuratorQueryRequest {
   query!: string;
 
   @IsOptional()
-  @IsIn(['all', 'books', 'notes', 'excerpts'])
+  @IsIn(['all', 'books', 'notes', 'excerpts', 'journals', 'plans'])
   scope?: SemanticScope;
 
   @IsOptional()

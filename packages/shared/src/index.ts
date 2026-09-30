@@ -291,3 +291,34 @@ export interface AiPlanBreakdownDto {
   milestones: AiPlanMilestoneDraft[];
   warnings: string[];
 }
+
+// ===== Curator (AI 馆长) =====
+
+export type CuratorSourceType = 'book' | 'note' | 'excerpt' | 'journal' | 'plan';
+export type CuratorScope = 'all' | 'books' | 'notes' | 'excerpts' | 'journals' | 'plans';
+
+export interface CuratorDiscoveryDto {
+  id: string;
+  icon: string;
+  text: string;
+  href: string | null;
+}
+
+export interface CuratorRecentItemDto {
+  type: CuratorSourceType;
+  title: string;
+  time: string;
+  href: string;
+}
+
+export interface CuratorInsightsDto {
+  collections: { books: number; notes: number; excerpts: number; journals: number; plans: number };
+  recent: CuratorRecentItemDto[];
+  discoveries: CuratorDiscoveryDto[];
+}
+
+export interface CuratorIndexStatusDto {
+  total: number;
+  byType: Record<string, number>;
+  lastIndexedAt: string | null;
+}

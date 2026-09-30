@@ -25,7 +25,7 @@ export class CuratorService {
     }
     const context = results.slice(0, 8).map((item, index) => ({
       sourceId: `S${index + 1}`,
-      category: item.type === 'book' ? '书籍内容' : item.type === 'note' ? '你的笔记' : '你的书摘',
+      category: item.type === 'book' ? '书籍内容' : item.type === 'note' ? '你的笔记' : item.type === 'excerpt' ? '你的书摘' : item.type === 'journal' ? '你的日记' : '你的计划',
       title: item.title,
       source: item.source,
       content: item.content.slice(0, 1800),
@@ -41,7 +41,7 @@ export class CuratorService {
   private prompt(context: Array<Record<string, unknown>>) {
     return [
       '你是“AI 馆长”，负责帮助用户检索和理解自己的数字书房。只能基于下方检索资料陈述个人书房中存在的内容。',
-      '回答必须按存在的资料类型区分【书籍内容】【你的笔记】【你的书摘】，最后可给出【AI 综合分析】。不存在的类型不要硬写。',
+      '回答必须按存在的资料类型区分【书籍内容】【你的笔记】【你的书摘】【你的日记】【你的计划】，最后可给出【AI 综合分析】。不存在的类型不要硬写。',
       '关键结论后引用真实来源编号，如 [S1]。只能使用提供的编号，不得发明来源、书名、章节、笔记或引文。',
       '模型自身补充的通用知识必须放在【AI 综合分析】并明确是补充，不得冒充用户资料。资料不足时直接说明。',
       `检索资料：\n${JSON.stringify(context)}`,
@@ -49,13 +49,17 @@ export class CuratorService {
   }
 
   private present(result: SemanticResult, index: number) {
-    const href = result.type === 'book'
-      ? `index.html#shelf?book=${encodeURIComponent(result.bookSlug || '')}&chapter=${encodeURIComponent(result.chapterId || '')}&text=${encodeURIComponent(result.content.slice(0, 120))}`
-      : result.type === 'note'
-        ? `index.html#reading?tab=notes&entry=${encodeURIComponent(result.sourceId)}`
-        : result.bookSlug
-          ? `index.html#shelf?book=${encodeURIComponent(result.bookSlug)}&entry=${encodeURIComponent(result.sourceId)}`
-          : `index.html#reading?tab=quotes&entry=${encodeURIComponent(result.sourceId)}`;
+    const href = result.type === 'journal'
+      ? `journal/${encodeURIComponent(result.sourceId)}`
+      : result.type === 'plan'
+        ? `plans/${encodeURIComponent(result.sourceId)}`
+        : result.type === 'book'
+          ? `index.html#shelf?book=${encodeURIComponent(result.bookSlug || '')}&chapter=${encodeURIComponent(result.chapterId || '')}&text=${encodeURIComponent(result.content.slice(0, 120))}`
+          : result.type === 'note'
+            ? `index.html#reading?tab=notes&entry=${encodeURIComponent(result.sourceId)}`
+            : result.bookSlug
+              ? `index.html#shelf?book=${encodeURIComponent(result.bookSlug)}&entry=${encodeURIComponent(result.sourceId)}`
+              : `index.html#reading?tab=quotes&entry=${encodeURIComponent(result.sourceId)}`;
     return {
       id: `S${index + 1}`,
       type: result.type,

@@ -7,6 +7,18 @@ const apiBase = globalThis.DIGITAL_STUDY_API_BASE || (isLocal ? `http://${locati
 
 export const streamCurator = (input, options) => streamNdjson('/curator/stream', input, options);
 
+async function request(path) {
+  if (!getStoredUser()) throw new Error('请先登录');
+  const response = await fetch(`${apiBase}${path}`, { cache: 'no-store', headers: authHeaders() });
+  const payload = await response.json().catch(() => null);
+  if (response.status === 401) window.dispatchEvent(new CustomEvent('study-auth-required'));
+  if (!response.ok) throw new Error(Array.isArray(payload?.message) ? payload.message.join('；') : payload?.message || `请求失败（${response.status}）`);
+  return payload;
+}
+
+export const getCuratorInsights = () => request('/curator/insights');
+export const getCuratorIndexStatus = () => request('/curator/index/status');
+
 export async function rebuildCuratorIndex() {
   if (!getStoredUser()) throw new Error('请先登录');
   const response = await fetch(`${apiBase}/curator/index/rebuild`, { method: 'POST', headers: authHeaders() });

@@ -1,7 +1,8 @@
-import { Body, Controller, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
 import type { Request, Response } from 'express';
 import { StudyAdminGuard, StudyAuthGuard } from '../auth/study-auth.guard';
 import { AiIndexService } from '../semantic/ai-index.service';
+import { CuratorInsightsService } from './curator-insights.service';
 import { CuratorService } from './curator.service';
 import { CuratorQueryRequest } from './dto/curator-query.dto';
 
@@ -9,7 +10,23 @@ type UserRequest = Request & { user: { username: string } };
 
 @Controller('curator')
 export class CuratorController {
-  constructor(private readonly curator: CuratorService, private readonly index: AiIndexService) {}
+  constructor(
+    private readonly curator: CuratorService,
+    private readonly index: AiIndexService,
+    private readonly insights: CuratorInsightsService,
+  ) {}
+
+  @Get('insights')
+  @UseGuards(StudyAuthGuard)
+  getInsights(@Req() request: UserRequest) {
+    return this.insights.insights(request.user.username);
+  }
+
+  @Get('index/status')
+  @UseGuards(StudyAuthGuard)
+  indexStatus() {
+    return this.insights.indexStatus();
+  }
 
   @Post('search')
   @UseGuards(StudyAuthGuard)

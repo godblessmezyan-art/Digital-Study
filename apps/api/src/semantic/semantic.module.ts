@@ -8,6 +8,8 @@ import { EmbeddingService } from './embedding.service';
 import { MysqlVectorStoreService } from './mysql-vector-store.service';
 import { BookContextRetriever } from './retrievers/book-context.retriever';
 import { ExcerptContextRetriever } from './retrievers/excerpt-context.retriever';
+import { JournalContextRetriever } from './retrievers/journal-context.retriever';
+import { PlanContextRetriever } from './retrievers/plan-context.retriever';
 import { NoteContextRetriever } from './retrievers/note-context.retriever';
 import { VectorStore } from './vector-store';
 
@@ -22,6 +24,8 @@ import { VectorStore } from './vector-store';
     BookContextRetriever,
     NoteContextRetriever,
     ExcerptContextRetriever,
+    JournalContextRetriever,
+    PlanContextRetriever,
     AIContextRetriever,
   ],
   exports: [AiIndexService, AIContextRetriever, EmbeddingService, VectorStore],

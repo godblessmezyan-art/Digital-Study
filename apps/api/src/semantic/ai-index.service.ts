@@ -54,8 +54,53 @@ export class AiIndexService {
     await this.store.deleteBySource(type === 'note' ? 'note' : 'excerpt', id, ownerId);
   }
 
+  async indexJournalEntry(id: string) {
+    const entry = await this.prisma.journalEntry.findUnique({ where: { id } });
+    if (!entry) return;
+    const content = [entry.title, entry.content].filter(Boolean).join('\n\n').slice(0, 8000);
+    const { model, vectors } = await this.embeddings.embed([content]);
+    await this.store.deleteBySource('journal', entry.id, entry.ownerId);
+    await this.store.upsert([{
+      key: `${entry.ownerId}:journal:${entry.id}`,
+      ownerId: entry.ownerId, type: 'journal', sourceId: entry.id, bookId: null, bookSlug: null,
+      chapterId: null, chunkIndex: 0, title: entry.title,
+      source: `旅者手记 · ${entry.entryDate.toISOString().slice(0, 10)}`,
+      content, embedding: vectors[0], embeddingModel: model,
+      sourceCreatedAt: entry.createdAt,
+    }]);
+  }
+
+  async removeJournalEntry(id: string, ownerId: string) {
+    await this.store.deleteBySource('journal', id, ownerId);
+  }
+
+  async indexPlan(id: string) {
+    const plan = await this.prisma.plan.findUnique({
+      where: { id },
+      include: { tasks: { select: { title: true, status: true }, orderBy: { order: 'asc' } } },
+    });
+    if (!plan) return;
+    const statusLabels: Record<string, string> = { DRAFT: '草稿', ACTIVE: '进行中', COMPLETED: '已完成', ARCHIVED: '已归档' };
+    const taskLines = plan.tasks.map((task) => `- ${task.title}（${statusLabels[task.status] || task.status}）`).join('\n');
+    const content = [plan.title, plan.description, taskLines ? `任务清单：\n${taskLines}` : ''].filter(Boolean).join('\n\n').slice(0, 8000);
+    const { model, vectors } = await this.embeddings.embed([content]);
+    await this.store.deleteBySource('plan', plan.id, plan.ownerId);
+    await this.store.upsert([{
+      key: `${plan.ownerId}:plan:${plan.id}`,
+      ownerId: plan.ownerId, type: 'plan', sourceId: plan.id, bookId: null, bookSlug: null,
+      chapterId: null, chunkIndex: 0, title: plan.title,
+      source: `计划 · ${statusLabels[plan.status] || plan.status}`,
+      content, embedding: vectors[0], embeddingModel: model,
+      sourceCreatedAt: plan.createdAt,
+    }]);
+  }
+
+  async removePlan(id: string, ownerId: string) {
+    await this.store.deleteBySource('plan', id, ownerId);
+  }
+
   async rebuildAll() {
-    await Promise.all([this.store.deleteByType('book'), this.store.deleteByType('note'), this.store.deleteByType('excerpt')]);
+    await Promise.all([this.store.deleteByType('book'), this.store.deleteByType('note'), this.store.deleteByType('excerpt'), this.store.deleteByType('journal'), this.store.deleteByType('plan')]);
     const books = await this.prisma.book.findMany({ where: { status: BookStatus.PUBLISHED, deletedAt: null }, select: { slug: true } });
     let booksIndexed = 0, recordsIndexed = 0, failed = 0;
     for (const book of books) {
@@ -64,6 +109,14 @@ export class AiIndexService {
     const records = await this.prisma.readingEntry.findMany({ select: { id: true } });
     for (const record of records) {
       try { await this.indexReadingEntry(record.id); recordsIndexed += 1; } catch { failed += 1; }
+    }
+    const journals = await this.prisma.journalEntry.findMany({ select: { id: true } });
+    for (const journal of journals) {
+      try { await this.indexJournalEntry(journal.id); recordsIndexed += 1; } catch { failed += 1; }
+    }
+    const plans = await this.prisma.plan.findMany({ select: { id: true } });
+    for (const plan of plans) {
+      try { await this.indexPlan(plan.id); recordsIndexed += 1; } catch { failed += 1; }
     }
     return { booksIndexed, recordsIndexed, failed };
   }

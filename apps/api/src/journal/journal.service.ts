@@ -2,6 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import type { JournalEntry, Prisma } from '@prisma/client';
 import type { JournalEntryDto } from '@digital-study/shared';
 import { PrismaService } from '../prisma/prisma.service';
+import { AiIndexService } from '../semantic/ai-index.service';
 import type { SaveJournalEntryRequest } from './dto/save-journal-entry.dto';
 
 export interface JournalQuery {
@@ -14,7 +15,7 @@ export interface JournalQuery {
 
 @Injectable()
 export class JournalService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService, private readonly index: AiIndexService) {}
 
   async list(ownerId: string, query: JournalQuery): Promise<JournalEntryDto[]> {
     const where: Prisma.JournalEntryWhereInput = { ownerId };
@@ -44,17 +45,22 @@ export class JournalService {
 
   async create(ownerId: string, input: SaveJournalEntryRequest): Promise<JournalEntryDto> {
     const data = this.data(input);
-    return this.toDto(await this.prisma.journalEntry.create({ data: { ownerId, ...data } }));
+    const entry = await this.prisma.journalEntry.create({ data: { ownerId, ...data } });
+    void this.index.indexJournalEntry(entry.id).catch(() => undefined);
+    return this.toDto(entry);
   }
 
   async update(ownerId: string, id: string, input: SaveJournalEntryRequest): Promise<JournalEntryDto> {
     await this.requireOwned(id, ownerId);
-    return this.toDto(await this.prisma.journalEntry.update({ where: { id }, data: this.data(input) }));
+    const entry = await this.prisma.journalEntry.update({ where: { id }, data: this.data(input) });
+    void this.index.indexJournalEntry(entry.id).catch(() => undefined);
+    return this.toDto(entry);
   }
 
   async remove(ownerId: string, id: string) {
     await this.requireOwned(id, ownerId);
     await this.prisma.journalEntry.delete({ where: { id } });
+    void this.index.removeJournalEntry(id, ownerId).catch(() => undefined);
     return { id, deleted: true };
   }
 

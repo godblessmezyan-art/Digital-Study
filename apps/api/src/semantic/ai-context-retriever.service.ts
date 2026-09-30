@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { EmbeddingService } from './embedding.service';
 import { BookContextRetriever } from './retrievers/book-context.retriever';
 import { ExcerptContextRetriever } from './retrievers/excerpt-context.retriever';
+import { JournalContextRetriever } from './retrievers/journal-context.retriever';
+import { PlanContextRetriever } from './retrievers/plan-context.retriever';
 import { NoteContextRetriever } from './retrievers/note-context.retriever';
 import type { SemanticResult, SemanticScope } from './semantic.types';
 
@@ -12,6 +14,8 @@ export class AIContextRetriever {
     private readonly books: BookContextRetriever,
     private readonly notes: NoteContextRetriever,
     private readonly excerpts: ExcerptContextRetriever,
+    private readonly journals: JournalContextRetriever,
+    private readonly plans: PlanContextRetriever,
   ) {}
 
   async retrieve(ownerId: string, query: string, scope: SemanticScope = 'all'): Promise<SemanticResult[]> {
@@ -20,6 +24,8 @@ export class AIContextRetriever {
     if (scope === 'all' || scope === 'books') jobs.push(this.books.retrieve(ownerId, vectors[0]));
     if (scope === 'all' || scope === 'notes') jobs.push(this.notes.retrieve(ownerId, vectors[0]));
     if (scope === 'all' || scope === 'excerpts') jobs.push(this.excerpts.retrieve(ownerId, vectors[0]));
+    if (scope === 'all' || scope === 'journals') jobs.push(this.journals.retrieve(ownerId, vectors[0]));
+    if (scope === 'all' || scope === 'plans') jobs.push(this.plans.retrieve(ownerId, vectors[0]));
     const candidates = (await Promise.all(jobs)).flat();
     const threshold = Number(process.env.AI_SEARCH_MIN_SCORE || 0.32);
     return candidates

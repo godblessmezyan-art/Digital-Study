@@ -2,6 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import type { Plan, PlanTask, Prisma } from '@prisma/client';
 import type { PlanDetailDto, PlanSummaryDto, PlanTaskDto } from '@digital-study/shared';
 import { PrismaService } from '../prisma/prisma.service';
+import { AiIndexService } from '../semantic/ai-index.service';
 import type { AiApplyBreakdownRequest } from './dto/ai-plan.dto';
 import type { ReorderPlanTasksRequest } from './dto/reorder-plan-tasks.dto';
 import type { SavePlanRequest } from './dto/save-plan.dto';
@@ -14,7 +15,7 @@ const MAX_TASK_DEPTH = 2;
 
 @Injectable()
 export class PlansService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService, private readonly index: AiIndexService) {}
 
   // ===== Plans =====
 
@@ -31,6 +32,7 @@ export class PlansService {
 
   async create(ownerId: string, input: SavePlanRequest): Promise<PlanSummaryDto> {
     const plan = await this.prisma.plan.create({ data: { ownerId, ...this.planData(input) } });
+    this.touchPlan(plan.id);
     return this.toSummary(plan, []);
   }
 
@@ -45,12 +47,14 @@ export class PlansService {
     await this.requirePlan(ownerId, id);
     const plan = await this.prisma.plan.update({ where: { id }, data: this.planData(input) });
     const tasks = await this.prisma.planTask.findMany({ where: { planId: id } });
+    this.touchPlan(plan.id);
     return this.toSummary(plan, tasks);
   }
 
   async remove(ownerId: string, id: string) {
     await this.requirePlan(ownerId, id);
     await this.prisma.plan.delete({ where: { id } });
+    void this.index.removePlan(id, ownerId).catch(() => undefined);
     return { id, deleted: true };
   }
 
@@ -91,6 +95,7 @@ export class PlansService {
       },
     });
     await this.refreshPlanProgress(planId);
+    this.touchPlan(planId);
     return this.toTaskDto(task, depth);
   }
 
@@ -120,6 +125,7 @@ export class PlansService {
     const updated = await this.prisma.planTask.update({ where: { id: taskId }, data });
     if (previousStatus !== updated.status) await this.cascadeParentStatus(planId, parentId, updated.status);
     await this.refreshPlanProgress(planId);
+    this.touchPlan(planId);
     const depth = await this.depthOf(planId, updated.parentId);
     return this.toTaskDto(updated, depth);
   }
@@ -128,6 +134,7 @@ export class PlansService {
     await this.requireTask(ownerId, planId, taskId);
     await this.prisma.planTask.delete({ where: { id: taskId } });
     await this.refreshPlanProgress(planId);
+    this.touchPlan(planId);
     return { id: taskId, deleted: true };
   }
 
@@ -145,6 +152,7 @@ export class PlansService {
       data: { order: item.order, ...(item.parentId !== undefined ? { parentId: item.parentId || null } : {}) },
     })));
     await this.refreshPlanProgress(planId);
+    this.touchPlan(planId);
     return { updated: items.length };
   }
 
@@ -202,11 +210,17 @@ export class PlansService {
       }
     }
     await this.refreshPlanProgress(planId);
+    this.touchPlan(planId);
     const detail = await this.findOne(ownerId, planId);
     return { ...detail, appliedTaskIds: created };
   }
 
   // ===== internals =====
+
+  /** Fire-and-forget reindex so the curator always sees the latest plan text. */
+  private touchPlan(planId: string): void {
+    void this.index.indexPlan(planId).catch(() => undefined);
+  }
 
   private planData(input: SavePlanRequest) {
     const title = input.title.trim();
