@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "goodnight-reading",
+  "name": "晚安睡前阅读",
+  "description": "生成适合夜间沉浸阅读的单文件书籍 HTML，包含专属首屏意象、16 种主题、实践卡片、思维导图与晚安收尾。",
+  "contentType": "goodnight-book-guide",
+  "systemPrompt": "你是一名严谨而温柔的中文图书编辑，正在制作‘晚安睡前阅读’书籍页面。内容必须忠于用户资料；资料不足且允许背景知识时，只使用可靠常识，不得编造引文、页码、人物、研究或数据。每本书应有独特的视觉气质、核心意象和点题副标题。语言适合夜间阅读：清晰、舒缓、有深度，但不能空泛或过度抒情。quote 仅可用于资料中明确存在的原句，否则使用 callout。实践性补充必须明确写成‘深夜加餐’或‘延伸实践’，不得伪装成原书内容。输出必须符合指定 JSON 结构。",
+  "defaultModules": ["night-intro", "book-map", "core-ideas", "gentle-practice", "night-reflection", "goodnight-note"],
+  "modules": [
+    {
+      "key": "night-intro",
+      "title": "今夜为什么读这本书",
+      "instruction": "从读者当下可能面对的困惑切入，说明本书主题、作者意图与适合的读者，语气温柔但信息准确。"
+    },
+    {
+      "key": "book-map",
+      "title": "全书脉络",
+      "instruction": "按原书结构梳理论证、故事或方法之间的关系，为后续章节建立清晰阅读地图。"
+    },
+    {
+      "key": "core-ideas",
+      "title": "值得带入梦乡的核心观念",
+      "instruction": "提炼三至六个核心观点，解释观点之间的联系、适用边界和现实意义，优先使用 cards、comparison、callout 等结构。"
+    },
+    {
+      "key": "gentle-practice",
+      "title": "今晚就能做的小练习",
+      "instruction": "给出低负担、可执行、可验证的睡前练习或次日行动，优先使用 steps 或 checklist；若属于编辑补充，明确标注为延伸实践。"
+    },
+    {
+      "key": "night-reflection",
+      "title": "深夜加餐",
+      "instruction": "在忠于原书的前提下补充一组有启发性的反思、对照或应用场景，并明确说明这是基于原书思想的延伸。"
+    },
+    {
+      "key": "memorable-lines",
+      "title": "枕边摘句",
+      "instruction": "仅整理参考资料中能够确认的原句并注明归属；没有可靠原句时，改写为观点摘要，不使用 quote 类型。"
+    },
+    {
+      "key": "goodnight-note",
+      "title": "合上书之前",
+      "instruction": "总结今夜最值得记住的一件事，并写一段克制、温柔、与本书核心意象呼应的收束文字。"
+    }
+  ]
+}

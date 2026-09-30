@@ -6,10 +6,17 @@ import type {
   GeneratedSection,
   GenerationInput,
 } from './ai.types';
+import { GoodnightHtmlRenderer } from './goodnight-html-renderer';
 
 @Injectable()
 export class HtmlRendererService {
+  private readonly goodnightRenderer = new GoodnightHtmlRenderer();
+
   render(book: GeneratedBook, input: GenerationInput): string {
+    if (input.templateId === 'goodnight-reading') {
+      return this.goodnightRenderer.render(book, input);
+    }
+
     const title = this.escape(book.title || input.title);
     const author = this.escape(input.author ?? '');
     const category = this.escape(input.categoryName ?? input.categorySlug ?? '未分类');

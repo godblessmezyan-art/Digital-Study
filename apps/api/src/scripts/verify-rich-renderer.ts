@@ -47,4 +47,22 @@ assert.match(html, /@media\(max-width:760px\)/);
 assert.doesNotMatch(html, /<script>alert\(1\)<\/script>/);
 assert.match(html, /&lt;script&gt;alert\(1\)&lt;\/script&gt;/);
 if (process.env.RENDERER_OUTPUT) writeFileSync(process.env.RENDERER_OUTPUT, html, 'utf8');
+
+const goodnightHtml = renderer.render(book, {
+  ...input,
+  templateId: 'goodnight-reading',
+  modules: ['night-intro', 'core-ideas', 'gentle-practice', 'goodnight-note'],
+});
+assert.match(goodnightHtml, /class="theme-select"/);
+assert.equal((goodnightHtml.match(/<option value="theme-/g) ?? []).length, 16);
+assert.match(goodnightHtml, /value="theme-deepsea"/);
+assert.match(goodnightHtml, /class="chapter-static mindmap-section"/);
+assert.match(goodnightHtml, /\.markmap-foreign/);
+assert.match(goodnightHtml, /cdn\.jsdelivr\.net\/npm\/markmap-autoloader/);
+assert.match(goodnightHtml, /class="goodnight"/);
+assert.match(goodnightHtml, /晚安/);
+assert.match(goodnightHtml, /@media\(max-width:760px\)/);
+assert.doesNotMatch(goodnightHtml, /<script>alert\(1\)<\/script>/);
+assert.match(goodnightHtml, /&lt;script&gt;alert\(1\)&lt;\/script&gt;/);
+if (process.env.GOODNIGHT_RENDERER_OUTPUT) writeFileSync(process.env.GOODNIGHT_RENDERER_OUTPUT, goodnightHtml, 'utf8');
 console.log('Rich HTML renderer verification passed.');
