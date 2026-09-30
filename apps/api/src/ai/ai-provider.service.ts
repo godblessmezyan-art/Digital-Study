@@ -135,7 +135,10 @@ export class AiProviderService {
       `视觉主题只能选择 cosmic、literary、forest、ocean、amber、rose、slate；视觉意象只能选择 constellation、orbit、path、waves、mountain、library。`,
       `章节顺序与标识必须严格使用：${JSON.stringify(sectionHint)}。内容块示例：${JSON.stringify(blockExamples)}。`,
       `仅返回 JSON：${JSON.stringify({ title: input.title, summary: '准确而有吸引力的简介', tags: ['标签'], design: { theme: 'literary', motif: 'library', eyebrow: '阅读专题', subtitle: '凝练而独特的副标题', heroQuote: '一句原创的主题提炼，不冒充原书引文' }, sections: sectionHint.map((section) => ({ ...section, content: '本章纯文本摘要，用于列表预览', blocks: [{ type: 'lead', content: '本章导语' }, { type: 'paragraph', content: '正文' }] })) })}`,
-    ].join('\n\n');
+      input.inscriptionPrompt?.trim()
+        ? `铭文指示（用户在铭文库选定，作为本次生成的额外约束）：\n${input.inscriptionPrompt.trim()}`
+        : '',
+    ].filter(Boolean).join('\n\n');
     const response = await this.modelConfigs.sendChat(runtime, {
       model: runtime.model,
       temperature: 0.3,

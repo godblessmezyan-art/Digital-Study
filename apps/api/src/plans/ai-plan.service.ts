@@ -1,6 +1,8 @@
 import { BadGatewayException, BadRequestException, Injectable } from '@nestjs/common';
 import type { AiPlanBreakdownDto, AiPlanMilestoneDraft, AiPlanTaskDraft } from '@digital-study/shared';
 import { AiModelConfigsService, type AiRuntimeConfig } from '../ai/ai-model-configs.service';
+import { InscriptionsService } from '../inscriptions/inscriptions.service';
+import { BUILTIN_PLAN_PROMPT } from '../inscriptions/builtin-prompts';
 import { PrismaService } from '../prisma/prisma.service';
 import type { AiPlanBreakdownRequest, AiTaskBreakdownRequest } from './dto/ai-plan.dto';
 
@@ -41,6 +43,7 @@ export class AiPlanService {
   constructor(
     private readonly modelConfigs: AiModelConfigsService,
     private readonly prisma: PrismaService,
+    private readonly inscriptions: InscriptionsService,
   ) {}
 
   /** Break a whole goal/plan into milestones + actionable tasks (preview only, no DB writes). */
@@ -67,6 +70,12 @@ export class AiPlanService {
     if (runtime.provider === 'mock') return this.mockBreakdown(task.title, task.dueDate ? task.dueDate.toISOString().slice(0, 10) : undefined);
     const userPrompt = this.buildTaskPrompt(plan.title, plan.description, plan.dueDate, task.title, task.description, siblings, input.instruction);
     return this.requestBreakdown(runtime, userPrompt);
+  }
+
+  /** The archive copy wins; the builtin constant is only a fallback. */
+  private async systemPrompt(): Promise<string> {
+    const inscription = await this.inscriptions.resolveForContext('plan.breakdown.prompt').catch(() => null);
+    return inscription?.content?.trim() || BUILTIN_PLAN_PROMPT;
   }
 
   // ===== prompt building =====
@@ -122,7 +131,7 @@ export class AiPlanService {
       max_tokens: 8000,
       response_format: { type: 'json_object' },
       messages: [
-        { role: 'system', content: SYSTEM_PROMPT },
+        { role: 'system', content: await this.systemPrompt() },
         { role: 'user', content: userPrompt },
       ],
     });

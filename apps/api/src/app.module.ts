@@ -15,6 +15,7 @@ import { ReadingAiModule } from './reading-ai/reading-ai.module';
 import { CuratorModule } from './curator/curator.module';
 import { PlansModule } from './plans/plans.module';
 import { ProfilesModule } from './profiles/profiles.module';
+import { InscriptionsModule } from './inscriptions/inscriptions.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { ProfilesModule } from './profiles/profiles.module';
     CuratorModule,
     PlansModule,
     ProfilesModule,
+    InscriptionsModule,
   ],
 })
 export class AppModule {}

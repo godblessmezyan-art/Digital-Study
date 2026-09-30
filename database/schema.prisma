@@ -47,6 +47,11 @@ enum ReadingEntryType {
   QUOTE
 }
 
+enum InscriptionType {
+  PROMPT
+  TEMPLATE
+}
+
 enum PlanStatus {
   DRAFT
   ACTIVE
@@ -191,6 +196,85 @@ model JournalEntry {
   @@index([ownerId, entryDate])
   @@index([ownerId, updatedAt])
   @@map("journal_entries")
+}
+
+model InscriptionCategory {
+  id           Int           @id @default(autoincrement())
+  slug         String        @unique @db.VarChar(100)
+  name         String        @db.VarChar(120)
+  description  String?       @db.Text
+  sortOrder    Int           @default(0)
+  inscriptions Inscription[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@map("inscription_categories")
+}
+
+model Inscription {
+  id             String                @id @default(uuid()) @db.VarChar(36)
+  type           InscriptionType
+  templateKind   String?               @db.VarChar(40)
+  legacyKey      String?               @unique @db.VarChar(120)
+  name           String                @db.VarChar(160)
+  description    String?               @db.Text
+  content        String                @db.Text
+  systemPrompt   String?               @db.Text
+  categoryId     Int?
+  category       InscriptionCategory?  @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  tags           Json
+  modelId        String?               @db.VarChar(160)
+  modelParams    Json?
+  currentVersion Int                   @default(1)
+  enabled        Boolean               @default(true)
+  bindings       InscriptionBinding[]
+  variables      InscriptionVariable[]
+  versions       InscriptionVersion[]
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
+
+  @@index([type, enabled])
+  @@index([categoryId])
+  @@map("inscriptions")
+}
+
+model InscriptionBinding {
+  id            Int         @id @default(autoincrement())
+  inscriptionId String
+  inscription   Inscription @relation(fields: [inscriptionId], references: [id], onDelete: Cascade)
+  contextKey    String      @db.VarChar(160)
+
+  @@unique([inscriptionId, contextKey])
+  @@index([contextKey])
+  @@map("inscription_bindings")
+}
+
+model InscriptionVariable {
+  id            Int         @id @default(autoincrement())
+  inscriptionId String
+  inscription   Inscription @relation(fields: [inscriptionId], references: [id], onDelete: Cascade)
+  key           String      @db.VarChar(80)
+  label         String      @db.VarChar(120)
+  defaultValue  String?     @db.VarChar(500)
+  required      Boolean     @default(false)
+  placeholder   String?     @db.VarChar(200)
+
+  @@unique([inscriptionId, key])
+  @@map("inscription_variables")
+}
+
+model InscriptionVersion {
+  id            Int         @id @default(autoincrement())
+  inscriptionId String
+  inscription   Inscription @relation(fields: [inscriptionId], references: [id], onDelete: Cascade)
+  version       Int
+  content       String      @db.Text
+  systemPrompt  String?     @db.Text
+  changeNote    String?     @db.VarChar(500)
+  createdAt     DateTime    @default(now())
+
+  @@unique([inscriptionId, version])
+  @@map("inscription_versions")
 }
 
 model JournalTemplate {

@@ -1,13 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import type { Response } from 'express';
 import { AiStreamingService } from '../ai/ai-streaming.service';
+import { InscriptionsService } from '../inscriptions/inscriptions.service';
+import { BUILTIN_CURATOR_PROMPT } from '../inscriptions/builtin-prompts';
 import { AiContextService } from '../reading-ai/ai-context.service';
 import type { SemanticResult, SemanticScope } from '../semantic/semantic.types';
 import type { CuratorQueryRequest } from './dto/curator-query.dto';
 
 @Injectable()
 export class CuratorService {
-  constructor(private readonly contexts: AiContextService, private readonly streaming: AiStreamingService) {}
+  constructor(
+    private readonly contexts: AiContextService,
+    private readonly streaming: AiStreamingService,
+    private readonly inscriptions: InscriptionsService,
+  ) {}
 
   async search(ownerId: string, query: string, scope: SemanticScope = 'all') {
     const results = await this.contexts.buildCuratorContext(ownerId, query, scope);
@@ -35,17 +41,23 @@ export class CuratorService {
       return [{ role: item.role, content: item.content.trim().slice(0, 6000) } as { role: 'user' | 'assistant'; content: string }];
     });
     if (!history.length || history.at(-1)?.role !== 'user' || history.at(-1)?.content !== input.query) history.push({ role: 'user', content: input.query });
-    await this.streaming.stream(this.prompt(context), history, response, signal, '已找到相关资料。请结合来源卡片查看书籍内容、笔记与书摘之间的联系。');
+    await this.streaming.stream(await this.prompt(context), history, response, signal, '已找到相关资料。请结合来源卡片查看书籍内容、笔记与书摘之间的联系。');
   }
 
-  private prompt(context: Array<Record<string, unknown>>) {
+  private async prompt(context: Array<Record<string, unknown>>): Promise<string> {
     return [
+      await this.curatorRole(),
       '你是“AI 馆长”，负责帮助用户检索和理解自己的数字书房。只能基于下方检索资料陈述个人书房中存在的内容。',
       '回答必须按存在的资料类型区分【书籍内容】【你的笔记】【你的书摘】【你的日记】【你的计划】，最后可给出【AI 综合分析】。不存在的类型不要硬写。',
       '关键结论后引用真实来源编号，如 [S1]。只能使用提供的编号，不得发明来源、书名、章节、笔记或引文。',
       '模型自身补充的通用知识必须放在【AI 综合分析】并明确是补充，不得冒充用户资料。资料不足时直接说明。',
       `检索资料：\n${JSON.stringify(context)}`,
     ].join('\n\n');
+  }
+
+  private async curatorRole(): Promise<string> {
+    const inscription = await this.inscriptions.resolveForContext('curator.deep.prompt').catch(() => null);
+    return inscription?.content?.trim() || BUILTIN_CURATOR_PROMPT;
   }
 
   private present(result: SemanticResult, index: number) {

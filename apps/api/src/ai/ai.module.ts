@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ContentModule } from '../content/content.module';
+import { InscriptionsModule } from '../inscriptions/inscriptions.module';
 import { AuthModule } from '../auth/auth.module';
 import { AiController } from './ai.controller';
 import { AiModelConfigsService } from './ai-model-configs.service';
@@ -10,7 +11,7 @@ import { TemplatesService } from './templates.service';
 import { AiStreamingService } from './ai-streaming.service';
 
 @Module({
-  imports: [ContentModule, AuthModule],
+  imports: [ContentModule, AuthModule, InscriptionsModule],
   controllers: [AiController],
   providers: [
     AiModelConfigsService,

@@ -1,7 +1,9 @@
 import { BadRequestException, ConflictException, Injectable, NotFoundException, OnApplicationBootstrap } from '@nestjs/common';
 import { copyFile, mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { PrismaService } from '../prisma/prisma.service';
 import { getBundledTemplatesRoot, getTemplatesRoot } from '../config/paths';
+import { InscriptionsService } from '../inscriptions/inscriptions.service';
 import type { AiTemplate } from './ai.types';
 import type { CreateTemplateRequest, UpdateTemplateRequest } from './dto/update-template.dto';
 
@@ -12,6 +14,8 @@ export class TemplatesService implements OnApplicationBootstrap {
   private readonly templatesRoot = getTemplatesRoot();
   private readonly bundledTemplatesRoot = getBundledTemplatesRoot();
 
+  constructor(private readonly prisma: PrismaService, private readonly inscriptions: InscriptionsService) {}
+
   async onApplicationBootstrap(): Promise<void> {
     await mkdir(this.templatesRoot, { recursive: true });
     const bundled = (await readdir(this.bundledTemplatesRoot)).filter((file) => file.endsWith('.json'));
@@ -20,13 +24,42 @@ export class TemplatesService implements OnApplicationBootstrap {
   }
 
   async list(): Promise<AiTemplate[]> {
+    const archived = await this.listFromArchive();
+    const archivedIds = new Set(archived.map((template) => template.id));
     const files = (await readdir(this.templatesRoot))
       .filter((file) => file.endsWith('.json'))
       .sort();
-    return Promise.all(files.map((file) => this.readFile(file)));
+    const fromFiles = (await Promise.all(files.map((file) => this.readFile(file).catch(() => null))))
+      .filter((template): template is AiTemplate => Boolean(template) && !archivedIds.has(template!.id));
+    return [...archived, ...fromFiles];
+  }
+
+  /** The Inscription Archive is the source of truth; files remain as legacy fallback. */
+  private async listFromArchive(): Promise<AiTemplate[]> {
+    const rows = await this.inscriptions.listFullForContext('ai_workshop.generate.template');
+    const parsed: AiTemplate[] = [];
+    for (const row of rows) {
+      if (row.templateKind !== 'BOOK_TEMPLATE') continue;
+      try {
+        const value = JSON.parse(row.content) as Partial<AiTemplate>;
+        if (value.schemaVersion === 1 && value.id && value.name && value.systemPrompt && Array.isArray(value.modules) && Array.isArray(value.defaultModules)) {
+          parsed.push(value as AiTemplate);
+        }
+      } catch { /* corrupted archive row: fall back to file copy */ }
+    }
+    return parsed;
   }
 
   async get(id: string): Promise<AiTemplate> {
+    const archived = await this.prisma.inscription.findUnique({ where: { legacyKey: `template:${id}` } });
+    if (archived && archived.enabled) {
+      try {
+        const value = JSON.parse(archived.content) as Partial<AiTemplate>;
+        if (value.schemaVersion === 1 && value.id && value.name && value.systemPrompt && Array.isArray(value.modules) && Array.isArray(value.defaultModules)) {
+          return value as AiTemplate;
+        }
+      } catch { /* fall through to file */ }
+    }
     const templates = await this.list();
     const template = templates.find((item) => item.id === id);
     if (!template) throw new NotFoundException(`AI template not found: ${id}`);
@@ -37,8 +70,7 @@ export class TemplatesService implements OnApplicationBootstrap {
     if (!TEMPLATE_ID.test(id)) throw new NotFoundException(`AI template not found: ${id}`);
     const current = await this.get(id);
     const template = this.buildTemplate(id, input, current);
-    const file = join(this.templatesRoot, `${id}.json`);
-    await writeFile(file, `${JSON.stringify(template, null, 2)}\n`, 'utf8');
+    await this.upsertArchiveTemplate(id, template);
     return template;
   }
 
@@ -52,8 +84,38 @@ export class TemplatesService implements OnApplicationBootstrap {
       if (!(error instanceof NotFoundException)) throw error;
     }
     const template = this.buildTemplate(input.id, input);
-    await writeFile(join(this.templatesRoot, `${input.id}.json`), `${JSON.stringify(template, null, 2)}\n`, 'utf8');
+    await this.upsertArchiveTemplate(input.id, template);
     return template;
+  }
+
+  /** Writes the template into the Inscription Archive (versioned). */
+  private async upsertArchiveTemplate(id: string, template: AiTemplate): Promise<void> {
+    const legacyKey = `template:${id}`;
+    const content = `${JSON.stringify(template, null, 2)}\n`;
+    const existing = await this.prisma.inscription.findUnique({ where: { legacyKey } });
+    if (existing) {
+      const version = existing.currentVersion + 1;
+      await this.prisma.inscription.update({
+        where: { id: existing.id },
+        data: { name: template.name, description: template.description, content, systemPrompt: template.systemPrompt, currentVersion: version },
+      });
+      await this.prisma.inscriptionVersion.create({
+        data: { inscriptionId: existing.id, version, content, systemPrompt: template.systemPrompt, changeNote: '\u94ed\u6587\u53f0\u4fdd\u5b58' },
+      });
+      return;
+    }
+    const category = await this.prisma.inscriptionCategory.findUnique({ where: { slug: 'book-generation' } });
+    const inscription = await this.prisma.inscription.create({
+      data: {
+        type: 'TEMPLATE', templateKind: 'BOOK_TEMPLATE', legacyKey,
+        name: template.name, description: template.description, content, systemPrompt: template.systemPrompt,
+        categoryId: category?.id ?? null, tags: ['\u4e66\u7c4d\u751f\u6210'],
+        bindings: { create: [{ contextKey: 'ai_workshop.generate.template' }] },
+      },
+    });
+    await this.prisma.inscriptionVersion.create({
+      data: { inscriptionId: inscription.id, version: 1, content, systemPrompt: template.systemPrompt, changeNote: '\u81ea\u65e7\u6a21\u677f\u4f53\u7cfb\u8fc1\u79fb' },
+    });
   }
 
   private buildTemplate(id: string, input: UpdateTemplateRequest, current?: AiTemplate): AiTemplate {

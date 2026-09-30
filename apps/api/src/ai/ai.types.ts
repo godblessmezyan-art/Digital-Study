@@ -29,6 +29,8 @@ export interface GenerationInput {
   style?: string;
   length?: 'short' | 'medium' | 'long';
   allowBackgroundKnowledge?: boolean;
+  inscriptionPromptId?: string;
+  inscriptionPrompt?: string;
 }
 
 export interface GeneratedSection {

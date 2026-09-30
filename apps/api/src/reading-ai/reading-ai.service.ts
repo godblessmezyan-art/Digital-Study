@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import type { Response } from 'express';
 import { AiStreamingService } from '../ai/ai-streaming.service';
+import { InscriptionsService } from '../inscriptions/inscriptions.service';
+import { BUILTIN_READING_PROMPT } from '../inscriptions/builtin-prompts';
 import { AiContextService, type ReadingAiContext } from './ai-context.service';
 import type { ReadingAiRequest } from './dto/reading-ai-request.dto';
 
@@ -11,6 +13,7 @@ export class ReadingAiService {
   constructor(
     private readonly contexts: AiContextService,
     private readonly streaming: AiStreamingService,
+    private readonly inscriptions: InscriptionsService,
   ) {}
 
   async stream(ownerId: string, input: ReadingAiRequest, response: Response, signal: AbortSignal) {
@@ -18,7 +21,7 @@ export class ReadingAiService {
     const messages = this.messages(input.messages);
     this.send(response, { type: 'sources', sources: this.sources(context) });
     await this.streaming.stream(
-      this.systemPrompt(context),
+      await this.systemPrompt(context),
       messages,
       response,
       signal,
@@ -26,9 +29,9 @@ export class ReadingAiService {
     );
   }
 
-  private systemPrompt(context: ReadingAiContext): string {
+  private async systemPrompt(context: ReadingAiContext): Promise<string> {
     return [
-      '你是嵌入书籍阅读过程的阅读助手。回答要克制、准确、帮助理解，不替用户做最终判断。',
+      await this.readingRole(),
       '必须清楚区分三类来源：书中内容、用户自己的笔记/书摘、AI 分析。',
       '只有“选中文字”和“附近上下文”中的原句可以作为书中引用；不得编造书中原句、页码、作者观点或章节内容。',
       '若依据不足，明确说“当前上下文不足以确认”。回答以“AI 分析”作为主体，需要引用时标注“书中内容”，参考用户记录时标注“你的记录”。',
@@ -39,6 +42,11 @@ export class ReadingAiService {
       context.relatedNotes.length ? `你的相关笔记：\n${JSON.stringify(context.relatedNotes)}` : '你的相关笔记：无',
       context.relatedExcerpts.length ? `你的相关书摘：\n${JSON.stringify(context.relatedExcerpts)}` : '你的相关书摘：无',
     ].join('\n\n');
+  }
+
+  private async readingRole(): Promise<string> {
+    const inscription = await this.inscriptions.resolveForContext('reading.summary.prompt').catch(() => null);
+    return inscription?.content?.trim() || BUILTIN_READING_PROMPT;
   }
 
   private messages(value: unknown): ConversationMessage[] {

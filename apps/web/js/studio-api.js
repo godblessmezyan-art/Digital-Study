@@ -34,6 +34,7 @@ async function request(path, options = {}) {
 }
 
 export const getAiConfig = () => request('/ai/config');
+export const getAvailableInscriptions = context => request(`/inscriptions/available?context=${encodeURIComponent(context)}`);
 export const getAiTemplates = () => request('/ai/templates');
 export const getAiTemplate = (id) => request(`/ai/templates/${id}`);
 export const createAiTemplate = (input) => request('/ai/templates', { method: 'POST', body: JSON.stringify(input) });

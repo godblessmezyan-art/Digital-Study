@@ -9,6 +9,7 @@ import { clearAuth, getStoredUser, login, validateAuth } from './auth-client.js'
 import { withAppBase } from './runtime-paths.js';
 import { openUserMenu } from './user-menu.js?v=1';
 import { createProfilePage } from './profile-page.js?v=1';
+import { createInscriptionsPage } from './inscriptions-page.js?v=1';
 import { initWorld } from './world.js?v=1';
 import { initFootprints, recordFootprint, seedFootprints } from './footprints.js?v=1';
 import { createJournalPage } from './journal-page.js?v=3';
@@ -234,6 +235,12 @@ function renderReadingSpace(){
   createReadingSpacePage(app,params.get('tab')||'notes',{showToast,focusEntryId:params.get('entry')||''});
 }
 
+function renderInscriptions(){
+  setActive('inscriptions');document.title='铭文库 · 云天幻境';
+  document.body.classList.remove('category-mode','studio-v2-mode','studio-workshop-mode','library-management-mode');
+  return createInscriptionsPage(app,{showToast,openLogin:openAuthDialog});
+}
+
 function renderProfile(){
  setActive('');document.title='旅者档案 · 云天幻境';
  document.body.classList.remove('category-mode','studio-v2-mode','studio-workshop-mode','library-management-mode');
@@ -268,7 +275,7 @@ function renderChronicles(){
 }
 
 function bindGlobal(){document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{setAppScenic(false);if(b.dataset.page==='home')window.location.href='home.html';else if(b.dataset.page==='library'||b.dataset.page==='content')location.hash='#content';else if(b.dataset.page==='studio')location.hash='#studio';else if(b.dataset.page==='categories')location.hash='#categories';else showToast(`${b.textContent.trim()}功能即将开放`)});document.querySelectorAll('[data-toast]').forEach(b=>b.onclick=()=>showToast(b.dataset.toast))}
-const route=()=>{if(/\/plans(?:\/[^/?#]+)?\/?$/.test(location.pathname)){chronicles.setContext('plans');void chronicles.check('plans');return renderPlans()}if(/\/chronicles\/?$/.test(location.pathname)){chronicles.setContext('chronicles');void chronicles.check('chronicles');return renderChronicles()}if(/\/journal(?:\/[^/?#]+){0,2}\/?$/.test(location.pathname)){chronicles.setContext('journal');void chronicles.check('journal');return renderJournal()}const page=location.hash.slice(1).split('?')[0];const storyPage=page==='library'?'content':page||'study';chronicles.setContext(storyPage);void chronicles.check(storyPage);world.setScene(storyPage);if(page==='studio')return renderStudioV3();if(page==='profile')return renderProfile();if(page==='curator')return renderCurator();if(page==='shelf')return renderShelf();if(page==='categories')return renderCategories();if(page==='reading')return renderReadingSpace();if(page==='content'||page==='library')return renderLibrary();window.location.replace('home.html')};route();
+const route=()=>{if(/\/plans(?:\/[^/?#]+)?\/?$/.test(location.pathname)){chronicles.setContext('plans');void chronicles.check('plans');return renderPlans()}if(/\/chronicles\/?$/.test(location.pathname)){chronicles.setContext('chronicles');void chronicles.check('chronicles');return renderChronicles()}if(/\/journal(?:\/[^/?#]+){0,2}\/?$/.test(location.pathname)){chronicles.setContext('journal');void chronicles.check('journal');return renderJournal()}const page=location.hash.slice(1).split('?')[0];const storyPage=page==='library'?'content':page||'study';chronicles.setContext(storyPage);void chronicles.check(storyPage);world.setScene(storyPage);if(page==='studio')return renderStudioV3();if(page==='inscriptions')return renderInscriptions();if(page==='profile')return renderProfile();if(page==='curator')return renderCurator();if(page==='shelf')return renderShelf();if(page==='categories')return renderCategories();if(page==='reading')return renderReadingSpace();if(page==='content'||page==='library')return renderLibrary();window.location.replace('home.html')};route();
 window.addEventListener('hashchange',route);
 window.addEventListener('study-auth-changed',()=>{updateAuthButton();void chronicles.refresh();if(location.pathname.includes('/journal')||location.pathname.includes('/chronicles')||location.pathname.includes('/plans')||location.hash.startsWith('#curator')||location.hash.startsWith('#profile'))route()});
 window.addEventListener('study-toast',event=>showToast(event.detail));

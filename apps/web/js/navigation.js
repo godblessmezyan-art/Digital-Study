@@ -15,6 +15,7 @@ export const navigationGroups = [
   { label: '创作', items: [
     { id: 'studio', label: PAGE_NAMES.studio.zh, icon: 'scroll', href: 'index.html#studio' },
     { id: 'curator', label: PAGE_NAMES.curator.zh, icon: 'search', href: 'index.html#curator' },
+    { id: 'inscriptions', label: PAGE_NAMES.inscriptions.zh, icon: 'quill', href: 'index.html#inscriptions' },
   ] },
   { label: '管理', items: [
     { id: 'content', label: PAGE_NAMES.content.zh, icon: 'archive', href: 'index.html#content' },

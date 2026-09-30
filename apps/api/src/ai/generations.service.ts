@@ -14,6 +14,7 @@ import type { GenerationInput, StoredGenerationResult } from './ai.types';
 import type { CreateGenerationRequest } from './dto/create-generation.dto';
 import { HtmlRendererService } from './html-renderer.service';
 import { TemplatesService } from './templates.service';
+import { InscriptionsService } from '../inscriptions/inscriptions.service';
 
 @Injectable()
 export class GenerationsService implements OnApplicationBootstrap {
@@ -27,6 +28,7 @@ export class GenerationsService implements OnApplicationBootstrap {
     private readonly renderer: HtmlRendererService,
     private readonly content: ContentService,
     private readonly gitSync: GitSyncService,
+    private readonly inscriptions: InscriptionsService,
   ) {}
 
   async onApplicationBootstrap(): Promise<void> {
@@ -42,6 +44,14 @@ export class GenerationsService implements OnApplicationBootstrap {
     if (!runtime.configured) {
       throw new BadRequestException('AI provider is not configured. Add a model in AI Workshop settings or configure the environment fallback.');
     }
+    let inscriptionPrompt: string | undefined;
+    if (input.inscriptionPromptId) {
+      const inscription = await this.inscriptions.get(input.inscriptionPromptId);
+      if (!inscription.enabled || inscription.type !== 'PROMPT') {
+        throw new BadRequestException('\u9009\u4e2d\u7684\u94ed\u6587\u63d0\u793a\u8bcd\u4e0d\u53ef\u7528');
+      }
+      inscriptionPrompt = inscription.content;
+    }
     const template = await this.templates.get(input.templateId);
     const allowed = new Set(template.modules.map((module) => module.key));
     const modules = [...new Set(input.modules)];
@@ -55,7 +65,7 @@ export class GenerationsService implements OnApplicationBootstrap {
     const active = await this.findActive(ownerId, input.slug);
     if (active) return { ...this.present(active), reused: true };
     const { clientRequestId, ...generationInput } = input;
-    const normalized: GenerationInput = { ...generationInput, modules };
+    const normalized: GenerationInput = { ...generationInput, modules, ...(inscriptionPrompt ? { inscriptionPrompt } : {}) };
     let task: GenerationTask;
     try {
       task = await this.prisma.generationTask.create({

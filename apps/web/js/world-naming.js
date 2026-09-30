@@ -22,5 +22,6 @@ export const PAGE_NAMES = {
   studio: { zh: '铭文台', en: 'SCRIPTORIUM ALTAR' },
   curator: { zh: '秘典回响', en: 'ECHOES OF THE ARCHIVE' },
   content: { zh: '典籍档案', en: 'ARCHIVE OF TOMES' },
+  inscriptions: { zh: '铭文库', en: 'INSCRIPTION ARCHIVE' },
   settings: { zh: '圣所设置', en: 'SANCTUM SETTINGS' },
 };

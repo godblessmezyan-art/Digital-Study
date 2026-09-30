@@ -87,4 +87,9 @@ export class CreateGenerationRequest implements GenerationInput {
   @Matches(/^[a-zA-Z0-9-]{16,64}$/)
   @MaxLength(64)
   clientRequestId?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(36)
+  inscriptionPromptId?: string;
 }
