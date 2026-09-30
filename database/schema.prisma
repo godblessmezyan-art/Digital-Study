@@ -198,6 +198,36 @@ model JournalEntry {
   @@map("journal_entries")
 }
 
+model EchoSession {
+  id            String        @id @default(uuid()) @db.VarChar(36)
+  ownerId       String        @db.VarChar(160)
+  title         String        @db.VarChar(200)
+  inscriptionId String?       @db.VarChar(36)
+  model         String?       @db.VarChar(160)
+  messages      EchoMessage[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([ownerId, updatedAt])
+  @@map("echo_sessions")
+}
+
+model EchoMessage {
+  id                 String      @id @default(uuid()) @db.VarChar(36)
+  sessionId          String
+  session            EchoSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  role               String      @db.VarChar(20)
+  content            String      @db.Text
+  model              String?     @db.VarChar(160)
+  inscriptionId      String?     @db.VarChar(36)
+  inscriptionVersion Int?
+  contextJson        Json?
+  createdAt          DateTime    @default(now())
+
+  @@index([sessionId, createdAt])
+  @@map("echo_messages")
+}
+
 model InscriptionCategory {
   id           Int           @id @default(autoincrement())
   slug         String        @unique @db.VarChar(100)

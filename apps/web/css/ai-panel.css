@@ -1,0 +1,43 @@
+/* ============================================================
+   Global AI Command Panel（唤起回响）
+   Chronicle / Paper 体系：深蓝夜空遮罩 + 纸面卡片
+   ============================================================ */
+
+.ai-panel-overlay{position:fixed;inset:0;z-index:120;display:grid;place-items:start center;padding:12vh 16px 16px;background:rgba(6,18,31,.62);backdrop-filter:blur(6px)}
+.ai-panel-overlay[hidden]{display:none}
+.ai-panel-card{width:min(680px,96vw);max-height:76vh;display:flex;flex-direction:column;gap:12px;padding:22px 26px;color:var(--color-ink,#2c3539);background:var(--color-paper-bg,#f7f2e7);border:1px solid var(--border-gold,rgba(207,169,102,.4));border-radius:14px;box-shadow:0 30px 80px rgba(4,14,25,.5);overflow-y:auto}
+.ai-panel-card header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.ai-panel-card header small{color:var(--color-gold,#9a7b3f);font:600 8px var(--sans,sans-serif);letter-spacing:.24em}
+.ai-panel-card header h2{margin:5px 0 0;font:600 19px var(--serif,serif);letter-spacing:.04em}
+.ai-panel-card header button{width:30px;height:30px;color:var(--color-ink-soft,#7d8791);background:none;border:1px solid var(--color-paper-border,#ddd4c0);border-radius:50%;cursor:pointer;font-size:15px}
+.ai-panel-contexts{display:flex;gap:6px;flex-wrap:wrap}
+.ai-panel-chip{padding:5px 11px;color:#33505f;background:rgba(51,91,131,.08);border:1px solid rgba(51,91,131,.25);border-radius:999px;font:10.5px var(--serif,serif);white-space:nowrap}
+.ai-panel-chip.muted{color:var(--color-ink-soft,#7d8791);border-style:dashed}
+.ai-panel-chip.library{cursor:pointer;color:#8b683b;background:var(--color-gold-soft,rgba(207,169,102,.1));border-color:var(--border-gold,rgba(207,169,102,.4))}
+.ai-panel-chip.library.active{color:#fffdf7;background:#8b683b;border-color:#8b683b}
+.ai-panel-card textarea{width:100%;padding:12px 14px;color:var(--color-ink,#2c3539);background:var(--color-paper-bg-soft,#fdfaf2);border:1px solid var(--color-paper-border,#ddd4c0);border-radius:9px;outline:none;font:13.5px/1.7 var(--serif,serif);resize:vertical}
+.ai-panel-card textarea:focus{border-color:var(--color-gold,#9a7b3f);box-shadow:0 0 0 3px var(--color-gold-soft,rgba(207,169,102,.14))}
+.ai-panel-actions{display:flex;gap:6px;flex-wrap:wrap}
+.ai-panel-actions button{padding:7px 13px;color:var(--color-ink-soft,#5d6a75);background:none;border:1px solid var(--color-paper-border,#ddd4c0);border-radius:999px;font:11.5px var(--serif,serif);cursor:pointer;transition:.15s}
+.ai-panel-actions button:hover{color:#8b683b;border-color:var(--border-gold,rgba(207,169,102,.4));background:var(--color-gold-soft,rgba(207,169,102,.08))}
+.ai-panel-recent{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.ai-panel-recent small{color:var(--color-gold,#9a7b3f);font:600 9px var(--sans,sans-serif);letter-spacing:.14em}
+.ai-panel-recent button{padding:5px 11px;color:#33505f;background:rgba(51,91,131,.06);border:1px solid rgba(51,91,131,.22);border-radius:7px;font:11px var(--serif,serif);cursor:pointer}
+.ai-panel-recent button:hover{border-color:#33505f}
+.ai-panel-answer{border:1px solid var(--color-paper-border,#ddd4c0);border-left:2px solid var(--color-gold,#9a7b3f);border-radius:9px;background:var(--color-paper-bg-soft,#fdfaf2);max-height:220px;overflow-y:auto}
+.ai-panel-answer pre{margin:0;padding:14px 16px;font:12.5px/1.85 var(--serif,serif);white-space:pre-wrap;word-break:break-word}
+.ai-panel-answer.streaming pre:after{content:"▍";color:var(--color-gold,#9a7b3f);animation:ai-panel-blink 1s steps(1) infinite}
+@keyframes ai-panel-blink{50%{opacity:0}}
+.ai-panel-error{margin:0;color:#9a4e42;font:12px var(--serif,serif)}
+.ai-panel-card footer{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:10px;border-top:1px solid var(--color-paper-border,#ddd4c0);flex-wrap:wrap}
+.ai-panel-card footer span{color:var(--color-paper-text-muted,#8d949c);font:10px var(--sans,sans-serif)}
+.ai-panel-card footer div{display:flex;gap:8px}
+.ai-panel-card footer button{padding:9px 18px;color:var(--color-ink-soft,#5d6a75);background:none;border:1px solid var(--color-paper-border,#ddd4c0);border-radius:999px;font:12px var(--serif,serif);cursor:pointer;transition:.15s}
+.ai-panel-card footer button:hover{color:#8b683b;border-color:var(--border-gold,rgba(207,169,102,.4))}
+.ai-panel-card footer button.primary{color:#fffdf7;background:var(--sidebar-bg,#132a43);border-color:var(--border-gold,rgba(207,169,102,.4))}
+.ai-panel-card footer button.primary:disabled{opacity:.55;cursor:wait}
+
+@media(max-width:640px){
+  .ai-panel-overlay{padding:6vh 10px 10px}
+  .ai-panel-card{padding:18px}
+}

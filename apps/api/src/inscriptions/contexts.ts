@@ -20,6 +20,10 @@ export const INSCRIPTION_CONTEXTS: InscriptionContext[] = [
   { key: 'journal.review.prompt', page: '旅者手记', feature: 'AI 反思', slot: '提示词', kind: 'PROMPT' },
   { key: 'journal.new.template', page: '旅者手记', feature: '新建手记', slot: '模板', kind: 'TEMPLATE' },
   { key: 'curator.deep.prompt', page: '秘典回响', feature: '深度思考', slot: '提示词', kind: 'PROMPT' },
+  { key: 'curator.echo.prompt', page: '秘典回响', feature: '通用问答', slot: '提示词', kind: 'PROMPT' },
+  { key: 'reading.note.ai', page: '静阅室', feature: '笔记助手', slot: '提示词', kind: 'PROMPT' },
+  { key: 'plan.assistant.ai', page: '远征计划', feature: '计划助手', slot: '提示词', kind: 'PROMPT' },
+  { key: 'journal.reflect.ai', page: '旅者手记', feature: '反思助手', slot: '提示词', kind: 'PROMPT' },
 ];
 
 export function contextLabel(key: string): string {

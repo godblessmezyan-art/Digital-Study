@@ -4,7 +4,7 @@ import type { Inscription, Prisma } from '@prisma/client';
 import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { getBundledTemplatesRoot } from '../config/paths';
-import { BUILTIN_CURATOR_PROMPT, BUILTIN_PLAN_PROMPT, BUILTIN_READING_PROMPT, BUILTIN_WORKSHOP_PROMPT } from './builtin-prompts';
+import { BUILTIN_CURATOR_PROMPT, BUILTIN_ECHO_PROMPT, BUILTIN_PLAN_PROMPT, BUILTIN_READING_PROMPT, BUILTIN_WORKSHOP_PROMPT } from './builtin-prompts';
 import { contextKind, INSCRIPTION_CONTEXTS } from './contexts';
 import type { SaveInscriptionCategoryRequest, SaveInscriptionRequest } from './dto/save-inscription.dto';
 
@@ -322,6 +322,11 @@ export class InscriptionsService implements OnApplicationBootstrap {
       content: BUILTIN_WORKSHOP_PROMPT, categoryId: categoryIds.get('book-generation') ?? null,
       tags: ['书籍生成'] as unknown as Prisma.InputJsonValue, enabled: true,
     }, ['ai_workshop.generate.prompt']);
+    await seedOne('prompt:echo-general', {
+      type: 'PROMPT', name: '通用回响引导', description: '秘典回响工作区默认的回答准则。',
+      content: BUILTIN_ECHO_PROMPT, categoryId: categoryIds.get('agent') ?? null,
+      tags: ['回响', '通用'] as unknown as Prisma.InputJsonValue, enabled: true,
+    }, ['curator.echo.prompt']);
     await seedOne('prompt:plan-breakdown', {
       type: 'PROMPT', name: '计划拆解准则', description: '远征计划 AI 拆解的系统准则：可执行、可验证、拒绝空话。',
       content: BUILTIN_PLAN_PROMPT, categoryId: categoryIds.get('planning') ?? null,

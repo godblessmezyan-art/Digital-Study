@@ -1,280 +1,331 @@
 import { getStoredUser } from './auth-client.js';
-import { getCuratorIndexStatus, getCuratorInsights, rebuildCuratorIndex, streamCurator } from './curator-client.js?v=2';
-import { PaperSurface } from './page-system.js';
+import { collectContexts, contextLabel } from './ai-context.js';
+import { actionsForContexts } from './ai-actions.js';
 import {
-  AnswerBlock, CuratorHero, CuratorQuickActions, CuratorSearchBox, CuratorSkeleton, CuratorInsightsBlock,
-  ErrorBlock, esc, extractConcepts, FollowupActions, IndexStatusChip, IndexStatusPanel,
-  NoResultsBlock, QuestionBlock, QUICK_ACTIONS, RecentExplorations, RecentSession,
-  RelatedConcepts, SignedOutBlock, SourceCard, SourcesBlock,
-} from './curator-components.js?v=2';
+  deleteEchoSession, echoChat, getEchoInscription, getEchoModels, getEchoSession,
+  listEchoInscriptions, listEchoSessions, saveEchoJournal, saveEchoNote,
+} from './echoes-client.js';
+import { getCuratorInsights } from './curator-client.js?v=2';
+import { PageContainer, PageHero, PaperSurface, EmptyState } from './page-system.js';
 
-const HISTORY_KEY = 'curator-history';
-const SESSION_KEY = 'curator-last-session';
-const MAX_HISTORY = 8;
+const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({
+  '&': '&amp;', '<': '&lt;', '>': '&gt;', '&quot;': '"', "'": '&#39;',
+}[char]));
+const RECENT_KEY = 'echo-recent-inscriptions';
 
-function loadJson(key, fallback) {
-  try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; }
-}
-function saveJson(key, value) {
-  try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* 存储满时静默降级 */ }
+function pushRecent(inscription) {
+  if (!inscription?.id) return;
+  try {
+    const recent = JSON.parse(localStorage.getItem(RECENT_KEY)) || [];
+    localStorage.setItem(RECENT_KEY, JSON.stringify([{ id: inscription.id, name: inscription.name }, ...recent.filter(item => item.id !== inscription.id)].slice(0, 4)));
+  } catch { /* 存储满降级 */ }
 }
 
 export function createCuratorPage(root, { showToast, openLogin }) {
   if (!getStoredUser()) {
-    root.innerHTML = SignedOutBlock();
-    root.querySelector('[data-curator-login]').onclick = event => { event.preventDefault(); openLogin?.(); };
+    root.innerHTML = `<section class="echoes-page">${PageContainer(EmptyState({ title: '登录后进入秘典回响', description: '向埃瑟瑞恩中留下的知识、记录与铭文发起追问。', action: '<button type="button" class="primary" data-echo-login>登录账号</button>' }))}</section>`;
+    root.querySelector('[data-echo-login]').onclick = event => { event.preventDefault(); openLogin?.(); };
     return;
   }
-  const isAdmin = getStoredUser()?.role === 'admin';
+
   const state = {
-    scope: 'all',
-    controller: null,
+    sessions: [],
+    sessionId: null,
     messages: [],
-    history: loadJson(HISTORY_KEY, []),
-    session: loadJson(SESSION_KEY, null),
+    inscriptions: [],
+    models: { available: [], current: null },
+    inscription: null,          // 启动的铭文（详情+变量值）
+    variableValues: {},
+    model: '',
+    useLibrary: false,
+    disabledContexts: new Set(),
+    input: '',
+    streaming: false,
     insights: null,
-    indexStatus: null,
-    currentQuery: '',
-    currentAnswer: '',
-    currentSources: [],
   };
 
-  /* ---------- 首页 ---------- */
+  // URL 参数：#curator?inscription=xxx / ?q=消息
+  const params = new URLSearchParams(location.hash.split('?')[1] || '');
+  const launchInscriptionId = params.get('inscription');
+  const presetQuestion = params.get('q');
 
-  function paintHome() {
-    root.innerHTML = `<section class="curator-page curator-home">
-      ${CuratorHero(IndexStatusChip(state.indexStatus), IndexStatusPanel(state.indexStatus, { isAdmin }))}
-      ${PaperSurface(`
-        ${CuratorSearchBox(state.scope)}
-        ${CuratorQuickActions()}
-        <div class="curator-columns">
-          ${RecentExplorations(state.history)}
-          ${CuratorInsightsBlock(state.insights)}
-          ${RecentSession(state.session)}
+  const activeContexts = () => collectContexts().filter(item => !state.disabledContexts.has(`${item.type}:${item.id || item.title || ''}`));
+
+  // ===== render =====
+
+  const sessionListHtml = () => `
+    <div class="echoes-sessions">
+      <button type="button" class="echoes-new-session" data-new-session>＋ 新的回响</button>
+      ${state.sessions.length ? state.sessions.map(session => `
+        <button type="button" class="echoes-session-item ${session.id === state.sessionId ? 'is-active' : ''}" data-session="${esc(session.id)}">
+          <b>${esc(session.title)}</b>
+          <small>${new Date(session.updatedAt).toLocaleString('zh-CN', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })} · ${session._count?.messages ?? 0} 条</small>
+          <span class="echoes-session-delete" data-delete-session="${esc(session.id)}" role="button" aria-label="删除会话">×</span>
+        </button>`).join('') : '<p class="echoes-sessions-empty">尚无回响记录</p>'}
+    </div>`;
+
+  const inscriptionBannerHtml = () => {
+    if (!state.inscription) return '';
+    const variables = state.inscription.variables || [];
+    return `<div class="echoes-inscription-banner">
+      <div class="echoes-inscription-head">
+        <span class="echoes-inscription-badge">运行铭文 · v${state.inscription.currentVersion}</span>
+        <h3>${esc(state.inscription.name)}</h3>
+        ${state.inscription.description ? `<p>${esc(state.inscription.description)}</p>` : ''}
+        <button type="button" data-clear-inscription>取消铭文</button>
+      </div>
+      ${variables.length ? `<div class="echoes-variables">${variables.map(variable => `
+        <label><span>${esc(variable.label)}${variable.required ? ' <em>*</em>' : ''}</span>
+        <input data-variable="${esc(variable.key)}" value="${esc(state.variableValues[variable.key] ?? variable.defaultValue ?? '')}" placeholder="${esc(variable.placeholder || variable.label)}" ${variable.required ? 'required' : ''}>
+        </label>`).join('')}</div>` : ''}
+    </div>`;
+  };
+
+  const messagesHtml = () => {
+    if (!state.messages.length) {
+      const actions = actionsForContexts(collectContexts());
+      return EmptyState({
+        title: '向埃瑟瑞恩发起追问',
+        description: '输入问题、选择铭文或站内上下文，回响将在此展开。',
+        icon: '✦',
+        action: `<div class="echoes-suggestions">${actions.map((action, index) => `<button type="button" data-suggestion="${index}">✦ ${esc(action.label)}</button>`).join('')}</div>`,
+      });
+    }
+    return state.messages.map((message, index) => message.role === 'user' ? `
+      <article class="echo-msg echo-msg--user"><div class="echo-msg__body"><p>${esc(message.content)}</p></div></article>` : `
+      <article class="echo-msg echo-msg--assistant" data-message-index="${index}">
+        <div class="echo-msg__body">
+          <pre>${esc(message.content)}${state.streaming && index === state.messages.length - 1 ? '<span class="echo-cursor">▍</span>' : ''}</pre>
+          ${message.model ? `<small class="echo-msg__model">${esc(message.model)}${message.inscriptionId ? ' · 铭文驱动' : ''}</small>` : ''}
+          ${!state.streaming || index !== state.messages.length - 1 ? `
+          <div class="echo-msg__actions">
+            <button type="button" data-msg-copy="${index}">复制</button>
+            <button type="button" data-msg-note="${index}">保存为笔记</button>
+            <button type="button" data-msg-journal="${index}">加入手记</button>
+            <button type="button" data-msg-followup="${index}">继续追问</button>
+          </div>` : ''}
         </div>
-      `, 'curator-surface', 'main')}
-    </section>`;
-    bindIndexStatus();
-    bindSearch();
-    bindHomeActions();
-  }
+      </article>`).join('');
+  };
 
-  async function bootHome() {
-    root.innerHTML = CuratorSkeleton();
-    paintHome();
-    // 数据到达后局部刷新，避免整页 skeleton 阻塞搜索框可用
+  const composerHtml = () => {
+    const contexts = collectContexts();
+    return `<div class="echoes-composer">
+      <div class="echoes-context-row">
+        <small>上下文</small>
+        ${contexts.length ? contexts.map(item => {
+          const key = `${item.type}:${item.id || item.title || ''}`;
+          const enabled = !state.disabledContexts.has(key);
+          return `<button type="button" class="echoes-context-chip ${enabled ? 'is-on' : ''}" data-toggle-context="${esc(key)}">${enabled ? '☑' : '☐'} ${esc(contextLabel(item))}</button>`;
+        }).join('') : '<span class="echoes-context-chip muted">无页面上下文</span>'}
+        <button type="button" class="echoes-context-chip library ${state.useLibrary ? 'is-on' : ''}" data-toggle-library>${state.useLibrary ? '☑' : '☐'} 全部知识库</button>
+      </div>
+      <div class="echoes-input-row">
+        <textarea data-echo-input rows="3" placeholder="向埃瑟瑞恩发起追问……（Enter 发送，Shift+Enter 换行）">${esc(state.input)}</textarea>
+      </div>
+      <div class="echoes-control-row">
+        <label>使用铭文
+          <select data-echo-inscription>
+            <option value="">不使用铭文</option>
+            ${state.inscriptions.map(item => `<option value="${esc(item.id)}" ${state.inscription?.id === item.id ? 'selected' : ''}>${esc(item.name)}${item.category ? ` · ${esc(item.category)}` : ''}</option>`).join('')}
+          </select>
+        </label>
+        <label>模型
+          <select data-echo-model>
+            <option value="">当前模型${state.models.current?.displayName ? `（${esc(state.models.current.displayName)}）` : ''}</option>
+            ${state.models.available.map(model => `<option value="${esc(model.id)}" ${state.model === model.id ? 'selected' : ''}>${esc(model.displayName)}${model.isActive ? ' · 默认' : ''}</option>`).join('')}
+          </select>
+        </label>
+        <button type="button" class="primary" data-echo-send ${state.streaming ? 'disabled' : ''}>${state.streaming ? '回响中…' : '✦ 发起回响'}</button>
+      </div>
+    </div>`;
+  };
+
+  const paint = (scroll = false) => {
+    root.innerHTML = `<section class="echoes-page">${PageContainer(`
+      ${PageHero({ eyebrow: 'ECHOES OF THE ARCHIVE', title: '秘典回响', description: '向埃瑟瑞恩中留下的知识、记录与铭文发起追问。' })}
+      <div class="echoes-layout">
+        ${PaperSurface(sessionListHtml(), 'echoes-sessions-surface')}
+        ${PaperSurface(`
+          ${inscriptionBannerHtml()}
+          <div class="echoes-messages" data-echo-messages>${messagesHtml()}</div>
+          ${composerHtml()}
+        `, 'echoes-main-surface')}
+      </div>
+    `)}</section>`;
+    bind();
+    if (scroll) {
+      const box = root.querySelector('[data-echo-messages]');
+      if (box) box.scrollTop = box.scrollHeight;
+    }
+  };
+
+  // ===== actions =====
+
+  const send = async () => {
+    const message = state.input.trim();
+    if (!message) { showToast('请输入你的问题'); return; }
+    if (state.inscription) {
+      const missing = (state.inscription.variables || []).filter(variable => variable.required && !(state.variableValues[variable.key] || '').trim());
+      if (missing.length) { showToast(`请先填写铭文变量：${missing.map(variable => variable.label).join('、')}`); return; }
+    }
+    pushRecent(state.inscription);
+    state.messages.push({ role: 'user', content: message });
+    state.messages.push({ role: 'assistant', content: '', model: null, inscriptionId: state.inscription?.id || null });
+    state.input = '';
+    state.streaming = true;
+    paint(true);
+    const contexts = activeContexts();
     try {
-      const [insights, indexStatus] = await Promise.all([
-        getCuratorInsights().catch(() => null),
-        getCuratorIndexStatus().catch(() => null),
-      ]);
-      state.insights = insights;
-      state.indexStatus = indexStatus;
-      const insightsBlock = root.querySelector('[data-block="insights"]');
-      if (insightsBlock) insightsBlock.outerHTML = CuratorInsightsBlock(insights);
-      const chip = root.querySelector('[data-index-toggle]');
-      if (chip) chip.outerHTML = IndexStatusChip(indexStatus);
-      const panel = root.querySelector('[data-index-panel]');
-      if (panel) panel.outerHTML = IndexStatusPanel(indexStatus, { isAdmin });
-      bindIndexStatus();
-    } catch { /* 首页降级：insights 区块保留 loading 占位 */ }
-  }
-
-  function bindIndexStatus() {
-    const chip = root.querySelector('[data-index-toggle]');
-    const panel = root.querySelector('[data-index-panel]');
-    if (!chip || !panel) return;
-    chip.onclick = () => {
-      const open = panel.hidden;
-      panel.hidden = !open;
-      chip.setAttribute('aria-expanded', String(open));
-    };
-    root.querySelector('[data-curator-rebuild]')?.addEventListener('click', async event => {
-      const button = event.currentTarget;
-      button.disabled = true; button.textContent = '正在重建索引…';
-      try {
-        const result = await rebuildCuratorIndex();
-        showToast(`索引完成：${result.booksIndexed} 本书，${result.recordsIndexed} 条记录`);
-        state.indexStatus = await getCuratorIndexStatus().catch(() => state.indexStatus);
-        chip.outerHTML = IndexStatusChip(state.indexStatus);
-        panel.outerHTML = IndexStatusPanel(state.indexStatus, { isAdmin });
-        bindIndexStatus();
-      } catch (error) {
-        showToast(error.message || '索引重建失败');
-        button.disabled = false; button.textContent = '重新索引';
-      }
-    });
-  }
-
-  function bindHomeActions() {
-    root.querySelectorAll('[data-quick-action]').forEach(button => button.onclick = () => {
-      const action = QUICK_ACTIONS.find(item => item.id === button.dataset.quickAction);
-      if (!action) return;
-      const input = root.querySelector('[data-curator-input]');
-      input.value = action.prompt;
-      input.focus();
-      input.setSelectionRange(0, input.value.length);
-    });
-    root.querySelectorAll('[data-replay-query]').forEach(element => {
-      const replay = () => runSearch(element.dataset.replayQuery);
-      element.onclick = replay;
-      element.onkeydown = event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); replay(); } };
-    });
-    root.querySelector('[data-resume-session]')?.addEventListener('click', () => {
-      if (!state.session) return;
-      state.messages = [{ role: 'user', content: state.session.query }];
-      if (state.session.answer) state.messages.push({ role: 'assistant', content: state.session.answer });
-      runSearch(state.session.query, { resume: true });
-    });
-  }
-
-  /* ---------- 搜索与回答视图 ---------- */
-
-  function bindSearch() {
-    const form = root.querySelector('[data-curator-form]');
-    const input = root.querySelector('[data-curator-input]');
-    if (!form || !input) return;
-    form.onsubmit = event => { event.preventDefault(); runSearch(input.value.trim()); };
-    input.addEventListener('keydown', event => {
-      if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); runSearch(input.value.trim()); }
-    });
-    root.querySelectorAll('[data-curator-scope]').forEach(button => button.onclick = () => {
-      state.scope = button.dataset.curatorScope;
-      root.querySelectorAll('[data-curator-scope]').forEach(item => item.classList.toggle('active', item === button));
-    });
-  }
-
-  function paintAnswerView(query, { resume = false } = {}) {
-    root.innerHTML = `<section class="curator-page curator-answer-view">
-      ${PaperSurface(`
-        <div class="curator-answer-toolbar">
-          <button type="button" class="curator-back" data-curator-back>← 返回秘典回响</button>
-          ${resume ? '<small class="curator-resume-flag">继续上次探索</small>' : ''}
-        </div>
-        ${QuestionBlock(query, state.scope)}
-        ${CuratorSearchBox(state.scope)}
-        ${AnswerBlock()}
-        ${SourcesBlock()}
-        <div data-curator-concepts></div>
-        <div data-curator-followup></div>
-      `, 'curator-surface', 'main')}
-    </section>`;
-    bindSearch();
-    root.querySelector('[data-curator-back]').onclick = () => { abortStream(); bootHome(); };
-  }
-
-  function abortStream() {
-    state.controller?.abort();
-    state.controller = null;
-  }
-
-  async function runSearch(query, options = {}) {
-    query = String(query || '').trim();
-    if (!query) return;
-    if (state.controller) return; // 生成中忽略重复提交
-    if (!options.resume) state.messages = [];
-    state.currentQuery = query;
-    state.currentAnswer = '';
-    state.currentSources = [];
-    paintAnswerView(query, options);
-
-    const thinking = root.querySelector('[data-curator-thinking]');
-    const answerContent = root.querySelector('[data-curator-answer-content]');
-    const related = root.querySelector('[data-curator-related]');
-    const results = root.querySelector('[data-curator-results]');
-    const submit = root.querySelector('.curator-submit');
-    const stop = root.querySelector('[data-curator-stop]');
-    thinking.hidden = false;
-    submit.disabled = true; stop.hidden = false;
-    stop.onclick = () => abortStream();
-    state.controller = new AbortController();
-    state.messages.push({ role: 'user', content: query });
-
-    let text = '';
-    let sources = [];
-    let failed = false;
-    try {
-      await streamCurator(
-        { query, scope: state.scope, messages: state.messages.slice(0, -1).concat([{ role: 'user', content: query }]).slice(-8) },
-        {
-          signal: state.controller.signal,
-          onEvent: event => {
-            if (event.type === 'sources') {
-              sources = event.sources || [];
-              related.hidden = false;
-              root.querySelector('[data-curator-count]').textContent = sources.length;
-              results.innerHTML = sources.length ? sources.map(source => SourceCard(source)).join('') : NoResultsBlock();
-            }
-            if (event.type === 'delta') {
-              if (thinking.hidden === false) thinking.hidden = true;
-              text += event.text || '';
-              answerContent.textContent = text;
-            }
-            if (event.type === 'error') throw new Error(event.message || '秘典回响暂时不可用');
-          },
+      await echoChat({
+        message,
+        sessionId: state.sessionId || undefined,
+        inscriptionId: state.inscription?.id || undefined,
+        variables: state.variableValues,
+        contextRefs: contexts.map(item => ({ type: item.type, id: item.id, title: item.title, content: item.content, description: item.description })),
+        useLibrary: state.useLibrary,
+        model: state.model || undefined,
+      }, {
+        onSession: id => { state.sessionId = id; void loadSessions(); },
+        onDelta: text => {
+          const last = state.messages[state.messages.length - 1];
+          last.content += text;
+          const pre = root.querySelector('.echo-msg--assistant:last-of-type pre');
+          if (pre) {
+            pre.textContent = last.content;
+            pre.insertAdjacentHTML('beforeend', '<span class="echo-cursor">▍</span>');
+            const box = root.querySelector('[data-echo-messages]');
+            if (box) box.scrollTop = box.scrollHeight;
+          }
         },
-      );
-      if (!text) {
-        thinking.hidden = true;
-        answerContent.innerHTML = `<p class="curator-answer-empty">${sources.length ? '回响显现了资料，但这次没有生成综述。可以直接查看下方参考资料。' : '目前没有找到足够相关的馆藏资料。试着换个说法，或把范围扩大到「全部」。'}</p>`;
-      }
+        onError: msg => {
+          const last = state.messages[state.messages.length - 1];
+          last.content = last.content || `〔回响失败〕${msg}`;
+          showToast(msg);
+        },
+        onDone: () => {
+          state.streaming = false;
+          const last = state.messages[state.messages.length - 1];
+          if (last.role === 'assistant' && !last.content) state.messages.pop();
+          paint(true);
+          void loadSessions();
+        },
+      });
     } catch (error) {
-      failed = true;
-      thinking.hidden = true;
-      if (error?.name !== 'AbortError') {
-        answerContent.innerHTML = ErrorBlock(error.message || '秘典回响暂时不可用', '重新搜索');
-        answerContent.querySelector('[data-curator-retry]')?.addEventListener('click', () => runSearch(query));
-        showToast(error.message || '回响查询失败');
-      } else {
-        answerContent.textContent = text || '（已停止生成）';
-      }
-    } finally {
-      state.controller = null;
-      const submitNow = root.querySelector('.curator-submit');
-      const stopNow = root.querySelector('[data-curator-stop]');
-      if (submitNow) submitNow.disabled = false;
-      if (stopNow) stopNow.hidden = true;
+      state.streaming = false;
+      const last = state.messages[state.messages.length - 1];
+      if (last?.role === 'assistant') last.content = last.content || `〔回响失败〕${error.message}`;
+      paint(true);
+      showToast(error.message);
     }
+  };
 
-    state.currentAnswer = text;
-    state.currentSources = sources;
-    if (text) state.messages.push({ role: 'assistant', content: text.slice(0, 6000) });
+  const loadSessions = async () => {
+    state.sessions = await listEchoSessions().catch(() => []);
+  };
 
-    if (!failed && text) {
-      recordHistory(query, text, sources.length);
-      paintTail(query, text, sources);
-    }
-  }
+  const openSession = async id => {
+    const session = await getEchoSession(id);
+    state.sessionId = session.id;
+    state.messages = session.messages.map(message => ({
+      role: message.role, content: message.content, model: message.model, inscriptionId: message.inscriptionId,
+    }));
+    state.inscription = null;
+    paint(true);
+  };
 
-  function paintTail(query, text, sources) {
-    const conceptsHost = root.querySelector('[data-curator-concepts]');
-    const followupHost = root.querySelector('[data-curator-followup]');
-    if (conceptsHost) conceptsHost.innerHTML = RelatedConcepts(extractConcepts(text, sources), query);
-    if (followupHost) followupHost.innerHTML = FollowupActions(query);
-    conceptsHost?.querySelectorAll('[data-concept-query]').forEach(button => button.onclick = () => runSearch(button.dataset.conceptQuery));
-    followupHost?.querySelectorAll('[data-followup]').forEach(button => button.onclick = () => handleFollowup(button.dataset.followup, button.dataset.followupQuery || query));
-  }
+  const selectInscription = async id => {
+    if (!id) { state.inscription = null; state.variableValues = {}; paint(); return; }
+    const inscription = await getEchoInscription(id);
+    state.inscription = inscription;
+    state.variableValues = {};
+    (inscription.variables || []).forEach(variable => { state.variableValues[variable.key] = variable.defaultValue || ''; });
+    paint();
+  };
 
-  function handleFollowup(kind, query) {
-    if (kind === 'ask') { root.querySelector('[data-curator-input]')?.focus(); return; }
-    if (kind === 'compare') { runSearch(`对比我过去和现在关于「${query}」的观点：以前的记录里我怎么想？最近的想法有什么变化？`); return; }
-    if (kind === 'note') { location.href = 'index.html#reading?tab=notes'; return; }
-    if (kind === 'journal') { location.href = 'journal/new'; return; }
-    if (kind === 'plan') { location.href = 'plans/new'; return; }
-  }
-
-  function recordHistory(query, answer, sourcesCount) {
-    state.history = [{ query, time: new Date().toISOString() }, ...state.history.filter(item => item.query !== query)].slice(0, MAX_HISTORY);
-    saveJson(HISTORY_KEY, state.history);
-    state.session = {
-      query,
-      excerpt: answer.replace(/\s+/g, ' ').trim().slice(0, 160),
-      answer: answer.slice(0, 3000),
-      time: new Date().toISOString(),
-      sourcesCount,
+  const bind = () => {
+    root.querySelector('[data-new-session]').onclick = () => {
+      state.sessionId = null; state.messages = []; state.inscription = null; state.variableValues = {}; state.input = '';
+      paint();
     };
-    saveJson(SESSION_KEY, state.session);
-  }
+    root.querySelectorAll('[data-session]').forEach(button => button.onclick = event => {
+      if (event.target.closest('[data-delete-session]')) return;
+      openSession(button.dataset.session).catch(error => showToast(error.message));
+    });
+    root.querySelectorAll('[data-delete-session]').forEach(button => button.onclick = async event => {
+      event.stopPropagation();
+      if (!confirm('删除这次回响会话？')) return;
+      try {
+        await deleteEchoSession(button.dataset.deleteSession);
+        if (state.sessionId === button.dataset.deleteSession) { state.sessionId = null; state.messages = []; }
+        await loadSessions(); paint();
+      } catch (error) { showToast(error.message); }
+    });
+    root.querySelectorAll('[data-suggestion]').forEach(button => button.onclick = () => {
+      state.input = actionsForContexts(collectContexts())[Number(button.dataset.suggestion)].instruction;
+      paint();
+    });
+    root.querySelectorAll('[data-toggle-context]').forEach(button => button.onclick = () => {
+      const key = button.dataset.toggleContext;
+      state.disabledContexts.has(key) ? state.disabledContexts.delete(key) : state.disabledContexts.add(key);
+      paint();
+    });
+    root.querySelector('[data-toggle-library]').onclick = () => { state.useLibrary = !state.useLibrary; paint(); };
+    root.querySelector('[data-clear-inscription]')?.addEventListener('click', () => { state.inscription = null; state.variableValues = {}; paint(); });
+    root.querySelectorAll('[data-variable]').forEach(input => input.addEventListener('input', () => { state.variableValues[input.dataset.variable] = input.value; }));
+    root.querySelector('[data-echo-inscription]').onchange = event => selectInscription(event.target.value).catch(error => showToast(error.message));
+    root.querySelector('[data-echo-model]').onchange = event => { state.model = event.target.value; };
+    const input = root.querySelector('[data-echo-input]');
+    input.oninput = () => { state.input = input.value; };
+    input.onkeydown = event => {
+      if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); void send(); }
+    };
+    root.querySelector('[data-echo-send]').onclick = () => void send();
+    root.querySelectorAll('[data-msg-copy]').forEach(button => button.onclick = async () => {
+      try { await navigator.clipboard.writeText(state.messages[Number(button.dataset.msgCopy)].content); showToast('已复制回响'); } catch { showToast('复制失败'); }
+    });
+    root.querySelectorAll('[data-msg-note]').forEach(button => button.onclick = async () => {
+      try {
+        await saveEchoNote({ content: state.messages[Number(button.dataset.msgNote)].content, title: `回响摘录 · ${new Date().toLocaleDateString('zh-CN')}` });
+        showToast('已保存为笔记（静阅室 · 笔记列表）');
+      } catch (error) { showToast(error.message); }
+    });
+    root.querySelectorAll('[data-msg-journal]').forEach(button => button.onclick = async () => {
+      try {
+        await saveEchoJournal({ content: state.messages[Number(button.dataset.msgJournal)].content, title: '秘典回响' });
+        showToast('已加入旅者手记（今日）');
+      } catch (error) { showToast(error.message); }
+    });
+    root.querySelectorAll('[data-msg-followup]').forEach(button => button.onclick = () => {
+      const message = state.messages[Number(button.dataset.msgFollowup)];
+      state.input = `关于你刚才的回答「${(message.content || '').slice(0, 40)}……」，`;
+      paint();
+      root.querySelector('[data-echo-input]')?.focus();
+    });
+  };
 
-  void bootHome();
+  // ===== boot =====
+
+  const boot = async () => {
+    paint();
+    const [sessions, inscriptions, models, insights] = await Promise.all([
+      listEchoSessions().catch(() => []),
+      listEchoInscriptions().catch(() => []),
+      getEchoModels().catch(() => ({ available: [], current: null })),
+      getCuratorInsights().catch(() => null),
+    ]);
+    state.sessions = sessions;
+    state.inscriptions = inscriptions;
+    state.models = models;
+    state.insights = insights;
+    if (launchInscriptionId) {
+      await selectInscription(launchInscriptionId).catch(() => undefined);
+      return; // selectInscription 已 paint
+    }
+    if (presetQuestion) state.input = presetQuestion;
+    paint();
+    if (presetQuestion) root.querySelector('[data-echo-input]')?.focus();
+  };
+
+  void boot();
 }

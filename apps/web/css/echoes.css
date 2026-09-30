@@ -1,0 +1,81 @@
+/* ============================================================
+   秘典回响 · Echoes of the Archive（AI Workspace）
+   Chronicle / Paper 体系：档案纸块，非 Messenger 气泡
+   ============================================================ */
+
+.echoes-page{min-height:100vh}
+.echoes-layout{display:grid;grid-template-columns:minmax(200px,250px) minmax(0,1fr);gap:18px;align-items:start}
+.echoes-sessions-surface{padding:16px;position:sticky;top:24px}
+.echoes-main-surface{padding:clamp(18px,2.6vw,32px);display:flex;flex-direction:column;gap:16px;min-height:60vh}
+
+/* ===== 会话列表 ===== */
+.echoes-sessions{display:grid;gap:6px}
+.echoes-new-session{padding:10px 14px;color:#fffdf7;background:var(--sidebar-bg,#132a43);border:1px solid var(--border-gold,rgba(207,169,102,.4));border-radius:9px;font:12.5px var(--serif,serif);letter-spacing:.05em;cursor:pointer}
+.echoes-new-session:hover{filter:brightness(1.15)}
+.echoes-session-item{position:relative;display:grid;gap:3px;padding:10px 30px 10px 13px;text-align:left;background:var(--color-paper-bg-soft,#fdfaf2);border:1px solid var(--color-paper-border,#ddd4c0);border-radius:9px;cursor:pointer;transition:.15s}
+.echoes-session-item:hover{border-color:var(--border-gold,rgba(207,169,102,.5))}
+.echoes-session-item.is-active{border-color:var(--color-gold,#9a7b3f);border-left:2px solid var(--color-gold,#9a7b3f);background:var(--color-gold-soft,rgba(207,169,102,.08))}
+.echoes-session-item b{color:var(--color-ink,#2c3539);font:600 12.5px/1.4 var(--serif,serif);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.echoes-session-item small{color:var(--color-paper-text-muted,#8d949c);font:9.5px var(--sans,sans-serif)}
+.echoes-session-delete{position:absolute;top:6px;right:8px;width:20px;height:20px;display:grid;place-items:center;color:var(--color-ink-soft,#7d8791);border-radius:50%;font-size:13px;opacity:0;transition:.15s}
+.echoes-session-item:hover .echoes-session-delete{opacity:1}
+.echoes-session-delete:hover{color:#9a4e42;background:rgba(154,78,66,.08)}
+.echoes-sessions-empty{margin:8px 4px;color:var(--color-paper-text-muted,#8d949c);font:11.5px var(--serif,serif)}
+
+/* ===== 铭文启动横幅 ===== */
+.echoes-inscription-banner{padding:16px 20px;background:linear-gradient(135deg,rgba(51,91,131,.06),rgba(207,169,102,.08));border:1px solid var(--border-gold,rgba(207,169,102,.4));border-radius:11px}
+.echoes-inscription-head{display:grid;gap:5px}
+.echoes-inscription-badge{justify-self:start;padding:3px 10px;color:#8b683b;background:var(--color-gold-soft,rgba(207,169,102,.14));border:1px solid var(--border-gold,rgba(207,169,102,.4));border-radius:999px;font:600 8.5px var(--sans,sans-serif);letter-spacing:.18em}
+.echoes-inscription-head h3{margin:2px 0 0;color:var(--color-ink,#2c3539);font:600 16px var(--serif,serif)}
+.echoes-inscription-head p{margin:0;color:var(--color-ink-soft,#5d6a75);font:12px/1.6 var(--serif,serif)}
+.echoes-inscription-head button{justify-self:start;margin-top:4px;padding:4px 12px;color:var(--color-ink-soft,#7d8791);background:none;border:1px solid var(--color-paper-border,#ddd4c0);border-radius:999px;font:10.5px var(--serif,serif);cursor:pointer}
+.echoes-inscription-head button:hover{color:#9a4e42;border-color:rgba(154,78,66,.4)}
+.echoes-variables{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:14px;padding-top:14px;border-top:1px dashed var(--border-gold,rgba(207,169,102,.4))}
+.echoes-variables label{display:grid;gap:5px}
+.echoes-variables span{color:var(--color-gold,#9a7b3f);font:600 9.5px var(--sans,sans-serif);letter-spacing:.14em}
+.echoes-variables span em{color:#9a4e42;font-style:normal}
+.echoes-variables input{padding:9px 12px;color:var(--color-ink,#2c3539);background:var(--color-paper-bg,#f7f2e7);border:1px solid var(--color-paper-border,#ddd4c0);border-radius:8px;outline:none;font:12.5px var(--serif,serif)}
+.echoes-variables input:focus{border-color:var(--color-gold,#9a7b3f);box-shadow:0 0 0 3px var(--color-gold-soft,rgba(207,169,102,.12))}
+
+/* ===== 消息流（纸面档案块） ===== */
+.echoes-messages{display:grid;gap:14px;max-height:52vh;overflow-y:auto;padding:4px 2px;scroll-behavior:smooth}
+.echo-msg{display:flex}
+.echo-msg--user{justify-content:flex-end}
+.echo-msg--user .echo-msg__body{max-width:78%;padding:12px 18px;color:#f2ecdb;background:var(--sidebar-bg,#132a43);border:1px solid rgba(207,169,102,.35);border-radius:12px 12px 3px 12px}
+.echo-msg--user p{margin:0;font:13px/1.75 var(--serif,serif);white-space:pre-wrap}
+.echo-msg--assistant .echo-msg__body{width:100%;padding:16px 20px;background:var(--color-paper-bg-soft,#fdfaf2);border:1px solid var(--color-paper-border,#ddd4c0);border-left:2px solid var(--color-gold,#9a7b3f);border-radius:3px 12px 12px 12px}
+.echo-msg--assistant pre{margin:0;font:13px/1.9 var(--serif,serif);white-space:pre-wrap;word-break:break-word;color:var(--color-ink,#2c3539)}
+.echo-cursor{color:var(--color-gold,#9a7b3f);animation:echo-blink 1s steps(1) infinite}
+@keyframes echo-blink{50%{opacity:0}}
+.echo-msg__model{display:block;margin-top:8px;color:var(--color-paper-text-muted,#8d949c);font:9.5px var(--sans,sans-serif);letter-spacing:.06em}
+.echo-msg__actions{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.echo-msg__actions button{padding:5px 12px;color:var(--color-ink-soft,#5d6a75);background:none;border:1px solid var(--color-paper-border,#ddd4c0);border-radius:999px;font:10.5px var(--serif,serif);cursor:pointer;transition:.15s}
+.echo-msg__actions button:hover{color:#8b683b;border-color:var(--border-gold,rgba(207,169,102,.5));background:var(--color-gold-soft,rgba(207,169,102,.08))}
+.echoes-suggestions{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:6px}
+.echoes-suggestions button{padding:8px 15px;color:#33505f;background:rgba(51,91,131,.06);border:1px solid rgba(51,91,131,.25);border-radius:999px;font:11.5px var(--serif,serif);cursor:pointer}
+.echoes-suggestions button:hover{border-color:#33505f}
+
+/* ===== 输入区 ===== */
+.echoes-composer{display:grid;gap:11px;padding-top:14px;border-top:1px solid var(--color-paper-border,#ddd4c0)}
+.echoes-context-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.echoes-context-row>small{color:var(--color-gold,#9a7b3f);font:600 9px var(--sans,sans-serif);letter-spacing:.16em;margin-right:2px}
+.echoes-context-chip{padding:5px 11px;color:var(--color-ink-soft,#7d8791);background:none;border:1px dashed var(--color-paper-border,#ddd4c0);border-radius:999px;font:10.5px var(--serif,serif);cursor:pointer;transition:.15s}
+.echoes-context-chip.is-on{color:#33505f;background:rgba(51,91,131,.08);border:1px solid rgba(51,91,131,.3)}
+.echoes-context-chip.library.is-on{color:#8b683b;background:var(--color-gold-soft,rgba(207,169,102,.12));border-color:var(--border-gold,rgba(207,169,102,.45))}
+.echoes-context-chip.muted{cursor:default;opacity:.7}
+.echoes-input-row textarea{width:100%;padding:13px 16px;color:var(--color-ink,#2c3539);background:var(--color-paper-bg-soft,#fdfaf2);border:1px solid var(--color-paper-border,#ddd4c0);border-radius:10px;outline:none;font:13.5px/1.75 var(--serif,serif);resize:vertical}
+.echoes-input-row textarea:focus{border-color:var(--color-gold,#9a7b3f);box-shadow:0 0 0 3px var(--color-gold-soft,rgba(207,169,102,.12))}
+.echoes-control-row{display:flex;gap:14px;align-items:flex-end;flex-wrap:wrap}
+.echoes-control-row label{display:grid;gap:5px;flex:1;min-width:160px}
+.echoes-control-row label>*,.echoes-control-row label{color:var(--color-gold,#9a7b3f);font:600 9.5px var(--sans,sans-serif);letter-spacing:.14em}
+.echoes-control-row select{padding:9px 12px;color:var(--color-ink,#2c3539);background:var(--color-paper-bg-soft,#fdfaf2);border:1px solid var(--color-paper-border,#ddd4c0);border-radius:8px;outline:none;font:12.5px var(--serif,serif)}
+.echoes-control-row select:focus{border-color:var(--color-gold,#9a7b3f)}
+.echoes-control-row .primary{padding:11px 26px;color:#fffdf7;background:var(--sidebar-bg,#132a43);border:1px solid var(--border-gold,rgba(207,169,102,.4));border-radius:999px;font:13px var(--serif,serif);letter-spacing:.06em;cursor:pointer;transition:.16s}
+.echoes-control-row .primary:hover{filter:brightness(1.2)}
+.echoes-control-row .primary:disabled{opacity:.55;cursor:wait}
+
+@media(max-width:960px){
+  .echoes-layout{grid-template-columns:1fr}
+  .echoes-sessions-surface{position:static;max-height:180px;overflow-y:auto}
+  .echoes-messages{max-height:44vh}
+}

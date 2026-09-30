@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import type { Response } from 'express';
-import { AiModelConfigsService } from './ai-model-configs.service';
+import { AiModelConfigsService, type AiRuntimeConfig } from './ai-model-configs.service';
 
 type Message = { role: 'user' | 'assistant'; content: string };
 
@@ -8,12 +8,13 @@ type Message = { role: 'user' | 'assistant'; content: string };
 export class AiStreamingService {
   constructor(private readonly models: AiModelConfigsService) {}
 
-  async stream(systemPrompt: string, messages: Message[], response: Response, signal: AbortSignal, mockText: string) {
-    const runtime = await this.models.resolveRuntimeConfig();
+  async stream(systemPrompt: string, messages: Message[], response: Response, signal: AbortSignal, mockText: string, runtimeOverride?: AiRuntimeConfig | null, onDelta?: (text: string) => void) {
+    const runtime = runtimeOverride ?? await this.models.resolveRuntimeConfig();
     if (runtime.provider === 'mock') {
       for (const text of mockText.match(/.{1,12}/gs) || []) {
         if (signal.aborted) return;
         this.send(response, { type: 'delta', text });
+        onDelta?.(text);
       }
       this.send(response, { type: 'done' });
       return;
@@ -24,15 +25,15 @@ export class AiStreamingService {
       stream: true,
       messages: [{ role: 'system', content: systemPrompt }, ...messages],
     }, signal);
-    await this.relay(upstream, response, signal);
+    await this.relay(upstream, response, signal, onDelta);
   }
 
-  private async relay(upstream: globalThis.Response, response: Response, signal: AbortSignal) {
+  private async relay(upstream: globalThis.Response, response: Response, signal: AbortSignal, onDelta?: (text: string) => void) {
     const contentType = upstream.headers.get('content-type') || '';
     if (contentType.includes('application/json')) {
       const payload = await upstream.json() as { choices?: Array<{ message?: { content?: string } }> };
       const text = payload.choices?.[0]?.message?.content || '';
-      if (text) this.send(response, { type: 'delta', text });
+      if (text) { this.send(response, { type: 'delta', text }); onDelta?.(text); }
       this.send(response, { type: 'done' });
       return;
     }
@@ -53,7 +54,7 @@ export class AiStreamingService {
         try {
           const chunk = JSON.parse(data) as { choices?: Array<{ delta?: { content?: string }; text?: string }> };
           const text = chunk.choices?.[0]?.delta?.content || chunk.choices?.[0]?.text || '';
-          if (text) this.send(response, { type: 'delta', text });
+          if (text) { this.send(response, { type: 'delta', text }); onDelta?.(text); }
         } catch { /* Provider keep-alive frame. */ }
       }
     }

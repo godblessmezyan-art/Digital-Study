@@ -126,6 +126,25 @@ export class AiModelConfigsService {
     };
   }
 
+  /** Resolve a runtime config for a specific stored model (used by the Echo workspace model picker). */
+  async resolveRuntimeById(id: string): Promise<AiRuntimeConfig | null> {
+    const model = await this.prisma.aiModelConfig.findUnique({ where: { id } });
+    return model ? this.runtimeFromModel(model) : null;
+  }
+
+  /** Lightweight, secret-free model list for authenticated users. */
+  async availableModels() {
+    const models = await this.prisma.aiModelConfig.findMany({
+      orderBy: [{ isActive: 'desc' }, { updatedAt: 'desc' }],
+    });
+    return models.map((model) => ({
+      id: model.id,
+      displayName: model.displayName,
+      modelId: model.modelId,
+      isActive: model.isActive,
+    }));
+  }
+
   async publicConfiguration() {
     const runtime = await this.resolveRuntimeConfig();
     return {

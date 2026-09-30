@@ -10,6 +10,8 @@ import { withAppBase } from './runtime-paths.js';
 import { openUserMenu } from './user-menu.js?v=1';
 import { createProfilePage } from './profile-page.js?v=1';
 import { createInscriptionsPage } from './inscriptions-page.js?v=1';
+import { initAiPanel } from './ai-panel.js?v=1';
+import { setPageContexts } from './ai-context.js';
 import { initWorld } from './world.js?v=1';
 import { initFootprints, recordFootprint, seedFootprints } from './footprints.js?v=1';
 import { createJournalPage } from './journal-page.js?v=3';
@@ -17,7 +19,7 @@ import { createPlansPage } from './plans-page.js?v=3';
 import { createChroniclesPage } from './chronicles-page.js?v=1';
 import { initChronicles } from './chronicles.js?v=1';
 import { initMotionSystem } from './motion.js?v=1';
-import { createCuratorPage } from './curator-page.js?v=3';
+import { createCuratorPage } from './curator-page.js?v=4';
 import { PageHero, PageToolbar } from './page-system.js';
 
 const icon = (name) => {
@@ -51,7 +53,7 @@ const appScenes=[
 ];
 let appSceneIndex=0;
 const appTopbar=document.querySelector('#appTopbar'),appSceneCaption=document.querySelector('#appSceneCaption');
-appTopbar.innerHTML=`<div class="app-topbar-inner"><button class="app-scene-status" id="appSceneStatus"><span>${archiveIcons.astrolabe}</span><span><small>埃瑞瑞恩 · 窗景</small><strong id="appSceneName"></strong></span></button><span data-world-entry></span><span data-footprint-entry></span><button class="app-circle-btn" id="appScenicToggle" title="进入观景模式" aria-label="进入观景模式">${archiveIcons.telescope}</button><button class="app-circle-btn" data-top-action="通知" aria-label="通知">${archiveIcons.bell}</button><button class="app-circle-btn" id="appAtmosphere" title="切换氛围" aria-label="切换氛围">${archiveIcons.alchemy}</button><button class="app-circle-btn app-avatar" id="appAuthButton" aria-label="账号登录">登录</button></div>`;
+appTopbar.innerHTML=`<div class="app-topbar-inner"><button class="app-scene-status" id="appSceneStatus"><span>${archiveIcons.astrolabe}</span><span><small>埃瑞瑞恩 · 窗景</small><strong id="appSceneName"></strong></span></button><span data-world-entry></span><span data-footprint-entry></span><button class="app-circle-btn" id="appScenicToggle" title="进入观景模式" aria-label="进入观景模式">${archiveIcons.telescope}</button><button class="app-circle-btn" id="appEchoButton" title="唤起回响（Ctrl+E）" aria-label="唤起回响">✦</button><button class="app-circle-btn" data-top-action="通知" aria-label="通知">${archiveIcons.bell}</button><button class="app-circle-btn" id="appAtmosphere" title="切换氛围" aria-label="切换氛围">${archiveIcons.alchemy}</button><button class="app-circle-btn app-avatar" id="appAuthButton" aria-label="账号登录">登录</button></div>`;
 const world=initWorld({mount:document.querySelector('[data-world-entry]'),scene:'study'});
 const chronicles=initChronicles({world,page:'study'});
 initMotionSystem({surface:'app'});
@@ -71,6 +73,8 @@ document.querySelector('#appSceneNext').addEventListener('click',()=>applyAppSce
 document.querySelector('#appSceneReturn').addEventListener('click',()=>setAppScenic(false));
 document.querySelector('#appAtmosphere').addEventListener('click',()=>world.open());
 document.querySelectorAll('[data-top-action]').forEach(button=>button.addEventListener('click',()=>showToast(`${button.dataset.topAction}功能开发中`)));
+const aiPanel=initAiPanel({showToast,openLogin:openAuthDialog});
+document.querySelector('#appEchoButton').addEventListener('click',()=>{void aiPanel.open()});
 document.addEventListener('keydown',event=>{if(event.key==='Escape'&&document.body.classList.contains('is-app-scenic'))setAppScenic(false)});
 
 const authDialog=document.createElement('dialog');
@@ -275,7 +279,8 @@ function renderChronicles(){
 }
 
 function bindGlobal(){document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{setAppScenic(false);if(b.dataset.page==='home')window.location.href='home.html';else if(b.dataset.page==='library'||b.dataset.page==='content')location.hash='#content';else if(b.dataset.page==='studio')location.hash='#studio';else if(b.dataset.page==='categories')location.hash='#categories';else showToast(`${b.textContent.trim()}功能即将开放`)});document.querySelectorAll('[data-toast]').forEach(b=>b.onclick=()=>showToast(b.dataset.toast))}
-const route=()=>{if(/\/plans(?:\/[^/?#]+)?\/?$/.test(location.pathname)){chronicles.setContext('plans');void chronicles.check('plans');return renderPlans()}if(/\/chronicles\/?$/.test(location.pathname)){chronicles.setContext('chronicles');void chronicles.check('chronicles');return renderChronicles()}if(/\/journal(?:\/[^/?#]+){0,2}\/?$/.test(location.pathname)){chronicles.setContext('journal');void chronicles.check('journal');return renderJournal()}const page=location.hash.slice(1).split('?')[0];const storyPage=page==='library'?'content':page||'study';chronicles.setContext(storyPage);void chronicles.check(storyPage);world.setScene(storyPage);if(page==='studio')return renderStudioV3();if(page==='inscriptions')return renderInscriptions();if(page==='profile')return renderProfile();if(page==='curator')return renderCurator();if(page==='shelf')return renderShelf();if(page==='categories')return renderCategories();if(page==='reading')return renderReadingSpace();if(page==='content'||page==='library')return renderLibrary();window.location.replace('home.html')};route();
+const syncAiContexts=()=>{const path=location.pathname,hash=location.hash.slice(1);const planMatch=path.match(/\/plans\/([^/?#]+)/);const journalMatch=path.match(/\/journal\/([^/?#]+)/);const params=new URLSearchParams(hash.split('?')[1]||'');const book=params.get('book');let contexts;if(planMatch)contexts=[{type:'PLAN',id:decodeURIComponent(planMatch[1]),title:'当前远征计划'}];else if(journalMatch&&journalMatch[1]!=='templates')contexts=[{type:'JOURNAL',id:decodeURIComponent(journalMatch[1]),title:'当前手记'}];else if(book)contexts=[{type:'BOOK',id:decodeURIComponent(book),title:'当前书籍'}];else{const page=hash.split('?')[0];const names={shelf:'私人藏书',categories:'典籍目录',reading:'静阅室',journal:'旅者手记',plans:'远征计划',studio:'铭文台',inscriptions:'铭文库',curator:'秘典回响',content:'典籍档案',profile:'旅者档案'};contexts=[{type:'PAGE',title:names[page]||(path.startsWith('/journal')?'旅者手记':path.startsWith('/plans')?'远征计划':'书房页面')}]}setPageContexts(contexts)};
+const route=()=>{syncAiContexts();if(/\/plans(?:\/[^/?#]+)?\/?$/.test(location.pathname)){chronicles.setContext('plans');void chronicles.check('plans');return renderPlans()}if(/\/chronicles\/?$/.test(location.pathname)){chronicles.setContext('chronicles');void chronicles.check('chronicles');return renderChronicles()}if(/\/journal(?:\/[^/?#]+){0,2}\/?$/.test(location.pathname)){chronicles.setContext('journal');void chronicles.check('journal');return renderJournal()}const page=location.hash.slice(1).split('?')[0];const storyPage=page==='library'?'content':page||'study';chronicles.setContext(storyPage);void chronicles.check(storyPage);world.setScene(storyPage);if(page==='studio')return renderStudioV3();if(page==='inscriptions')return renderInscriptions();if(page==='profile')return renderProfile();if(page==='curator')return renderCurator();if(page==='shelf')return renderShelf();if(page==='categories')return renderCategories();if(page==='reading')return renderReadingSpace();if(page==='content'||page==='library')return renderLibrary();window.location.replace('home.html')};route();
 window.addEventListener('hashchange',route);
 window.addEventListener('study-auth-changed',()=>{updateAuthButton();void chronicles.refresh();if(location.pathname.includes('/journal')||location.pathname.includes('/chronicles')||location.pathname.includes('/plans')||location.hash.startsWith('#curator')||location.hash.startsWith('#profile'))route()});
 window.addEventListener('study-toast',event=>showToast(event.detail));

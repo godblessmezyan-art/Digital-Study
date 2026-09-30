@@ -49,7 +49,7 @@ function listRows(items, contexts) {
         ${rowMeta(item, contexts)}
       </div>
       <div class="inscription-row__actions">
-        <button type="button" data-action="view">查看</button>
+        ${item.type === 'PROMPT' ? '<button type="button" data-action="launch">启动铭文</button>' : ''}<button type="button" data-action="view">查看</button>
         <button type="button" data-action="edit">编辑</button>
         <button type="button" data-action="duplicate">复制</button>
         <button type="button" data-action="toggle">${item.enabled ? '停用' : '启用'}</button>
@@ -281,6 +281,7 @@ export async function createInscriptionsPage(root, { showToast, openLogin }) {
       row.querySelectorAll('[data-action]').forEach(button => button.onclick = async () => {
         const action = button.dataset.action;
         try {
+          if (action === 'launch') { location.hash = `#curator?inscription=${encodeURIComponent(id)}`; return; }
           if (action === 'view') await openViewer(id);
           else if (action === 'edit') await openEditor(id);
           else if (action === 'duplicate') { await duplicateInscription(id); showToast('已创建副本（默认停用）'); await load(); paint(); }
