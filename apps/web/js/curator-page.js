@@ -1,7 +1,7 @@
 import { getStoredUser } from './auth-client.js';
 import { getCuratorIndexStatus, getCuratorInsights, rebuildCuratorIndex, streamCurator } from './curator-client.js?v=2';
 import {
-  AnswerBlock, CuratorHero, CuratorQuickActions, CuratorSkeleton, CuratorInsightsBlock,
+  AnswerBlock, CuratorHero, CuratorQuickActions, CuratorSearchBox, CuratorSkeleton, CuratorInsightsBlock,
   ErrorBlock, esc, extractConcepts, FollowupActions, IndexStatusChip, IndexStatusPanel,
   NoResultsBlock, QuestionBlock, QUICK_ACTIONS, RecentExplorations, RecentSession,
   RelatedConcepts, SignedOutBlock, SourceCard, SourcesBlock,
