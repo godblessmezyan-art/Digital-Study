@@ -148,7 +148,7 @@ export function createCuratorPage(root, { showToast, openLogin }) {
     root.innerHTML = `<section class="curator-page curator-answer-view">
       ${PaperSurface(`
         <div class="curator-answer-toolbar">
-          <button type="button" class="curator-back" data-curator-back>← 返回馆长首页</button>
+          <button type="button" class="curator-back" data-curator-back>← 返回秘典回响</button>
           ${resume ? '<small class="curator-resume-flag">继续上次探索</small>' : ''}
         </div>
         ${QuestionBlock(query, state.scope)}
@@ -210,21 +210,21 @@ export function createCuratorPage(root, { showToast, openLogin }) {
               text += event.text || '';
               answerContent.textContent = text;
             }
-            if (event.type === 'error') throw new Error(event.message || 'AI 馆长暂时不可用');
+            if (event.type === 'error') throw new Error(event.message || '秘典回响暂时不可用');
           },
         },
       );
       if (!text) {
         thinking.hidden = true;
-        answerContent.innerHTML = `<p class="curator-answer-empty">${sources.length ? '馆长检索到了资料，但这次没有生成综述。可以直接查看下方参考资料。' : '目前没有找到足够相关的个人资料。试着换个说法，或把范围扩大到「全部」。'}</p>`;
+        answerContent.innerHTML = `<p class="curator-answer-empty">${sources.length ? '回响显现了资料，但这次没有生成综述。可以直接查看下方参考资料。' : '目前没有找到足够相关的馆藏资料。试着换个说法，或把范围扩大到「全部」。'}</p>`;
       }
     } catch (error) {
       failed = true;
       thinking.hidden = true;
       if (error?.name !== 'AbortError') {
-        answerContent.innerHTML = ErrorBlock(error.message || 'AI 馆长暂时不可用', '重新搜索');
+        answerContent.innerHTML = ErrorBlock(error.message || '秘典回响暂时不可用', '重新搜索');
         answerContent.querySelector('[data-curator-retry]')?.addEventListener('click', () => runSearch(query));
-        showToast(error.message || '馆长查询失败');
+        showToast(error.message || '回响查询失败');
       } else {
         answerContent.textContent = text || '（已停止生成）';
       }

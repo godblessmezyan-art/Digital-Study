@@ -7,7 +7,7 @@ const apiBase = globalThis.DIGITAL_STUDY_API_BASE || (isLocalStaticPreview ? `ht
 async function request(path = '', options = {}) {
   if (!getStoredUser()) {
     window.dispatchEvent(new CustomEvent('study-auth-required'));
-    throw new Error('请先登录后使用阅读空间');
+    throw new Error('请先登录后使用静阅室');
   }
   const response = await fetch(`${apiBase}/reading/entries${path}`, {
     cache: 'no-store',

@@ -44,14 +44,13 @@ export function JournalHeader(entries) {
   const today = todayValue();
   const year = today.slice(0, 4), month = today.slice(0, 7);
   return PageHero({
-    eyebrow: "TRAVELER'S JOURNAL", title: '旅者手记', description: '记录留在云天幻境中的日子',
+    eyebrow: "TRAVELER'S JOURNAL", title: '旅者手记', description: '记录留在埃瑞瑞恩中的日子',
     stats: [
       { value: entries.filter(item => item.entryDate.startsWith(year)).length, label: '今年手记' },
       { value: entries.filter(item => item.entryDate.startsWith(month)).length, label: '本月' },
       { value: entries.length, label: '累计' },
     ], action: '<a class="journal-write" href="journal/new">＋ 写下今天</a>', className: 'journal-hero',
-  });
-}
+  });}
 
 export function JournalTodayCard(entries) {
   const today = todayValue();

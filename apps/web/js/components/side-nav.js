@@ -9,7 +9,7 @@ import { categories } from '../data.js';
 
 const MAIN_ITEMS = [
   { label: '首页',     icon: 'home',      active: true, target: null },
-  { label: '我的书架', icon: 'bookshelf', target: '#sec-shelf' },
+  { label: '私人藏书', icon: 'bookshelf', target: '#sec-shelf' },
   { label: '最近阅读', icon: 'clock',     target: '#sec-continue' },
 ];
 

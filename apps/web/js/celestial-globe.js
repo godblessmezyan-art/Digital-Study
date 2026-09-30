@@ -29,7 +29,7 @@ export function createCelestialGlobe(root, {
   const sphereContext = sphereCanvas.getContext('2d');
   canvas.className = 'celestial-globe__canvas';
   canvas.setAttribute('role', 'img');
-  canvas.setAttribute('aria-label', '可旋转的手绘异世界星球，天空之城是其中一个地点');
+  canvas.setAttribute('aria-label', '可旋转的手绘异世界星球，埃瑞瑞恩是其中一个地点');
   markerLayer.className = 'celestial-globe__markers';
   root.append(canvas, markerLayer);
 

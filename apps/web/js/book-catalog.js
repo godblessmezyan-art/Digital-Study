@@ -81,7 +81,7 @@ export async function loadCatalogBooks({ fresh = false } = {}) {
 }
 
 export async function refreshShelfBooks() {
-  if (!getStoredUser()) throw new Error('请先登录后查看我的书架');
+  if (!getStoredUser()) throw new Error('请先登录后查看私人藏书');
   const apiBooks=await fetchJson(`${apiBase}/shelf`,3000,{headers:authHeaders()});
   const books=mergeBooks([],Array.isArray(apiBooks)?apiBooks:[]);
   try { sessionStorage.setItem(shelfCacheKey(),JSON.stringify({savedAt:Date.now(),books})) } catch { /* 缓存不可用时仍返回服务器数据。 */ }
@@ -95,7 +95,7 @@ export async function loadShelfBooks() {
 }
 
 async function shelfMutation(slug,{method='POST',body}={}){
-  if(!getStoredUser()){window.dispatchEvent(new CustomEvent('study-auth-required'));throw new Error('请先登录后操作我的书架')}
+  if(!getStoredUser()){window.dispatchEvent(new CustomEvent('study-auth-required'));throw new Error('请先登录后操作私人藏书')}
   const response=await fetch(`${apiBase}/shelf/${encodeURIComponent(slug)}`,{method,headers:{...authHeaders(),...(body?{'Content-Type':'application/json'}:{})},...(body?{body:JSON.stringify(body)}:{})});
   const payload=await response.json().catch(()=>null);
   if(response.status===401)window.dispatchEvent(new CustomEvent('study-auth-required'));

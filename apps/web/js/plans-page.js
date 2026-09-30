@@ -40,7 +40,7 @@ export async function PlansListPage(root, { showToast, openLogin }) {
 
 export async function PlanNewPage(root, { showToast }) {
   root.innerHTML = `<section class="plans-page plan-new-page">
-    <header class="plan-form-head"><a href="plans">← 返回计划</a><small>NEW EXPEDITION</small><span></span></header>
+    <header class="plan-form-head"><a href="plans">← 返回远征计划</a><small>NEW EXPEDITION</small><span></span></header>
     <form class="plan-form" data-plan-form>
       <h1>开启一个新计划</h1>
       <label><span>计划标题 *</span><input name="title" maxlength="255" required placeholder="例如：3 个月内雅思从 5.0 提升到 6.0"></label>

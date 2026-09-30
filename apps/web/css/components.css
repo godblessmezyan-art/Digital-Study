@@ -266,7 +266,7 @@
   .stat-card__watermark { transition:none; }
 }
 
-/* 天空城地图导航：坐标和地图素材由主题配置提供。 */
+/* 埃瑞瑞恩地图导航：坐标和地图素材由主题配置提供。 */
 body.is-atlas-open { overflow:hidden; }
 .scene-status__astrolabe { width:28px; height:28px; position:relative; display:grid; place-items:center; flex:0 0 auto; }
 .scene-status__astrolabe::before,.scene-status__astrolabe::after { content:""; position:absolute; inset:-3px; border:1px solid rgba(231,201,146,.48); border-radius:50%; transition:transform .55s cubic-bezier(.2,.8,.2,1); }

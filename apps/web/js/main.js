@@ -105,17 +105,17 @@ app.innerHTML = `
   </section>
   <div class="dashboard" id="home-content">
     <section class="home-section quick-entries" aria-labelledby="quick-entries-title"><div class="home-section__head home-section__head--compact"><div><span>MY STUDY</span><h2 id="quick-entries-title">我的书房</h2></div></div><div class="stat-grid" aria-label="书房快捷入口">${statHTML}</div></section>
-    <section class="home-section continue-section" aria-labelledby="continue-title"><div class="home-section__head"><div><span>CONTINUE THE JOURNEY</span><h2 id="continue-title">继续阅读</h2></div><p>回到上次停留的文字之间</p></div><article class="panel reading" id="continue-reading"><div class="reading__art" aria-hidden="true"></div><div class="reading__cover" data-title=""></div><div class="reading__body"><span class="reading__label">正在读取书架…</span><h2>我的阅读</h2><p class="reading__author">登录后同步最近进度</p><div class="reading__meta"><span>上次阅读 <time>—</time></span><span>最近章节 <time>正文</time></span></div><div class="progress-line" style="--reading-progress:0%"><i><b aria-hidden="true">✦</b></i><span>已读 0%</span></div><button class="primary-btn" data-action="read">打开我的书架 →</button></div></article></section>
+    <section class="home-section continue-section" aria-labelledby="continue-title"><div class="home-section__head"><div><span>CONTINUE THE JOURNEY</span><h2 id="continue-title">继续阅读</h2></div><p>回到上次停留的文字之间</p></div><article class="panel reading" id="continue-reading"><div class="reading__art" aria-hidden="true"></div><div class="reading__cover" data-title=""></div><div class="reading__body"><span class="reading__label">正在读取书架…</span><h2>我的阅读</h2><p class="reading__author">登录后同步最近进度</p><div class="reading__meta"><span>上次阅读 <time>—</time></span><span>最近章节 <time>正文</time></span></div><div class="progress-line" style="--reading-progress:0%"><i><b aria-hidden="true">✦</b></i><span>已读 0%</span></div><button class="primary-btn" data-action="read">打开私人藏书 →</button></div></article></section>
     <section class="home-section recent-section" aria-labelledby="recent-title"><div class="home-section__head"><div><span>RECENT TRACES</span><h2 id="recent-title">最近留下的痕迹</h2></div><p>想法与句子，都是旅途的坐标</p></div><div class="recent-grid"><section class="panel notes-panel" id="notes"><div class="panel__head"><h3 class="panel__title">最近写下的想法</h3><button class="panel__more" data-home-reading="notes">查看全部 →</button></div><div class="notes" id="homeNotes">${noteHTML}</div></section><section class="panel quotes-panel" id="quotes"><div class="panel__head"><h3 class="panel__title">最近收藏的片段</h3><button class="panel__more" data-home-reading="quotes">查看全部 →</button></div><div class="quotes" id="homeQuotes">${quoteHTML}</div></section></div></section>
     <section class="home-section category-section" id="categories"><div class="section-head"><div><span>EXPLORE THE LIBRARY</span><h2>探索藏书</h2><p>沿着兴趣，寻找下一段阅读旅程</p></div><a href="#shelf">查看全部分类 →</a></div><div class="category-grid">${categoryHTML}</div></section>
-    <section class="panel shelf" id="shelf"><div class="shelf__head"><h2>我的书架</h2><div class="tabs" id="shelfTabs"><button class="tab is-active" data-category="all">最近加入</button></div><a class="shelf__more" id="shelfCount" href="index.html#shelf">正在读取…</a></div><div class="books" id="books"></div></section>
+    <section class="panel shelf" id="shelf"><div class="shelf__head"><h2>私人藏书</h2><div class="tabs" id="shelfTabs"><button class="tab is-active" data-category="all">最近加入</button></div><a class="shelf__more" id="shelfCount" href="index.html#shelf">正在读取…</a></div><div class="books" id="books"></div></section>
   </div>
   <aside class="world-map-modal" id="world-map-modal" role="dialog" aria-modal="true" aria-labelledby="world-map-title" aria-hidden="true">
     <div class="world-map-modal__backdrop" data-world-map-close aria-hidden="true"></div>
     <section class="world-map-modal__panel">
       <header class="world-map-modal__head">
         <span class="world-map-modal__sigil" aria-hidden="true">${icons.astrolabe}</span>
-        <span><small>OTHERWORLD CELESTIAL ATLAS</small><h2 id="world-map-title">异世界航行图</h2><p>拖动星球，寻找云海之外的天空之城</p></span>
+        <span><small>AETHERION CELESTIAL ATLAS</small><h2 id="world-map-title">埃瑞瑞恩航行图</h2><p>转动星盘，寻访云海之上的埃瑞瑞恩</p></span>
         <button class="world-map-modal__close" id="world-map-close" type="button" aria-label="关闭世界地图">×</button>
       </header>
       <div class="world-map-modal__body">
@@ -125,8 +125,8 @@ app.innerHTML = `
       </div>
       <footer class="world-map-modal__foot">
         <span class="chronicle-map-entry"><button type="button" data-open-chronicles><small>WORLD CHRONICLES</small><strong>世界纪事 · <b data-chronicle-count>0 / 12</b></strong></button></span>
-        <span><i aria-hidden="true"></i> 已发现坐标：天空之城</span>
-        <button type="button" id="globe-map">查看天空城地图 →</button>
+        <span><i aria-hidden="true"></i> 已发现坐标：埃瑞瑞恩</span>
+        <button type="button" id="globe-map">查看埃瑞瑞恩地图 →</button>
       </footer>
     </section>
   </aside>
@@ -135,7 +135,7 @@ app.innerHTML = `
     <section class="scene-atlas__panel">
       <header class="scene-atlas__head">
         <span class="atlas-sigil" aria-hidden="true">${icons.astrolabe}</span>
-        <span><small>${theme.name} · CELESTIAL ATLAS</small><h2 id="atlas-title">${theme.navigator.title}</h2><p>${theme.navigator.subtitle}</p></span>
+        <span><small>埃瑞瑞恩 · CELESTIAL ATLAS</small><h2 id="atlas-title">${theme.navigator.title}</h2><p>${theme.navigator.subtitle}</p></span>
         <button class="scene-atlas__close" id="atlas-close" type="button" aria-label="关闭航行图">×</button>
       </header>
       <div class="scene-atlas__body">
@@ -176,7 +176,7 @@ document.querySelector('#scenic-return').innerHTML = `${icons.return}<span>返�
 function renderBooks() {
   const filtered = shelfBooks.filter((book) => (activeCategory === 'all' || (book.category?.name || '未分类') === activeCategory)
     && `${book.title}${book.author}`.toLowerCase().includes(query.toLowerCase()));
-  const addBook = activeCategory === 'all' && !query ? `<button class="book-add" type="button" data-action="add-book">${icons.tome}<span>浏览书籍分类</span></button>` : '';
+  const addBook = activeCategory === 'all' && !query ? `<button class="book-add" type="button" data-action="add-book">${icons.tome}<span>浏览典籍目录</span></button>` : '';
   document.querySelector('#books').innerHTML = filtered.length
     ? filtered.slice(0, 8).map((book) => `<button class="book" data-title="${esc(book.title)}" data-home-book="${esc(book.slug)}"><span class="book__cover" style="--cover:${book.coverUrl ? `linear-gradient(rgba(6,20,31,.12),rgba(6,20,31,.55)),url('${esc(book.coverUrl)}') center/cover` : 'linear-gradient(145deg,#17344a,#486a79)'}"><span>${esc(book.title)}</span></span><strong>${esc(book.title)}</strong><small>${esc(book.author || '佚名')}</small></button>`).join('') + addBook
     : `<p class="empty">${getStoredUser() ? '你的书架里暂时没有匹配的书' : '登录后查看你的真实书架'}</p>${addBook}`;
@@ -277,9 +277,9 @@ function renderContinueReading() {
     || shelfBooks.find(item => item.status === 'published');
   const card = document.querySelector('#continue-reading');
   if (!book) {
-    card.querySelector('.reading__label').textContent = getStoredUser() ? '我的书架还是空的' : '登录后同步阅读进度';
+    card.querySelector('.reading__label').textContent = getStoredUser() ? '私人藏书还是空的' : '登录后同步阅读进度';
     card.querySelector('h2').textContent = getStoredUser() ? '去发现一本好书' : '我的阅读';
-    card.querySelector('.reading__author').textContent = getStoredUser() ? '从书籍分类加入书架' : '你的书架、笔记与书摘会显示在这里';
+    card.querySelector('.reading__author').textContent = getStoredUser() ? '从典籍目录加入书架' : '你的书架、笔记与书摘会显示在这里';
     return;
   }
   const progress = Number(book.shelf?.progress || 0);
@@ -607,7 +607,7 @@ document.querySelector('#atmosphere').addEventListener('click', () => {
   const root = document.documentElement;
   root.dataset.atmosphere = root.dataset.atmosphere === 'dusk' ? 'day' : 'dusk';
   localStorage.setItem('library-atmosphere', root.dataset.atmosphere);
-  showToast(root.dataset.atmosphere === 'dusk' ? '暮色已降临天空城' : '天空城迎来晨光');
+  showToast(root.dataset.atmosphere === 'dusk' ? '暮色已降临埃瑞瑞恩' : '埃瑞瑞恩迎来晨光');
 });
 document.querySelector('[data-action="read"]').addEventListener('click', () => { window.location.href = 'index.html#shelf'; });
 document.querySelectorAll('[data-home-reading]').forEach(button => button.addEventListener('click', () => { window.location.href = `index.html#reading?tab=${button.dataset.homeReading}`; }));

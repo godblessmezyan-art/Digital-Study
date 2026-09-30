@@ -1,5 +1,5 @@
 /* ============================================================
-   AI 馆长 · 个人知识中枢
+   秘典回响 · 个人知识中枢
    古老天空藏书馆中的智能知识档案终端
    深蓝 hero + 纸色 surface + 黄铜金点缀
    ============================================================ */
@@ -70,7 +70,7 @@
 .curator-recent-list button small{flex:none;color:#a2977e;font:9px var(--sans)}
 .curator-recent-list button:hover{border-color:rgba(185,145,86,.55);color:#173b51;background:#fffcf4}
 
-/* 馆长发现 */
+/* 回响发现 */
 .curator-discoveries{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
 .curator-discoveries li a,.curator-discoveries li>span{display:flex;align-items:flex-start;gap:9px;padding:10px 12px;color:#41596a;background:linear-gradient(120deg,rgba(23,59,81,.05),rgba(185,145,86,.06));border:1px solid rgba(185,145,86,.22);border-radius:9px;font:12px/1.75 var(--serif);text-decoration:none;transition:.2s}
 .curator-discoveries li a:hover{border-color:rgba(185,145,86,.6);box-shadow:0 6px 18px rgba(44,53,57,.09);transform:translateY(-1px)}

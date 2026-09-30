@@ -1,7 +1,6 @@
 import { PageHero } from './page-system.js';
 
-// AI 馆长 · 展示组件库（纯 HTML 字符串组件，遵循 journal-components 模式）
-
+// 秘典回响 · 展示组件库（纯 HTML 字符串组件，遵循 journal-components 模式）
 export const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
 }[char]));
@@ -70,15 +69,14 @@ export function IndexStatusPanel(status, { isAdmin = false } = {}) {
 }
 
 export function CuratorHero(indexChipHtml, indexPanelHtml) {
-  return PageHero({ eyebrow: 'AI CURATOR · KNOWLEDGE SANCTUM', title: 'AI 馆长', description: '他记得你读过什么，也知道你的想法曾经如何改变。', action: `<div class="curator-index">${indexChipHtml}${indexPanelHtml}</div>`, className: 'curator-hero' });
-}
+  return PageHero({ eyebrow: 'ECHOES OF THE ARCHIVE · AETHERION', title: '秘典回响', description: '埋藏于埃瑞瑞恩的典籍与记录，会回应你的追问，并显现思绪曾经留下的轨迹。', action: `<div class="curator-index">${indexChipHtml}${indexPanelHtml}</div>`, className: 'curator-hero' });}
 
 /* ===== 搜索与快捷入口 ===== */
 
 export function CuratorSearchBox(scope = 'all') {
   return `<form class="curator-query" data-curator-form>
     <div class="curator-input-wrap">
-      <textarea data-curator-input maxlength="2000" rows="2" required placeholder="问我关于你的书房、阅读和过去的思考……" aria-label="询问 AI 馆长"></textarea>
+      <textarea data-curator-input maxlength="2000" rows="2" required placeholder="问我关于你的书房、阅读和过去的思考……" aria-label="询问秘典回响"></textarea>
       <div class="curator-query-actions">
         <div class="curator-scopes" role="group" aria-label="检索范围">${SCOPES.map(([id, label]) => `<button type="button" class="${id === scope ? 'active' : ''}" data-curator-scope="${id}">${label}</button>`).join('')}</div>
         <button class="curator-submit" type="submit">智能搜索</button>
@@ -107,15 +105,15 @@ export function RecentExplorations(history) {
 const COLLECTION_LABELS = [['books', '书籍'], ['notes', '笔记'], ['excerpts', '书摘'], ['journals', '日记'], ['plans', '计划']];
 
 export function CuratorInsightsBlock(insights) {
-  if (!insights) return `<section class="curator-block" data-block="insights"><header><small>CURATOR INSIGHTS</small><h2>馆长发现</h2></header><div class="curator-insights-loading"><i></i><i></i><i></i></div></section>`;
+  if (!insights) return `<section class="curator-block" data-block="insights"><header><small>ARCHIVE ECHOES</small><h2>回响发现</h2></header><div class="curator-insights-loading"><i></i><i></i><i></i></div></section>`;
   const discoveries = insights.discoveries || [];
   const collections = COLLECTION_LABELS
     .map(([key, label]) => [label, insights.collections?.[key] ?? 0])
     .filter(([, count]) => count > 0);
   return `<section class="curator-block" data-block="insights">
-    <header><small>CURATOR INSIGHTS</small><h2>馆长发现</h2></header>
+    <header><small>ARCHIVE ECHOES</small><h2>回响发现</h2></header>
     ${discoveries.length ? `<ul class="curator-discoveries">${discoveries.map(item => `<li>${item.href ? `<a href="${esc(item.href)}">` : '<span>'}<i aria-hidden="true">${esc(item.icon)}</i>${esc(item.text)}${item.href ? '<b>去看看 →</b></a>' : '</span>'}</li>`).join('')}</ul>`
-      : '<p class="curator-block-empty">馆长还在观察你的书房。写下笔记、日记或计划后，他会主动发现之间的联系。</p>'}
+      : '<p class="curator-block-empty">回响仍在馆藏之间聆听。写下笔记、日记或计划后，它会主动显现彼此的联系。</p>'}
     ${collections.length ? `<footer class="curator-collections">${collections.map(([label, count]) => `<span><b>${count}</b>${label}</span>`).join('')}</footer>` : ''}
   </section>`;
 }
@@ -141,8 +139,8 @@ export function QuestionBlock(query, scope) {
 
 export function AnswerBlock() {
   return `<section class="curator-answer" data-curator-answer>
-    <header><span>AI 馆长回答</span><small>综合你的书籍、笔记、书摘、日记与计划</small></header>
-    <div class="curator-thinking" data-curator-thinking hidden><i></i><i></i><i></i><span>馆长正在翻阅你的书房…</span></div>
+    <header><span>秘典回响</span><small>综合你的书籍、笔记、书摘、日记与计划</small></header>
+    <div class="curator-thinking" data-curator-thinking hidden><i></i><i></i><i></i><span>回响正在翻阅馆藏…</span></div>
     <div data-curator-answer-content></div>
   </section>`;
 }
@@ -166,7 +164,7 @@ export function SourceCard(source) {
 }
 
 export function NoResultsBlock() {
-  return '<div class="curator-no-results"><span>✦</span><p>没有找到足够相关的个人资料。<br>试试换一个说法，或扩大检索范围到「全部」。</p></div>';
+  return '<div class="curator-no-results"><span>✦</span><p>没有找到足够相关的馆藏资料。<br>试试换一个说法，或扩大检索范围到「全部」。</p></div>';
 }
 
 /* 轻量相关概念：从回答与来源中提取真实高频关键词（非写死数据） */
@@ -221,8 +219,8 @@ export function CuratorSkeleton() {
 export function SignedOutBlock() {
   return `<section class="curator-page"><div class="curator-signed-out">
     <small>AI CURATOR · KNOWLEDGE SANCTUM</small>
-    <h1>登录后唤醒你的馆长</h1>
-    <p>他记得你读过什么，也知道你的想法曾经如何改变。<br>登录后，馆长会在你的书籍、笔记、书摘、日记与计划中寻找关联，并给出可以追溯的回答。</p>
+    <h1>登录后唤醒秘典回响</h1>
+    <p>埃瑞瑞恩中保存的书籍、笔记、书摘、日记与计划，都会回应你的追问，<br>并给出可以追溯的回答。</p>
     <button type="button" data-curator-login>登录账号</button>
   </div></section>`;
 }

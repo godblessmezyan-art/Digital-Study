@@ -19,7 +19,7 @@ function entryCard(entry) {
 }
 
 function signedOut(root) {
-  root.innerHTML = `<section class="reading-space-page"><div class="reading-signed-out"><small>PRIVATE READING ARCHIVE</small><h1>登录后使用阅读空间</h1><p>笔记和书摘属于当前账号，登录后可以在不同设备上继续整理。</p><button type="button" data-reading-login>登录账号</button></div></section>`;
+  root.innerHTML = `<section class="reading-space-page"><div class="reading-signed-out"><small>READING CHAMBER</small><h1>登录后使用静阅室</h1><p>笔记和书摘属于当前账号，登录后可以在不同设备上继续整理。</p><button type="button" data-reading-login>登录账号</button></div></section>`;
   root.querySelector('[data-reading-login]').onclick = () => window.dispatchEvent(new CustomEvent('study-auth-required'));
 }
 
@@ -33,7 +33,7 @@ export async function createReadingSpacePage(root, initialTab = 'notes', { showT
   let editingEntry = null;
   let bookFilter = '';
 
-  root.innerHTML = '<div class="reading-space-loading"><span></span><p>正在打开你的阅读空间…</p></div>';
+  root.innerHTML = '<div class="reading-space-loading"><span></span><p>正在打开你的静阅室…</p></div>';
   try {
     [entries, shelf] = await Promise.all([listReadingEntries(), loadShelfBooks({ fresh: true })]);
     seedFootprints(entries.map(entry => ({
@@ -43,14 +43,13 @@ export async function createReadingSpacePage(root, initialTab = 'notes', { showT
       href: `index.html#reading?tab=${entry.type === 'note' ? 'notes' : 'quotes'}&entry=${encodeURIComponent(entry.id)}`,
     })));
   } catch (error) {
-    showToast(error.message || '阅读空间加载失败');
+    showToast(error.message || '静阅室加载失败');
     if (!getStoredUser()) return signedOut(root);
   }
 
   const counts = type => entries.filter(item => item.type === type).length;
   root.innerHTML = `<section class="reading-space-page">
-    ${PageHero({ eyebrow: 'PRIVATE READING ARCHIVE', title: '阅读空间', description: '把阅读中的想法与触动，整理成只属于你的知识档案。', className: 'reading-space-header', stats: [{ valueHtml: `<span data-note-count>${counts('note')}</span>`, label: '篇笔记' }, { valueHtml: `<span data-quote-count>${counts('quote')}</span>`, label: '条书摘' }], tabs: `<nav class="reading-space-tabs" aria-label="阅读空间内容">${tabs.map(([id, label]) => `<button data-reading-tab="${id}">${label}</button>`).join('')}</nav>` })}
-    <section class="reading-space-content">
+    ${PageHero({ eyebrow: 'READING CHAMBER', title: '静阅室', description: '把阅读中的想法与触动，整理成只属于你的知识档案。', className: 'reading-space-header', stats: [{ valueHtml: `<span data-note-count>${counts('note')}</span>`, label: '篇笔记' }, { valueHtml: `<span data-quote-count>${counts('quote')}</span>`, label: '条书摘' }], tabs: `<nav class="reading-space-tabs" aria-label="静阅室内容">${tabs.map(([id, label]) => `<button data-reading-tab="${id}">${label}</button>`).join('')}</nav>` })}    <section class="reading-space-content">
       ${PageToolbar({ className: 'reading-space-toolbar', search: '<label><span>⌕</span><input data-reading-search placeholder="搜索标题、内容或书名…"></label>', controls: `<select data-reading-book-filter aria-label="按书籍筛选"><option value="">全部书籍</option>${shelf.map(book => `<option value="${esc(book.slug)}">${esc(book.title)}</option>`).join('')}</select>`, action: '<button type="button" class="reading-add" data-entry-new>＋ 新建笔记</button>' })}
       <div class="reading-entry-grid" id="readingEntryGrid"></div>
     </section>

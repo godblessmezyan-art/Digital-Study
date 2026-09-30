@@ -32,7 +32,7 @@ function bookCard(book) {
 }
 
 function signedOutView(root, navigateToCategories) {
-  root.innerHTML = `<section class="shelf-page-v2"><div class="shelf-signed-out"><small>PERSONAL LIBRARY</small><h1>登录后查看我的书架</h1><p>“我的书架”只保存当前用户自己的书籍、阅读进度和最近阅读记录，与全站的“书籍分类”资源库相互独立。</p><div><button type="button" class="primary" data-shelf-login>登录账号</button><button type="button" data-shelf-categories>浏览书籍分类</button></div></div></section>`;
+  root.innerHTML = `<section class="shelf-page-v2"><div class="shelf-signed-out"><small>PERSONAL COLLECTION</small><h1>登录后查看私人藏书</h1><p>“私人藏书”只保存当前用户自己的书籍、阅读进度和最近阅读记录，与全站的“典籍目录”资源库相互独立。</p><div><button type="button" class="primary" data-shelf-login>登录账号</button><button type="button" data-shelf-categories>浏览典籍目录</button></div></div></section>`;
   root.querySelector('[data-shelf-login]').onclick = () => window.dispatchEvent(new CustomEvent('study-auth-required'));
   root.querySelector('[data-shelf-categories]').onclick = () => navigateToCategories?.();
 }
@@ -69,8 +69,7 @@ export async function createShelfPage(root, { showToast, navigateToStudio, navig
     || books[0];
 
   root.innerHTML = `<section class="shelf-page-v2">
-    ${PageHero({eyebrow:'PERSONAL LIBRARY',title:'我的书架',description:'这里收藏当前账号加入、生成或导入的书。继续阅读，或前往公共书库发现新的旅程。',className:'shelf-hero-v2',stats:[{value:books.length,label:'我的书'},{value:counts('reading'),label:'阅读中'},{value:counts('completed'),label:'已读完'},{value:counts('want_to_read'),label:'想读'}]})}
-    ${continueBook ? `<section class="shelf-feature"><div class="shelf-feature-cover"${coverStyle(continueBook)}><span>${continueBook.shelf?.lastReadAt ? '最近阅读' : '新加入'}</span><strong>${esc(continueBook.title)}</strong><small>${esc(continueBook.author)}</small></div><div class="shelf-feature-copy"><small>CONTINUE READING · ${esc(continueBook.category?.name || '未分类')}</small><h2>${esc(continueBook.title)}</h2><p class="author">${esc(continueBook.author)} · ${continueBook.shelf?.progress || 0}%</p><p>${esc(continueBook.summary || '这本书已在你的书架中，随时可以继续阅读。')}</p><div><button type="button" class="primary" data-shelf-action="${continueBook.status === 'published' ? 'read' : 'edit'}" data-slug="${esc(continueBook.slug)}">${continueBook.status === 'published' ? (continueBook.shelf?.progress ? '继续阅读' : '开始阅读') : '继续完善'}</button><button type="button" data-go-categories>发现更多书籍</button></div></div><blockquote>你的阅读进度会自动保存，<br>下次从这里继续。</blockquote></section>` : ''}
+    ${PageHero({eyebrow:'PERSONAL COLLECTION',title:'私人藏书',description:'这里收藏当前账号加入、生成或导入的书。继续阅读，或前往公共书库发现新的旅程。',className:'shelf-hero-v2',stats:[{value:books.length,label:'我的书'},{value:counts('reading'),label:'阅读中'},{value:counts('completed'),label:'已读完'},{value:counts('want_to_read'),label:'想读'}]})}    ${continueBook ? `<section class="shelf-feature"><div class="shelf-feature-cover"${coverStyle(continueBook)}><span>${continueBook.shelf?.lastReadAt ? '最近阅读' : '新加入'}</span><strong>${esc(continueBook.title)}</strong><small>${esc(continueBook.author)}</small></div><div class="shelf-feature-copy"><small>CONTINUE READING · ${esc(continueBook.category?.name || '未分类')}</small><h2>${esc(continueBook.title)}</h2><p class="author">${esc(continueBook.author)} · ${continueBook.shelf?.progress || 0}%</p><p>${esc(continueBook.summary || '这本书已在你的书架中，随时可以继续阅读。')}</p><div><button type="button" class="primary" data-shelf-action="${continueBook.status === 'published' ? 'read' : 'edit'}" data-slug="${esc(continueBook.slug)}">${continueBook.status === 'published' ? (continueBook.shelf?.progress ? '继续阅读' : '开始阅读') : '继续完善'}</button><button type="button" data-go-categories>发现更多书籍</button></div></div><blockquote>你的阅读进度会自动保存，<br>下次从这里继续。</blockquote></section>` : ''}
     <section class="shelf-library-v2"><header><div><small>YOUR COLLECTION</small><h2>我的全部书籍 <span id="shelfResultCount">${books.length}</span></h2></div><div class="shelf-view-switch"><button type="button" class="active" data-shelf-view="grid" aria-label="网格视图">▦</button><button type="button" data-shelf-view="list" aria-label="列表视图">☷</button></div></header>
       <div class="shelf-toolbar"><label class="shelf-search"><span>⌕</span><input data-shelf-search placeholder="搜索我的书籍…"></label><div class="shelf-status-filter"><button type="button" class="active" data-shelf-status="all">全部 <b>${books.length}</b></button><button type="button" data-shelf-status="reading">阅读中 <b>${counts('reading')}</b></button><button type="button" data-shelf-status="completed">已读完 <b>${counts('completed')}</b></button><button type="button" data-shelf-status="want_to_read">想读 <b>${counts('want_to_read')}</b></button></div><select data-shelf-category aria-label="按分类筛选"><option value="all">全部分类</option>${categories.map(name => `<option value="${esc(name)}">${esc(name)}</option>`).join('')}</select><select data-shelf-sort aria-label="书架排序"><option value="lastRead">最近阅读</option><option value="added">最近加入</option><option value="title">按书名</option></select></div>
       <div class="shelf-grid" id="shelfGrid"></div>
@@ -161,12 +160,12 @@ export async function createShelfPage(root, { showToast, navigateToStudio, navig
 
   const removeBook = async slug => {
     const book = books.find(item => item.slug === slug);
-    if (!book || !confirm(`将《${book.title}》移出你的书架？这不会删除书籍分类中的网站资源。`)) return;
+    if (!book || !confirm(`将《${book.title}》移出你的书架？这不会删除典籍目录中的网站资源。`)) return;
     try {
       await removeShelfBook(slug);
       books = books.filter(item => item.slug !== slug);
       markFootprintUnavailable('book', slug);
-      showToast('已移出我的书架');
+      showToast('已移出私人藏书');
       paint();
     } catch (error) {
       showToast(error.message || '移出书架失败');
@@ -181,7 +180,7 @@ export async function createShelfPage(root, { showToast, navigateToStudio, navig
     const items = filtered();
     const grid = root.querySelector('#shelfGrid');
     grid.classList.toggle('list', state.view === 'list');
-    grid.innerHTML = items.length ? items.map(bookCard).join('') : `<div class="shelf-empty"><span>◇</span><h3>${books.length ? '没有找到匹配的书籍' : '你的书架还是空的'}</h3><p>${books.length ? '换个关键词或筛选条件试试。' : '从书籍分类中挑选资源，或生成、导入一本属于你的新书。'}</p><div><button type="button" data-empty-categories>浏览书籍分类</button><button type="button" class="primary" data-go-studio>生成或导入新书</button></div></div>`;
+    grid.innerHTML = items.length ? items.map(bookCard).join('') : `<div class="shelf-empty"><span>◇</span><h3>${books.length ? '没有找到匹配的书籍' : '你的书架还是空的'}</h3><p>${books.length ? '换个关键词或筛选条件试试。' : '从典籍目录中挑选资源，或生成、导入一本属于你的新书。'}</p><div><button type="button" data-empty-categories>浏览典籍目录</button><button type="button" class="primary" data-go-studio>生成或导入新书</button></div></div>`;
     root.querySelector('#shelfResultCount').textContent = items.length;
     bindCards();
     root.querySelector('[data-empty-categories]')?.addEventListener('click', () => navigateToCategories?.());

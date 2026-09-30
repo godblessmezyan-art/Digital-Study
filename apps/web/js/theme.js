@@ -14,7 +14,7 @@ export const THEMES = {
     defaultScene: 'city-overview',
     navigator: {
       type: 'map',
-      title: '天空城航行图',
+      title: '埃瑟瑞恩航行图',
       subtitle: '转动星盘，选择下一处窗景',
       image: 'assets/cloud-realm-map.png',
     },
@@ -22,9 +22,9 @@ export const THEMES = {
       {
         id: 'city-overview',
         code: 'CR-00',
-        name: '天空城远景',
+        name: '埃瑞瑞恩远景',
         region: '外环航港 · 观景书房',
-        description: '从外环航港眺望天空主城、远方浮岛与往返云海的飞空艇。',
+        description: '从外环航港眺望埃瑞瑞恩主城、远方浮岛与往返云海的飞空艇。',
         image: 'assets/scenes/home-world/clear-day.webp',
         backgrounds: {
           clear: {
@@ -38,7 +38,7 @@ export const THEMES = {
           snow: 'assets/scenes/home-world/snow.webp',
         },
         focus: { desktop: '50% 48%', tablet: '54% 48%', mobile: '62% 48%' },
-        globe: { latitude: 52, longitude: 58, label: '天空之城' },
+        globe: { latitude: 52, longitude: 58, label: '埃瑞瑞恩' },
       },
       {
         id: 'hidden-sanctuary',
@@ -73,7 +73,7 @@ export const THEMES = {
         code: 'CR-02',
         name: '云端书房',
         region: '藏书塔 · 东侧观景窗',
-        description: '越过黄铜仪器与摊开的书页，眺望天空主城。',
+        description: '越过黄铜仪器与摊开的书页，眺望埃瑞瑞恩主城。',
         image: 'assets/scenes/cloud-study.webp',
         focus: { desktop: 'center 48%', tablet: '54% 48%', mobile: '52% 45%' },
         map: { x: 75.5, y: 51, marker: 2 },

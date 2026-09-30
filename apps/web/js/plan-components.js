@@ -40,8 +40,7 @@ export function dueLabel(dueDate) {
 export function PlanHero(plans) {
   const active = plans.filter(plan => plan.status === 'active');
   const completed = plans.filter(plan => plan.status === 'completed');
-  return PageHero({ eyebrow: 'EXPEDITION PLANS', title: '计划', description: '把遥远的目标，拆成今天可以出发的一步。', stats: [{ value: active.length, label: '进行中' }, { value: plans.length, label: '全部' }, { value: completed.length, label: '已完成' }], action: '<a class="plans-new" href="plans/new">＋ 新计划</a>', className: 'plans-hero' });
-}
+  return PageHero({ eyebrow: 'EXPEDITION PLANS', title: '远征计划', description: '把遥远的目标，拆成今天可以出发的一步。', stats: [{ value: active.length, label: '进行中' }, { value: plans.length, label: '全部' }, { value: completed.length, label: '已完成' }], action: '<a class="plans-new" href="plans/new">＋ 新计划</a>', className: 'plans-hero' });}
 
 export function PlanTodayCard(tasks) {
   if (!tasks.length) {
